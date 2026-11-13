@@ -322,6 +322,11 @@ class DataStatus(BaseModel):
     latest_official_report_date: date | None
     latest_official_fetched_at: datetime | None
     note: str = "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+    market_prices_count: int = 0
+    pipeline_health: str = "operational"
+    external_api_source: str = "Government of India Open Government Data (data.gov.in)"
+    external_api_status: str = "offline_cache_mode"
+    series_summary: list[dict] = []
 
 
 class MandiComparisonRequest(BaseModel):

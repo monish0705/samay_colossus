@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 import time
@@ -20,7 +21,7 @@ from app.prices import router as prices_router
 
 @asynccontextmanager
 async def lifespan(application):
-    if get_settings().environment != "test":
+    if os.getenv("SAMAY_ENVIRONMENT", get_settings().environment) != "test":
         from pathlib import Path
 
         from sqlalchemy import inspect

@@ -27,12 +27,51 @@ class Market(Record, Base):
     district: Mapped[str] = mapped_column(String(120))
     state: Mapped[str] = mapped_column(String(120))
     data_source: Mapped[str] = mapped_column(String(120))
+    latitude: Mapped[Decimal | None] = mapped_column(Numeric(9, 6), nullable=True)
+    longitude: Mapped[Decimal | None] = mapped_column(Numeric(9, 6), nullable=True)
+
+    @property
+    def market_name(self) -> str:
+        return self.name
 
 
 class Commodity(Record, Base):
     __tablename__ = "commodities"
     name: Mapped[str] = mapped_column(String(120), unique=True)
     data_source: Mapped[str] = mapped_column(String(120))
+    category: Mapped[str] = mapped_column(String(60), default="Vegetable", server_default="Vegetable")
+    standard_unit: Mapped[str] = mapped_column(String(40), default="INR/quintal", server_default="INR/quintal")
+    perishability_class: Mapped[str] = mapped_column(String(60), default="perishable", server_default="perishable")
+
+    @property
+    def crop_name(self) -> str:
+        return self.name
+
+
+class MarketPrice(Record, Base):
+    __tablename__ = "market_prices"
+    __table_args__ = (
+        UniqueConstraint("commodity", "variety", "market_name", "arrival_date", name="uq_market_price_natural_key"),
+        CheckConstraint(
+            "minimum_price >= 0 AND minimum_price <= modal_price AND modal_price <= maximum_price",
+            name="ck_market_price_order",
+        ),
+    )
+    commodity: Mapped[str] = mapped_column(String(120), index=True)
+    variety: Mapped[str] = mapped_column(String(120), default="unspecified")
+    market_name: Mapped[str] = mapped_column(String(120), index=True)
+    district: Mapped[str] = mapped_column(String(120))
+    state: Mapped[str] = mapped_column(String(120), default="Karnataka")
+    arrival_date: Mapped[date] = mapped_column(Date, index=True)
+    minimum_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
+    maximum_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
+    modal_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
+    price_unit: Mapped[str] = mapped_column(String(40), default="INR/quintal")
+    source: Mapped[str] = mapped_column(String(255))
+    source_record_id: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    imported_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=lambda: datetime.now(UTC))
+    data_status: Mapped[str] = mapped_column(String(20), default="CACHED", index=True)
+
 
 
 class MandiObservation(Record, Base):

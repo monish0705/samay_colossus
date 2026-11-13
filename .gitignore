@@ -6,10 +6,10 @@ __pycache__/
 .env
 .env.*
 !.env.example
-*.db
-!data/prepared/samay.db
-*.db-*
-*.sqlite*
+
+
+
+
 node_modules/
 dist/
 !frontend/dist/

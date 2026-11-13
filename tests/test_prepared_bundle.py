@@ -1,6 +1,7 @@
 import hashlib
 import importlib.util
 import json
+import sqlite3
 from pathlib import Path
 
 import pytest
@@ -12,12 +13,14 @@ spec.loader.exec_module(module)
 
 def test_restore_verifies_hash_and_never_overwrites_local_data(tmp_path):
     source = tmp_path / "prepared.db"
-    source.write_bytes(b"TEST_ONLY")
+    with sqlite3.connect(source) as connection:
+        connection.execute('CREATE TABLE test_only (label TEXT)')
+    expected = source.read_bytes()
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps({"database_sha256": hashlib.sha256(source.read_bytes()).hexdigest()}))
     target = tmp_path / "local.db"
     assert "restored" in module.restore(source, manifest, target)
-    assert target.read_bytes() == b"TEST_ONLY"
+    assert target.read_bytes() == expected
     target.write_bytes(b"EXISTING_LOCAL_DATA")
     assert "preserved" in module.restore(source, manifest, target)
     assert target.read_bytes() == b"EXISTING_LOCAL_DATA"

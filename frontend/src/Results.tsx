@@ -22,7 +22,7 @@ export function ResultSummary({ result }: { result: Recommendation }) {
 }
 
 export function Results() {
-  const { result, priorResult, language, mode, draft, scope, setResult, catalog } = useApp();
+  const { result, priorResult, language, draft, scope, setResult, catalog } = useApp();
   const [showAll, setShowAll] = useState(false);
   const [scenario, setScenario] = useState<'lower' | 'central' | 'adverse'>('central');
   const [customPrice, setCustomPrice] = useState(draft.price || String(result?.optimization.request_and_assumptions.today_price_inr_per_quintal || ''));
@@ -118,6 +118,8 @@ export function Results() {
       </PageHeading>
 
       <DecisionPanel result={result}/>
+      <Link className="button button-primary" to="/sale-requests/new">{t('Sell to This Mandi')}</Link>
+      <p>{t('Online requests require an activated mandi and your confirmation. A recommendation is not a buyer offer.')}</p>
       {result.decision_support && <h2>{t('Full calculation audit for the displayed plan')}</h2>}
 
       {/* Main Status Banner */}
@@ -498,7 +500,7 @@ export function Results() {
         </Card>
       </div>
 
-      {/* Settlement Ledger Table (In Judge Mode or Expandable) */}
+      {/* Expandable settlement ledger */}
       {plan && (
         <Card>
           <div className="section-heading">
@@ -627,8 +629,8 @@ export function Results() {
           </p>
         </details>
 
-        {mode === 'judge' && (
-          <details className="judge-assumptions-panel" style={{ marginTop: '12px' }}>
+        {(
+          <details className="audit-assumptions-panel" style={{ marginTop: '12px' }}>
             <summary>{t('Inspect the exact submitted assumptions')}</summary>
             <pre className="json-view">{JSON.stringify(output.request_and_assumptions, null, 2)}</pre>
           </details>

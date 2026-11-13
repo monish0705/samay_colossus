@@ -1,6 +1,6 @@
-import os
 import json
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
 from uuid import uuid4
@@ -17,6 +17,9 @@ from app.api_routes import router as api_router
 from app.api_services import ServiceProblem
 from app.config import get_settings
 from app.prices import router as prices_router
+from app.sale_routes import router as sale_router
+from app.business_routes import router as business_router
+from app.purchase_routes import router as purchase_router
 
 
 @asynccontextmanager
@@ -45,7 +48,7 @@ async def lifespan(application):
 
 
 app = FastAPI(title="SAMAY API", version="0.1.0", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=get_settings().cors_origins, allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type", "X-Request-ID"], expose_headers=["X-Request-ID"])
+app.add_middleware(CORSMiddleware, allow_origins=get_settings().cors_origins, allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type", "X-Request-ID", "X-SAMAY-Action", "Idempotency-Key"], expose_headers=["X-Request-ID"])
 logger = logging.getLogger("samay.api")
 logger.setLevel(logging.INFO)
 if not logger.handlers:
@@ -73,6 +76,10 @@ async def request_context(request: Request, call_next):
             result.headers["Access-Control-Expose-Headers"] = "X-Request-ID"
             result.headers["Vary"] = "Origin"
     result.headers["X-Request-ID"] = request.state.request_id
+    if request.url.path.startswith(('/api/v1/auth', '/api/v1/sale-', '/api/v1/mandi/', '/api/v1/admin/', '/api/v1/notification')):
+        result.headers['Cache-Control'] = 'private, no-store'
+    if request.url.path.startswith(('/api/v1/business', '/api/v1/private-purchases')):
+        result.headers['Cache-Control'] = 'private, no-store'
     logger.info(json.dumps({"event": "http_request", "request_id": request.state.request_id,
         "method": request.method, "route": getattr(request.scope.get("route"), "path", "unmatched"),
         "status": result.status_code, "duration_ms": round((time.monotonic() - start) * 1000, 2)}))
@@ -92,8 +99,22 @@ async def database_error(request, exc):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request, exc):
-    fields = [{"location": list(e["loc"]), "type": e["type"]} for e in exc.errors()]
-    return error(request, 422, "invalid_request", "Request validation failed", {"fields": fields})
+    fields = []
+    messages = []
+    for e in exc.errors():
+        field_parts = [str(x) for x in e["loc"] if x != "body"]
+        field_name = ".".join(field_parts)
+        msg = e.get("msg", "Invalid value")
+        # Strip "Value error, " prefix if added by Pydantic
+        if msg.startswith("Value error, "):
+            msg = msg[len("Value error, "):]
+        if field_name:
+            messages.append(f"{field_name}: {msg}")
+        else:
+            messages.append(msg)
+        fields.append({"field": field_name, "message": msg, "location": list(e["loc"]), "type": e["type"]})
+    user_message = "; ".join(messages) if messages else "Request validation failed"
+    return error(request, 422, "invalid_request", user_message, {"fields": fields})
 
 
 @app.exception_handler(StarletteHTTPException)
@@ -115,3 +136,6 @@ def health() -> HealthResponse:
 
 app.include_router(prices_router)
 app.include_router(api_router)
+app.include_router(sale_router)
+app.include_router(business_router)
+app.include_router(purchase_router)

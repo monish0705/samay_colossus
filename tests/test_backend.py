@@ -40,7 +40,7 @@ def test_migration_initialization_and_utc(tmp_path, monkeypatch):
         command.upgrade(config, "head")
         command.upgrade(config, "head")
         engine = make_engine(url)
-        assert set(inspect(engine).get_table_names()) == {"alembic_version", "markets", "commodities", "mandi_observations", "model_versions", "predictions", "recommendations", "import_batches", "import_rows", "recommendation_history"}
+        assert {"alembic_version", "markets", "commodities", "mandi_observations", "model_versions", "predictions", "recommendations", "import_batches", "import_rows", "recommendation_history", "market_prices", "mandi_users", "sale_requests", "sale_request_events", "notification_outbox"} <= set(inspect(engine).get_table_names())
         monkeypatch.setenv("SAMAY_ENVIRONMENT", "development")
         for _ in range(2):
             subprocess.run([sys.executable, str(ROOT / "scripts" / "seed_demo.py")], check=True, capture_output=True)

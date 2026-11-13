@@ -1,0 +1,12 @@
+{
+  "health": {
+    "status": "ok",
+    "service": "samay",
+    "version": "0.1.0"
+  },
+  "frontend_http": 200,
+  "private_requests_without_login": 401,
+  "authentic_mandis": 5,
+  "activated_online_mandis": 0,
+  "note": "No runtime owner or farmer accounts or sale requests were seeded."
+}

@@ -1,0 +1,20 @@
+import {fireEvent, render, screen, waitFor, within} from '@testing-library/react';
+import {beforeEach, describe, expect, it, vi} from 'vitest';
+import {BusinessPurchasing, OfferForm, rupees} from './BusinessPurchasing';
+import {setLanguage} from './i18n';
+import {purchaseAPI} from './purchase-api';
+vi.mock('./purchase-api',()=>({purchaseAPI:{offers:vi.fn(),requests:vi.fn(),analytics:vi.fn(),notes:vi.fn()}}));
+vi.mock('./sale-api',()=>({saleAPI:vi.fn()}));
+vi.mock('./api',()=>({api:{commodities:vi.fn(async()=>[{id:1,name:'Tomato'}])}}));
+const switchTo=vi.fn(async()=>{});
+const workspace={access:{active_workspace:{mode:'BUSINESS',business_id:1},workspaces:[{business_id:1,role:'PRIVATE_BUYER'}]},switchTo};
+vi.mock('./business-context',()=>({useBusinessWorkspace:()=>workspace}));
+const profile={id:1,business_type:'PRIVATE_BUYER',name:'TEST_ONLY buyer',address:'TEST_ONLY address',district:'Kolar',state:'Karnataka',can_publish:true};
+beforeEach(()=>{vi.clearAllMocks();setLanguage('en');workspace.access.active_workspace={mode:'BUSINESS',business_id:1};vi.mocked(purchaseAPI.offers).mockResolvedValue([]);vi.mocked(purchaseAPI.requests).mockResolvedValue([]);vi.mocked(purchaseAPI.notes).mockResolvedValue({unread:3,items:[]});vi.mocked(purchaseAPI.analytics).mockResolvedValue({offer_count:2,requested_quantity:'60.000',confirmed_quantity:'20.000',reserved_quantity:'10.000',remaining_quantity:'70.000',average_offered_price:'1000.25',incoming_requests:3,accepted_requests:1,upcoming_arrivals:[],completed_purchases:0,completion_recording_available:false,appointment_booking_available:false});});
+describe('Private purchasing portal',()=>{
+  it('renders backend statistics and real unread count without invented records',async()=>{render(<BusinessPurchasing profile={profile}/>);expect(await screen.findByText('70.000')).toBeInTheDocument();expect(screen.getByRole('button',{name:'Notifications (3)'})).toBeInTheDocument();fireEvent.click(screen.getByRole('button',{name:'Completed Purchases'}));expect(screen.getByText(/No completed purchase records exist/)).toBeInTheDocument();});
+  it('shows disconnected errors and supports retry',async()=>{vi.mocked(purchaseAPI.analytics).mockRejectedValueOnce(new Error('TEST_ONLY disconnected'));render(<BusinessPurchasing profile={profile}/>);expect(await screen.findByRole('alert')).toHaveTextContent('TEST_ONLY disconnected');fireEvent.click(screen.getByRole('button',{name:'Retry'}));await waitFor(()=>expect(screen.queryByRole('alert')).not.toBeInTheDocument());});
+  it('requires the selected authorized workspace before fetching purchasing data',()=>{workspace.access.active_workspace={mode:'FARMER',business_id:0};render(<BusinessPurchasing profile={profile}/>);expect(purchaseAPI.offers).not.toHaveBeenCalled();fireEvent.click(screen.getByRole('button',{name:'Open purchasing workspace'}));expect(switchTo).toHaveBeenCalledWith(workspace.access.workspaces[0]);});
+  it('keeps the same backend quantities and INR values in Kannada',async()=>{setLanguage('kn');render(<BusinessPurchasing profile={profile}/>);expect(await screen.findByText('70.000')).toBeInTheDocument();expect(screen.getByText(rupees('1000.25'))).toBeInTheDocument();expect(screen.getByRole('button',{name:'ಸೂಚನೆಗಳು (3)'})).toBeInTheDocument();});
+  it('loads the real crop registry and does not save an incomplete first step',async()=>{render(<OfferForm profile={profile} existing={null} onSaved={vi.fn()}/>);const crop=await screen.findByRole('combobox',{name:'Crop'});expect(within(crop).getByRole('option',{name:'Tomato'})).toBeInTheDocument();expect(screen.queryByLabelText('Offered price (INR/quintal)',{selector:'input'})).not.toBeInTheDocument();});
+});

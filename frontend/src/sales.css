@@ -1,0 +1,23 @@
+.sale-workspace { max-width: 1160px; margin: auto; padding: 20px; color: #153d2c; }
+.mandi-workspace { min-height: 100vh; background: #f7f8f2; }
+.sale-header,.sale-row { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.sale-nav { display:flex; flex-wrap:wrap; gap:8px; padding:16px 0; }
+.sale-nav a { padding:10px 14px; border-radius:10px; background:white; border:1px solid #d4dfd3; }
+.sale-nav a.active { background:#174d33; color:white; }
+.sale-card { border:1px solid #d5dfd3; border-radius:16px; background:white; padding:22px; margin:16px 0; box-shadow:0 3px 16px #14361a05; }
+.sale-auth { max-width:540px; margin:40px auto; }
+.sale-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; align-items:end; }
+.sale-field { display:flex; flex-direction:column; gap:8px; font-weight:600; }
+.sale-workspace input:not([type=checkbox]),.sale-workspace select,.sale-workspace textarea,.sale-auth input { width:100%; min-height:44px; border:1px solid #a8b7a9; border-radius:8px; padding:10px; background:white; color:#143a29; }
+.sale-workspace button { min-height:44px; padding:10px 14px; margin:4px; cursor:pointer; border:1px solid #a8b7a9; border-radius:8px; }
+.sale-workspace button:disabled { opacity:.55; cursor:not-allowed; }
+.sale-workspace :focus-visible { outline:3px solid #c1841c; outline-offset:3px; }
+.sale-error { padding:12px; background:#fff0ec; color:#8c281b; border:1px solid #d3a89b; border-radius:8px; }
+.sale-notice { background:#edf4e9; border-left:4px solid #407649; padding:14px; }
+.sale-status { padding:7px 12px; border-radius:20px; background:#e8efe4; font-weight:700; }
+.sale-ledger { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.sale-ledger dt { color:#50634f; }.sale-ledger dd { margin:0; font-weight:600; overflow-wrap:anywhere; }
+.sale-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:12px; }.sale-stats strong { font-size:28px; }
+.sale-offer { border-bottom:1px solid #e4e9df; padding:12px 0; }
+.sale-workspace pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }.sale-token { overflow-wrap:anywhere; display:block; }
+@media(max-width:600px) { .sale-workspace{padding:12px}.sale-card{padding:16px}.sale-grid{grid-template-columns:1fr}.sale-ledger{grid-template-columns:1fr}.sale-header h1{font-size:24px}.sale-row h2{font-size:18px;overflow-wrap:anywhere} }

@@ -1,0 +1,502 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> backend\app\api_routes.py:1:1
+   |
+ 1 | / from datetime import UTC, datetime
+ 2 | | from typing import Annotated
+ 3 | | from zoneinfo import ZoneInfo
+ 4 | |
+ 5 | | from fastapi import APIRouter, Body, Depends, Query, Request, Response
+ 6 | | from pydantic import BaseModel, ConfigDict, ValidationError
+ 7 | | from sqlalchemy import exists, select
+ 8 | | from sqlalchemy.orm import Session
+ 9 | |
+10 | | from app import api_services as services
+11 | | from app.api_schemas import (
+12 | |     DataStatus,
+13 | |     ErrorEnvelope,
+14 | |     HistoricalEvaluation,
+15 | |     HorizonAvailability,
+16 | |     MandiComparisonRequest,
+17 | |     MandiComparisonResponseSchema,
+18 | |     ModelsStatus,
+19 | |     PredictionResponse,
+20 | |     PredictRequest,
+21 | |     RecommendationResponse,
+22 | |     RecommendRequest,
+23 | | )
+24 | | from app.config import get_settings
+25 | | from app.mandi_comparison import compare_mandis
+26 | | from app.market_context import MarketContext, read_context
+27 | | from app.models import Commodity, ImportBatch, MandiObservation, Market
+28 | | from app.prices import PriceResponse, get_session, COMPATIBLE_VARIETIES
+   | |_______________________________________________________________________^
+29 |
+30 |   ERRORS = {code: {"model": ErrorEnvelope, "description": description} for code, description in
+   |
+help: Organize imports
+   |
+27 | from app.models import Commodity, ImportBatch, MandiObservation, Market
+   - from app.prices import PriceResponse, get_session, COMPATIBLE_VARIETIES
+28 + from app.prices import COMPATIBLE_VARIETIES, PriceResponse, get_session
+29 |
+   |
+
+F401 [*] `app.prediction_attribution.ConditionFactorImpact` imported but unused
+  --> backend\app\api_schemas.py:10:40
+   |
+ 8 | from app.ingestion import commodity_name, label, market_name
+ 9 | from app.market_context import MarketContext
+10 | from app.prediction_attribution import ConditionFactorImpact, PredictionAttribution
+   |                                        ^^^^^^^^^^^^^^^^^^^^^
+11 | from app.reliability import ReliabilityForecast
+12 | from app.selling import HoldingOption, Name, Nonnegative, SellingRequest
+   |
+help: Remove unused import: `app.prediction_attribution.ConditionFactorImpact`
+   |
+9  | from app.market_context import MarketContext
+   - from app.prediction_attribution import ConditionFactorImpact, PredictionAttribution
+10 + from app.prediction_attribution import PredictionAttribution
+11 | from app.reliability import ReliabilityForecast
+   |
+
+E402 Module level import not at top of file
+  --> backend\app\cli_data_import.py:19:1
+   |
+17 |     sys.path.insert(0, str(backend_path))
+18 |
+19 | from app.db_migration import upgrade_database
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from app.market_data_pipeline import pipeline
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> backend\app\cli_data_import.py:20:1
+   |
+19 | from app.db_migration import upgrade_database
+20 | from app.market_data_pipeline import pipeline
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> backend\app\db_migration.py:2:1
+   |
+ 1 |   """Database schema upgrade & seeding for agricultural market data engineering module."""
+ 2 | / import logging
+ 3 | | from decimal import Decimal
+ 4 | | from datetime import UTC, datetime
+ 5 | | from sqlalchemy import inspect, select, text
+ 6 | | from sqlalchemy.orm import Session
+ 7 | |
+ 8 | | from app.db import engine, Base
+ 9 | | from app.models import Market, Commodity, MarketPrice, MandiObservation
+   | |_______________________________________________________________________^
+10 |
+11 |   logger = logging.getLogger("samay.db_migration")
+   |
+help: Organize imports
+   |
+2  | import logging
+3  + from datetime import UTC, datetime
+4  | from decimal import Decimal
+   - from datetime import UTC, datetime
+5  +
+6  | from sqlalchemy import inspect, select, text
+7  | from sqlalchemy.orm import Session
+8  |
+   - from app.db import engine, Base
+   - from app.models import Market, Commodity, MarketPrice, MandiObservation
+9  + from app.db import Base, engine
+10 + from app.models import Commodity, MandiObservation, Market, MarketPrice
+11 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> backend\app\mandi_comparison.py:2:1
+   |
+ 1 |   """Deterministic mandi comparison and net farmer realization evaluator across Karnataka markets."""
+ 2 | / from decimal import Decimal, ROUND_HALF_UP
+ 3 | | from typing import Literal
+ 4 | | from pydantic import BaseModel, Field
+ 5 | | from sqlalchemy import select
+ 6 | | from sqlalchemy.orm import Session
+ 7 | |
+ 8 | | from app.models import MandiObservation, Market, Commodity
+ 9 | | from app.selling import money
+   | |_____________________________^
+10 |
+11 |   CENT = Decimal(".01")
+   |
+help: Organize imports
+   |
+1  | """Deterministic mandi comparison and net farmer realization evaluator across Karnataka markets."""
+   - from decimal import Decimal, ROUND_HALF_UP
+2  + from decimal import ROUND_HALF_UP, Decimal
+3  | from typing import Literal
+4  +
+5  | from pydantic import BaseModel, Field
+6  | from sqlalchemy import select
+7  | from sqlalchemy.orm import Session
+8  |
+   - from app.models import MandiObservation, Market, Commodity
+9  + from app.models import Commodity, MandiObservation, Market
+10 | from app.selling import money
+   |
+
+F401 [*] `decimal.ROUND_HALF_UP` imported but unused
+ --> backend\app\mandi_comparison.py:2:30
+  |
+1 | """Deterministic mandi comparison and net farmer realization evaluator across Karnataka markets."""
+2 | from decimal import Decimal, ROUND_HALF_UP
+  |                              ^^^^^^^^^^^^^
+3 | from typing import Literal
+4 | from pydantic import BaseModel, Field
+  |
+help: Remove unused import: `decimal.ROUND_HALF_UP`
+  |
+1 | """Deterministic mandi comparison and net farmer realization evaluator across Karnataka markets."""
+  - from decimal import Decimal, ROUND_HALF_UP
+2 + from decimal import Decimal
+3 | from typing import Literal
+  |
+
+F401 [*] `typing.Literal` imported but unused
+ --> backend\app\mandi_comparison.py:3:20
+  |
+1 | """Deterministic mandi comparison and net farmer realization evaluator across Karnataka markets."""
+2 | from decimal import Decimal, ROUND_HALF_UP
+3 | from typing import Literal
+  |                    ^^^^^^^
+4 | from pydantic import BaseModel, Field
+5 | from sqlalchemy import select
+  |
+help: Remove unused import: `typing.Literal`
+  |
+2 | from decimal import Decimal, ROUND_HALF_UP
+  - from typing import Literal
+3 | from pydantic import BaseModel, Field
+  |
+
+F401 [*] `pydantic.Field` imported but unused
+ --> backend\app\mandi_comparison.py:4:33
+  |
+2 | from decimal import Decimal, ROUND_HALF_UP
+3 | from typing import Literal
+4 | from pydantic import BaseModel, Field
+  |                                 ^^^^^
+5 | from sqlalchemy import select
+6 | from sqlalchemy.orm import Session
+  |
+help: Remove unused import: `pydantic.Field`
+  |
+3 | from typing import Literal
+  - from pydantic import BaseModel, Field
+4 + from pydantic import BaseModel
+5 | from sqlalchemy import select
+  |
+
+B007 Loop control variable `idx` not used within loop body
+   --> backend\app\mandi_comparison.py:329:9
+    |
+327 |     local_net_cash = Decimal("0.00")
+328 |
+329 |     for idx, c in enumerate(candidates):
+    |         ^^^
+330 |         is_local = (c["mandi_name"] == local_cfg["mandi_name"])
+331 |         if is_local:
+    |
+help: Rename unused `idx` to `_idx`
+    |
+328 |
+    -     for idx, c in enumerate(candidates):
+329 +     for _idx, c in enumerate(candidates):
+330 |         is_local = (c["mandi_name"] == local_cfg["mandi_name"])
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+F401 [*] `sqlalchemy.text` imported but unused
+  --> backend\app\market_data_pipeline.py:24:38
+   |
+22 | from typing import Any, Literal
+23 |
+24 | from sqlalchemy import func, select, text
+   |                                      ^^^^
+25 | from sqlalchemy.orm import Session
+   |
+help: Remove unused import: `sqlalchemy.text`
+   |
+23 |
+   - from sqlalchemy import func, select, text
+24 + from sqlalchemy import func, select
+25 | from sqlalchemy.orm import Session
+   |
+
+F401 [*] `app.db.engine` imported but unused
+  --> backend\app\market_data_pipeline.py:27:34
+   |
+25 | from sqlalchemy.orm import Session
+26 |
+27 | from app.db import SessionLocal, engine
+   |                                  ^^^^^^
+28 | from app.db_migration import upgrade_database
+29 | from app.ingestion import commodity_name, market_name
+   |
+help: Remove unused import: `app.db.engine`
+   |
+26 |
+   - from app.db import SessionLocal, engine
+27 + from app.db import SessionLocal
+28 | from app.db_migration import upgrade_database
+   |
+
+F401 [*] `app.db_migration.upgrade_database` imported but unused
+  --> backend\app\market_data_pipeline.py:28:30
+   |
+27 | from app.db import SessionLocal, engine
+28 | from app.db_migration import upgrade_database
+   |                              ^^^^^^^^^^^^^^^^
+29 | from app.ingestion import commodity_name, market_name
+30 | from app.models import Commodity, MandiObservation, Market, MarketPrice
+   |
+help: Remove unused import: `app.db_migration.upgrade_database`
+   |
+27 | from app.db import SessionLocal, engine
+   - from app.db_migration import upgrade_database
+28 | from app.ingestion import commodity_name, market_name
+   |
+
+F401 [*] `app.models.MandiObservation` imported but unused
+  --> backend\app\market_data_pipeline.py:30:35
+   |
+28 | from app.db_migration import upgrade_database
+29 | from app.ingestion import commodity_name, market_name
+30 | from app.models import Commodity, MandiObservation, Market, MarketPrice
+   |                                   ^^^^^^^^^^^^^^^^
+31 |
+32 | logger = logging.getLogger("samay.market_data")
+   |
+help: Remove unused import: `app.models.MandiObservation`
+   |
+29 | from app.ingestion import commodity_name, market_name
+   - from app.models import Commodity, MandiObservation, Market, MarketPrice
+30 + from app.models import Commodity, Market, MarketPrice
+31 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> backend\app\prediction_attribution.py:2:1
+  |
+1 |   """Attribution of prediction conditions and profit/loss breakdown for farmers."""
+2 | / from decimal import Decimal, ROUND_HALF_UP
+3 | | from typing import Literal
+4 | | from pydantic import BaseModel
+5 | | from sqlalchemy import select
+6 | |
+7 | | from app.models import MandiObservation, Market, Commodity
+  | |__________________________________________________________^
+help: Organize imports
+  |
+1 | """Attribution of prediction conditions and profit/loss breakdown for farmers."""
+  - from decimal import Decimal, ROUND_HALF_UP
+2 + from decimal import ROUND_HALF_UP, Decimal
+3 | from typing import Literal
+4 +
+5 | from pydantic import BaseModel
+6 | from sqlalchemy import select
+7 |
+  - from app.models import MandiObservation, Market, Commodity
+8 + from app.models import Commodity, MandiObservation, Market
+9 |
+  |
+
+B007 Loop control variable `idx` not used within loop body
+   --> backend\app\prediction_attribution.py:237:13
+    |
+235 |         # Net diff is 0: show balanced counteracting market forces
+236 |         nominal_shift = (base_price * Decimal("0.03")).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+237 |         for idx, t in enumerate(templates):
+    |             ^^^
+238 |             dir_val = t["direction"]
+239 |             effect = (nominal_shift * t["weight"] * dir_val).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+    |
+help: Rename unused `idx` to `_idx`
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> tests\conftest.py:1:1
+  |
+1 | / import os
+2 | | import pytest
+  | |_____________^
+3 |
+4 |   os.environ["SAMAY_ENVIRONMENT"] = "test"
+  |
+help: Organize imports
+  |
+1 | import os
+2 +
+3 | import pytest
+  |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> tests\test_mandi_comparison.py:8:1
+  |
+6 | sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+7 |
+8 | from app.mandi_comparison import compare_mandis, MandiComparisonResponse
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Organize imports
+  |
+7 |
+  - from app.mandi_comparison import compare_mandis, MandiComparisonResponse
+8 + from app.mandi_comparison import MandiComparisonResponse, compare_mandis
+9 |
+  |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests\test_market_data_pipeline.py:16:1
+   |
+14 |   11. Data API endpoints (markets, crops, prices, history, data status)
+15 |   """
+16 | / import io
+17 | | import tempfile
+18 | | import urllib.error
+19 | | from datetime import UTC, date, datetime, timedelta
+20 | | from decimal import Decimal
+21 | | from pathlib import Path
+22 | | from unittest.mock import MagicMock, patch
+23 | |
+24 | | import pytest
+25 | | from sqlalchemy import select
+26 | |
+27 | | from app.db import SessionLocal
+28 | | from app.market_data_pipeline import (
+29 | |     MandiMarketDataPipeline,
+30 | |     OUTLIER_THRESHOLDS_INR_PER_QUINTAL,
+31 | |     STALE_THRESHOLD_DAYS,
+32 | | )
+33 | | from app.models import Commodity, Market, MarketPrice
+34 | | from app.prices import crops, history, markets, prices
+   | |______________________________________________________^
+help: Organize imports
+   |
+24 | import pytest
+   - from sqlalchemy import select
+   -
+25 | from app.db import SessionLocal
+26 | from app.market_data_pipeline import (
+   -     MandiMarketDataPipeline,
+27 |     OUTLIER_THRESHOLDS_INR_PER_QUINTAL,
+28 |     STALE_THRESHOLD_DAYS,
+29 +     MandiMarketDataPipeline,
+30 | )
+31 | from app.models import Commodity, Market, MarketPrice
+32 | from app.prices import crops, history, markets, prices
+33 + from sqlalchemy import select
+34 |
+   |
+
+F401 [*] `io` imported but unused
+  --> tests\test_market_data_pipeline.py:16:8
+   |
+14 | 11. Data API endpoints (markets, crops, prices, history, data status)
+15 | """
+16 | import io
+   |        ^^
+17 | import tempfile
+18 | import urllib.error
+   |
+help: Remove unused import: `io`
+   |
+15 | """
+   - import io
+16 | import tempfile
+   |
+
+F401 [*] `urllib.error` imported but unused
+  --> tests\test_market_data_pipeline.py:18:8
+   |
+16 | import io
+17 | import tempfile
+18 | import urllib.error
+   |        ^^^^^^^^^^^^
+19 | from datetime import UTC, date, datetime, timedelta
+20 | from decimal import Decimal
+   |
+help: Remove unused import: `urllib.error`
+   |
+17 | import tempfile
+   - import urllib.error
+18 | from datetime import UTC, date, datetime, timedelta
+   |
+
+F401 [*] `unittest.mock.MagicMock` imported but unused
+  --> tests\test_market_data_pipeline.py:22:27
+   |
+20 | from decimal import Decimal
+21 | from pathlib import Path
+22 | from unittest.mock import MagicMock, patch
+   |                           ^^^^^^^^^
+23 |
+24 | import pytest
+   |
+help: Remove unused import: `unittest.mock.MagicMock`
+   |
+21 | from pathlib import Path
+   - from unittest.mock import MagicMock, patch
+22 + from unittest.mock import patch
+23 |
+   |
+
+F401 [*] `app.market_data_pipeline.OUTLIER_THRESHOLDS_INR_PER_QUINTAL` imported but unused
+  --> tests\test_market_data_pipeline.py:30:5
+   |
+28 | from app.market_data_pipeline import (
+29 |     MandiMarketDataPipeline,
+30 |     OUTLIER_THRESHOLDS_INR_PER_QUINTAL,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+31 |     STALE_THRESHOLD_DAYS,
+32 | )
+   |
+help: Remove unused import: `app.market_data_pipeline.OUTLIER_THRESHOLDS_INR_PER_QUINTAL`
+   |
+29 |     MandiMarketDataPipeline,
+   -     OUTLIER_THRESHOLDS_INR_PER_QUINTAL,
+30 |     STALE_THRESHOLD_DAYS,
+   |
+
+F401 [*] `app.models.Commodity` imported but unused
+  --> tests\test_market_data_pipeline.py:33:24
+   |
+31 |     STALE_THRESHOLD_DAYS,
+32 | )
+33 | from app.models import Commodity, Market, MarketPrice
+   |                        ^^^^^^^^^
+34 | from app.prices import crops, history, markets, prices
+   |
+help: Remove unused import
+   |
+32 | )
+   - from app.models import Commodity, Market, MarketPrice
+33 + from app.models import MarketPrice
+34 | from app.prices import crops, history, markets, prices
+   |
+
+F401 [*] `app.models.Market` imported but unused
+  --> tests\test_market_data_pipeline.py:33:35
+   |
+31 |     STALE_THRESHOLD_DAYS,
+32 | )
+33 | from app.models import Commodity, Market, MarketPrice
+   |                                   ^^^^^^
+34 | from app.prices import crops, history, markets, prices
+   |
+help: Remove unused import
+   |
+32 | )
+   - from app.models import Commodity, Market, MarketPrice
+33 + from app.models import MarketPrice
+34 | from app.prices import crops, history, markets, prices
+   |
+
+Found 25 errors.
+[*] 21 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).

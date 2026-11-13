@@ -8,6 +8,7 @@ from pathlib import Path
 
 from app.config import ROOT, get_settings
 from app.ingestion import SourceManifest
+from app.prepared_data import assert_public_market_snapshot
 from sqlalchemy.engine import make_url
 
 
@@ -24,6 +25,8 @@ def main():
     if source==temporary or source==folder/"samay.db":
         raise ValueError("Source and portable snapshot must be distinct")
     with closing(sqlite3.connect(source.as_uri()+"?mode=ro",uri=True)) as original,closing(sqlite3.connect(temporary)) as target:
+        original.execute('BEGIN')
+        assert_public_market_snapshot(original)
         original.backup(target)
         for archive,sha,raw in target.execute("SELECT archive_path,file_sha256,manifest FROM import_batches WHERE data_kind IN ('official','secondary')"):
             manifest=SourceManifest.model_validate_json(raw)

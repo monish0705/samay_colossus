@@ -13,7 +13,7 @@ from app.api_services import predict
 from app.config import get_settings
 from app.forecasting import rolling_folds, select_horizon
 from app.models import Commodity, ImportBatch, MandiObservation, Market
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 from test_backend import ROOT
 from test_forecasting import case
@@ -117,6 +117,8 @@ def test_all_four_current_crops_have_hash_pinned_real_forecasts_and_stale_fallba
     engine=create_engine("sqlite://",creator=lambda:sqlite3.connect(f"file:{database.as_posix()}?mode=ro",uri=True))
     try:
         with Session(engine) as session:
+            last_report = datetime.fromisoformat(session.execute(text("SELECT MAX(observed_on) FROM mandi_observations WHERE data_kind='official'")).scalar_one()).date()
+            stale_origin = last_report + timedelta(days=10)
             for folder,meta in current:
                 assert hashlib.sha256((folder/"model.pkl").read_bytes()).hexdigest()==meta["model_sha256"]
                 request=PredictRequest(**{k:meta[k] for k in ("market","commodity","variety","grade","horizon")})
@@ -128,7 +130,7 @@ def test_all_four_current_crops_have_hash_pinned_real_forecasts_and_stale_fallba
                 assert all(i.lower_inr_per_quintal <= result.prediction_inr_per_quintal <= i.upper_inr_per_quintal for i in result.intervals)
                 from app.api_services import ServiceProblem
                 with pytest.raises(ServiceProblem) as stale:
-                    predict(session,request,origin+timedelta(days=10),"TEST_ONLY",when+timedelta(days=10))
+                    predict(session,request,stale_origin,"TEST_ONLY",when+timedelta(days=(stale_origin-origin).days))
                 assert stale.value.code == "stale_market_data"
     finally:
         engine.dispose()

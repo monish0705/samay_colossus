@@ -47,6 +47,7 @@
     "maximum_today_net_cash_upper_bound_inr": "18700.00",
     "cash_requirement_achievable_on_grid": true,
     "recommended_plan": {
+      "cash_deadline_days": 0,
       "sell_today_quintals": "11",
       "hold_initial_quintals": "9",
       "holding_days": 3,

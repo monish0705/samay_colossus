@@ -11,8 +11,8 @@ import recommendationFixture from './test/fixtures/recommendation.json';
 import infeasibleFixture from './test/fixtures/infeasible.json';
 import conditionalFixture from './test/fixtures/conditional-hold.json';
 
-const recommendation = recommendationFixture as Recommendation;
-const conditional = conditionalFixture as Recommendation;
+const recommendation = recommendationFixture as unknown as Recommendation;
+const conditional = conditionalFixture as unknown as Recommendation;
 let research = false;
 let historical = false;
 let staleReference = false;

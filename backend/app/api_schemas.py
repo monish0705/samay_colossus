@@ -124,6 +124,7 @@ class SellingPlan(BaseModel):
     today_sale: SaleLedger
     cash_today_inr: Decimal
     cash_surplus_inr: Decimal
+    cash_deadline_days: int = 0
     later_sales: dict[str, SaleLedger]
     central_later_net_after_storage_inr: Decimal
     total_net_inr: dict[str, Decimal]
@@ -321,3 +322,44 @@ class DataStatus(BaseModel):
     latest_official_report_date: date | None
     latest_official_fetched_at: datetime | None
     note: str = "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+
+
+class MandiComparisonRequest(BaseModel):
+    commodity: str = "Tomato"
+    quantity_quintals: Decimal = Field(gt=0, le=100000, description="Harvest quantity in quintals")
+    local_mandi: str | None = None
+    user_price_override: Decimal | None = None
+    variety: str | None = None
+    grade: str | None = None
+
+
+class MandiOptionSchema(BaseModel):
+    mandi_name: str
+    district: str
+    distance_km: int
+    travel_time_hours: float
+    modal_price_inr_per_quintal: Decimal
+    price_basis: str
+    is_local: bool
+    gross_revenue_inr: Decimal
+    commission_inr: Decimal
+    market_fee_inr: Decimal
+    transport_cost_inr: Decimal
+    handling_inr: Decimal
+    net_cash_inr: Decimal
+    net_realization_inr_per_quintal: Decimal
+    diff_vs_local_inr: Decimal
+    is_recommended: bool
+    tag: str
+    tag_kn: str
+
+
+class MandiComparisonResponseSchema(BaseModel):
+    commodity: str
+    quantity_quintals: Decimal
+    local_mandi: str
+    recommended_mandi: str
+    recommendation_summary: str
+    recommendation_summary_kn: str
+    mandis: list[MandiOptionSchema]
+

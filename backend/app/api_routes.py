@@ -13,6 +13,8 @@ from app.api_schemas import (
     ErrorEnvelope,
     HistoricalEvaluation,
     HorizonAvailability,
+    MandiComparisonRequest,
+    MandiComparisonResponseSchema,
     ModelsStatus,
     PredictionResponse,
     PredictRequest,
@@ -20,6 +22,7 @@ from app.api_schemas import (
     RecommendRequest,
 )
 from app.config import get_settings
+from app.mandi_comparison import compare_mandis
 from app.market_context import MarketContext, read_context
 from app.models import Commodity, ImportBatch, MandiObservation, Market
 from app.prices import PriceResponse, get_session, COMPATIBLE_VARIETIES
@@ -229,3 +232,22 @@ def retired_multi_factor(horizon: int = Query(3, ge=1, le=730), base_price: floa
 @router.get("/storage/nearby", deprecated=True, tags=["selling"])
 def retired_storage(quantity: float = Query(20, gt=0), days: int = Query(3, ge=1, le=730), today_price: float = Query(1400, gt=0)):
     raise services.ServiceProblem(410, "unverified_facilities_removed", "No verified warehouse directory or tariffs are configured. Enter your actual storage quote and costs through POST /api/v1/recommend.")
+
+
+@router.post("/mandi-comparison", response_model=MandiComparisonResponseSchema, tags=["mandi advisor"])
+def mandi_comparison(body: MandiComparisonRequest, session: Session = Depends(get_session)):
+    from app.ingestion import commodity_name
+    try:
+        norm_commodity = commodity_name(body.commodity)
+    except ValueError as exc:
+        raise services.ServiceProblem(422, "unsupported_commodity", str(exc)) from exc
+    return compare_mandis(
+        commodity=norm_commodity,
+        quantity_quintals=body.quantity_quintals,
+        local_mandi=body.local_mandi,
+        user_price_override=body.user_price_override,
+        session=session,
+        variety=body.variety,
+        grade=body.grade,
+    )
+

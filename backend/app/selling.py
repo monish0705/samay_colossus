@@ -105,6 +105,7 @@ class SellingRequest(Input):
     today_sale_costs: SaleCosts
     holding_options: tuple[HoldingOption, ...] = ()
     risk_tolerance: Literal["conservative", "balanced", "aggressive"] = "conservative"
+    cash_deadline_days: Annotated[StrictInt, Field(ge=0, le=730)] = 0
 
     @model_validator(mode="after")
     def consistent(self):
@@ -195,6 +196,7 @@ def _optimize(request):
             "rounding_discard_quintals": rounding_loss, "storage_cost_inr": storage,
             "storage_paid_today_inr": storage - later, "storage_paid_later_inr": later,
             "today_sale": costs_today, "cash_today_inr": cash, "cash_surplus_inr": cash - r.required_net_cash_inr,
+            "cash_deadline_days": r.cash_deadline_days,
             "later_sales": scenario_sales, "central_later_net_after_storage_inr": scenario_sales["central"]["net_inr"] - later,
             "total_net_inr": totals, "downside_total_net_inr": totals["adverse"],
             "difference_vs_sell_all_now_inr": {k: v - baseline for k, v in totals.items()},
@@ -236,10 +238,14 @@ def _optimize(request):
             upfront = storage if option.storage_payment == "today" else D(0)
             today_sale = sale(now, r.today_price_inr_per_quintal, r.today_sale_costs)
             cash = today_sale["net_inr"] - upfront
-            if cash < r.required_net_cash_inr:
+            future = {key: sale(marketable, getattr(scenario, key + "_inr_per_quintal"), option.future_sale_costs) for key in ("adverse", "lower", "central", "upper")}
+            later_storage = storage - upfront
+            # If the holding duration falls on or before the farmer's cash deadline, the later sale proceeds
+            # are also available by the deadline. We evaluate against adverse stress to ensure safety.
+            cash_by_deadline = (cash + (future["adverse"]["net_inr"] - later_storage)) if option.days <= r.cash_deadline_days else cash
+            if cash_by_deadline < r.required_net_cash_inr:
                 reject("immediate_net_cash_shortfall")
                 continue
-            future = {key: sale(marketable, getattr(scenario, key + "_inr_per_quintal"), option.future_sale_costs) for key in ("adverse", "lower", "central", "upper")}
             plans.append(plan(now, held, option.days, cash, today_sale, marketable, loss, rounding_loss, storage, storage - upfront, future, eligible, warning, option))
     def rank(p):
         return (p["risk_adjusted_objective_inr"], p["total_net_inr"]["central"], p["downside_total_net_inr"], -p["holding_days"])

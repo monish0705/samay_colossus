@@ -39,11 +39,13 @@ export interface AdvisorValues {
   storageExposure: 'protected' | 'outdoor' | 'unknown';
   rainStop: boolean;
   rainThreshold: string;
+  deadline?: string;
 }
 
 export const blankAdvisor: AdvisorValues = {
   quantity: '',
   cash: '0',
+  deadline: '0',
   price: '',
   capacity: '0',
   days: '3',
@@ -283,6 +285,7 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
     today_price_inr_per_quintal: effectiveValues.price,
     today_price_assumption: notes,
     required_net_cash_inr: effectiveValues.cash || '0',
+    cash_deadline_days: Number(effectiveValues.deadline || '0'),
     storage_capacity_quintals: effectiveValues.capacity || '0',
     decision_increment_quintals: effectiveValues.increment || '1',
     market_quantity_step_quintals: effectiveValues.step || '0.01',

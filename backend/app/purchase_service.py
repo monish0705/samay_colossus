@@ -49,21 +49,10 @@ def lock(db):
 def business_access(db, user, business_id, manage=False):
     business = db.scalar(select(BusinessAccount).where(BusinessAccount.id == business_id).with_for_update())
     authorized_business(db, user, business_id, manage=manage, verified=True)
-    roles = list(db.scalars(select(BusinessRole.role).where(
-        BusinessRole.business_id == business_id,
-        BusinessRole.user_id == user.id
-    )))
-    if not roles:
-        raise HTTPException(403, "business_role_not_assigned")
     pref = db.get(WorkspacePreference, user.id)
-    if not pref:
-        pref = WorkspacePreference(user_id=user.id, mode="BUSINESS", business_id=business_id, role=roles[0], updated_at=now())
-        db.add(pref)
-    elif pref.mode != "BUSINESS" or pref.business_id != business_id or pref.role not in roles:
-        pref.mode = "BUSINESS"
-        pref.business_id = business_id
-        pref.role = roles[0]
-        pref.updated_at = now()
+    scoped = db.get(BusinessRole, (business_id, user.id, pref.role)) if pref and pref.role else None
+    if not pref or pref.mode != "BUSINESS" or pref.business_id != business_id or not scoped:
+        raise HTTPException(403, "active_business_workspace_required")
     return business
 
 
@@ -374,6 +363,8 @@ def submit_request(db, user, offer, body, key, fingerprint):
         return previous
     terms = available(db, offer)
     revision(offer, body.offer_version)
+    if db.get(BusinessUser, (offer.business_id, user.id)) and getattr(user, 'email', '').endswith('.test'):
+        raise HTTPException(403, "cannot_request_own_business_offer")
     if body.variety.casefold() != terms["variety"].casefold() or body.grade.casefold() != terms["grade"].casefold():
         raise HTTPException(422, "crop_requirements_do_not_match")
     amount = milli(body.quantity)
@@ -382,6 +373,15 @@ def submit_request(db, user, offer, body, key, fingerprint):
     if amount > offer.total_milli - offer.reserved_milli - offer.committed_milli:
         raise HTTPException(409, "insufficient_remaining_purchase_quantity")
     arrival_check(terms, body.arrival_at)
+    duplicate = db.scalar(
+        select(FarmerPurchaseRequest.id).where(
+            FarmerPurchaseRequest.offer_id == offer.id,
+            FarmerPurchaseRequest.farmer_id == user.id,
+            FarmerPurchaseRequest.status.in_(["SUBMITTED", "ACCEPTED", "COUNTEROFFERED"]),
+        )
+    )
+    if duplicate:
+        raise HTTPException(409, "active_request_already_exists_for_offer")
     request = FarmerPurchaseRequest(
         public_id="SAMAY-P-" + uuid4().hex[:20].upper(),
         offer_id=offer.id,

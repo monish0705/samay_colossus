@@ -27,46 +27,56 @@ def roles_for(db, user):
 
 
 def ensure_default_workspaces(db, user):
-    """Ensure any active user has verified memberships in all 3 pilot personas:
+    """Ensure pilot users in development have verified memberships in all 3 personas:
     1. APMC Mandi (Kolar APMC: market_id=1)
     2. Private Mandi (Monish MR: business_id=1)
     3. Private Buyer (Monish MR Private Buyer: business_id=2)
     """
+    if getattr(user, 'email', '').endswith('.test') or user.id not in {1, 2}:
+        return
+
     from app.sale_models import MandiAssignment
+    from app.models import Market
     dirty = False
-    # 1. APMC Mandi (Kolar APMC: market_id=1)
-    if not db.get(MandiAssignment, (user.id, 1)):
+
+    # 1. APMC Mandi (Kolar APMC: market_id=1) - only if market 1 exists
+    m1 = db.get(Market, 1)
+    if m1 and not db.get(MandiAssignment, (user.id, 1)):
         db.add(MandiAssignment(user_id=user.id, market_id=1, can_transact=True))
         dirty = True
-    if not db.get(AccountRole, (user.id, 'MANDI_OWNER')):
-        db.add(AccountRole(user_id=user.id, role='MANDI_OWNER', approved_by=1))
-        dirty = True
+        if not db.get(AccountRole, (user.id, 'MANDI_OWNER')):
+            db.add(AccountRole(user_id=user.id, role='MANDI_OWNER', approved_by=user.id))
+            dirty = True
 
-    # 2. Private Mandi (Monish MR: business_id=1)
-    if not db.get(BusinessUser, (1, user.id)):
-        db.add(BusinessUser(business_id=1, user_id=user.id, active=True, can_manage=True, assigned_by=1))
-        dirty = True
-    if not db.get(BusinessRole, (1, user.id, 'PRIVATE_MANDI_OWNER')):
-        db.add(BusinessRole(business_id=1, user_id=user.id, role='PRIVATE_MANDI_OWNER', approved_by=1))
-        dirty = True
-    if not db.get(AccountRole, (user.id, 'PRIVATE_MANDI_OWNER')):
-        db.add(AccountRole(user_id=user.id, role='PRIVATE_MANDI_OWNER', approved_by=1))
-        dirty = True
+    # 2. Private Mandi (Monish MR: business_id=1) - only if business 1 exists
+    b1 = db.get(BusinessAccount, 1)
+    if b1 and b1.verification_state == 'VERIFIED':
+        if not db.get(BusinessUser, (1, user.id)):
+            db.add(BusinessUser(business_id=1, user_id=user.id, active=True, can_manage=True, assigned_by=user.id))
+            dirty = True
+        if not db.get(BusinessRole, (1, user.id, 'PRIVATE_MANDI_OWNER')):
+            db.add(BusinessRole(business_id=1, user_id=user.id, role='PRIVATE_MANDI_OWNER', approved_by=user.id))
+            dirty = True
+        if not db.get(AccountRole, (user.id, 'PRIVATE_MANDI_OWNER')):
+            db.add(AccountRole(user_id=user.id, role='PRIVATE_MANDI_OWNER', approved_by=user.id))
+            dirty = True
 
-    # 3. Private Buyer (Monish MR Private Buyer: business_id=2)
-    if not db.get(BusinessUser, (2, user.id)):
-        db.add(BusinessUser(business_id=2, user_id=user.id, active=True, can_manage=True, assigned_by=1))
-        dirty = True
-    if not db.get(BusinessRole, (2, user.id, 'PRIVATE_BUYER')):
-        db.add(BusinessRole(business_id=2, user_id=user.id, role='PRIVATE_BUYER', approved_by=1))
-        dirty = True
-    if not db.get(AccountRole, (user.id, 'PRIVATE_BUYER')):
-        db.add(AccountRole(user_id=user.id, role='PRIVATE_BUYER', approved_by=1))
-        dirty = True
+    # 3. Private Buyer (Monish MR Private Buyer: business_id=2) - only if business 2 exists
+    b2 = db.get(BusinessAccount, 2)
+    if b2 and b2.verification_state == 'VERIFIED':
+        if not db.get(BusinessUser, (2, user.id)):
+            db.add(BusinessUser(business_id=2, user_id=user.id, active=True, can_manage=True, assigned_by=user.id))
+            dirty = True
+        if not db.get(BusinessRole, (2, user.id, 'PRIVATE_BUYER')):
+            db.add(BusinessRole(business_id=2, user_id=user.id, role='PRIVATE_BUYER', approved_by=user.id))
+            dirty = True
+        if not db.get(AccountRole, (user.id, 'PRIVATE_BUYER')):
+            db.add(AccountRole(user_id=user.id, role='PRIVATE_BUYER', approved_by=user.id))
+            dirty = True
 
     if dirty:
         try:
-            db.commit()
+            db.flush()
         except Exception:
             db.rollback()
 

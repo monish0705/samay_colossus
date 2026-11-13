@@ -1,0 +1,73 @@
+{
+  "batch_id": 6,
+  "counts": {
+    "records": 343,
+    "inserted": 343,
+    "revised": 0,
+    "duplicates": 0,
+    "stale": 0,
+    "quarantined": 0,
+    "filtered": 0
+  },
+  "data_kind": "official",
+  "source": "AGMARKNET 2.0 official browser CSV export",
+  "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+  "file_sha256": "4ea751069ff8e7a62844129b328b44349e493562ee57a5ca6393efd49a5735b2",
+  "fetched_at": "2026-11-04T09:35:25.443765+00:00",
+  "generated_at": "2026-11-04T09:35:59.775939+00:00",
+  "date_range": [
+    "2024-01-02",
+    "2024-12-31"
+  ],
+  "missing_calendar_dates": [
+    "2024-01-18",
+    "2024-04-07",
+    "2024-04-09",
+    "2024-04-10",
+    "2024-04-11",
+    "2024-04-12",
+    "2024-04-13",
+    "2024-05-23",
+    "2024-06-16",
+    "2024-09-15",
+    "2024-10-31",
+    "2024-11-04",
+    "2024-11-17",
+    "2024-11-21",
+    "2024-11-22",
+    "2024-11-23",
+    "2024-11-24",
+    "2024-11-29",
+    "2024-11-30",
+    "2024-12-02",
+    "2024-12-08",
+    "2024-12-11"
+  ],
+  "missing_days_count": 22,
+  "missing_days_note": "Unreported dates, not proof of data loss; no rows imputed. Union across varieties/grades.",
+  "modal_price_distribution_inr_per_quintal": {
+    "count": 343.0,
+    "mean": 1595.8775510204082,
+    "std": 856.794472781038,
+    "min": 600.0,
+    "25%": 1060.0,
+    "50%": 1330.0,
+    "75%": 2000.0,
+    "max": 5067.0
+  },
+  "distribution_basis": "validated in-scope input rows including duplicates/stale, not unique current observations",
+  "report_age_days": 673,
+  "provenance_verification": "Local file provenance asserted by operator manifest; not independently network-authenticated",
+  "current_snapshot_records": 1426,
+  "current_snapshot_modal_distribution_inr_per_quintal": {
+    "count": 1426.0,
+    "mean": 1406.8709677419354,
+    "std": 1212.5963966768702,
+    "min": 330.0,
+    "25%": 670.0,
+    "50%": 1060.0,
+    "75%": 1622.5,
+    "max": 9330.0
+  },
+  "output_directory": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\data\\processed\\imports\\batch-6"
+}

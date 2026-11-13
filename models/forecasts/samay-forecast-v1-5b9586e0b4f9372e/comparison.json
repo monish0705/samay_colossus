@@ -1,0 +1,144 @@
+{
+  "version": "samay-forecast-v1-5b9586e0b4f9372e",
+  "dataset_fingerprint": "5b9586e0b4f9372e3f26e1a481eee5820f28aaf4cb7c576c2dcb21f29373be67",
+  "source_vintages_sha256": "4d28dd79549d9b5789bef98f559760c83a549bebd52e1f0b7683f1e59adc5e15",
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": null
+  },
+  "source": {
+    "sources": [],
+    "development_ledger_dispositions": {},
+    "provenance": "Official operator-attested manifests and SHA256-verified local archives; independent publisher authentication not established by this pipeline"
+  },
+  "plan": {
+    "start": "2025-01-01",
+    "train_end": "2025-06-30",
+    "validation_end": "2025-09-30",
+    "holdout_end": "2025-12-31",
+    "variety": "local",
+    "grade": "faq",
+    "market": "Kolar APMC",
+    "commodity": "Tomato",
+    "min_train": 120,
+    "min_validation": 30,
+    "min_train_span_days": 180,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7
+  },
+  "code_sha256": {
+    "training.py": "9c20867d4222106412d54e03e49a41fc2846238593aeb73726f20082581c2818",
+    "forecasting.py": "69bfa2b19736d863dd52719c2c3099066165d5ca86e664bac465300ecb65091c",
+    "features.py": "064a09a4f8d0c922d046c0728aff43d39c3553711397b540b9fb400540aea164"
+  },
+  "metric_policy": "INR/quintal MAE/RMSE; percentage sMAPE/WAPE; tiny denominator threshold INR .01; direction includes ties within .01. p90 overprediction is downside risk from optimistic prices.",
+  "horizons": [
+    {
+      "horizon": 1,
+      "sample_policy": {
+        "horizon_calendar_days": 1,
+        "status": "insufficient_data",
+        "effective_train_samples": 0,
+        "effective_validation_samples": 0,
+        "train_span_calendar_days": 0,
+        "training_observed_date_coverage": 0.0,
+        "exclusions": {
+          "train/embargo_target_crosses_split": 1,
+          "train/missing_target_at_label_freeze": 180,
+          "validation/embargo_target_crosses_split": 1,
+          "validation/missing_target_at_label_freeze": 91
+        },
+        "reasons": [
+          "train 0 < minimum 120",
+          "validation 0 < minimum 30",
+          "eligible training span 0 < minimum 180 calendar days",
+          "training observed-date coverage 0.000 < minimum 0.5"
+        ],
+        "holdout_samples": "reserved_not_evaluated",
+        "embargo": "Purge origins whose exact +1-calendar-day target crosses partition end; labels must be available before next partition begins"
+      },
+      "status": "insufficient_data",
+      "comparisons": [],
+      "champion": null,
+      "reason": [
+        "train 0 < minimum 120",
+        "validation 0 < minimum 30",
+        "eligible training span 0 < minimum 180 calendar days",
+        "training observed-date coverage 0.000 < minimum 0.5"
+      ]
+    },
+    {
+      "horizon": 3,
+      "sample_policy": {
+        "horizon_calendar_days": 3,
+        "status": "insufficient_data",
+        "effective_train_samples": 0,
+        "effective_validation_samples": 0,
+        "train_span_calendar_days": 0,
+        "training_observed_date_coverage": 0.0,
+        "exclusions": {
+          "train/embargo_target_crosses_split": 3,
+          "train/missing_target_at_label_freeze": 178,
+          "validation/embargo_target_crosses_split": 3,
+          "validation/missing_target_at_label_freeze": 89
+        },
+        "reasons": [
+          "train 0 < minimum 120",
+          "validation 0 < minimum 30",
+          "eligible training span 0 < minimum 180 calendar days",
+          "training observed-date coverage 0.000 < minimum 0.5"
+        ],
+        "holdout_samples": "reserved_not_evaluated",
+        "embargo": "Purge origins whose exact +3-calendar-day target crosses partition end; labels must be available before next partition begins"
+      },
+      "status": "insufficient_data",
+      "comparisons": [],
+      "champion": null,
+      "reason": [
+        "train 0 < minimum 120",
+        "validation 0 < minimum 30",
+        "eligible training span 0 < minimum 180 calendar days",
+        "training observed-date coverage 0.000 < minimum 0.5"
+      ]
+    },
+    {
+      "horizon": 7,
+      "sample_policy": {
+        "horizon_calendar_days": 7,
+        "status": "insufficient_data",
+        "effective_train_samples": 0,
+        "effective_validation_samples": 0,
+        "train_span_calendar_days": 0,
+        "training_observed_date_coverage": 0.0,
+        "exclusions": {
+          "train/embargo_target_crosses_split": 7,
+          "train/missing_target_at_label_freeze": 174,
+          "validation/embargo_target_crosses_split": 7,
+          "validation/missing_target_at_label_freeze": 85
+        },
+        "reasons": [
+          "train 0 < minimum 120",
+          "validation 0 < minimum 30",
+          "eligible training span 0 < minimum 180 calendar days",
+          "training observed-date coverage 0.000 < minimum 0.5"
+        ],
+        "holdout_samples": "reserved_not_evaluated",
+        "embargo": "Purge origins whose exact +7-calendar-day target crosses partition end; labels must be available before next partition begins"
+      },
+      "status": "insufficient_data",
+      "comparisons": [],
+      "champion": null,
+      "reason": [
+        "train 0 < minimum 120",
+        "validation 0 < minimum 30",
+        "eligible training span 0 < minimum 180 calendar days",
+        "training observed-date coverage 0.000 < minimum 0.5"
+      ]
+    }
+  ],
+  "final_evaluation": null,
+  "status": "insufficient_data"
+}

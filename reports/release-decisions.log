@@ -1,0 +1,45 @@
+{
+  "schema_version": "samay-decisions-v1",
+  "status": "insufficient_data",
+  "scope": {
+    "market": "Kolar APMC",
+    "commodity": "Tomato",
+    "variety": "local",
+    "grade": "faq"
+  },
+  "decision_start": "2025-05-01",
+  "decision_end": "2025-09-30",
+  "scoring_freeze": "2025-10-01",
+  "decision_dates": 153,
+  "scored_decisions": 0,
+  "unscored_decisions": 153,
+  "mean_gain_inr": null,
+  "median_gain_inr": null,
+  "win_rate": null,
+  "worst_gain_inr": null,
+  "worst_loss_inr": null,
+  "cash_constraint_success_rate": null,
+  "recommended_hold_count": 0,
+  "no_feasible_plan_count": 0,
+  "realization_multiplier": "1",
+  "source": {
+    "sources": [],
+    "development_ledger_dispositions": {},
+    "provenance": "Official operator-attested manifests and SHA256-verified local archives; independent publisher authentication not established by this pipeline"
+  },
+  "limitations": [
+    "Today quote is the latest observation available before midnight, multiplied by the declared realization factor.",
+    "Realized sales use exact decision/target-date modal prices as a proxy, not actual farmer transaction receipts.",
+    "Missing dates are unscored; no interpolation. Scoring uses revisions known at the declared freeze only.",
+    "Independent decision experiments reuse the same crop quantity; this is not a cumulative trading portfolio.",
+    "Costs, daily compounded deterioration, storage payment and market-step losses are explicit user assumptions.",
+    "No buyer availability, disposal cost or grade-specific realization guarantee is modeled.",
+    "Final holdout is inaccessible here. No valid forecasts means today-only fallback, not synthetic hold profits."
+  ],
+  "final_holdout": "unopened",
+  "money_unit": "INR",
+  "quantity_unit": "quintals",
+  "source_vintages_sha256": "4d28dd79549d9b5789bef98f559760c83a549bebd52e1f0b7683f1e59adc5e15",
+  "implementation_sha256": "8b4b7382d65efa955b8f5e52039874f9fef29c9c8cc6340f4d5846443d6f3e8b"
+}
+REPORT: reports\decision-backtests\samay-decisions-v1-df5c844ccf01a208\summary.json

@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-11-04T06:49:36.278685+00:00",
+  "database": "initialized",
+  "data": {
+    "historical_demo_date": null,
+    "status": "unavailable",
+    "official_observations": 0,
+    "fixture_observations": 3,
+    "demo_observations": 0,
+    "latest_official_report_date": null,
+    "latest_official_fetched_at": null,
+    "note": "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+  },
+  "models": {
+    "status": "no_models_deployed",
+    "models": []
+  },
+  "ready_for_authentic_forecast_demo": false,
+  "issues": [
+    "No authentic official observations are prepared; fixture prices are excluded",
+    "No saved model/baseline is deployed"
+  ],
+  "prediction_checks": []
+}

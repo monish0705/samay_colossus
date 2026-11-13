@@ -1,0 +1,8 @@
+{
+  "{\"commodity\": \"Tomato\", \"grade\": \"faq\", \"market\": \"Kolar APMC\", \"variety\": \"local\"}": {
+    "start": "2025-01-01",
+    "train_end": "2025-06-30",
+    "validation_end": "2025-09-30",
+    "holdout_end": "2025-12-31"
+  }
+}

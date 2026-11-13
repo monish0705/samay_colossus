@@ -1,0 +1,6 @@
+STATUS: insufficient_data
+horizon=1d train=0 validation=0 champion=NONE comparisons=0
+horizon=3d train=0 validation=0 champion=NONE comparisons=0
+horizon=7d train=0 validation=0 champion=NONE comparisons=0
+FINAL HOLDOUT: unopened / not evaluated
+REPORT: models\forecasts\samay-forecast-v1-5b9586e0b4f9372e\comparison.md

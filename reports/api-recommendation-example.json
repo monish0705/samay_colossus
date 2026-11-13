@@ -1,0 +1,372 @@
+{
+  "request_id": "f0b7324a-e634-4c99-9126-8851c7a2decb",
+  "history_id": 1,
+  "market_data": {
+    "report_date": null,
+    "fetched_at": null,
+    "source": null,
+    "source_url": null,
+    "file_sha256": null,
+    "stale": true,
+    "data_kind": "official"
+  },
+  "predictions": [],
+  "reliability_warnings": [
+    "3d:missing_model",
+    "no_official_market_observations; today's quote is user supplied"
+  ],
+  "optimization": {
+    "schema_version": "samay-selling-v1",
+    "status": "sell_all_now",
+    "recommendation_basis": "today_only_safe_fallback",
+    "has_unreliable_or_missing_scenarios": true,
+    "decision_at": "2026-11-04T08:00:00+05:30",
+    "scope": {
+      "commodity": "Tomato",
+      "market": "Kolar APMC",
+      "variety": "local",
+      "grade": "faq"
+    },
+    "units": {
+      "money": "INR",
+      "price": "INR/quintal",
+      "quantity": "quintals"
+    },
+    "sell_all_now": {
+      "sale": {
+        "gross_inr": "20000.00",
+        "commission_inr": "1000.00",
+        "market_fee_inr": "0.00",
+        "transport_inr": "300.00",
+        "handling_inr": "0.00",
+        "fixed_transaction_inr": "0.00",
+        "net_inr": "18700.00"
+      },
+      "meets_minimum_lot": true,
+      "meets_cash_requirement": true
+    },
+    "maximum_today_net_cash_upper_bound_inr": "18700.00",
+    "cash_requirement_achievable_on_grid": true,
+    "recommended_plan": {
+      "sell_today_quintals": "20",
+      "hold_initial_quintals": "0",
+      "holding_days": 0,
+      "later_saleable_quintals": "0",
+      "deterioration_loss_quintals": "0",
+      "rounding_discard_quintals": "0",
+      "storage_cost_inr": "0",
+      "storage_paid_today_inr": "0",
+      "storage_paid_later_inr": "0",
+      "today_sale": {
+        "gross_inr": "20000.00",
+        "commission_inr": "1000.00",
+        "market_fee_inr": "0.00",
+        "transport_inr": "300.00",
+        "handling_inr": "0.00",
+        "fixed_transaction_inr": "0.00",
+        "net_inr": "18700.00"
+      },
+      "cash_today_inr": "18700.00",
+      "cash_surplus_inr": "8700.00",
+      "later_sales": {
+        "adverse": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        },
+        "lower": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        },
+        "central": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        },
+        "upper": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        }
+      },
+      "central_later_net_after_storage_inr": "0.00",
+      "total_net_inr": {
+        "adverse": "18700.00",
+        "lower": "18700.00",
+        "central": "18700.00",
+        "upper": "18700.00"
+      },
+      "downside_total_net_inr": "18700.00",
+      "difference_vs_sell_all_now_inr": {
+        "adverse": "0.00",
+        "lower": "0.00",
+        "central": "0.00",
+        "upper": "0.00"
+      },
+      "risk_adjusted_objective_inr": "18700.00",
+      "recommendation_eligible": true,
+      "warnings": [],
+      "break_even_future_price_inr_per_quintal": null,
+      "assumptions": {
+        "today": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data"
+      }
+    },
+    "best_scenario_only_or_validated_plan": {
+      "sell_today_quintals": "20",
+      "hold_initial_quintals": "0",
+      "holding_days": 0,
+      "later_saleable_quintals": "0",
+      "deterioration_loss_quintals": "0",
+      "rounding_discard_quintals": "0",
+      "storage_cost_inr": "0",
+      "storage_paid_today_inr": "0",
+      "storage_paid_later_inr": "0",
+      "today_sale": {
+        "gross_inr": "20000.00",
+        "commission_inr": "1000.00",
+        "market_fee_inr": "0.00",
+        "transport_inr": "300.00",
+        "handling_inr": "0.00",
+        "fixed_transaction_inr": "0.00",
+        "net_inr": "18700.00"
+      },
+      "cash_today_inr": "18700.00",
+      "cash_surplus_inr": "8700.00",
+      "later_sales": {
+        "adverse": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        },
+        "lower": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        },
+        "central": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        },
+        "upper": {
+          "gross_inr": "0.00",
+          "commission_inr": "0.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "0.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "0.00"
+        }
+      },
+      "central_later_net_after_storage_inr": "0.00",
+      "total_net_inr": {
+        "adverse": "18700.00",
+        "lower": "18700.00",
+        "central": "18700.00",
+        "upper": "18700.00"
+      },
+      "downside_total_net_inr": "18700.00",
+      "difference_vs_sell_all_now_inr": {
+        "adverse": "0.00",
+        "lower": "0.00",
+        "central": "0.00",
+        "upper": "0.00"
+      },
+      "risk_adjusted_objective_inr": "18700.00",
+      "recommendation_eligible": true,
+      "warnings": [],
+      "break_even_future_price_inr_per_quintal": null,
+      "assumptions": {
+        "today": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data"
+      }
+    },
+    "feasible_plans": [
+      {
+        "sell_today_quintals": "20",
+        "hold_initial_quintals": "0",
+        "holding_days": 0,
+        "later_saleable_quintals": "0",
+        "deterioration_loss_quintals": "0",
+        "rounding_discard_quintals": "0",
+        "storage_cost_inr": "0",
+        "storage_paid_today_inr": "0",
+        "storage_paid_later_inr": "0",
+        "today_sale": {
+          "gross_inr": "20000.00",
+          "commission_inr": "1000.00",
+          "market_fee_inr": "0.00",
+          "transport_inr": "300.00",
+          "handling_inr": "0.00",
+          "fixed_transaction_inr": "0.00",
+          "net_inr": "18700.00"
+        },
+        "cash_today_inr": "18700.00",
+        "cash_surplus_inr": "8700.00",
+        "later_sales": {
+          "adverse": {
+            "gross_inr": "0.00",
+            "commission_inr": "0.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "0.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "0.00"
+          },
+          "lower": {
+            "gross_inr": "0.00",
+            "commission_inr": "0.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "0.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "0.00"
+          },
+          "central": {
+            "gross_inr": "0.00",
+            "commission_inr": "0.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "0.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "0.00"
+          },
+          "upper": {
+            "gross_inr": "0.00",
+            "commission_inr": "0.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "0.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "0.00"
+          }
+        },
+        "central_later_net_after_storage_inr": "0.00",
+        "total_net_inr": {
+          "adverse": "18700.00",
+          "lower": "18700.00",
+          "central": "18700.00",
+          "upper": "18700.00"
+        },
+        "downside_total_net_inr": "18700.00",
+        "difference_vs_sell_all_now_inr": {
+          "adverse": "0.00",
+          "lower": "0.00",
+          "central": "0.00",
+          "upper": "0.00"
+        },
+        "risk_adjusted_objective_inr": "18700.00",
+        "recommendation_eligible": true,
+        "warnings": [],
+        "break_even_future_price_inr_per_quintal": null,
+        "assumptions": {
+          "today": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data"
+        }
+      }
+    ],
+    "rejected_counts": {
+      "missing_price_scenarios": 1
+    },
+    "risk_tolerance": "balanced",
+    "request_and_assumptions": {
+      "commodity": "Tomato",
+      "market": "Kolar APMC",
+      "variety": "local",
+      "grade": "faq",
+      "decision_at": "2026-11-04T08:00:00+05:30",
+      "total_quantity_quintals": "20",
+      "today_price_inr_per_quintal": "1000",
+      "today_price_assumption": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data",
+      "required_net_cash_inr": "10000",
+      "storage_capacity_quintals": "10",
+      "decision_increment_quintals": "1",
+      "market_quantity_step_quintals": "0.01",
+      "minimum_sale_lot_quintals": "1",
+      "maximum_horizon_days": 7,
+      "crop_storage_profile": {
+        "commodity": "Tomato",
+        "maximum_holding_days": 3,
+        "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+        "assumption_source": "Illustrative user assumption, not a verified tomato holding recommendation"
+      },
+      "today_sale_costs": {
+        "fixed_transport_inr": "100",
+        "fixed_transaction_inr": "0",
+        "transport_inr_per_quintal": "10",
+        "handling_inr_per_quintal": "0",
+        "market_fee_rate": "0",
+        "commission_rate": "0.05",
+        "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+      },
+      "holding_options": [
+        {
+          "days": 3,
+          "daily_loss_fractions": [
+            "0.01",
+            "0.01",
+            "0.01"
+          ],
+          "daily_storage_inr_per_quintal": [
+            "2",
+            "2",
+            "2"
+          ],
+          "fixed_storage_inr": "0",
+          "storage_payment": "later",
+          "future_sale_costs": {
+            "fixed_transport_inr": "100",
+            "fixed_transaction_inr": "0",
+            "transport_inr_per_quintal": "10",
+            "handling_inr_per_quintal": "0",
+            "market_fee_rate": "0",
+            "commission_rate": "0.05",
+            "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+          },
+          "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+          "scenarios": null
+        }
+      ],
+      "risk_tolerance": "balanced"
+    },
+    "explanations": [
+      "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+      "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+      "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+      "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+      "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+      "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+      "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+      "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+      "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+      "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+    ]
+  }
+}

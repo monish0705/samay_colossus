@@ -1,0 +1,172 @@
+{
+  "version": "samay-reliability-v1",
+  "price_unit": "INR/quintal",
+  "scope": {
+    "market": "Kolar APMC",
+    "commodity": "Tomato",
+    "variety": "local",
+    "grade": "faq"
+  },
+  "calibration_start": "2025-01-01",
+  "calibration_end": "2025-04-30",
+  "evaluation_end": "2025-09-30",
+  "source_sha256": "4d28dd79549d9b5789bef98f559760c83a549bebd52e1f0b7683f1e59adc5e15",
+  "source": {
+    "sources": [],
+    "development_ledger_dispositions": {},
+    "provenance": "Official operator-attested manifests and SHA256-verified local archives; independent publisher authentication not established by this pipeline"
+  },
+  "policy": {
+    "minimum_history": 30,
+    "maximum_age_days": 7,
+    "minimum_calibration_errors": 30,
+    "minimum_calibration_blocks": 8,
+    "block_calendar_days": 7,
+    "minimum_validation_errors": 60,
+    "minimum_validation_span_days": 60,
+    "volatility_threshold": 0.2,
+    "maximum_calibration_age_days": 180,
+    "maximum_error_evidence_age_days": 30,
+    "maximum_relative_interval_width": 1.0
+  },
+  "models": {
+    "1": {
+      "version": "predeclared-naive-v1",
+      "model_sha256": null
+    },
+    "3": {
+      "version": "predeclared-naive-v1",
+      "model_sha256": null
+    },
+    "7": {
+      "version": "predeclared-naive-v1",
+      "model_sha256": null
+    }
+  },
+  "code": {
+    "backtesting.py": "a698fb61f341bbe4a3f3623416b20f2abe70794567385003f574b0832bd54849",
+    "reliability.py": "14ea101473688c64ab262f93b216b34a02c429775c6ce2773251414541e77a6c",
+    "forecasting.py": "69bfa2b19736d863dd52719c2c3099066165d5ca86e664bac465300ecb65091c",
+    "features.py": "064a09a4f8d0c922d046c0728aff43d39c3553711397b540b9fb400540aea164"
+  },
+  "created_at": "2026-11-04T06:47:16.222279+00:00",
+  "horizons": [
+    {
+      "horizon": 1,
+      "model_version": "predeclared-naive-v1",
+      "calibration": {
+        "version": "samay-reliability-v1",
+        "horizon": 1,
+        "scope": {
+          "market": "Kolar APMC",
+          "commodity": "Tomato",
+          "variety": "local",
+          "grade": "faq"
+        },
+        "model_version": "predeclared-naive-v1",
+        "frozen_at": "2025-04-30T18:30:00+00:00",
+        "calibration_n": 0,
+        "calibration_blocks": 0,
+        "calibration_mae": null,
+        "calibration_p90_error": null,
+        "radii": {},
+        "method": "Empirical higher quantiles of seven-calendar-day block maximum absolute errors; fixed chronological calibration, no IID/exchangeability coverage claim"
+      },
+      "assessment": {
+        "n": 0,
+        "metrics": null,
+        "naive_metrics_same_timestamps": null,
+        "intervals": {}
+      },
+      "flag_counts": {
+        "sparse_history": 153,
+        "no_official_observations": 153,
+        "missing_target_observation": 152,
+        "target_crosses_partition": 1
+      }
+    },
+    {
+      "horizon": 3,
+      "model_version": "predeclared-naive-v1",
+      "calibration": {
+        "version": "samay-reliability-v1",
+        "horizon": 3,
+        "scope": {
+          "market": "Kolar APMC",
+          "commodity": "Tomato",
+          "variety": "local",
+          "grade": "faq"
+        },
+        "model_version": "predeclared-naive-v1",
+        "frozen_at": "2025-04-30T18:30:00+00:00",
+        "calibration_n": 0,
+        "calibration_blocks": 0,
+        "calibration_mae": null,
+        "calibration_p90_error": null,
+        "radii": {},
+        "method": "Empirical higher quantiles of seven-calendar-day block maximum absolute errors; fixed chronological calibration, no IID/exchangeability coverage claim"
+      },
+      "assessment": {
+        "n": 0,
+        "metrics": null,
+        "naive_metrics_same_timestamps": null,
+        "intervals": {}
+      },
+      "flag_counts": {
+        "sparse_history": 153,
+        "no_official_observations": 153,
+        "missing_target_observation": 150,
+        "target_crosses_partition": 3
+      }
+    },
+    {
+      "horizon": 7,
+      "model_version": "predeclared-naive-v1",
+      "calibration": {
+        "version": "samay-reliability-v1",
+        "horizon": 7,
+        "scope": {
+          "market": "Kolar APMC",
+          "commodity": "Tomato",
+          "variety": "local",
+          "grade": "faq"
+        },
+        "model_version": "predeclared-naive-v1",
+        "frozen_at": "2025-04-30T18:30:00+00:00",
+        "calibration_n": 0,
+        "calibration_blocks": 0,
+        "calibration_mae": null,
+        "calibration_p90_error": null,
+        "radii": {},
+        "method": "Empirical higher quantiles of seven-calendar-day block maximum absolute errors; fixed chronological calibration, no IID/exchangeability coverage claim"
+      },
+      "assessment": {
+        "n": 0,
+        "metrics": null,
+        "naive_metrics_same_timestamps": null,
+        "intervals": {}
+      },
+      "flag_counts": {
+        "sparse_history": 153,
+        "no_official_observations": 153,
+        "missing_target_observation": 146,
+        "target_crosses_partition": 7
+      }
+    }
+  ],
+  "status": "insufficient_data",
+  "final_holdout": "unopened; all rows are in the development partition",
+  "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+  "artifact_sha256": {
+    "calibration-1d.csv": "96912cefec09a6271821d7910860fdca1f3371259e840d751a9688d1e7b427a7",
+    "calibration-3d.csv": "54123646d43dcac186ede9d6361da503ec8fb825a59861d1ec84dab77f9e68f3",
+    "calibration-7d.csv": "78838408446bdecfec39db17b1f30be1aaf3fed3f95c197612c8203b1fca2f1b",
+    "error_by_horizon.png": "f45132cd82f03fdfa96ea76afbf1ef8b7609278242f5ce2acd2f9514e4f8413b",
+    "error_by_season.png": "651565cb158692ee4f43ac1b1b7e56c0906b9088c8257d79ee1a825bf2a48874",
+    "evaluation-1d.csv": "3365cd6b0f4507f0270aaa31cc3d34fbc88e59f2d7b9f50e0c005f7c7c92133e",
+    "evaluation-3d.csv": "8f8d3fcc376c0a5e21d59f653b4cd1c46baf96961bb075f58324116685cb0f32",
+    "evaluation-7d.csv": "4a8433763c9f22f3e307a7793130d50422e2a5f5ab6a96139de87a33694ee9ef",
+    "predicted_vs_actual.png": "adcc533e4d7cd85e7784198807d8d44468d629ed2aef72551c708efeae346355",
+    "residuals_over_time.png": "fa80a0b74e09c95165623453e74c5d955dde9b7e200547bef29a85150160aa8a"
+  }
+}

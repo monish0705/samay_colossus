@@ -1,0 +1,10 @@
+{
+  "source_label": "AGMARKNET 2.0 official browser CSV export",
+  "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+  "data_kind": "official",
+  "fetched_at": "2026-11-04T09:31:34.184248Z",
+  "price_unit": "INR/quintal",
+  "unit_evidence": "Original government export Price Unit column: Rs./Quintal; original bytes and SHA256 retained alongside import CSV",
+  "date_format": "%d-%m-%Y",
+  "sha256": "c668d7f5bd38c8176e80c3f9c13e3ca677fbb36c327994b358ecc6c885b28624"
+}

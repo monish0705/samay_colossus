@@ -1,0 +1,6 @@
+STATUS: insufficient_data
+horizon=1d calibration_n=0 unseen_pairs=0 metrics=None
+horizon=3d calibration_n=0 unseen_pairs=0 metrics=None
+horizon=7d calibration_n=0 unseen_pairs=0 metrics=None
+REPORT: reports\backtests\samay-reliability-v1-7fc38a3e65acd7a7\summary.json
+Final holdout: unopened. Nominal interval levels are not confidence guarantees.

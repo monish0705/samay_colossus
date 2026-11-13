@@ -1,0 +1,55 @@
+{
+  "batch_id": 4,
+  "counts": {
+    "records": 363,
+    "inserted": 363,
+    "revised": 0,
+    "duplicates": 0,
+    "stale": 0,
+    "quarantined": 0,
+    "filtered": 0
+  },
+  "data_kind": "official",
+  "source": "AGMARKNET 2.0 official browser CSV export",
+  "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+  "file_sha256": "c668d7f5bd38c8176e80c3f9c13e3ca677fbb36c327994b358ecc6c885b28624",
+  "fetched_at": "2026-11-04T09:31:34.184248+00:00",
+  "generated_at": "2026-11-04T09:32:40.807807+00:00",
+  "date_range": [
+    "2022-01-01",
+    "2022-12-31"
+  ],
+  "missing_calendar_dates": [
+    "2022-06-01",
+    "2022-07-02",
+    "2022-09-26",
+    "2022-11-30"
+  ],
+  "missing_days_count": 4,
+  "missing_days_note": "Unreported dates, not proof of data loss; no rows imputed. Union across varieties/grades.",
+  "modal_price_distribution_inr_per_quintal": {
+    "count": 363.0,
+    "mean": 1338.1101928374655,
+    "std": 979.1198008972542,
+    "min": 330.0,
+    "25%": 670.0,
+    "50%": 1000.0,
+    "75%": 1730.0,
+    "max": 6000.0
+  },
+  "distribution_basis": "validated in-scope input rows including duplicates/stale, not unique current observations",
+  "report_age_days": 1404,
+  "provenance_verification": "Local file provenance asserted by operator manifest; not independently network-authenticated",
+  "current_snapshot_records": 725,
+  "current_snapshot_modal_distribution_inr_per_quintal": {
+    "count": 725.0,
+    "mean": 1183.6303448275862,
+    "std": 919.4849799532822,
+    "min": 330.0,
+    "25%": 567.0,
+    "50%": 800.0,
+    "75%": 1470.0,
+    "max": 6000.0
+  },
+  "output_directory": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\data\\processed\\imports\\batch-4"
+}

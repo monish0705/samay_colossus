@@ -82,7 +82,7 @@ def main():
         ".\\.venv\\Scripts\\python.exe scripts/train_research_snapshot.py --start 2021-01-01 --train-end 2023-12-31 --validation-end 2024-12-31 --test-end 2025-06-30 --variety tomato --grade faq --acknowledge-retrospective-limitations --evaluate-final",
         ".\\.venv\\Scripts\\python.exe scripts/train_research_snapshot.py --start 2025-07-03 --train-end 2026-06-30 --validation-end 2026-08-31 --test-end 2026-10-31 --variety tomato --grade local --acknowledge-retrospective-limitations --evaluate-final",
         ".\\.venv\\Scripts\\python.exe scripts/report_research_results.py", "```", "",
-        "The same frozen run is returned on an unchanged rerun. A new selection/evaluation on the same consumed research holdout is refused. Retain final_evaluation_registry. Raw data, model binaries and generated reports are git-ignored and must be transferred separately with hashes."]
+        "The same frozen run is returned on an unchanged rerun. A new selection/evaluation on the same consumed research holdout is refused. Retain final_evaluation_registry. Official data, research artifacts and generated reports are included in the repository; retain their hashes and the research-only limitations."]
     args.output.write_text("\n".join(lines), encoding="utf-8")
     print(f"Verified saved prediction metrics for all six horizon/series combinations. Report: {args.output}")
 

@@ -1,0 +1,168 @@
+{
+  "version": "samay-features-v1",
+  "plan": {
+    "start": "2025-01-01",
+    "train_end": "2025-06-30",
+    "validation_end": "2025-09-30",
+    "holdout_end": "2025-12-31",
+    "variety": "local",
+    "grade": "faq",
+    "market": "Kolar APMC",
+    "commodity": "Tomato",
+    "min_train": 120,
+    "min_validation": 30,
+    "min_train_span_days": 180,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7
+  },
+  "provenance": {
+    "sources": [],
+    "development_ledger_dispositions": {},
+    "provenance": "Official operator-attested manifests and SHA256-verified local archives; independent publisher authentication not established by this pipeline"
+  },
+  "code_sha256": {
+    "features.py": "064a09a4f8d0c922d046c0728aff43d39c3553711397b540b9fb400540aea164",
+    "analysis.py": "432c2e14cf2cf92286cd873dbf0845b6d6999553619e06f1671ebb4a750ef5d8"
+  },
+  "runtime": {
+    "python": "3.12.10",
+    "pandas": "2.3.3",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2"
+  },
+  "vintages_sha256": "4d28dd79549d9b5789bef98f559760c83a549bebd52e1f0b7683f1e59adc5e15",
+  "run_id": "samay-features-v1-68e87f1704aef7ad",
+  "created_at": "2026-11-04T06:45:16.724114+00:00",
+  "status": "insufficient_data",
+  "feature_columns": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "definitions": {
+    "decision_time": "00:00 Asia/Kolkata on origin_date. Report date must be strictly earlier than origin_date and snapshot fetched_at <= decision_time.",
+    "lag_n_obs": "Nth most recent distinct report date available at decision time, within the selected market/commodity/variety/grade. Observation lags, not calendar-day lags.",
+    "rolling": "Last N available observations strictly before origin; mean, median, sample std (ddof=1), requiring all N. Equivalent to causal shift(1) before rolling on a complete series.",
+    "target": "Modal wholesale price in INR/quintal on exactly origin_date + horizon calendar days; no nearest-date matching, interpolation or forward fill.",
+    "labels": "Training labels frozen as known strictly before validation_start; validation labels frozen strictly before holdout_start. Later revisions cannot alter these labels.",
+    "calendar": "Origin and target weekday (Monday=0) and month; deterministically known at origin.",
+    "extras": "Only report recency and 30-observation calendar span. No arrivals, min/max, weather, target prices or unverified external predictors."
+  },
+  "horizons": [
+    {
+      "horizon_calendar_days": 1,
+      "status": "insufficient_data",
+      "effective_train_samples": 0,
+      "effective_validation_samples": 0,
+      "train_span_calendar_days": 0,
+      "training_observed_date_coverage": 0.0,
+      "exclusions": {
+        "train/embargo_target_crosses_split": 1,
+        "train/missing_target_at_label_freeze": 180,
+        "validation/embargo_target_crosses_split": 1,
+        "validation/missing_target_at_label_freeze": 91
+      },
+      "reasons": [
+        "train 0 < minimum 120",
+        "validation 0 < minimum 30",
+        "eligible training span 0 < minimum 180 calendar days",
+        "training observed-date coverage 0.000 < minimum 0.5"
+      ],
+      "holdout_samples": "reserved_not_evaluated",
+      "embargo": "Purge origins whose exact +1-calendar-day target crosses partition end; labels must be available before next partition begins"
+    },
+    {
+      "horizon_calendar_days": 3,
+      "status": "insufficient_data",
+      "effective_train_samples": 0,
+      "effective_validation_samples": 0,
+      "train_span_calendar_days": 0,
+      "training_observed_date_coverage": 0.0,
+      "exclusions": {
+        "train/embargo_target_crosses_split": 3,
+        "train/missing_target_at_label_freeze": 178,
+        "validation/embargo_target_crosses_split": 3,
+        "validation/missing_target_at_label_freeze": 89
+      },
+      "reasons": [
+        "train 0 < minimum 120",
+        "validation 0 < minimum 30",
+        "eligible training span 0 < minimum 180 calendar days",
+        "training observed-date coverage 0.000 < minimum 0.5"
+      ],
+      "holdout_samples": "reserved_not_evaluated",
+      "embargo": "Purge origins whose exact +3-calendar-day target crosses partition end; labels must be available before next partition begins"
+    },
+    {
+      "horizon_calendar_days": 7,
+      "status": "insufficient_data",
+      "effective_train_samples": 0,
+      "effective_validation_samples": 0,
+      "train_span_calendar_days": 0,
+      "training_observed_date_coverage": 0.0,
+      "exclusions": {
+        "train/embargo_target_crosses_split": 7,
+        "train/missing_target_at_label_freeze": 174,
+        "validation/embargo_target_crosses_split": 7,
+        "validation/missing_target_at_label_freeze": 85
+      },
+      "reasons": [
+        "train 0 < minimum 120",
+        "validation 0 < minimum 30",
+        "eligible training span 0 < minimum 180 calendar days",
+        "training observed-date coverage 0.000 < minimum 0.5"
+      ],
+      "holdout_samples": "reserved_not_evaluated",
+      "embargo": "Purge origins whose exact +7-calendar-day target crosses partition end; labels must be available before next partition begins"
+    }
+  ],
+  "holdout_policy": "No holdout features, targets, statistics or evaluation materialized. Reserve dates only. Do not tune on final holdout.",
+  "fitting_policy": "Tune only on train/validation; no scalers/imputers fitted. Any future preprocessing must fit train only. Origins with missing targets/history excluded explicitly.",
+  "authentication_limit": "Operator-attested official archive provenance is not independent source authentication. No fixture/demo override exists in CLI.",
+  "insights_status": "insufficient_data_no_point_in_time_official_observations",
+  "artifact_sha256": {
+    "data_quality.png": "ec0297d9778807e2f1a631934de69e006f8be9a3eedd0a5b98aca2a9176ecb16",
+    "horizon-1d/development_audit.csv": "3b205e41bd9c4bdfc37d3d0b521c239ace75e0166d58130a487e513c65bc0737",
+    "horizon-1d/holdout_plan_no_values.csv": "9396e25ed95757beb0d858d9f7a38c76bf899c4af00daa1cade1a7cebc42a9c7",
+    "horizon-1d/train_X.csv": "efd567a45a690e23516387ffdcf909a50e7216992ca62911f9fbdf9b68d1837d",
+    "horizon-1d/train_y.csv": "7c4c849e6b84c4ae8e44c415dbc25c9e98fe0c875625687f6fc30596fd777c7f",
+    "horizon-1d/validation_X.csv": "efd567a45a690e23516387ffdcf909a50e7216992ca62911f9fbdf9b68d1837d",
+    "horizon-1d/validation_y.csv": "7c4c849e6b84c4ae8e44c415dbc25c9e98fe0c875625687f6fc30596fd777c7f",
+    "horizon-3d/development_audit.csv": "f315738c83349a7219149f17397a233c445d20222d107b5bb21424309dbca335",
+    "horizon-3d/holdout_plan_no_values.csv": "c8531eca20ddfe0d57ad441bec116dee3269f8441fb1b8d9ca010841072e8a7d",
+    "horizon-3d/train_X.csv": "efd567a45a690e23516387ffdcf909a50e7216992ca62911f9fbdf9b68d1837d",
+    "horizon-3d/train_y.csv": "7c4c849e6b84c4ae8e44c415dbc25c9e98fe0c875625687f6fc30596fd777c7f",
+    "horizon-3d/validation_X.csv": "efd567a45a690e23516387ffdcf909a50e7216992ca62911f9fbdf9b68d1837d",
+    "horizon-3d/validation_y.csv": "7c4c849e6b84c4ae8e44c415dbc25c9e98fe0c875625687f6fc30596fd777c7f",
+    "horizon-7d/development_audit.csv": "8b2599a58a9edde1e89d22f9d3ea8d366d8d0a937016e8c873155ad6c4800ffb",
+    "horizon-7d/holdout_plan_no_values.csv": "79bf607bed90fe3817108f393b8208961d2bbb96f6c2828a90db2981ff89d8b5",
+    "horizon-7d/train_X.csv": "efd567a45a690e23516387ffdcf909a50e7216992ca62911f9fbdf9b68d1837d",
+    "horizon-7d/train_y.csv": "7c4c849e6b84c4ae8e44c415dbc25c9e98fe0c875625687f6fc30596fd777c7f",
+    "horizon-7d/validation_X.csv": "efd567a45a690e23516387ffdcf909a50e7216992ca62911f9fbdf9b68d1837d",
+    "horizon-7d/validation_y.csv": "7c4c849e6b84c4ae8e44c415dbc25c9e98fe0c875625687f6fc30596fd777c7f",
+    "market_insights.json": "80cc595d6f68d9bf3e42135eba6f04e00a262084e75737b098a36c0d6619b129",
+    "missing_dates.png": "934d76d70ddf640040215a52f481abcf1ad036a6bad1e8e74efa99133053598f",
+    "month_seasonality.png": "32129f73f64267ec2b72ab5c0bf2107e6f26f7dfbd987e52451a2dfe122d02ca",
+    "observed_volatility.png": "2d5a04723ad9ebec2f7e8fc37d85fe006b0a320e9591130fd90f0913033927e8",
+    "price_over_time.png": "932d832ef4b7eb279769833923e3b4b32ec58a2e50e00a51931b5954db61a225",
+    "weekday_seasonality.png": "3e8e0bcb6eb5ed4abe4b6f63b562e5beeb00f16447266f50a83e0b8350362002"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "original_sha256": "4824090fd75e8045985988af019df29d86c1a0e91272186415aa7ac8b418c1fd",
+  "import_csv_sha256": "4ea751069ff8e7a62844129b328b44349e493562ee57a5ca6393efd49a5735b2",
+  "original_filename": "Daily Price Report-01-01-2024 to 31-12-2024 for Karnataka.csv",
+  "fetched_at": "2026-11-04T09:35:25.443765+00:00",
+  "rows": 343,
+  "transformation": "Remove report title prelude/blank lines, map documented source headers to importer aliases; retain prices, units, variety, grade and dates unchanged",
+  "original_publication_revision_times": "unverified; current-snapshot retrospective study only"
+}

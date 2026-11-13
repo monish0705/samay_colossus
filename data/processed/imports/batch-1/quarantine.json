@@ -1,0 +1,128 @@
+[
+  {
+    "line_number": 5,
+    "status": "quarantined",
+    "reason": "Invalid nonnegative numeric price: '-10'",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "04/01/2025",
+      "Min_Price": "-10",
+      "Max_Price": "2000",
+      "Modal_Price": "1500",
+      "Price_Unit": "INR/quintal"
+    }
+  },
+  {
+    "line_number": 6,
+    "status": "quarantined",
+    "reason": "Invalid report date for manifest date_format",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "31/02/2025",
+      "Min_Price": "1000",
+      "Max_Price": "2000",
+      "Modal_Price": "1500",
+      "Price_Unit": "INR/quintal"
+    }
+  },
+  {
+    "line_number": 7,
+    "status": "quarantined",
+    "reason": "Impossible min/modal/max ordering",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "05/01/2025",
+      "Min_Price": "1000",
+      "Max_Price": "2000",
+      "Modal_Price": "2500",
+      "Price_Unit": "INR/quintal"
+    }
+  },
+  {
+    "line_number": 8,
+    "status": "quarantined",
+    "reason": "Unknown price unit 'USD/quintal'; currency and weight basis required",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "06/01/2025",
+      "Min_Price": "1000",
+      "Max_Price": "2000",
+      "Modal_Price": "1500",
+      "Price_Unit": "USD/quintal"
+    }
+  },
+  {
+    "line_number": 9,
+    "status": "quarantined",
+    "reason": "Suspicious zero modal or price above review threshold",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "07/01/2025",
+      "Min_Price": "0",
+      "Max_Price": "2000",
+      "Modal_Price": "0",
+      "Price_Unit": "INR/quintal"
+    }
+  },
+  {
+    "line_number": 10,
+    "status": "quarantined",
+    "reason": "Suspicious zero modal or price above review threshold",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "08/01/2025",
+      "Min_Price": "1000",
+      "Max_Price": "200001",
+      "Modal_Price": "1500",
+      "Price_Unit": "INR/quintal"
+    }
+  },
+  {
+    "line_number": 13,
+    "status": "quarantined",
+    "reason": "Invalid nonnegative numeric price: 'NaN'",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Kolar",
+      "Market": "Kolar",
+      "Commodity": "Tomato",
+      "Variety": "Local",
+      "Grade": "FAQ",
+      "Arrival_Date": "09/01/2025",
+      "Min_Price": "NaN",
+      "Max_Price": "2000",
+      "Modal_Price": "1500",
+      "Price_Unit": "INR/quintal"
+    }
+  }
+]

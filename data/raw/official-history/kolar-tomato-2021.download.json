@@ -1,0 +1,13 @@
+{
+  "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+  "fetched_at": "2026-11-04T09:29:09.625996+00:00",
+  "sha256": "37fdfa72368c59feb0afacd5635002d9ec8c213c177e020bdd999dcbe997ed17",
+  "original_filename": "Daily Price Report-01-01-2021 to 31-12-2021 for Karnataka.csv",
+  "query": {
+    "from": "2021-01-01",
+    "to": "2021-12-31",
+    "market": "Kolar APMC",
+    "commodity": "Tomato"
+  },
+  "availability": "Current snapshot; original publication and revision timestamps unverified"
+}

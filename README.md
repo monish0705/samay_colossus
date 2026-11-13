@@ -105,7 +105,15 @@ intervals. Future prices are uncertain; the farmer makes the final decision.
 - [HANDOFF](docs/HANDOFF.md): file tree, changes, remaining work and acceptance gates.
 - [API](docs/api.md): all nine endpoints, schemas, error codes and model registry.
 
-Secrets, databases, datasets, model binaries, report runs and dependencies are
-git-ignored. Transfer authentic prepared artifacts separately with hashes. No
-GitHub remote or public deployment has been created. Earlier foundation notes are
-preserved in [foundation-notes](docs/foundation-notes.md).
+Official datasets, six research model artifacts, generated evaluation reports and
+a portable database are included in this repository. Startup restores
+`data/prepared/samay.db` only when the default local database does not exist; it
+checks the bundled hash and never overwrites an existing database. The prepared
+copy has empty recommendation history and repository-relative source paths.
+`.env.example` enables the bundled research registry for the Transparency screen.
+These remain explicitly retrospective research artifacts, not validated live models.
+
+Secrets, dependency folders, caches, local database backups and credential-bearing
+website/debug downloads stay excluded. The repository is published at
+https://github.com/monish0705/prototype; no hosted application deployment is claimed.
+Earlier foundation notes are preserved in [foundation-notes](docs/foundation-notes.md).

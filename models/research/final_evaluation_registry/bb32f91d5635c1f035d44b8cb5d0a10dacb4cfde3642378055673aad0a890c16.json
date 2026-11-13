@@ -1,0 +1,56 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-bf5682f4a2bfbde9",
+  "result": {
+    "horizon": 7,
+    "champion": "mean_14",
+    "n": 53,
+    "status": "evaluated",
+    "metrics": {
+      "n": 53,
+      "mae_inr_per_quintal": 240.32345013477092,
+      "rmse_inr_per_quintal": 287.229808079194,
+      "smape_pct": 20.44566827092882,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 20.20806418712178,
+      "directional_accuracy": 0.5849056603773585,
+      "p90_absolute_error_inr_per_quintal": 450.00000000000006,
+      "p90_overprediction_inr_per_quintal": 378.0000000000001
+    },
+    "baseline_metrics": {
+      "naive": {
+        "n": 53,
+        "mae_inr_per_quintal": 240.56603773584905,
+        "rmse_inr_per_quintal": 296.1800829046983,
+        "smape_pct": 20.778289850549697,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 20.228462636839602,
+        "directional_accuracy": 0.11320754716981132,
+        "p90_absolute_error_inr_per_quintal": 494.0000000000001,
+        "p90_overprediction_inr_per_quintal": 386.0000000000003
+      },
+      "mean_14": {
+        "n": 53,
+        "mae_inr_per_quintal": 240.32345013477092,
+        "rmse_inr_per_quintal": 287.229808079194,
+        "smape_pct": 20.44566827092882,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 20.20806418712178,
+        "directional_accuracy": 0.5849056603773585,
+        "p90_absolute_error_inr_per_quintal": 450.00000000000006,
+        "p90_overprediction_inr_per_quintal": 378.0000000000001
+      },
+      "median_14": {
+        "n": 53,
+        "mae_inr_per_quintal": 243.39622641509433,
+        "rmse_inr_per_quintal": 295.44657595796065,
+        "smape_pct": 20.880088296231587,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 20.466444550214185,
+        "directional_accuracy": 0.49056603773584906,
+        "p90_absolute_error_inr_per_quintal": 454.0000000000001,
+        "p90_overprediction_inr_per_quintal": 386.0000000000003
+      }
+    }
+  }
+}

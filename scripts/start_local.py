@@ -32,6 +32,7 @@ def main():
         raise SystemExit("Dependencies are missing. Run python scripts/setup_local.py while online first.")
     env = os.environ.copy()
     env.update(PYTHONUTF8="1", VITE_API_BASE_URL="/backend", SAMAY_BACKEND_URL=f"http://127.0.0.1:{args.backend_port}")
+    subprocess.run([str(python), "scripts/restore_prepared_data.py"], cwd=ROOT, env=env, check=True)
     subprocess.run([str(python), "-m", "alembic", "-c", "backend/alembic.ini", "upgrade", "head"], cwd=ROOT, env=env, check=True)
     backend = f"http://127.0.0.1:{args.backend_port}"
     frontend = f"http://127.0.0.1:{args.frontend_port}"

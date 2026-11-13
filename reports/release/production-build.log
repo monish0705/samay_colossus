@@ -1,0 +1,14 @@
+
+> samay-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 2166 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.36 kB │ gzip:   0.27 kB
+dist/assets/index-Cap9Leyv.css   31.56 kB │ gzip:   8.17 kB
+dist/assets/index-Cj1BcqGO.js   481.56 kB │ gzip: 142.53 kB
+
+✓ built in 761ms

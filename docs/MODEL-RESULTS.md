@@ -122,4 +122,4 @@ Research artifacts are explicitly rejected by the production predictor and are d
 .\.venv\Scripts\python.exe scripts/report_research_results.py
 ```
 
-The same frozen run is returned on an unchanged rerun. A new selection/evaluation on the same consumed research holdout is refused. Retain final_evaluation_registry. Raw data, model binaries and generated reports are git-ignored and must be transferred separately with hashes.
+The same frozen run is returned on an unchanged rerun. A new selection/evaluation on the same consumed research holdout is refused. Retain final_evaluation_registry. Official data, research artifacts and generated reports are included in the repository; retain their hashes and the research-only limitations.

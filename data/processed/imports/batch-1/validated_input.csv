@@ -1,0 +1,5 @@
+state,district,market,commodity,report_date,variety,grade,min,modal,max,price_unit,raw_unit,data_kind,source,fetched_at,file_sha256,line_number,disposition
+Karnataka,Kolar,Kolar APMC,Tomato,2025-01-01,local,faq,1000.00,1500.00,2000.00,INR/quintal,INR/quintal,fixture,TEST_FIXTURE_NOT_GOVERNMENT_DATA,2025-01-10T06:30:00+00:00,90e43db81a1c0c8ee1ca5ca876f771f1f83e3197f1f20b2485f9ec042aa0b16c,2,inserted
+Karnataka,Kolar,Kolar APMC,Tomato,2025-01-01,local,faq,1000.00,1500.00,2000.00,INR/quintal,INR/quintal,fixture,TEST_FIXTURE_NOT_GOVERNMENT_DATA,2025-01-10T06:30:00+00:00,90e43db81a1c0c8ee1ca5ca876f771f1f83e3197f1f20b2485f9ec042aa0b16c,3,duplicates
+Karnataka,Kolar,Kolar APMC,Tomato,2025-01-03,local,faq,1000.00,1500.00,2000.00,INR/quintal,INR/kg,fixture,TEST_FIXTURE_NOT_GOVERNMENT_DATA,2025-01-10T06:30:00+00:00,90e43db81a1c0c8ee1ca5ca876f771f1f83e3197f1f20b2485f9ec042aa0b16c,4,inserted
+Karnataka,Kolar,Kolar APMC,Tomato,2025-01-01,hybrid,faq,1200.00,1600.00,2200.00,INR/quintal,INR/quintal,fixture,TEST_FIXTURE_NOT_GOVERNMENT_DATA,2025-01-10T06:30:00+00:00,90e43db81a1c0c8ee1ca5ca876f771f1f83e3197f1f20b2485f9ec042aa0b16c,12,inserted

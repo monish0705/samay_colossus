@@ -1,0 +1,11 @@
+{
+  "created_at": "2026-11-04T10:49:05.662024+00:00",
+  "database_sha256": "2ab1f25f0a424d5799bdb9a2c1a131f1761928cbead734789c529e25b0ae47c7",
+  "observation_counts": {
+    "fixture": 3,
+    "official": 1943
+  },
+  "recommendation_history_rows": 0,
+  "archive_paths": "Repository-relative; start commands run from repository root",
+  "models": "Six explicitly retrospective research champions; not validated production forecasts"
+}

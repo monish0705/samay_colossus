@@ -1,0 +1,46 @@
+{
+  "batch_id": 1,
+  "counts": {
+    "records": 12,
+    "inserted": 3,
+    "revised": 0,
+    "duplicates": 1,
+    "stale": 0,
+    "quarantined": 7,
+    "filtered": 1
+  },
+  "data_kind": "fixture",
+  "source": "TEST_FIXTURE_NOT_GOVERNMENT_DATA",
+  "source_url": "fixture://mandi_fixture.csv",
+  "file_sha256": "90e43db81a1c0c8ee1ca5ca876f771f1f83e3197f1f20b2485f9ec042aa0b16c",
+  "fetched_at": "2025-01-10T06:30:00+00:00",
+  "generated_at": "2026-11-04T04:37:29.497804+00:00",
+  "date_range": [
+    "2025-01-01",
+    "2025-01-03"
+  ],
+  "missing_calendar_dates": [
+    "2025-01-02",
+    "2025-01-04",
+    "2025-01-05",
+    "2025-01-06",
+    "2025-01-07",
+    "2025-01-08",
+    "2025-01-09"
+  ],
+  "missing_days_count": 7,
+  "missing_days_note": "Unreported dates, not proof of data loss; no rows imputed. Union across varieties/grades.",
+  "modal_price_distribution_inr_per_quintal": {
+    "count": 4.0,
+    "mean": 1525.0,
+    "std": 50.0,
+    "min": 1500.0,
+    "25%": 1500.0,
+    "50%": 1500.0,
+    "75%": 1525.0,
+    "max": 1600.0
+  },
+  "distribution_basis": "validated in-scope input rows including duplicates/stale, not unique current observations",
+  "report_age_days": 670,
+  "provenance_verification": "Local file provenance asserted by operator manifest; not independently network-authenticated"
+}

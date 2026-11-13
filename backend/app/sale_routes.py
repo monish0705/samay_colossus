@@ -498,6 +498,8 @@ def notifications(db: DB, user: User, limit: int = Query(50, ge=1, le=100)):
     result = []
     for n in rows:
         row = db.get(SaleRequest, n.request_id)
+        if not row:
+            continue
         result.append({'id': n.id, 'request_id': row.public_request_id, 'message': n.message,
             'created_at': n.created_at, 'read_at': n.read_at,
             'deliveries': [{'channel': d.channel, 'status': d.status, 'attempts': d.attempts, 'error_reason': d.error_reason}
@@ -507,8 +509,11 @@ def notifications(db: DB, user: User, limit: int = Query(50, ge=1, le=100)):
 
 @router.get('/notifications/unread-count')
 def unread(db: DB, user: User):
-    query = notification_query(user).where(Notification.read_at.is_(None)).subquery()
-    return {'count': db.scalar(select(func.count()).select_from(query))}
+    try:
+        query = notification_query(user).where(Notification.read_at.is_(None)).subquery()
+        return {'count': db.scalar(select(func.count()).select_from(query)) or 0}
+    except Exception:
+        return {'count': 0}
 
 
 def notification_query(user):

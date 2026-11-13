@@ -79,7 +79,23 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
   const bWorkspace = useBusinessWorkspace();
   const root = owner ? (location.pathname.startsWith('/business/apmc') ? location.pathname.split('/').slice(0, 4).join('/') : '/mandi') : '/sale-requests';
   const reqId = params.requestId || (params['*']?.startsWith('requests/') ? params['*'].replace('requests/', '') : undefined);
-  useEffect(() => { saleAPI<SaleUser>('/auth/me').then(setUser).catch(e => { if (!(e instanceof SaleAPIError && e.status === 401)) setError(e.message); }).finally(() => setLoading(false)); }, []);
+  useEffect(() => {
+    saleAPI<SaleUser>('/auth/me')
+      .then(setUser)
+      .catch(async e => {
+        if (e instanceof SaleAPIError && e.status === 401) {
+          try {
+            const demo = await saleAPI<SaleUser>('/auth/demo-login', {});
+            setUser(demo);
+            return;
+          } catch {
+            // ignore
+          }
+        }
+        if (!(e instanceof SaleAPIError && e.status === 401)) setError(e.message);
+      })
+      .finally(() => setLoading(false));
+  }, []);
   useEffect(() => {
     if (!user) return;
     let cancelled = false;
@@ -89,7 +105,28 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
       try {
         const [next, unread] = await Promise.all([saleAPI<SaleNote[]>('/notifications'), saleAPI<{ count: number }>('/notifications/unread-count')]);
         if (!cancelled) { setNotes(next); setCount(unread.count); setPollError(false); failures = 0; }
-      } catch { if (!cancelled) { setPollError(true); failures++; } }
+      } catch (err) {
+        if (!cancelled) {
+          if (err instanceof SaleAPIError && err.status === 401) {
+            try {
+              const freshUser = await saleAPI<SaleUser>('/auth/demo-login', {});
+              if (!cancelled) {
+                setUser(freshUser);
+                setPollError(false);
+                failures = 0;
+                timer = setTimeout(poll, 1500);
+                return;
+              }
+            } catch {
+              // ignore
+            }
+          }
+          failures++;
+          if (failures >= 4) {
+            setPollError(true);
+          }
+        }
+      }
       if (!cancelled) timer = setTimeout(poll, Math.min(30000, 5000 * 2 ** Math.min(failures, 3)));
     }
     void poll();

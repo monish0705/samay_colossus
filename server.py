@@ -7,6 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from fastapi import FastAPI, Request, Response
+from fastapi.responses import FileResponse
 from starlette.middleware.gzip import GZipMiddleware
 
 ROOT = Path(__file__).resolve().parent
@@ -62,4 +63,14 @@ async def buffer_recommendation(request: Request, call_next):
 
 
 app.mount("/backend", api)
+
+
+@app.get("/{page}", include_in_schema=False)
+def farmer_page(page: str):
+    if page in {"advisor", "forecast", "insights", "results", "explorer", "transparency"}:
+        return FileResponse(ROOT / "frontend" / "dist" / "index.html", headers={"Cache-Control": "no-store"})
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404)
+
+
 app.frontend("/", directory=ROOT / "frontend" / "dist", fallback="index.html")

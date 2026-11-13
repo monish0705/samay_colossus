@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "fastapi"
+  "framework": "fastapi",
+  "headers": [
+    {
+      "source": "/((?!assets/).*)",
+      "headers": [{"key": "Cache-Control", "value": "no-store"}]
+    }
+  ]
 }

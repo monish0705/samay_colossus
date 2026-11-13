@@ -1,2 +1,20 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>SAMAY | Team Resonance</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SAMAY | Team Resonance</title>
+  </head>
+  <body>
+    <div id="root"><p role="status" style="padding:24px;font:16px system-ui;color:#245138">Loading SAMAY…</p></div>
+    <script>
+      window.addEventListener('error', function (event) {
+        const root = document.getElementById('root');
+        if (root && !root.querySelector('.app-shell')) {
+          root.innerHTML = '<div style="padding:24px;font:16px system-ui;color:#245138"><h1>SAMAY could not load</h1><p>Please reload the latest version.</p><a href="/?reload=' + Date.now() + '">Open SAMAY again</a></div>';
+        }
+      }, true);
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

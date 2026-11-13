@@ -24,6 +24,23 @@ def policy():
         "assumption_source":"TEST_ONLY explicit sensitivities, not estimated prediction intervals"}
 
 
+@pytest.mark.parametrize('future,positive',[(1500,True),(700,False)])
+def test_later_sale_projection_is_computed_from_model_after_costs(api,monkeypatch,future,positive):
+    client,_=api
+    install_predictor(monkeypatch,future)
+    body=recommendation()
+    body['decision_policy']=policy()
+    response=client.post('/api/v1/recommend',json=body)
+    assert response.status_code==200,response.text
+    result=response.json()
+    later=result['decision_support']['best_holding_plan']
+    assert later['holding_days']==3
+    assert (Decimal(later['difference_vs_sell_all_now_inr']['central'])>0)==positive
+    baseline=Decimal(result['optimization']['sell_all_now']['sale']['net_inr'])
+    assert Decimal(later['total_net_inr']['central'])-baseline==Decimal(later['difference_vs_sell_all_now_inr']['central'])
+    assert result['predictions'][0]['model_version']=='TEST_ONLY_POINT_WITHOUT_INTERVAL'
+
+
 def install_predictor(monkeypatch, price=1500):
     def predictor(session,body,origin,request_id,decision_at=None):
         raw=ReliabilityForecast(prediction_inr_per_quintal=price,intervals=[],horizon_calendar_days=body.horizon,

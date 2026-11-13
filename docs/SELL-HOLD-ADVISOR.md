@@ -1,5 +1,37 @@
 # Sell-or-hold integration
 
+## Daily-date comparison and projected later proceeds
+
+The advisor compares every saved forecast date inside the verified holding limit,
+plus the explicitly selected planning date. The 10,000-plan safety limit still
+applies; increase the quantity increment or disable multi-date comparison for
+large searches. Previously the form considered only 1/3/7 days and one selected
+date, so it could miss a different model-supported selling date.
+
+The response now includes `decision_support.best_holding_plan`: the feasible
+holding plan with highest central total net proceeds, independent of risk choice.
+The UI shows its held quantity, immediate-sale quantity, target date and saved
+forecast, projected later net proceeds, incremental gain/loss against selling
+everything now, and adverse loss. A conservative risk objective can still select
+immediate sale while this comparison exposes the projected alternative. Projected
+gain is not total farm profit: production costs were not supplied.
+
+Live checks against all 60 saved Copra dates produced hold-all, partial-hold and
+sell-now outcomes. These used **EXAMPLE_ONLY** farmer quotes/costs and a future
+realization factor of 1, not actual executed sales. With 20 quintals, assumed
+today quote INR 15,000/quintal, zero immediate cash, 20 quintals storage, explicit
+costs/loss and balanced risk, the selected scenario held 20 for two days with
+INR 66,088.71 central incremental proceeds. The saved future mandi point was
+INR 18,500/quintal; this result assumes the farmer actually realizes that price.
+It does not establish a model-predicted market rise from today's mandi price.
+With INR 10,000 cash and storage for 10 quintals, it sold 10 and held 10. With an
+assumed current quote of INR 20,000, it selected full immediate sale instead.
+Exact inputs and outputs: `reports/sell-later-live-results.json`.
+
+Zero storage cannot support holding. A last-price baseline is flat by definition;
+storage losses/costs can make immediate sale economically preferable. No forecast
+is increased artificially to force a profitable hold recommendation.
+
 The advisor now uses the saved prediction service and the existing Decimal
 optimizer. Previously, long crop defaults had no model, point forecasts without
 calibrated intervals were discarded, and results emphasized only the safe

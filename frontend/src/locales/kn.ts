@@ -1,5 +1,16 @@
 /** English phrase keys are the canonical UI copy. Values use consistent Kannada agricultural terms. */
 export const kannada: Record<string, string> = {
+  'Compare all saved forecast dates plus my selected date, within my holding limit': 'ನನ್ನ ದಾಸ್ತಾನು ಮಿತಿಯೊಳಗೆ ಉಳಿಸಿದ ಎಲ್ಲ ಮುನ್ಸೂಚನಾ ದಿನಾಂಕಗಳು ಮತ್ತು ನಾನು ಆಯ್ದ ದಿನವನ್ನು ಹೋಲಿಸಿ',
+  'Sell-later comparison': 'ನಂತರ ಮಾರಾಟದ ಹೋಲಿಕೆ',
+  'Model-based sell-later comparison': 'ಮಾದರಿಯ ಆಧಾರದ ನಂತರದ ಮಾರಾಟದ ಹೋಲಿಕೆ',
+  'Sell-later scenario comparison': 'ನಂತರ ಮಾರಾಟದ ಊಹಾಧಾರಿತ ಹೋಲಿಕೆ',
+  'Projected later net proceeds': 'ಮುಂದಿನ ಮಾರಾಟದ ಅಂದಾಜು ನಿವ್ವಳ ಆದಾಯ',
+  'After selling costs, storage and quantity loss': 'ಮಾರಾಟ ವೆಚ್ಚ, ದಾಸ್ತಾನು ಮತ್ತು ಪ್ರಮಾಣದ ನಷ್ಟದ ನಂತರ',
+  'Projected gain or loss versus selling now': 'ಈಗ ಮಾರಾಟಕ್ಕೆ ಹೋಲಿಸಿದ ಅಂದಾಜು ಲಾಭ ಅಥವಾ ನಷ್ಟ',
+  'Forecast-based projection, not guaranteed profit': 'ಮುನ್ಸೂಚನೆಯ ಆಧಾರದ ಅಂದಾಜು; ಖಚಿತ ಲಾಭವಲ್ಲ',
+  'This is the feasible holding plan with the highest central net proceeds. Your risk preference can still select immediate sale. Production costs were not supplied, so this is a comparison with selling now, not total farm profit.': 'ಇದು ಮಧ್ಯಮ ಸನ್ನಿವೇಶದಲ್ಲಿ ಹೆಚ್ಚು ನಿವ್ವಳ ಮೊತ್ತ ನೀಡುವ ಸಾಧ್ಯ ದಾಸ್ತಾನು ಯೋಜನೆ. ನಿಮ್ಮ ಅಪಾಯದ ಆಯ್ಕೆ ತಕ್ಷಣದ ಮಾರಾಟವನ್ನು ಸೂಚಿಸಬಹುದು. ಉತ್ಪಾದನಾ ವೆಚ್ಚ ನೀಡಿಲ್ಲ; ಇದು ಈಗ ಮಾರಾಟಕ್ಕೆ ಹೋಲಿಕೆ ಮಾತ್ರ, ಒಟ್ಟು ಕೃಷಿ ಲಾಭವಲ್ಲ.',
+  'No feasible sell-later plan exists under these storage, cash or forecast inputs. Enter verified storage capacity to assess holding.': 'ಈ ದಾಸ್ತಾನು, ನಗದು ಅಥವಾ ಮುನ್ಸೂಚನಾ ಮಾಹಿತಿಯಲ್ಲಿ ನಂತರ ಮಾರಾಟ ಸಾಧ್ಯವಿಲ್ಲ. ದಾಸ್ತಾನು ಹೋಲಿಸಲು ಪರಿಶೀಲಿಸಿದ ಸಂಗ್ರಹಣಾ ಸಾಮರ್ಥ್ಯ ನಮೂದಿಸಿ.',
+  'Increase the quantity increment or disable date comparison to keep the search within 10,000 plans.': 'ಹುಡುಕಾಟವನ್ನು 10,000 ಯೋಜನೆಗಳೊಳಗೆ ಇಡಲು ಪ್ರಮಾಣದ ಹಂತ ಹೆಚ್ಚಿಸಿ ಅಥವಾ ದಿನಾಂಕ ಹೋಲಿಕೆ ನಿಲ್ಲಿಸಿ.',
   'Exact forecast horizon (calendar days)': 'ಮುನ್ಸೂಚನೆಯ ನಿಖರ ಅವಧಿ (ಕ್ಯಾಲೆಂಡರ್ ದಿನಗಳು)',
   'Each date needs its own saved evidence. Longer dates are not interpolated from a short forecast.': 'ಪ್ರತಿ ದಿನಾಂಕಕ್ಕೂ ಪ್ರತ್ಯೇಕವಾಗಿ ಉಳಿಸಿದ ಆಧಾರ ಬೇಕು. ಅಲ್ಪಾವಧಿಯ ಮುನ್ಸೂಚನೆಯನ್ನು ಎಳೆದು ದೀರ್ಘಾವಧಿಯ ಬೆಲೆ ಊಹಿಸುವುದಿಲ್ಲ.',
   'Saved horizons': 'ಉಳಿಸಿದ ಮುನ್ಸೂಚನಾ ಅವಧಿಗಳು',

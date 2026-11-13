@@ -191,7 +191,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
     setError(null);
     try {
       const response = await api.recommend(
-        buildRecommendation(currentEffective, scope, (catalog.data?.data || await api.data()).historical_demo_date)
+        buildRecommendation(currentEffective, scope, (catalog.data?.data || await api.data()).historical_demo_date, availableHorizons)
       );
       setResult(response);
       setDirty(false);
@@ -522,7 +522,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
             {hasStorage && (
               <div className="form-grid">
                 <label className="checkbox-field"><input type="checkbox" checked={draft.conditionalAnalysis} onChange={e => change('conditionalAnalysis',e.target.checked)}/><span>{t('Compare conditional sell-or-hold scenarios even when calibrated intervals are unavailable')}</span></label>
-                <label className="checkbox-field"><input type="checkbox" checked={draft.compareDates} onChange={e => change('compareDates',e.target.checked)}/><span>{t('Compare 1, 3 and 7 days plus my selected date, within my holding limit')}</span></label>
+                <label className="checkbox-field"><input type="checkbox" checked={draft.compareDates} onChange={e => change('compareDates',e.target.checked)}/><span>{t('Compare all saved forecast dates plus my selected date, within my holding limit')}</span></label>
                 <label className="field" htmlFor="advisor-scenario-price">
                   <span>{t('Optional future buyer price assumption')}</span>
                   <input id="advisor-scenario-price" inputMode="decimal" value={draft.scenarioPrice || ''} onChange={e => change('scenarioPrice', e.target.value)} />
@@ -656,7 +656,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                 </div>
               </dl>
 
-              {Number(draft.capacity)>0 && <Notice>{t('Compared holding dates')}: {holdingDates(effectiveDraft,scope.commodity).join(', ')} {t('days')} · {t('Risk tolerance')}: {t(draft.risk)} · {t('Lower / adverse drop / upper rise')}: {draft.downsidePercent}% / {draft.adversePercent}% / {draft.upsidePercent}% · {t('Future buyer price / mandi forecast')}: {draft.realization}×</Notice>}
+              {Number(draft.capacity)>0 && <Notice>{t('Compared holding dates')}: {holdingDates(effectiveDraft,scope.commodity,availableHorizons).join(', ')} {t('days')} · {t('Risk tolerance')}: {t(draft.risk)} · {t('Lower / adverse drop / upper rise')}: {draft.downsidePercent}% / {draft.adversePercent}% / {draft.upsidePercent}% · {t('Future buyer price / mandi forecast')}: {draft.realization}×</Notice>}
 
               <div className="review-cost-summary">
                 <h4>{t('User assumptions: verify costs and storage conditions')}</h4>

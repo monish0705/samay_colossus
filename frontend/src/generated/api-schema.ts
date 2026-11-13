@@ -421,6 +421,7 @@ export interface components {
             conditional: boolean;
             plan: components["schemas"]["SellingPlan"] | null;
             safe_fallback_plan: components["schemas"]["SellingPlan"] | null;
+            best_holding_plan?: components["schemas"]["SellingPlan"] | null;
             /** Reasons */
             reasons: string[];
             /** Horizon Comparisons */

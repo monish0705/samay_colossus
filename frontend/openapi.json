@@ -1781,6 +1781,16 @@
               }
             ]
           },
+          "best_holding_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SellingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "reasons": {
             "items": {
               "type": "string"

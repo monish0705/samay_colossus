@@ -272,6 +272,11 @@ describe('frozen historical evaluation', () => {
 });
 
 describe('deterministic explanation and request construction', () => {
+  it('compares every supported date within the verified storage limit', () => {
+    const input=buildRecommendation({...exampleAdvisor,capacity:'10',days:'30',limit:'30',loss:'0.01'},CROP_SCOPES.Copra,undefined,[1,2,3,4,5,6,7,14,21,30,60]);
+    expect(input.holding_options.map(o=>o.days)).toEqual([1,2,3,4,5,6,7,14,21,30]);
+    expect(input.holding_options.every(o=>!o.scenario_price_inr_per_quintal)).toBe(true);
+  });
   it('requests an exact saved monthly horizon and preserves the forecast value in Kannada', async () => {
     dailyHorizons=true; multiCrop=true; show('/forecast');
     fireEvent.click(screen.getByRole('button',{name:/Copra ·/}));

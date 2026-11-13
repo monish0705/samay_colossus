@@ -235,13 +235,13 @@ export function validateAdvisor(v: AdvisorValues, commodity: string = 'Tomato'):
   return errors;
 }
 
-export function holdingDates(v: AdvisorValues, commodity: string): number[] {
+export function holdingDates(v: AdvisorValues, commodity: string, savedHorizons: number[] = []): number[] {
   const crop = CROP_SCOPES[commodity] || CROP_SCOPES.Tomato;
   const chosen = Number(v.days || crop.defaultDays);
-  return v.conditionalAnalysis && v.compareDates ? [...new Set([1,3,7,chosen])].filter(d => d <= Math.min(Number(v.limit),crop.maxDays)) : [chosen];
+  return v.conditionalAnalysis && v.compareDates ? [...new Set([1,3,7,...savedHorizons,chosen])].filter(d => d >= 1 && d <= Math.min(Number(v.limit),crop.maxDays)).sort((a,b)=>a-b) : [chosen];
 }
 
-export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDate?: string | null): RecommendInput {
+export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDate?: string | null, savedHorizons: number[] = []): RecommendInput {
   const crop = CROP_SCOPES[scope.commodity] || CROP_SCOPES['Tomato'];
   const effectiveValues = getEffectiveAdvisorValues(v, undefined, scope.commodity);
   const errors = validateAdvisor(effectiveValues, scope.commodity);
@@ -259,7 +259,8 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
   };
   const capacity = Number(effectiveValues.capacity || '0');
   const selectedDays = Number(effectiveValues.days || crop.defaultDays);
-  const dates = holdingDates(effectiveValues,scope.commodity);
+  const dates = holdingDates(effectiveValues,scope.commodity,savedHorizons);
+  if (capacity > 0 && (Math.floor(Number(effectiveValues.quantity)/Number(effectiveValues.increment))+2)*dates.length>10000) throw new Error('Increase the quantity increment or disable date comparison to keep the search within 10,000 plans.');
   const holding = capacity > 0 ? dates.map(days => ({
     days,
     daily_loss_fractions: Array(days).fill(percent(effectiveValues.loss || crop.dailyLossPercent)),

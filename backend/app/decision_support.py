@@ -76,10 +76,12 @@ def summarize_decision(result, context, *, requested_holding, scenarios_availabl
         action, basis = "sell_now", "constraints_and_supplied_scenarios"
         reasons.append("holding_does_not_improve_risk_adjusted_net_or_is_infeasible")
     comparisons = []
+    held = [p for p in result['feasible_plans'] if p['holding_days'] > 0]
+    best_holding = max(held,key=lambda p:(p['total_net_inr']['central'],p['downside_total_net_inr'],-p['holding_days'])) if held else None
     for days in sorted({p["holding_days"] for p in result["feasible_plans"]}):
         options = [p for p in result["feasible_plans"] if p["holding_days"]==days]
         best = max(options,key=lambda p:(p["risk_adjusted_objective_inr"],p["downside_total_net_inr"],p["sell_today_quintals"]))
         comparisons.append(best)
     return {"action":action,"basis":basis,"conditional":bool(candidate and not candidate["recommendation_eligible"]),
-        "plan":candidate,"safe_fallback_plan":safe,"reasons":reasons,"horizon_comparisons":comparisons,
+        "plan":candidate,"safe_fallback_plan":safe,"best_holding_plan":best_holding,"reasons":reasons,"horizon_comparisons":comparisons,
         "context":context,"note":"Compare conditional scenarios with the safe fallback. Calendar/news do not imply a price rise. Longer flat-reference scenarios are not trained long-horizon forecasts."}

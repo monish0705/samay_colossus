@@ -36,6 +36,8 @@ export function DecisionPanel({ result }: { result: Recommendation }) {
   if (!decision) return null;
   const plan = decision.plan;
   const safe = decision.safe_fallback_plan;
+  const later = decision.best_holding_plan;
+  const laterPrediction = result.predictions.find(p=>p.horizon_calendar_days===later?.holding_days);
   const selectedPrediction = result.predictions.find(p => p.horizon_calendar_days === plan?.holding_days);
   return localize(<Card className="decision-panel">
     <p className="eyebrow">{t('SELL OR HOLD DECISION')}</p>
@@ -70,6 +72,16 @@ export function DecisionPanel({ result }: { result: Recommendation }) {
     </> : <Notice tone="amber">{decision.reasons.map(r => warningText(r)).join(' · ')}</Notice>}
     {!!decision.horizon_comparisons.length && <div className="table-scroll"><table><caption>{t('Best feasible plan at each evaluated holding date')}</caption><thead><tr><th>{t('Days held')}</th><th>{t('Sell today')}</th><th>{t('Hold initially')}</th><th>{t('Central total net')}</th><th>{t('Adverse total net')}</th><th>{t('Break-even price')}</th></tr></thead><tbody>{decision.horizon_comparisons.map(p => <tr key={p.holding_days}><td>{p.holding_days}</td><td>{qty(p.sell_today_quintals)}</td><td>{qty(p.hold_initial_quintals)}</td><td>{inr(p.total_net_inr.central)}</td><td>{inr(p.total_net_inr.adverse)}</td><td>{inr(p.break_even_future_price_inr_per_quintal)}</td></tr>)}</tbody></table></div>}
     {decision.conditional && safe && <p className="small muted">{t('Safe fallback kept separately')}: {t('Sell today')} {qty(safe.sell_today_quintals)} · {inr(safe.cash_today_inr)} {t('net cash today')}.</p>}
+    {later ? <section aria-label={t('Sell-later comparison')}>
+      <h3>{t(laterPrediction ? 'Model-based sell-later comparison' : 'Sell-later scenario comparison')}</h3>
+      <p>{t('Hold initially')}: {qty(later.hold_initial_quintals)} · {t('Sell today')}: {qty(later.sell_today_quintals)} · {later.holding_days} {t('calendar days')}{laterPrediction && <> · {t('Target')}: {dateLabel(laterPrediction.target_date)} · {t('Predicted')}: {inr(laterPrediction.prediction_inr_per_quintal)} / {t('quintal')}</>}</p>
+      <div className="stats-grid three">
+        <Stat label={t('Projected later net proceeds')} value={inr(later.central_later_net_after_storage_inr)} note={t('After selling costs, storage and quantity loss')}/>
+        <Stat label={t('Projected gain or loss versus selling now')} value={inr(later.difference_vs_sell_all_now_inr.central)} note={t('Forecast-based projection, not guaranteed profit')}/>
+        <Stat label={t('Adverse gain or loss against selling now')} value={inr(later.difference_vs_sell_all_now_inr.adverse)} note={t('User-reviewed stress scenario, not a prediction interval')}/>
+      </div>
+      <Notice>{t('This is the feasible holding plan with the highest central net proceeds. Your risk preference can still select immediate sale. Production costs were not supplied, so this is a comparison with selling now, not total farm profit.')}</Notice>
+    </section> : <Notice>{t('No feasible sell-later plan exists under these storage, cash or forecast inputs. Enter verified storage capacity to assess holding.')}</Notice>}
     <details><summary>{t('Review weather, festivals and news evidence')}</summary><ContextEvidence context={decision.context}/></details>
   </Card>);
 }

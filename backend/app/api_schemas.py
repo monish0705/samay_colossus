@@ -177,6 +177,7 @@ class DecisionSupport(BaseModel):
     conditional: bool
     plan: SellingPlan | None
     safe_fallback_plan: SellingPlan | None
+    best_holding_plan: SellingPlan | None = None
     reasons: list[str]
     horizon_comparisons: list[SellingPlan]
     context: MarketContext

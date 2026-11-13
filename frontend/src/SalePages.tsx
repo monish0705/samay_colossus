@@ -149,6 +149,7 @@ function SaleCreateForm() {
   const [mandis, setMandis] = useState<SaleMandi[]>([]);
   const [crops, setCrops] = useState<{ id: number; name: string }[]>([]);
   const [chosenCrop, setChosenCrop] = useState(scope.commodity);
+  const [chosenMandiId, setChosenMandiId] = useState<number | null>(null);
   const [error, setError] = useState('');
   const [pending, setPending] = useState<SaleInput | null>(null);
   const [previewResult, setPreviewResult] = useState<{ expected_price_per_quintal: string; reference_price_date: string | null; estimated_net_inr: string; waiting_for_mandi_activation: boolean } | null>(null);
@@ -156,7 +157,7 @@ function SaleCreateForm() {
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
   const selectedScope = CROP_SCOPES[chosenCrop] || CROP_SCOPES.Tomato;
-  const market = mandis.find(m => m.name === selectedScope.market);
+  const market = (chosenMandiId ? mandis.find(m => m.id === chosenMandiId) : null) || mandis.find(m => m.id === 1) || mandis.find(m => m.name === selectedScope.market) || mandis[0];
   const crop = crops.find(c => c.name === chosenCrop);
   const latest = useResource(signal => api.latest(selectedScope, signal), chosenCrop);
   const plan = result && getDecisionPlan(result);
@@ -188,7 +189,23 @@ function SaleCreateForm() {
       <button className="button" disabled={busy} onClick={() => setPending(null)}>{t('Edit request')}</button><button className="button button-primary" disabled={busy} onClick={() => void send()}>{t(busy ? 'Sending' : 'Confirm and send request')}</button></>
     : <form onSubmit={preview}>
       <fieldset className="crop-choice-group"><legend>{t('Choose your crop')}</legend><div className="crop-choice-row">{Object.values(CROP_SCOPES).map(c => <button className="crop-choice" type="button" key={c.id} aria-pressed={chosenCrop === c.commodity} onClick={() => setChosenCrop(c.commodity)}><span className="crop-emoji" aria-hidden="true">{c.icon}</span><strong>{t(c.commodity)}</strong><small>{t(c.market)}</small></button>)}</div></fieldset>
-      <p><strong>{t(selectedScope.market)}</strong> · {selectedScope.variety} / {selectedScope.grade}</p>
+      <div style={{ margin: '0.75rem 0' }}>
+        <label className="sale-field" style={{ fontWeight: 600 }}>
+          {t('Destination APMC Mandi')}
+          <select
+            style={{ marginTop: '0.25rem', padding: '0.45rem 0.6rem', width: '100%', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }}
+            value={market?.id || ''}
+            onChange={e => setChosenMandiId(Number(e.target.value))}
+          >
+            {mandis.map(m => (
+              <option key={m.id} value={m.id}>
+                🏛️ {m.name} {m.id === 1 ? `(${t('Primary Pilot APMC')})` : ''}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <p><strong>{market?.name || t(selectedScope.market)}</strong> · {t(chosenCrop)} · {selectedScope.variety} / {selectedScope.grade}</p>
       <div className="mandi-price-box" role="status"><span>{t('Mandi price used automatically')}</span><strong>{latest.loading ? t('Loading market price') : latest.data?.observation ? inr(latest.data.observation.modal_price_inr_per_quintal) + ' / ' + t('quintal') : t('Unavailable')}</strong><small>{latest.data?.observation?.report_date || ''}</small><p>{t('This is a wholesale reference, not a confirmed buyer offer.')}</p></div>
       <div className="sale-grid"><Field name="requested_quantity" label="Quantity to sell (quintals)" type="number" min="0.001" step="0.001" value={plan && chosenCrop === scope.commodity && Number(plan.sell_today_quintals) > 0 ? String(plan.sell_today_quintals) : draft.quantity} /><Field name="preferred_arrival_at" label="Preferred arrival (your local time)" type="datetime-local" /></div>
       <details><summary>{t('Optional details: costs and message')}</summary><p>{t('Fees and transport are excluded unless you enter them below.')}</p><Field name="estimated_costs_inr" label="Estimated selling costs (INR)" type="number" min="0" step="0.01" value="0" /><label className="sale-field">{t('Message')}<textarea name="farmer_message" maxLength={2000} /></label><label><input type="checkbox" name="contact_sharing_consent" /> {t('Share my verified phone number with this mandi')}</label></details>

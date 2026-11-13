@@ -32,7 +32,7 @@ def ensure_default_workspaces(db, user):
     2. Private Mandi (Monish MR: business_id=1)
     3. Private Buyer (Monish MR Private Buyer: business_id=2)
     """
-    if getattr(user, 'email', '').endswith('.test') or user.id not in {1, 2}:
+    if getattr(user, 'email', '').endswith('.test'):
         return
 
     from app.sale_models import MandiAssignment
@@ -76,7 +76,7 @@ def ensure_default_workspaces(db, user):
 
     if dirty:
         try:
-            db.flush()
+            db.commit()
         except Exception:
             db.rollback()
 
@@ -101,6 +101,8 @@ def workspaces_for(db, user):
             private_mandis.append(item)
         else:
             private_buyers.append(item)
+    private_mandis.sort(key=lambda x: x['business_id'])
+    private_buyers.sort(key=lambda x: x['business_id'])
 
     from app.models import Market
     from app.sale_models import MandiAssignment

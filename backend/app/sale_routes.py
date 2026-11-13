@@ -229,17 +229,19 @@ def create_sale(body: SaleCreate, db: DB, user: User, idempotency_key: str = Hea
     online = bool(reg and reg.active and len(recipients) > 0)
     if body.preferred_arrival_at <= now():
         raise HTTPException(422, 'arrival_must_be_in_future')
-    obs = db.scalar(select(MandiObservation).where(MandiObservation.market_id == body.mandi_id,
-        MandiObservation.commodity_id == body.crop_id, MandiObservation.variety == body.variety,
-        MandiObservation.grade == body.grade, MandiObservation.data_kind == 'official', MandiObservation.observed_on <= now().date())
-        .order_by(MandiObservation.observed_on.desc(), MandiObservation.id.desc()))
     price = body.expected_price_per_quintal
+    obs = None
+    from app.mandi_quote import latest_quote
     if body.use_mandi_price:
-        from app.mandi_quote import latest_quote
         obs = latest_quote(db, body.mandi_id, body.crop_id, body.variety, body.grade, now())
         price = obs.modal_price_inr_per_quintal
         if body.expected_price_per_quintal is not None and price != body.expected_price_per_quintal:
             raise HTTPException(409, 'mandi_price_changed_review_again')
+    else:
+        try:
+            obs = latest_quote(db, body.mandi_id, body.crop_id, body.variety, body.grade, now())
+        except HTTPException:
+            obs = None
     row = SaleRequest(**body.model_dump(exclude={'use_mandi_price', 'expected_price_per_quintal'}), expected_price_per_quintal=price, farmer_id=user.id,
         public_request_id=f'SAMAY-SALE-{now().year}-{uuid4().hex[:16].upper()}',
         status='SUBMITTED', idempotency_key=idempotency_key, payload_hash=fingerprint,
@@ -274,15 +276,17 @@ def preview_sale(body: SaleCreate, db: DB, user: User):
     validate_sale_market(db, body, reg)
     if body.preferred_arrival_at <= now():
         raise HTTPException(422, 'arrival_must_be_in_future')
-    obs = db.scalar(select(MandiObservation).where(MandiObservation.market_id == body.mandi_id,
-        MandiObservation.commodity_id == body.crop_id, MandiObservation.variety == body.variety,
-        MandiObservation.grade == body.grade, MandiObservation.data_kind == 'official',
-        MandiObservation.observed_on <= now().date()).order_by(MandiObservation.observed_on.desc()))
     price = body.expected_price_per_quintal
+    obs = None
+    from app.mandi_quote import latest_quote
     if body.use_mandi_price:
-        from app.mandi_quote import latest_quote
         obs = latest_quote(db, body.mandi_id, body.crop_id, body.variety, body.grade, now())
         price = obs.modal_price_inr_per_quintal
+    else:
+        try:
+            obs = latest_quote(db, body.mandi_id, body.crop_id, body.variety, body.grade, now())
+        except HTTPException:
+            obs = None
     return {'expected_price_per_quintal': str(price), 'waiting_for_mandi_activation': not bool(reg and reg.active and any(u.role == 'MANDI_OWNER' for u in owners(db, body.mandi_id))),
             'reference_modal_price': str(obs.modal_price_inr_per_quintal) if obs else None,
             'reference_price_date': obs.observed_on if obs else None,

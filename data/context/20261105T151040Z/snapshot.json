@@ -1,0 +1,107 @@
+{
+  "schema_version": "samay-context-v1",
+  "sources": [
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Kolar%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T15:10:41.643427+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "geocoding",
+      "archive": "source-01.dat",
+      "market": "Kolar APMC"
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Tiptur%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T15:10:42.646068+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "geocoding",
+      "archive": "source-02.dat",
+      "market": "Tiptur APMC"
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Shivamogga%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T15:10:43.652133+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "geocoding",
+      "archive": "source-03.dat",
+      "market": "Shivamogga Mandi"
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Hubli%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T15:10:44.655354+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "geocoding",
+      "archive": "source-04.dat",
+      "market": "Hubballi APMC"
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Bengaluru%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T15:10:45.656536+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "geocoding",
+      "archive": "source-05.dat",
+      "market": "Bengaluru APMC"
+    },
+    {
+      "source": {
+        "name": "LPSC / ISRO Bengaluru 2026 calendar",
+        "url": "https://www.lpsc.gov.in/holidaysBangalore2026.html",
+        "fetched_at": "2026-11-05T15:10:46.658158+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "calendar",
+      "archive": "source-06.dat"
+    },
+    {
+      "source": {
+        "name": "PIB official RSS directory",
+        "url": "https://www.pib.gov.in/ViewRss.aspx?lang=1&reg=3",
+        "fetched_at": "2026-11-05T15:10:47.660140+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "news_directory",
+      "archive": "source-07.dat"
+    },
+    {
+      "source": {
+        "name": "The Hindu BusinessLine agriculture headlines",
+        "url": "https://www.thehindubusinessline.com/economy/agri-business/feeder/default.rss",
+        "fetched_at": "2026-11-05T15:10:48.662402+00:00",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "unavailable",
+        "note": "RuntimeError: source unavailable or schema invalid; no substitute data"
+      },
+      "kind": "news",
+      "archive": "source-08.dat"
+    }
+  ],
+  "note": "Live evidence starts at actual capture time. No headline sentiment or festival multiplier was applied to market prices."
+}

@@ -1,0 +1,29 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-a18c6b2407216a5a",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-31",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "rashi",
+    "grade": "local",
+    "market": "Shivamogga Mandi",
+    "commodity": "Arecanut",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "result": {
+    "horizon": 3,
+    "champion": "naive",
+    "n": 26,
+    "status": "insufficient_final_samples",
+    "metrics": null,
+    "baseline_metrics": null
+  }
+}

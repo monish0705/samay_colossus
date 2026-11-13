@@ -1,0 +1,2668 @@
+{
+  "data_status": {
+    "historical_demo_date": null,
+    "status": "observations_available",
+    "official_observations": 1943,
+    "secondary_observations": 5834,
+    "latest_secondary_report_date": "2026-05-30",
+    "latest_secondary_fetched_at": "2026-11-04T19:36:59.824210Z",
+    "fixture_observations": 3,
+    "demo_observations": 7305,
+    "latest_official_report_date": "2026-10-31",
+    "latest_official_fetched_at": "2026-11-04T09:38:58.059991Z",
+    "note": "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+  },
+  "research_models": [
+    {
+      "source_kind": "official",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "horizon": 1,
+      "model_version": "a12f3115f0bc1266-champion-1d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T18:46:25.564119Z",
+      "dataset_fingerprint": "3a1b43184a7ceb4273f1632927491222eeee56d44a9501c97c9daa5270cd6ef3",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "official",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "horizon": 3,
+      "model_version": "6d9e0366a16177e6-champion-3d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T18:46:33.910958Z",
+      "dataset_fingerprint": "3a1b43184a7ceb4273f1632927491222eeee56d44a9501c97c9daa5270cd6ef3",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "official",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "horizon": 7,
+      "model_version": "55d83adaf57197a7-champion-7d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T18:46:42.235222Z",
+      "dataset_fingerprint": "3a1b43184a7ceb4273f1632927491222eeee56d44a9501c97c9daa5270cd6ef3",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "official",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "horizon": 1,
+      "model_version": "b316e9f5fc2d154f-champion-1d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T18:46:43.853677Z",
+      "dataset_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "official",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "horizon": 3,
+      "model_version": "1f3005b630413c3d-champion-3d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T18:46:45.448668Z",
+      "dataset_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "official",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "horizon": 7,
+      "model_version": "61768c3f00bdacec-champion-7d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T18:46:46.995282Z",
+      "dataset_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "horizon": 1,
+      "model_version": "0716f26aab53f06e-champion-1d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:47.493537Z",
+      "dataset_fingerprint": "6f815d48161ef863ca1326359aded6fe92e0040bf43ee3033fa0c12b0f3c0415",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "horizon": 3,
+      "model_version": "3190c51f9377c92f-champion-3d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:49.669586Z",
+      "dataset_fingerprint": "6f815d48161ef863ca1326359aded6fe92e0040bf43ee3033fa0c12b0f3c0415",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "horizon": 7,
+      "model_version": "83d3a73a28bb26bf-champion-7d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:51.948016Z",
+      "dataset_fingerprint": "6f815d48161ef863ca1326359aded6fe92e0040bf43ee3033fa0c12b0f3c0415",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "horizon": 1,
+      "model_version": "9339e02817831d4a-champion-1d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:53.901067Z",
+      "dataset_fingerprint": "5ab90f1ce8c99aa2dd6ba80b36136ba6a7cc9bc6f4640843ba6c4151be0ff7fb",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "horizon": 3,
+      "model_version": "0b9c4f101e1144f9-champion-3d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:55.707964Z",
+      "dataset_fingerprint": "5ab90f1ce8c99aa2dd6ba80b36136ba6a7cc9bc6f4640843ba6c4151be0ff7fb",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "horizon": 7,
+      "model_version": "3b626115986b3daa-champion-7d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:57.571218Z",
+      "dataset_fingerprint": "5ab90f1ce8c99aa2dd6ba80b36136ba6a7cc9bc6f4640843ba6c4151be0ff7fb",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "horizon": 1,
+      "model_version": "9f64e29ec282ec1c-champion-1d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:48:59.028036Z",
+      "dataset_fingerprint": "3e6f67389b31eb8a22c76bd5bfea547e948865ae813143031dc681bd9591b5db",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "horizon": 3,
+      "model_version": "e1364f7e43a9970e-champion-3d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:49:00.421725Z",
+      "dataset_fingerprint": "3e6f67389b31eb8a22c76bd5bfea547e948865ae813143031dc681bd9591b5db",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "horizon": 7,
+      "model_version": "c17f9ca00c82a01d-champion-7d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:49:01.784698Z",
+      "dataset_fingerprint": "3e6f67389b31eb8a22c76bd5bfea547e948865ae813143031dc681bd9591b5db",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "horizon": 1,
+      "model_version": "27b001ec4da18397-champion-1d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:49:03.753163Z",
+      "dataset_fingerprint": "e19d4af2378300375fe97521d1735ff6599fe28597a1508dec5f32334362ec15",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "horizon": 3,
+      "model_version": "a64877387dd698d2-champion-3d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:49:05.512634Z",
+      "dataset_fingerprint": "e19d4af2378300375fe97521d1735ff6599fe28597a1508dec5f32334362ec15",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    },
+    {
+      "source_kind": "secondary",
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "horizon": 7,
+      "model_version": "7cca0655ee90deff-champion-7d",
+      "status": "research_only_limited_evidence",
+      "trained_before": "2026-11-04T19:49:07.308971Z",
+      "dataset_fingerprint": "e19d4af2378300375fe97521d1735ff6599fe28597a1508dec5f32334362ec15",
+      "reliability_evidence_configured": false,
+      "validation_metrics": null,
+      "final_holdout_metrics": null
+    }
+  ],
+  "checks": [
+    {
+      "commodity": "Copra",
+      "historical": {
+        "research_only": true,
+        "source_kind": "secondary",
+        "scope": {
+          "market": "Tiptur APMC",
+          "commodity": "Copra",
+          "variety": "copra",
+          "grade": "unspecified"
+        },
+        "horizon": 1,
+        "selected_model": "naive",
+        "model_version": "research-snapshot-v1-ace0b738d62a1d97",
+        "status": "evaluated",
+        "final_n": 39,
+        "metrics": {
+          "n": 39,
+          "mae_inr_per_quintal": 491.0769230769231,
+          "rmse_inr_per_quintal": 699.0668138714713,
+          "smape_pct": 2.740501588484595,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.851820581889331,
+          "directional_accuracy": 0.02564102564102564,
+          "p90_absolute_error_inr_per_quintal": 1033.2000000000005,
+          "p90_overprediction_inr_per_quintal": 423.60000000000025
+        },
+        "naive_metrics": {
+          "n": 39,
+          "mae_inr_per_quintal": 491.0769230769231,
+          "rmse_inr_per_quintal": 699.0668138714713,
+          "smape_pct": 2.740501588484595,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.851820581889331,
+          "directional_accuracy": 0.02564102564102564,
+          "p90_absolute_error_inr_per_quintal": 1033.2000000000005,
+          "p90_overprediction_inr_per_quintal": 423.60000000000025
+        },
+        "train_end": "2023-12-31",
+        "validation_end": "2024-12-31",
+        "test_start": "2025-01-01",
+        "test_end": "2025-06-19",
+        "source": [
+          {
+            "source": "India Data Portal AGMARKNET mirror (secondary)",
+            "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+            "sha256": "1f221e7195603ed2f064b2e8a072fcfe0350aa232d925146f33145dc3e1d5034",
+            "fetched_at": "2026-11-04T19:36:13.947679+00:00",
+            "source_kind": "secondary",
+            "upstream_source_url": "https://agmarknet.gov.in/",
+            "license": "Open Data Commons Attribution License"
+          }
+        ],
+        "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts.",
+        "points": [
+          {
+            "origin_date": "2025-01-05",
+            "target_date": "2025-01-06",
+            "actual_inr_per_quintal": "14121.00",
+            "prediction_inr_per_quintal": "14619.00",
+            "absolute_error_inr_per_quintal": "498.00"
+          },
+          {
+            "origin_date": "2025-01-08",
+            "target_date": "2025-01-09",
+            "actual_inr_per_quintal": "14000.00",
+            "prediction_inr_per_quintal": "14121.00",
+            "absolute_error_inr_per_quintal": "121.00"
+          },
+          {
+            "origin_date": "2025-01-12",
+            "target_date": "2025-01-13",
+            "actual_inr_per_quintal": "14629.00",
+            "prediction_inr_per_quintal": "14000.00",
+            "absolute_error_inr_per_quintal": "629.00"
+          },
+          {
+            "origin_date": "2025-01-15",
+            "target_date": "2025-01-16",
+            "actual_inr_per_quintal": "14409.00",
+            "prediction_inr_per_quintal": "14629.00",
+            "absolute_error_inr_per_quintal": "220.00"
+          },
+          {
+            "origin_date": "2025-01-19",
+            "target_date": "2025-01-20",
+            "actual_inr_per_quintal": "14100.00",
+            "prediction_inr_per_quintal": "14409.00",
+            "absolute_error_inr_per_quintal": "309.00"
+          },
+          {
+            "origin_date": "2025-01-22",
+            "target_date": "2025-01-23",
+            "actual_inr_per_quintal": "14220.00",
+            "prediction_inr_per_quintal": "14100.00",
+            "absolute_error_inr_per_quintal": "120.00"
+          },
+          {
+            "origin_date": "2025-01-26",
+            "target_date": "2025-01-27",
+            "actual_inr_per_quintal": "13914.00",
+            "prediction_inr_per_quintal": "14220.00",
+            "absolute_error_inr_per_quintal": "306.00"
+          },
+          {
+            "origin_date": "2025-01-29",
+            "target_date": "2025-01-30",
+            "actual_inr_per_quintal": "14000.00",
+            "prediction_inr_per_quintal": "13914.00",
+            "absolute_error_inr_per_quintal": "86.00"
+          },
+          {
+            "origin_date": "2025-02-02",
+            "target_date": "2025-02-03",
+            "actual_inr_per_quintal": "14529.00",
+            "prediction_inr_per_quintal": "14000.00",
+            "absolute_error_inr_per_quintal": "529.00"
+          },
+          {
+            "origin_date": "2025-02-05",
+            "target_date": "2025-02-06",
+            "actual_inr_per_quintal": "14500.00",
+            "prediction_inr_per_quintal": "14529.00",
+            "absolute_error_inr_per_quintal": "29.00"
+          },
+          {
+            "origin_date": "2025-02-09",
+            "target_date": "2025-02-10",
+            "actual_inr_per_quintal": "14445.00",
+            "prediction_inr_per_quintal": "14500.00",
+            "absolute_error_inr_per_quintal": "55.00"
+          },
+          {
+            "origin_date": "2025-02-12",
+            "target_date": "2025-02-13",
+            "actual_inr_per_quintal": "14200.00",
+            "prediction_inr_per_quintal": "14445.00",
+            "absolute_error_inr_per_quintal": "245.00"
+          },
+          {
+            "origin_date": "2025-02-16",
+            "target_date": "2025-02-17",
+            "actual_inr_per_quintal": "14000.00",
+            "prediction_inr_per_quintal": "14200.00",
+            "absolute_error_inr_per_quintal": "200.00"
+          },
+          {
+            "origin_date": "2025-02-19",
+            "target_date": "2025-02-20",
+            "actual_inr_per_quintal": "14500.00",
+            "prediction_inr_per_quintal": "14000.00",
+            "absolute_error_inr_per_quintal": "500.00"
+          },
+          {
+            "origin_date": "2025-02-23",
+            "target_date": "2025-02-24",
+            "actual_inr_per_quintal": "14706.00",
+            "prediction_inr_per_quintal": "14500.00",
+            "absolute_error_inr_per_quintal": "206.00"
+          },
+          {
+            "origin_date": "2025-02-26",
+            "target_date": "2025-02-27",
+            "actual_inr_per_quintal": "14535.00",
+            "prediction_inr_per_quintal": "14706.00",
+            "absolute_error_inr_per_quintal": "171.00"
+          },
+          {
+            "origin_date": "2025-03-16",
+            "target_date": "2025-03-17",
+            "actual_inr_per_quintal": "15306.00",
+            "prediction_inr_per_quintal": "14400.00",
+            "absolute_error_inr_per_quintal": "906.00"
+          },
+          {
+            "origin_date": "2025-03-19",
+            "target_date": "2025-03-20",
+            "actual_inr_per_quintal": "17026.00",
+            "prediction_inr_per_quintal": "15306.00",
+            "absolute_error_inr_per_quintal": "1720.00"
+          },
+          {
+            "origin_date": "2025-03-23",
+            "target_date": "2025-03-24",
+            "actual_inr_per_quintal": "17500.00",
+            "prediction_inr_per_quintal": "17026.00",
+            "absolute_error_inr_per_quintal": "474.00"
+          },
+          {
+            "origin_date": "2025-03-26",
+            "target_date": "2025-03-27",
+            "actual_inr_per_quintal": "17800.00",
+            "prediction_inr_per_quintal": "17500.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-04-02",
+            "target_date": "2025-04-03",
+            "actual_inr_per_quintal": "18350.00",
+            "prediction_inr_per_quintal": "17800.00",
+            "absolute_error_inr_per_quintal": "550.00"
+          },
+          {
+            "origin_date": "2025-04-06",
+            "target_date": "2025-04-07",
+            "actual_inr_per_quintal": "18500.00",
+            "prediction_inr_per_quintal": "18350.00",
+            "absolute_error_inr_per_quintal": "150.00"
+          },
+          {
+            "origin_date": "2025-04-09",
+            "target_date": "2025-04-10",
+            "actual_inr_per_quintal": "17500.00",
+            "prediction_inr_per_quintal": "18500.00",
+            "absolute_error_inr_per_quintal": "1000.00"
+          },
+          {
+            "origin_date": "2025-04-23",
+            "target_date": "2025-04-24",
+            "actual_inr_per_quintal": "18405.00",
+            "prediction_inr_per_quintal": "18500.00",
+            "absolute_error_inr_per_quintal": "95.00"
+          },
+          {
+            "origin_date": "2025-04-27",
+            "target_date": "2025-04-28",
+            "actual_inr_per_quintal": "18000.00",
+            "prediction_inr_per_quintal": "18405.00",
+            "absolute_error_inr_per_quintal": "405.00"
+          },
+          {
+            "origin_date": "2025-05-04",
+            "target_date": "2025-05-05",
+            "actual_inr_per_quintal": "17969.00",
+            "prediction_inr_per_quintal": "18000.00",
+            "absolute_error_inr_per_quintal": "31.00"
+          },
+          {
+            "origin_date": "2025-05-07",
+            "target_date": "2025-05-08",
+            "actual_inr_per_quintal": "18000.00",
+            "prediction_inr_per_quintal": "17969.00",
+            "absolute_error_inr_per_quintal": "31.00"
+          },
+          {
+            "origin_date": "2025-05-11",
+            "target_date": "2025-05-12",
+            "actual_inr_per_quintal": "18244.00",
+            "prediction_inr_per_quintal": "18000.00",
+            "absolute_error_inr_per_quintal": "244.00"
+          },
+          {
+            "origin_date": "2025-05-14",
+            "target_date": "2025-05-15",
+            "actual_inr_per_quintal": "18400.00",
+            "prediction_inr_per_quintal": "18244.00",
+            "absolute_error_inr_per_quintal": "156.00"
+          },
+          {
+            "origin_date": "2025-05-18",
+            "target_date": "2025-05-19",
+            "actual_inr_per_quintal": "18766.00",
+            "prediction_inr_per_quintal": "18400.00",
+            "absolute_error_inr_per_quintal": "366.00"
+          },
+          {
+            "origin_date": "2025-05-21",
+            "target_date": "2025-05-22",
+            "actual_inr_per_quintal": "19566.00",
+            "prediction_inr_per_quintal": "18766.00",
+            "absolute_error_inr_per_quintal": "800.00"
+          },
+          {
+            "origin_date": "2025-05-25",
+            "target_date": "2025-05-26",
+            "actual_inr_per_quintal": "20500.00",
+            "prediction_inr_per_quintal": "19566.00",
+            "absolute_error_inr_per_quintal": "934.00"
+          },
+          {
+            "origin_date": "2025-05-28",
+            "target_date": "2025-05-29",
+            "actual_inr_per_quintal": "20500.00",
+            "prediction_inr_per_quintal": "20500.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-06-01",
+            "target_date": "2025-06-02",
+            "actual_inr_per_quintal": "19800.00",
+            "prediction_inr_per_quintal": "20500.00",
+            "absolute_error_inr_per_quintal": "700.00"
+          },
+          {
+            "origin_date": "2025-06-04",
+            "target_date": "2025-06-05",
+            "actual_inr_per_quintal": "20115.00",
+            "prediction_inr_per_quintal": "19800.00",
+            "absolute_error_inr_per_quintal": "315.00"
+          },
+          {
+            "origin_date": "2025-06-08",
+            "target_date": "2025-06-09",
+            "actual_inr_per_quintal": "21500.00",
+            "prediction_inr_per_quintal": "20115.00",
+            "absolute_error_inr_per_quintal": "1385.00"
+          },
+          {
+            "origin_date": "2025-06-11",
+            "target_date": "2025-06-12",
+            "actual_inr_per_quintal": "23850.00",
+            "prediction_inr_per_quintal": "21500.00",
+            "absolute_error_inr_per_quintal": "2350.00"
+          },
+          {
+            "origin_date": "2025-06-15",
+            "target_date": "2025-06-16",
+            "actual_inr_per_quintal": "23000.00",
+            "prediction_inr_per_quintal": "23850.00",
+            "absolute_error_inr_per_quintal": "850.00"
+          },
+          {
+            "origin_date": "2025-06-18",
+            "target_date": "2025-06-19",
+            "actual_inr_per_quintal": "24166.00",
+            "prediction_inr_per_quintal": "23000.00",
+            "absolute_error_inr_per_quintal": "1166.00"
+          }
+        ],
+        "price_unit": "INR/quintal",
+        "rounding_note": "Displayed prices/errors are rounded to INR .01; aggregate metrics use the original full-precision frozen predictions. This is historical evaluation, not a current forecast."
+      },
+      "current_unavailability": {
+        "error": {
+          "code": "stale_market_data",
+          "message": "The selected series is stale or has insufficient recent history; inspect the dated historical evaluation instead",
+          "request_id": "9c44ae00-c837-469f-97e4-30e84ee4e7b8",
+          "details": {}
+        }
+      }
+    },
+    {
+      "commodity": "Arecanut",
+      "historical": {
+        "research_only": true,
+        "source_kind": "secondary",
+        "scope": {
+          "market": "Shivamogga Mandi",
+          "commodity": "Arecanut",
+          "variety": "bette",
+          "grade": "unspecified"
+        },
+        "horizon": 1,
+        "selected_model": "median_14",
+        "model_version": "research-snapshot-v1-52875c5dff4eac15",
+        "status": "evaluated",
+        "final_n": 163,
+        "metrics": {
+          "n": 163,
+          "mae_inr_per_quintal": 1689.717791411043,
+          "rmse_inr_per_quintal": 2239.1643989491868,
+          "smape_pct": 2.846320917614108,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.8804630427170794,
+          "directional_accuracy": 0.6073619631901841,
+          "p90_absolute_error_inr_per_quintal": 3830.300000000001,
+          "p90_overprediction_inr_per_quintal": 2167.6000000000017
+        },
+        "naive_metrics": {
+          "n": 163,
+          "mae_inr_per_quintal": 1471.2576687116564,
+          "rmse_inr_per_quintal": 2041.0784786059112,
+          "smape_pct": 2.5549432532250975,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.508053926270755,
+          "directional_accuracy": 0.024539877300613498,
+          "p90_absolute_error_inr_per_quintal": 3704.000000000001,
+          "p90_overprediction_inr_per_quintal": 2100.8
+        },
+        "train_end": "2023-12-31",
+        "validation_end": "2024-12-31",
+        "test_start": "2025-01-01",
+        "test_end": "2025-10-17",
+        "source": [
+          {
+            "source": "India Data Portal AGMARKNET mirror (secondary)",
+            "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+            "sha256": "170128e81ee493943633b9cc8ff338146d968035bd4ee62fa936c98262d1d7a4",
+            "fetched_at": "2026-11-04T19:36:21.608091+00:00",
+            "source_kind": "secondary",
+            "upstream_source_url": "https://agmarknet.gov.in/",
+            "license": "Open Data Commons Attribution License"
+          }
+        ],
+        "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts.",
+        "points": [
+          {
+            "origin_date": "2025-01-01",
+            "target_date": "2025-01-02",
+            "actual_inr_per_quintal": "54189.00",
+            "prediction_inr_per_quintal": "55664.00",
+            "absolute_error_inr_per_quintal": "1475.00"
+          },
+          {
+            "origin_date": "2025-01-02",
+            "target_date": "2025-01-03",
+            "actual_inr_per_quintal": "51600.00",
+            "prediction_inr_per_quintal": "55664.00",
+            "absolute_error_inr_per_quintal": "4064.00"
+          },
+          {
+            "origin_date": "2025-01-05",
+            "target_date": "2025-01-06",
+            "actual_inr_per_quintal": "52099.00",
+            "prediction_inr_per_quintal": "55664.00",
+            "absolute_error_inr_per_quintal": "3565.00"
+          },
+          {
+            "origin_date": "2025-01-06",
+            "target_date": "2025-01-07",
+            "actual_inr_per_quintal": "55399.00",
+            "prediction_inr_per_quintal": "55664.00",
+            "absolute_error_inr_per_quintal": "265.00"
+          },
+          {
+            "origin_date": "2025-01-07",
+            "target_date": "2025-01-08",
+            "actual_inr_per_quintal": "56500.00",
+            "prediction_inr_per_quintal": "54694.00",
+            "absolute_error_inr_per_quintal": "1806.00"
+          },
+          {
+            "origin_date": "2025-01-08",
+            "target_date": "2025-01-09",
+            "actual_inr_per_quintal": "54699.00",
+            "prediction_inr_per_quintal": "54694.00",
+            "absolute_error_inr_per_quintal": "5.00"
+          },
+          {
+            "origin_date": "2025-01-09",
+            "target_date": "2025-01-10",
+            "actual_inr_per_quintal": "56399.00",
+            "prediction_inr_per_quintal": "55299.00",
+            "absolute_error_inr_per_quintal": "1100.00"
+          },
+          {
+            "origin_date": "2025-01-12",
+            "target_date": "2025-01-13",
+            "actual_inr_per_quintal": "54099.00",
+            "prediction_inr_per_quintal": "55049.00",
+            "absolute_error_inr_per_quintal": "950.00"
+          },
+          {
+            "origin_date": "2025-01-14",
+            "target_date": "2025-01-15",
+            "actual_inr_per_quintal": "54399.00",
+            "prediction_inr_per_quintal": "54444.00",
+            "absolute_error_inr_per_quintal": "45.00"
+          },
+          {
+            "origin_date": "2025-01-15",
+            "target_date": "2025-01-16",
+            "actual_inr_per_quintal": "55499.00",
+            "prediction_inr_per_quintal": "54444.00",
+            "absolute_error_inr_per_quintal": "1055.00"
+          },
+          {
+            "origin_date": "2025-01-16",
+            "target_date": "2025-01-17",
+            "actual_inr_per_quintal": "52089.00",
+            "prediction_inr_per_quintal": "54294.00",
+            "absolute_error_inr_per_quintal": "2205.00"
+          },
+          {
+            "origin_date": "2025-01-19",
+            "target_date": "2025-01-20",
+            "actual_inr_per_quintal": "55729.00",
+            "prediction_inr_per_quintal": "54294.00",
+            "absolute_error_inr_per_quintal": "1435.00"
+          },
+          {
+            "origin_date": "2025-01-20",
+            "target_date": "2025-01-21",
+            "actual_inr_per_quintal": "55919.00",
+            "prediction_inr_per_quintal": "54294.00",
+            "absolute_error_inr_per_quintal": "1625.00"
+          },
+          {
+            "origin_date": "2025-01-21",
+            "target_date": "2025-01-22",
+            "actual_inr_per_quintal": "53499.00",
+            "prediction_inr_per_quintal": "54294.00",
+            "absolute_error_inr_per_quintal": "795.00"
+          },
+          {
+            "origin_date": "2025-01-22",
+            "target_date": "2025-01-23",
+            "actual_inr_per_quintal": "54599.00",
+            "prediction_inr_per_quintal": "54549.00",
+            "absolute_error_inr_per_quintal": "50.00"
+          },
+          {
+            "origin_date": "2025-01-23",
+            "target_date": "2025-01-24",
+            "actual_inr_per_quintal": "50089.00",
+            "prediction_inr_per_quintal": "54549.00",
+            "absolute_error_inr_per_quintal": "4460.00"
+          },
+          {
+            "origin_date": "2025-01-26",
+            "target_date": "2025-01-27",
+            "actual_inr_per_quintal": "54299.00",
+            "prediction_inr_per_quintal": "54649.00",
+            "absolute_error_inr_per_quintal": "350.00"
+          },
+          {
+            "origin_date": "2025-01-27",
+            "target_date": "2025-01-28",
+            "actual_inr_per_quintal": "54499.00",
+            "prediction_inr_per_quintal": "54649.00",
+            "absolute_error_inr_per_quintal": "150.00"
+          },
+          {
+            "origin_date": "2025-01-28",
+            "target_date": "2025-01-29",
+            "actual_inr_per_quintal": "56689.00",
+            "prediction_inr_per_quintal": "54649.00",
+            "absolute_error_inr_per_quintal": "2040.00"
+          },
+          {
+            "origin_date": "2025-01-29",
+            "target_date": "2025-01-30",
+            "actual_inr_per_quintal": "54099.00",
+            "prediction_inr_per_quintal": "54549.00",
+            "absolute_error_inr_per_quintal": "450.00"
+          },
+          {
+            "origin_date": "2025-01-30",
+            "target_date": "2025-01-31",
+            "actual_inr_per_quintal": "52899.00",
+            "prediction_inr_per_quintal": "54549.00",
+            "absolute_error_inr_per_quintal": "1650.00"
+          },
+          {
+            "origin_date": "2025-02-02",
+            "target_date": "2025-02-03",
+            "actual_inr_per_quintal": "52500.00",
+            "prediction_inr_per_quintal": "54349.00",
+            "absolute_error_inr_per_quintal": "1849.00"
+          },
+          {
+            "origin_date": "2025-02-03",
+            "target_date": "2025-02-04",
+            "actual_inr_per_quintal": "54014.00",
+            "prediction_inr_per_quintal": "54349.00",
+            "absolute_error_inr_per_quintal": "335.00"
+          },
+          {
+            "origin_date": "2025-02-04",
+            "target_date": "2025-02-05",
+            "actual_inr_per_quintal": "50399.00",
+            "prediction_inr_per_quintal": "54349.00",
+            "absolute_error_inr_per_quintal": "3950.00"
+          },
+          {
+            "origin_date": "2025-02-05",
+            "target_date": "2025-02-06",
+            "actual_inr_per_quintal": "54299.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "100.00"
+          },
+          {
+            "origin_date": "2025-02-06",
+            "target_date": "2025-02-07",
+            "actual_inr_per_quintal": "54699.00",
+            "prediction_inr_per_quintal": "54056.50",
+            "absolute_error_inr_per_quintal": "642.50"
+          },
+          {
+            "origin_date": "2025-02-09",
+            "target_date": "2025-02-10",
+            "actual_inr_per_quintal": "52899.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "1300.00"
+          },
+          {
+            "origin_date": "2025-02-10",
+            "target_date": "2025-02-11",
+            "actual_inr_per_quintal": "54890.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "691.00"
+          },
+          {
+            "origin_date": "2025-02-11",
+            "target_date": "2025-02-12",
+            "actual_inr_per_quintal": "55500.00",
+            "prediction_inr_per_quintal": "54056.50",
+            "absolute_error_inr_per_quintal": "1443.50"
+          },
+          {
+            "origin_date": "2025-02-12",
+            "target_date": "2025-02-13",
+            "actual_inr_per_quintal": "52299.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "1900.00"
+          },
+          {
+            "origin_date": "2025-02-13",
+            "target_date": "2025-02-14",
+            "actual_inr_per_quintal": "55300.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "1101.00"
+          },
+          {
+            "origin_date": "2025-02-16",
+            "target_date": "2025-02-17",
+            "actual_inr_per_quintal": "55300.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "1101.00"
+          },
+          {
+            "origin_date": "2025-02-17",
+            "target_date": "2025-02-18",
+            "actual_inr_per_quintal": "55619.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "1420.00"
+          },
+          {
+            "origin_date": "2025-02-18",
+            "target_date": "2025-02-19",
+            "actual_inr_per_quintal": "54399.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "200.00"
+          },
+          {
+            "origin_date": "2025-02-19",
+            "target_date": "2025-02-20",
+            "actual_inr_per_quintal": "55499.00",
+            "prediction_inr_per_quintal": "54199.00",
+            "absolute_error_inr_per_quintal": "1300.00"
+          },
+          {
+            "origin_date": "2025-02-20",
+            "target_date": "2025-02-21",
+            "actual_inr_per_quintal": "56100.00",
+            "prediction_inr_per_quintal": "54349.00",
+            "absolute_error_inr_per_quintal": "1751.00"
+          },
+          {
+            "origin_date": "2025-02-23",
+            "target_date": "2025-02-24",
+            "actual_inr_per_quintal": "51559.00",
+            "prediction_inr_per_quintal": "54794.50",
+            "absolute_error_inr_per_quintal": "3235.50"
+          },
+          {
+            "origin_date": "2025-02-24",
+            "target_date": "2025-02-25",
+            "actual_inr_per_quintal": "56399.00",
+            "prediction_inr_per_quintal": "54794.50",
+            "absolute_error_inr_per_quintal": "1604.50"
+          },
+          {
+            "origin_date": "2025-02-26",
+            "target_date": "2025-02-27",
+            "actual_inr_per_quintal": "54400.00",
+            "prediction_inr_per_quintal": "55095.00",
+            "absolute_error_inr_per_quintal": "695.00"
+          },
+          {
+            "origin_date": "2025-02-27",
+            "target_date": "2025-02-28",
+            "actual_inr_per_quintal": "56200.00",
+            "prediction_inr_per_quintal": "55095.00",
+            "absolute_error_inr_per_quintal": "1105.00"
+          },
+          {
+            "origin_date": "2025-03-02",
+            "target_date": "2025-03-03",
+            "actual_inr_per_quintal": "53009.00",
+            "prediction_inr_per_quintal": "55300.00",
+            "absolute_error_inr_per_quintal": "2291.00"
+          },
+          {
+            "origin_date": "2025-03-03",
+            "target_date": "2025-03-04",
+            "actual_inr_per_quintal": "55299.00",
+            "prediction_inr_per_quintal": "55300.00",
+            "absolute_error_inr_per_quintal": "1.00"
+          },
+          {
+            "origin_date": "2025-03-11",
+            "target_date": "2025-03-12",
+            "actual_inr_per_quintal": "53009.00",
+            "prediction_inr_per_quintal": "55300.00",
+            "absolute_error_inr_per_quintal": "2291.00"
+          },
+          {
+            "origin_date": "2025-03-13",
+            "target_date": "2025-03-14",
+            "actual_inr_per_quintal": "54389.00",
+            "prediction_inr_per_quintal": "55299.50",
+            "absolute_error_inr_per_quintal": "910.50"
+          },
+          {
+            "origin_date": "2025-03-16",
+            "target_date": "2025-03-17",
+            "actual_inr_per_quintal": "54699.00",
+            "prediction_inr_per_quintal": "54849.50",
+            "absolute_error_inr_per_quintal": "150.50"
+          },
+          {
+            "origin_date": "2025-03-17",
+            "target_date": "2025-03-18",
+            "actual_inr_per_quintal": "55319.00",
+            "prediction_inr_per_quintal": "54849.50",
+            "absolute_error_inr_per_quintal": "469.50"
+          },
+          {
+            "origin_date": "2025-03-18",
+            "target_date": "2025-03-19",
+            "actual_inr_per_quintal": "55000.00",
+            "prediction_inr_per_quintal": "54549.50",
+            "absolute_error_inr_per_quintal": "450.50"
+          },
+          {
+            "origin_date": "2025-03-19",
+            "target_date": "2025-03-20",
+            "actual_inr_per_quintal": "55069.00",
+            "prediction_inr_per_quintal": "54549.50",
+            "absolute_error_inr_per_quintal": "519.50"
+          },
+          {
+            "origin_date": "2025-03-23",
+            "target_date": "2025-03-24",
+            "actual_inr_per_quintal": "53599.00",
+            "prediction_inr_per_quintal": "54849.50",
+            "absolute_error_inr_per_quintal": "1250.50"
+          },
+          {
+            "origin_date": "2025-03-24",
+            "target_date": "2025-03-25",
+            "actual_inr_per_quintal": "53199.00",
+            "prediction_inr_per_quintal": "54849.50",
+            "absolute_error_inr_per_quintal": "1650.50"
+          },
+          {
+            "origin_date": "2025-04-10",
+            "target_date": "2025-04-11",
+            "actual_inr_per_quintal": "56669.00",
+            "prediction_inr_per_quintal": "54644.00",
+            "absolute_error_inr_per_quintal": "2025.00"
+          },
+          {
+            "origin_date": "2025-04-14",
+            "target_date": "2025-04-15",
+            "actual_inr_per_quintal": "54119.00",
+            "prediction_inr_per_quintal": "54644.00",
+            "absolute_error_inr_per_quintal": "525.00"
+          },
+          {
+            "origin_date": "2025-04-15",
+            "target_date": "2025-04-16",
+            "actual_inr_per_quintal": "56609.00",
+            "prediction_inr_per_quintal": "54644.00",
+            "absolute_error_inr_per_quintal": "1965.00"
+          },
+          {
+            "origin_date": "2025-04-16",
+            "target_date": "2025-04-17",
+            "actual_inr_per_quintal": "56399.00",
+            "prediction_inr_per_quintal": "54644.00",
+            "absolute_error_inr_per_quintal": "1755.00"
+          },
+          {
+            "origin_date": "2025-04-20",
+            "target_date": "2025-04-21",
+            "actual_inr_per_quintal": "58700.00",
+            "prediction_inr_per_quintal": "54849.50",
+            "absolute_error_inr_per_quintal": "3850.50"
+          },
+          {
+            "origin_date": "2025-04-21",
+            "target_date": "2025-04-22",
+            "actual_inr_per_quintal": "58599.00",
+            "prediction_inr_per_quintal": "54849.50",
+            "absolute_error_inr_per_quintal": "3749.50"
+          },
+          {
+            "origin_date": "2025-04-22",
+            "target_date": "2025-04-23",
+            "actual_inr_per_quintal": "58899.00",
+            "prediction_inr_per_quintal": "55034.50",
+            "absolute_error_inr_per_quintal": "3864.50"
+          },
+          {
+            "origin_date": "2025-04-23",
+            "target_date": "2025-04-24",
+            "actual_inr_per_quintal": "60189.00",
+            "prediction_inr_per_quintal": "55194.00",
+            "absolute_error_inr_per_quintal": "4995.00"
+          },
+          {
+            "origin_date": "2025-04-24",
+            "target_date": "2025-04-25",
+            "actual_inr_per_quintal": "60300.00",
+            "prediction_inr_per_quintal": "55654.00",
+            "absolute_error_inr_per_quintal": "4646.00"
+          },
+          {
+            "origin_date": "2025-04-27",
+            "target_date": "2025-04-28",
+            "actual_inr_per_quintal": "58699.00",
+            "prediction_inr_per_quintal": "56504.00",
+            "absolute_error_inr_per_quintal": "2195.00"
+          },
+          {
+            "origin_date": "2025-04-28",
+            "target_date": "2025-04-29",
+            "actual_inr_per_quintal": "58514.00",
+            "prediction_inr_per_quintal": "56504.00",
+            "absolute_error_inr_per_quintal": "2010.00"
+          },
+          {
+            "origin_date": "2025-05-01",
+            "target_date": "2025-05-02",
+            "actual_inr_per_quintal": "58519.00",
+            "prediction_inr_per_quintal": "57591.50",
+            "absolute_error_inr_per_quintal": "927.50"
+          },
+          {
+            "origin_date": "2025-05-04",
+            "target_date": "2025-05-05",
+            "actual_inr_per_quintal": "55899.00",
+            "prediction_inr_per_quintal": "58516.50",
+            "absolute_error_inr_per_quintal": "2617.50"
+          },
+          {
+            "origin_date": "2025-05-05",
+            "target_date": "2025-05-06",
+            "actual_inr_per_quintal": "58099.00",
+            "prediction_inr_per_quintal": "58516.50",
+            "absolute_error_inr_per_quintal": "417.50"
+          },
+          {
+            "origin_date": "2025-05-06",
+            "target_date": "2025-05-07",
+            "actual_inr_per_quintal": "57399.00",
+            "prediction_inr_per_quintal": "58516.50",
+            "absolute_error_inr_per_quintal": "1117.50"
+          },
+          {
+            "origin_date": "2025-05-07",
+            "target_date": "2025-05-08",
+            "actual_inr_per_quintal": "58589.00",
+            "prediction_inr_per_quintal": "58516.50",
+            "absolute_error_inr_per_quintal": "72.50"
+          },
+          {
+            "origin_date": "2025-05-08",
+            "target_date": "2025-05-09",
+            "actual_inr_per_quintal": "57399.00",
+            "prediction_inr_per_quintal": "58516.50",
+            "absolute_error_inr_per_quintal": "1117.50"
+          },
+          {
+            "origin_date": "2025-05-11",
+            "target_date": "2025-05-12",
+            "actual_inr_per_quintal": "57600.00",
+            "prediction_inr_per_quintal": "58554.00",
+            "absolute_error_inr_per_quintal": "954.00"
+          },
+          {
+            "origin_date": "2025-05-12",
+            "target_date": "2025-05-13",
+            "actual_inr_per_quintal": "55399.00",
+            "prediction_inr_per_quintal": "58554.00",
+            "absolute_error_inr_per_quintal": "3155.00"
+          },
+          {
+            "origin_date": "2025-05-13",
+            "target_date": "2025-05-14",
+            "actual_inr_per_quintal": "57599.00",
+            "prediction_inr_per_quintal": "58554.00",
+            "absolute_error_inr_per_quintal": "955.00"
+          },
+          {
+            "origin_date": "2025-05-14",
+            "target_date": "2025-05-15",
+            "actual_inr_per_quintal": "56019.00",
+            "prediction_inr_per_quintal": "58516.50",
+            "absolute_error_inr_per_quintal": "2497.50"
+          },
+          {
+            "origin_date": "2025-05-15",
+            "target_date": "2025-05-16",
+            "actual_inr_per_quintal": "56300.00",
+            "prediction_inr_per_quintal": "58306.50",
+            "absolute_error_inr_per_quintal": "2006.50"
+          },
+          {
+            "origin_date": "2025-05-18",
+            "target_date": "2025-05-19",
+            "actual_inr_per_quintal": "57569.00",
+            "prediction_inr_per_quintal": "57599.50",
+            "absolute_error_inr_per_quintal": "30.50"
+          },
+          {
+            "origin_date": "2025-05-19",
+            "target_date": "2025-05-20",
+            "actual_inr_per_quintal": "57989.00",
+            "prediction_inr_per_quintal": "57599.50",
+            "absolute_error_inr_per_quintal": "389.50"
+          },
+          {
+            "origin_date": "2025-05-20",
+            "target_date": "2025-05-21",
+            "actual_inr_per_quintal": "57989.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "405.00"
+          },
+          {
+            "origin_date": "2025-05-21",
+            "target_date": "2025-05-22",
+            "actual_inr_per_quintal": "57299.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "285.00"
+          },
+          {
+            "origin_date": "2025-05-22",
+            "target_date": "2025-05-23",
+            "actual_inr_per_quintal": "57919.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "335.00"
+          },
+          {
+            "origin_date": "2025-05-25",
+            "target_date": "2025-05-26",
+            "actual_inr_per_quintal": "57699.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "115.00"
+          },
+          {
+            "origin_date": "2025-05-26",
+            "target_date": "2025-05-27",
+            "actual_inr_per_quintal": "57989.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "405.00"
+          },
+          {
+            "origin_date": "2025-05-28",
+            "target_date": "2025-05-29",
+            "actual_inr_per_quintal": "56399.00",
+            "prediction_inr_per_quintal": "57599.50",
+            "absolute_error_inr_per_quintal": "1200.50"
+          },
+          {
+            "origin_date": "2025-05-29",
+            "target_date": "2025-05-30",
+            "actual_inr_per_quintal": "57349.00",
+            "prediction_inr_per_quintal": "57599.50",
+            "absolute_error_inr_per_quintal": "250.50"
+          },
+          {
+            "origin_date": "2025-06-02",
+            "target_date": "2025-06-03",
+            "actual_inr_per_quintal": "57399.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "185.00"
+          },
+          {
+            "origin_date": "2025-06-03",
+            "target_date": "2025-06-04",
+            "actual_inr_per_quintal": "57699.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "115.00"
+          },
+          {
+            "origin_date": "2025-06-04",
+            "target_date": "2025-06-05",
+            "actual_inr_per_quintal": "56789.00",
+            "prediction_inr_per_quintal": "57484.00",
+            "absolute_error_inr_per_quintal": "695.00"
+          },
+          {
+            "origin_date": "2025-06-05",
+            "target_date": "2025-06-06",
+            "actual_inr_per_quintal": "57709.00",
+            "prediction_inr_per_quintal": "57584.00",
+            "absolute_error_inr_per_quintal": "125.00"
+          },
+          {
+            "origin_date": "2025-06-08",
+            "target_date": "2025-06-09",
+            "actual_inr_per_quintal": "57919.00",
+            "prediction_inr_per_quintal": "57634.00",
+            "absolute_error_inr_per_quintal": "285.00"
+          },
+          {
+            "origin_date": "2025-06-09",
+            "target_date": "2025-06-10",
+            "actual_inr_per_quintal": "57278.00",
+            "prediction_inr_per_quintal": "57634.00",
+            "absolute_error_inr_per_quintal": "356.00"
+          },
+          {
+            "origin_date": "2025-06-10",
+            "target_date": "2025-06-11",
+            "actual_inr_per_quintal": "58699.00",
+            "prediction_inr_per_quintal": "57699.00",
+            "absolute_error_inr_per_quintal": "1000.00"
+          },
+          {
+            "origin_date": "2025-06-11",
+            "target_date": "2025-06-12",
+            "actual_inr_per_quintal": "57299.00",
+            "prediction_inr_per_quintal": "57699.00",
+            "absolute_error_inr_per_quintal": "400.00"
+          },
+          {
+            "origin_date": "2025-06-12",
+            "target_date": "2025-06-13",
+            "actual_inr_per_quintal": "58009.00",
+            "prediction_inr_per_quintal": "57699.00",
+            "absolute_error_inr_per_quintal": "310.00"
+          },
+          {
+            "origin_date": "2025-06-15",
+            "target_date": "2025-06-16",
+            "actual_inr_per_quintal": "59719.00",
+            "prediction_inr_per_quintal": "57699.00",
+            "absolute_error_inr_per_quintal": "2020.00"
+          },
+          {
+            "origin_date": "2025-06-16",
+            "target_date": "2025-06-17",
+            "actual_inr_per_quintal": "57199.00",
+            "prediction_inr_per_quintal": "57699.00",
+            "absolute_error_inr_per_quintal": "500.00"
+          },
+          {
+            "origin_date": "2025-06-17",
+            "target_date": "2025-06-18",
+            "actual_inr_per_quintal": "57200.00",
+            "prediction_inr_per_quintal": "57699.00",
+            "absolute_error_inr_per_quintal": "499.00"
+          },
+          {
+            "origin_date": "2025-06-18",
+            "target_date": "2025-06-19",
+            "actual_inr_per_quintal": "57299.00",
+            "prediction_inr_per_quintal": "57549.00",
+            "absolute_error_inr_per_quintal": "250.00"
+          },
+          {
+            "origin_date": "2025-06-19",
+            "target_date": "2025-06-20",
+            "actual_inr_per_quintal": "56619.00",
+            "prediction_inr_per_quintal": "57374.00",
+            "absolute_error_inr_per_quintal": "755.00"
+          },
+          {
+            "origin_date": "2025-06-22",
+            "target_date": "2025-06-23",
+            "actual_inr_per_quintal": "55311.00",
+            "prediction_inr_per_quintal": "57349.00",
+            "absolute_error_inr_per_quintal": "2038.00"
+          },
+          {
+            "origin_date": "2025-06-23",
+            "target_date": "2025-06-24",
+            "actual_inr_per_quintal": "57599.00",
+            "prediction_inr_per_quintal": "57349.00",
+            "absolute_error_inr_per_quintal": "250.00"
+          },
+          {
+            "origin_date": "2025-06-24",
+            "target_date": "2025-06-25",
+            "actual_inr_per_quintal": "56200.00",
+            "prediction_inr_per_quintal": "57299.00",
+            "absolute_error_inr_per_quintal": "1099.00"
+          },
+          {
+            "origin_date": "2025-06-25",
+            "target_date": "2025-06-26",
+            "actual_inr_per_quintal": "57599.00",
+            "prediction_inr_per_quintal": "57299.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-06-26",
+            "target_date": "2025-06-27",
+            "actual_inr_per_quintal": "59519.00",
+            "prediction_inr_per_quintal": "57299.00",
+            "absolute_error_inr_per_quintal": "2220.00"
+          },
+          {
+            "origin_date": "2025-06-29",
+            "target_date": "2025-06-30",
+            "actual_inr_per_quintal": "60420.00",
+            "prediction_inr_per_quintal": "57299.00",
+            "absolute_error_inr_per_quintal": "3121.00"
+          },
+          {
+            "origin_date": "2025-06-30",
+            "target_date": "2025-07-01",
+            "actual_inr_per_quintal": "59719.00",
+            "prediction_inr_per_quintal": "57299.00",
+            "absolute_error_inr_per_quintal": "2420.00"
+          },
+          {
+            "origin_date": "2025-07-02",
+            "target_date": "2025-07-03",
+            "actual_inr_per_quintal": "59420.00",
+            "prediction_inr_per_quintal": "57449.00",
+            "absolute_error_inr_per_quintal": "1971.00"
+          },
+          {
+            "origin_date": "2025-07-03",
+            "target_date": "2025-07-04",
+            "actual_inr_per_quintal": "54029.00",
+            "prediction_inr_per_quintal": "57449.00",
+            "absolute_error_inr_per_quintal": "3420.00"
+          },
+          {
+            "origin_date": "2025-07-06",
+            "target_date": "2025-07-07",
+            "actual_inr_per_quintal": "59400.00",
+            "prediction_inr_per_quintal": "57449.00",
+            "absolute_error_inr_per_quintal": "1951.00"
+          },
+          {
+            "origin_date": "2025-07-07",
+            "target_date": "2025-07-08",
+            "actual_inr_per_quintal": "59169.00",
+            "prediction_inr_per_quintal": "57449.00",
+            "absolute_error_inr_per_quintal": "1720.00"
+          },
+          {
+            "origin_date": "2025-07-09",
+            "target_date": "2025-07-10",
+            "actual_inr_per_quintal": "57820.00",
+            "prediction_inr_per_quintal": "57599.00",
+            "absolute_error_inr_per_quintal": "221.00"
+          },
+          {
+            "origin_date": "2025-07-13",
+            "target_date": "2025-07-14",
+            "actual_inr_per_quintal": "59609.00",
+            "prediction_inr_per_quintal": "57709.50",
+            "absolute_error_inr_per_quintal": "1899.50"
+          },
+          {
+            "origin_date": "2025-07-14",
+            "target_date": "2025-07-15",
+            "actual_inr_per_quintal": "58629.00",
+            "prediction_inr_per_quintal": "57709.50",
+            "absolute_error_inr_per_quintal": "919.50"
+          },
+          {
+            "origin_date": "2025-07-15",
+            "target_date": "2025-07-16",
+            "actual_inr_per_quintal": "59800.00",
+            "prediction_inr_per_quintal": "58494.50",
+            "absolute_error_inr_per_quintal": "1305.50"
+          },
+          {
+            "origin_date": "2025-07-16",
+            "target_date": "2025-07-17",
+            "actual_inr_per_quintal": "56699.00",
+            "prediction_inr_per_quintal": "58899.00",
+            "absolute_error_inr_per_quintal": "2200.00"
+          },
+          {
+            "origin_date": "2025-07-17",
+            "target_date": "2025-07-18",
+            "actual_inr_per_quintal": "56319.00",
+            "prediction_inr_per_quintal": "59284.50",
+            "absolute_error_inr_per_quintal": "2965.50"
+          },
+          {
+            "origin_date": "2025-07-20",
+            "target_date": "2025-07-21",
+            "actual_inr_per_quintal": "57899.00",
+            "prediction_inr_per_quintal": "59284.50",
+            "absolute_error_inr_per_quintal": "1385.50"
+          },
+          {
+            "origin_date": "2025-07-21",
+            "target_date": "2025-07-22",
+            "actual_inr_per_quintal": "59774.00",
+            "prediction_inr_per_quintal": "59284.50",
+            "absolute_error_inr_per_quintal": "489.50"
+          },
+          {
+            "origin_date": "2025-07-22",
+            "target_date": "2025-07-23",
+            "actual_inr_per_quintal": "59669.00",
+            "prediction_inr_per_quintal": "59284.50",
+            "absolute_error_inr_per_quintal": "384.50"
+          },
+          {
+            "origin_date": "2025-07-23",
+            "target_date": "2025-07-24",
+            "actual_inr_per_quintal": "58719.00",
+            "prediction_inr_per_quintal": "59284.50",
+            "absolute_error_inr_per_quintal": "565.50"
+          },
+          {
+            "origin_date": "2025-07-24",
+            "target_date": "2025-07-25",
+            "actual_inr_per_quintal": "59200.00",
+            "prediction_inr_per_quintal": "59284.50",
+            "absolute_error_inr_per_quintal": "84.50"
+          },
+          {
+            "origin_date": "2025-07-27",
+            "target_date": "2025-07-28",
+            "actual_inr_per_quintal": "55019.00",
+            "prediction_inr_per_quintal": "58944.00",
+            "absolute_error_inr_per_quintal": "3925.00"
+          },
+          {
+            "origin_date": "2025-07-29",
+            "target_date": "2025-07-30",
+            "actual_inr_per_quintal": "54029.00",
+            "prediction_inr_per_quintal": "58944.00",
+            "absolute_error_inr_per_quintal": "4915.00"
+          },
+          {
+            "origin_date": "2025-07-30",
+            "target_date": "2025-07-31",
+            "actual_inr_per_quintal": "60299.00",
+            "prediction_inr_per_quintal": "58944.00",
+            "absolute_error_inr_per_quintal": "1355.00"
+          },
+          {
+            "origin_date": "2025-07-31",
+            "target_date": "2025-08-01",
+            "actual_inr_per_quintal": "60599.00",
+            "prediction_inr_per_quintal": "58674.00",
+            "absolute_error_inr_per_quintal": "1925.00"
+          },
+          {
+            "origin_date": "2025-08-03",
+            "target_date": "2025-08-04",
+            "actual_inr_per_quintal": "60599.00",
+            "prediction_inr_per_quintal": "58959.50",
+            "absolute_error_inr_per_quintal": "1639.50"
+          },
+          {
+            "origin_date": "2025-08-05",
+            "target_date": "2025-08-06",
+            "actual_inr_per_quintal": "60719.00",
+            "prediction_inr_per_quintal": "58959.50",
+            "absolute_error_inr_per_quintal": "1759.50"
+          },
+          {
+            "origin_date": "2025-08-06",
+            "target_date": "2025-08-07",
+            "actual_inr_per_quintal": "61009.00",
+            "prediction_inr_per_quintal": "58959.50",
+            "absolute_error_inr_per_quintal": "2049.50"
+          },
+          {
+            "origin_date": "2025-08-07",
+            "target_date": "2025-08-08",
+            "actual_inr_per_quintal": "60399.00",
+            "prediction_inr_per_quintal": "59434.50",
+            "absolute_error_inr_per_quintal": "964.50"
+          },
+          {
+            "origin_date": "2025-08-10",
+            "target_date": "2025-08-11",
+            "actual_inr_per_quintal": "62099.00",
+            "prediction_inr_per_quintal": "59721.50",
+            "absolute_error_inr_per_quintal": "2377.50"
+          },
+          {
+            "origin_date": "2025-08-11",
+            "target_date": "2025-08-12",
+            "actual_inr_per_quintal": "62669.00",
+            "prediction_inr_per_quintal": "59721.50",
+            "absolute_error_inr_per_quintal": "2947.50"
+          },
+          {
+            "origin_date": "2025-08-12",
+            "target_date": "2025-08-13",
+            "actual_inr_per_quintal": "61989.00",
+            "prediction_inr_per_quintal": "60036.50",
+            "absolute_error_inr_per_quintal": "1952.50"
+          },
+          {
+            "origin_date": "2025-08-13",
+            "target_date": "2025-08-14",
+            "actual_inr_per_quintal": "62799.00",
+            "prediction_inr_per_quintal": "60349.00",
+            "absolute_error_inr_per_quintal": "2450.00"
+          },
+          {
+            "origin_date": "2025-08-17",
+            "target_date": "2025-08-18",
+            "actual_inr_per_quintal": "63750.00",
+            "prediction_inr_per_quintal": "60599.00",
+            "absolute_error_inr_per_quintal": "3151.00"
+          },
+          {
+            "origin_date": "2025-08-18",
+            "target_date": "2025-08-19",
+            "actual_inr_per_quintal": "62569.00",
+            "prediction_inr_per_quintal": "60599.00",
+            "absolute_error_inr_per_quintal": "1970.00"
+          },
+          {
+            "origin_date": "2025-08-20",
+            "target_date": "2025-08-21",
+            "actual_inr_per_quintal": "63109.00",
+            "prediction_inr_per_quintal": "60864.00",
+            "absolute_error_inr_per_quintal": "2245.00"
+          },
+          {
+            "origin_date": "2025-08-21",
+            "target_date": "2025-08-22",
+            "actual_inr_per_quintal": "64432.00",
+            "prediction_inr_per_quintal": "60864.00",
+            "absolute_error_inr_per_quintal": "3568.00"
+          },
+          {
+            "origin_date": "2025-08-24",
+            "target_date": "2025-08-25",
+            "actual_inr_per_quintal": "65200.00",
+            "prediction_inr_per_quintal": "62044.00",
+            "absolute_error_inr_per_quintal": "3156.00"
+          },
+          {
+            "origin_date": "2025-08-25",
+            "target_date": "2025-08-26",
+            "actual_inr_per_quintal": "62774.00",
+            "prediction_inr_per_quintal": "62044.00",
+            "absolute_error_inr_per_quintal": "730.00"
+          },
+          {
+            "origin_date": "2025-08-28",
+            "target_date": "2025-08-29",
+            "actual_inr_per_quintal": "65049.00",
+            "prediction_inr_per_quintal": "62619.00",
+            "absolute_error_inr_per_quintal": "2430.00"
+          },
+          {
+            "origin_date": "2025-08-31",
+            "target_date": "2025-09-01",
+            "actual_inr_per_quintal": "65269.00",
+            "prediction_inr_per_quintal": "62721.50",
+            "absolute_error_inr_per_quintal": "2547.50"
+          },
+          {
+            "origin_date": "2025-09-01",
+            "target_date": "2025-09-02",
+            "actual_inr_per_quintal": "64609.00",
+            "prediction_inr_per_quintal": "62721.50",
+            "absolute_error_inr_per_quintal": "1887.50"
+          },
+          {
+            "origin_date": "2025-09-02",
+            "target_date": "2025-09-03",
+            "actual_inr_per_quintal": "64782.00",
+            "prediction_inr_per_quintal": "62786.50",
+            "absolute_error_inr_per_quintal": "1995.50"
+          },
+          {
+            "origin_date": "2025-09-03",
+            "target_date": "2025-09-04",
+            "actual_inr_per_quintal": "62509.00",
+            "prediction_inr_per_quintal": "62954.00",
+            "absolute_error_inr_per_quintal": "445.00"
+          },
+          {
+            "origin_date": "2025-09-07",
+            "target_date": "2025-09-08",
+            "actual_inr_per_quintal": "64699.00",
+            "prediction_inr_per_quintal": "63429.50",
+            "absolute_error_inr_per_quintal": "1269.50"
+          },
+          {
+            "origin_date": "2025-09-08",
+            "target_date": "2025-09-09",
+            "actual_inr_per_quintal": "65399.00",
+            "prediction_inr_per_quintal": "63429.50",
+            "absolute_error_inr_per_quintal": "1969.50"
+          },
+          {
+            "origin_date": "2025-09-09",
+            "target_date": "2025-09-10",
+            "actual_inr_per_quintal": "65399.00",
+            "prediction_inr_per_quintal": "64091.00",
+            "absolute_error_inr_per_quintal": "1308.00"
+          },
+          {
+            "origin_date": "2025-09-10",
+            "target_date": "2025-09-11",
+            "actual_inr_per_quintal": "63324.00",
+            "prediction_inr_per_quintal": "64520.50",
+            "absolute_error_inr_per_quintal": "1196.50"
+          },
+          {
+            "origin_date": "2025-09-11",
+            "target_date": "2025-09-12",
+            "actual_inr_per_quintal": "66019.00",
+            "prediction_inr_per_quintal": "64654.00",
+            "absolute_error_inr_per_quintal": "1365.00"
+          },
+          {
+            "origin_date": "2025-09-14",
+            "target_date": "2025-09-15",
+            "actual_inr_per_quintal": "65299.00",
+            "prediction_inr_per_quintal": "64740.50",
+            "absolute_error_inr_per_quintal": "558.50"
+          },
+          {
+            "origin_date": "2025-09-15",
+            "target_date": "2025-09-16",
+            "actual_inr_per_quintal": "60599.00",
+            "prediction_inr_per_quintal": "64740.50",
+            "absolute_error_inr_per_quintal": "4141.50"
+          },
+          {
+            "origin_date": "2025-09-16",
+            "target_date": "2025-09-17",
+            "actual_inr_per_quintal": "65309.00",
+            "prediction_inr_per_quintal": "64915.50",
+            "absolute_error_inr_per_quintal": "393.50"
+          },
+          {
+            "origin_date": "2025-09-17",
+            "target_date": "2025-09-18",
+            "actual_inr_per_quintal": "65319.00",
+            "prediction_inr_per_quintal": "64915.50",
+            "absolute_error_inr_per_quintal": "403.50"
+          },
+          {
+            "origin_date": "2025-09-21",
+            "target_date": "2025-09-22",
+            "actual_inr_per_quintal": "64300.00",
+            "prediction_inr_per_quintal": "65159.00",
+            "absolute_error_inr_per_quintal": "859.00"
+          },
+          {
+            "origin_date": "2025-09-23",
+            "target_date": "2025-09-24",
+            "actual_inr_per_quintal": "63089.00",
+            "prediction_inr_per_quintal": "65025.50",
+            "absolute_error_inr_per_quintal": "1936.50"
+          },
+          {
+            "origin_date": "2025-09-24",
+            "target_date": "2025-09-25",
+            "actual_inr_per_quintal": "64899.00",
+            "prediction_inr_per_quintal": "65025.50",
+            "absolute_error_inr_per_quintal": "126.50"
+          },
+          {
+            "origin_date": "2025-09-25",
+            "target_date": "2025-09-26",
+            "actual_inr_per_quintal": "66809.00",
+            "prediction_inr_per_quintal": "64740.50",
+            "absolute_error_inr_per_quintal": "2068.50"
+          },
+          {
+            "origin_date": "2025-09-28",
+            "target_date": "2025-09-29",
+            "actual_inr_per_quintal": "66600.00",
+            "prediction_inr_per_quintal": "65099.00",
+            "absolute_error_inr_per_quintal": "1501.00"
+          },
+          {
+            "origin_date": "2025-10-02",
+            "target_date": "2025-10-03",
+            "actual_inr_per_quintal": "68272.00",
+            "prediction_inr_per_quintal": "65304.00",
+            "absolute_error_inr_per_quintal": "2968.00"
+          },
+          {
+            "origin_date": "2025-10-05",
+            "target_date": "2025-10-06",
+            "actual_inr_per_quintal": "68699.00",
+            "prediction_inr_per_quintal": "65314.00",
+            "absolute_error_inr_per_quintal": "3385.00"
+          },
+          {
+            "origin_date": "2025-10-07",
+            "target_date": "2025-10-08",
+            "actual_inr_per_quintal": "69399.00",
+            "prediction_inr_per_quintal": "65314.00",
+            "absolute_error_inr_per_quintal": "4085.00"
+          },
+          {
+            "origin_date": "2025-10-08",
+            "target_date": "2025-10-09",
+            "actual_inr_per_quintal": "70169.00",
+            "prediction_inr_per_quintal": "65314.00",
+            "absolute_error_inr_per_quintal": "4855.00"
+          },
+          {
+            "origin_date": "2025-10-12",
+            "target_date": "2025-10-13",
+            "actual_inr_per_quintal": "71250.00",
+            "prediction_inr_per_quintal": "65669.00",
+            "absolute_error_inr_per_quintal": "5581.00"
+          },
+          {
+            "origin_date": "2025-10-13",
+            "target_date": "2025-10-14",
+            "actual_inr_per_quintal": "71399.00",
+            "prediction_inr_per_quintal": "65669.00",
+            "absolute_error_inr_per_quintal": "5730.00"
+          },
+          {
+            "origin_date": "2025-10-14",
+            "target_date": "2025-10-15",
+            "actual_inr_per_quintal": "73269.00",
+            "prediction_inr_per_quintal": "65959.50",
+            "absolute_error_inr_per_quintal": "7309.50"
+          },
+          {
+            "origin_date": "2025-10-15",
+            "target_date": "2025-10-16",
+            "actual_inr_per_quintal": "73465.00",
+            "prediction_inr_per_quintal": "66704.50",
+            "absolute_error_inr_per_quintal": "6760.50"
+          },
+          {
+            "origin_date": "2025-10-16",
+            "target_date": "2025-10-17",
+            "actual_inr_per_quintal": "74299.00",
+            "prediction_inr_per_quintal": "67540.50",
+            "absolute_error_inr_per_quintal": "6758.50"
+          }
+        ],
+        "price_unit": "INR/quintal",
+        "rounding_note": "Displayed prices/errors are rounded to INR .01; aggregate metrics use the original full-precision frozen predictions. This is historical evaluation, not a current forecast."
+      },
+      "current_unavailability": {
+        "error": {
+          "code": "stale_market_data",
+          "message": "The selected series is stale or has insufficient recent history; inspect the dated historical evaluation instead",
+          "request_id": "436931d7-9167-4f7b-89dd-6cf92412dd95",
+          "details": {}
+        }
+      }
+    },
+    {
+      "commodity": "Onion",
+      "historical": {
+        "research_only": true,
+        "source_kind": "secondary",
+        "scope": {
+          "market": "Hubballi APMC",
+          "commodity": "Onion",
+          "variety": "local",
+          "grade": "unspecified"
+        },
+        "horizon": 1,
+        "selected_model": "blend_naive_mean14_25",
+        "model_version": "research-snapshot-v1-20d2b14759154880",
+        "status": "evaluated",
+        "final_n": 68,
+        "metrics": {
+          "n": 68,
+          "mae_inr_per_quintal": 236.5861344537815,
+          "rmse_inr_per_quintal": 322.87581661481227,
+          "smape_pct": 22.633992651451617,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 22.322543558841602,
+          "directional_accuracy": 0.6617647058823529,
+          "p90_absolute_error_inr_per_quintal": 424.0357142857142,
+          "p90_overprediction_inr_per_quintal": 317.8571428571429
+        },
+        "naive_metrics": {
+          "n": 68,
+          "mae_inr_per_quintal": 253.38235294117646,
+          "rmse_inr_per_quintal": 354.61039100929446,
+          "smape_pct": 24.277002005423075,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 23.907312335229637,
+          "directional_accuracy": 0.10294117647058823,
+          "p90_absolute_error_inr_per_quintal": 415.0000000000002,
+          "p90_overprediction_inr_per_quintal": 400.0
+        },
+        "train_end": "2023-12-31",
+        "validation_end": "2024-12-31",
+        "test_start": "2025-01-01",
+        "test_end": "2025-10-25",
+        "source": [
+          {
+            "source": "India Data Portal AGMARKNET mirror (secondary)",
+            "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+            "sha256": "db1302924a8415d47b1d3da0bbc987df8bc72b7fe8ada1f9d113d8ba43db95c5",
+            "fetched_at": "2026-11-04T19:36:36.768805+00:00",
+            "source_kind": "secondary",
+            "upstream_source_url": "https://agmarknet.gov.in/",
+            "license": "Open Data Commons Attribution License"
+          }
+        ],
+        "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts.",
+        "points": [
+          {
+            "origin_date": "2025-01-01",
+            "target_date": "2025-01-02",
+            "actual_inr_per_quintal": "1300.00",
+            "prediction_inr_per_quintal": "1587.50",
+            "absolute_error_inr_per_quintal": "287.50"
+          },
+          {
+            "origin_date": "2025-01-03",
+            "target_date": "2025-01-04",
+            "actual_inr_per_quintal": "1600.00",
+            "prediction_inr_per_quintal": "1358.04",
+            "absolute_error_inr_per_quintal": "241.96"
+          },
+          {
+            "origin_date": "2025-01-06",
+            "target_date": "2025-01-07",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "1574.11",
+            "absolute_error_inr_per_quintal": "74.11"
+          },
+          {
+            "origin_date": "2025-01-07",
+            "target_date": "2025-01-08",
+            "actual_inr_per_quintal": "1800.00",
+            "prediction_inr_per_quintal": "1574.11",
+            "absolute_error_inr_per_quintal": "225.89"
+          },
+          {
+            "origin_date": "2025-01-10",
+            "target_date": "2025-01-11",
+            "actual_inr_per_quintal": "1300.00",
+            "prediction_inr_per_quintal": "1722.32",
+            "absolute_error_inr_per_quintal": "422.32"
+          },
+          {
+            "origin_date": "2025-01-12",
+            "target_date": "2025-01-13",
+            "actual_inr_per_quintal": "2400.00",
+            "prediction_inr_per_quintal": "1343.75",
+            "absolute_error_inr_per_quintal": "1056.25"
+          },
+          {
+            "origin_date": "2025-01-15",
+            "target_date": "2025-01-16",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "2181.25",
+            "absolute_error_inr_per_quintal": "1381.25"
+          },
+          {
+            "origin_date": "2025-01-17",
+            "target_date": "2025-01-18",
+            "actual_inr_per_quintal": "850.00",
+            "prediction_inr_per_quintal": "968.75",
+            "absolute_error_inr_per_quintal": "118.75"
+          },
+          {
+            "origin_date": "2025-01-21",
+            "target_date": "2025-01-22",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "989.29",
+            "absolute_error_inr_per_quintal": "510.71"
+          },
+          {
+            "origin_date": "2025-01-22",
+            "target_date": "2025-01-23",
+            "actual_inr_per_quintal": "450.00",
+            "prediction_inr_per_quintal": "989.29",
+            "absolute_error_inr_per_quintal": "539.29"
+          },
+          {
+            "origin_date": "2025-01-23",
+            "target_date": "2025-01-24",
+            "actual_inr_per_quintal": "1150.00",
+            "prediction_inr_per_quintal": "1473.21",
+            "absolute_error_inr_per_quintal": "323.21"
+          },
+          {
+            "origin_date": "2025-01-27",
+            "target_date": "2025-01-28",
+            "actual_inr_per_quintal": "1200.00",
+            "prediction_inr_per_quintal": "1189.29",
+            "absolute_error_inr_per_quintal": "10.71"
+          },
+          {
+            "origin_date": "2025-01-29",
+            "target_date": "2025-01-30",
+            "actual_inr_per_quintal": "1400.00",
+            "prediction_inr_per_quintal": "1225.00",
+            "absolute_error_inr_per_quintal": "175.00"
+          },
+          {
+            "origin_date": "2025-01-31",
+            "target_date": "2025-02-01",
+            "actual_inr_per_quintal": "1250.00",
+            "prediction_inr_per_quintal": "1373.21",
+            "absolute_error_inr_per_quintal": "123.21"
+          },
+          {
+            "origin_date": "2025-02-03",
+            "target_date": "2025-02-04",
+            "actual_inr_per_quintal": "1150.00",
+            "prediction_inr_per_quintal": "1267.86",
+            "absolute_error_inr_per_quintal": "117.86"
+          },
+          {
+            "origin_date": "2025-02-05",
+            "target_date": "2025-02-06",
+            "actual_inr_per_quintal": "1300.00",
+            "prediction_inr_per_quintal": "1190.18",
+            "absolute_error_inr_per_quintal": "109.82"
+          },
+          {
+            "origin_date": "2025-02-07",
+            "target_date": "2025-02-08",
+            "actual_inr_per_quintal": "1150.00",
+            "prediction_inr_per_quintal": "1297.32",
+            "absolute_error_inr_per_quintal": "147.32"
+          },
+          {
+            "origin_date": "2025-02-10",
+            "target_date": "2025-02-11",
+            "actual_inr_per_quintal": "1400.00",
+            "prediction_inr_per_quintal": "1178.57",
+            "absolute_error_inr_per_quintal": "221.43"
+          },
+          {
+            "origin_date": "2025-02-11",
+            "target_date": "2025-02-12",
+            "actual_inr_per_quintal": "1600.00",
+            "prediction_inr_per_quintal": "1178.57",
+            "absolute_error_inr_per_quintal": "421.43"
+          },
+          {
+            "origin_date": "2025-02-12",
+            "target_date": "2025-02-13",
+            "actual_inr_per_quintal": "1800.00",
+            "prediction_inr_per_quintal": "1358.93",
+            "absolute_error_inr_per_quintal": "441.07"
+          },
+          {
+            "origin_date": "2025-02-13",
+            "target_date": "2025-02-14",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "1514.29",
+            "absolute_error_inr_per_quintal": "14.29"
+          },
+          {
+            "origin_date": "2025-02-14",
+            "target_date": "2025-02-15",
+            "actual_inr_per_quintal": "1800.00",
+            "prediction_inr_per_quintal": "1653.57",
+            "absolute_error_inr_per_quintal": "146.43"
+          },
+          {
+            "origin_date": "2025-02-17",
+            "target_date": "2025-02-18",
+            "actual_inr_per_quintal": "1550.00",
+            "prediction_inr_per_quintal": "1683.04",
+            "absolute_error_inr_per_quintal": "133.04"
+          },
+          {
+            "origin_date": "2025-02-23",
+            "target_date": "2025-02-24",
+            "actual_inr_per_quintal": "1400.00",
+            "prediction_inr_per_quintal": "1496.43",
+            "absolute_error_inr_per_quintal": "96.43"
+          },
+          {
+            "origin_date": "2025-02-27",
+            "target_date": "2025-02-28",
+            "actual_inr_per_quintal": "1250.00",
+            "prediction_inr_per_quintal": "1400.89",
+            "absolute_error_inr_per_quintal": "150.89"
+          },
+          {
+            "origin_date": "2025-03-28",
+            "target_date": "2025-03-29",
+            "actual_inr_per_quintal": "850.00",
+            "prediction_inr_per_quintal": "907.14",
+            "absolute_error_inr_per_quintal": "57.14"
+          },
+          {
+            "origin_date": "2025-04-01",
+            "target_date": "2025-04-02",
+            "actual_inr_per_quintal": "750.00",
+            "prediction_inr_per_quintal": "967.86",
+            "absolute_error_inr_per_quintal": "217.86"
+          },
+          {
+            "origin_date": "2025-04-03",
+            "target_date": "2025-04-04",
+            "actual_inr_per_quintal": "700.00",
+            "prediction_inr_per_quintal": "885.71",
+            "absolute_error_inr_per_quintal": "185.71"
+          },
+          {
+            "origin_date": "2025-04-06",
+            "target_date": "2025-04-07",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "837.50",
+            "absolute_error_inr_per_quintal": "37.50"
+          },
+          {
+            "origin_date": "2025-04-08",
+            "target_date": "2025-04-09",
+            "actual_inr_per_quintal": "700.00",
+            "prediction_inr_per_quintal": "906.25",
+            "absolute_error_inr_per_quintal": "206.25"
+          },
+          {
+            "origin_date": "2025-04-14",
+            "target_date": "2025-04-15",
+            "actual_inr_per_quintal": "700.00",
+            "prediction_inr_per_quintal": "818.75",
+            "absolute_error_inr_per_quintal": "118.75"
+          },
+          {
+            "origin_date": "2025-04-20",
+            "target_date": "2025-04-21",
+            "actual_inr_per_quintal": "1000.00",
+            "prediction_inr_per_quintal": "802.68",
+            "absolute_error_inr_per_quintal": "197.32"
+          },
+          {
+            "origin_date": "2025-04-21",
+            "target_date": "2025-04-22",
+            "actual_inr_per_quintal": "1000.00",
+            "prediction_inr_per_quintal": "802.68",
+            "absolute_error_inr_per_quintal": "197.32"
+          },
+          {
+            "origin_date": "2025-04-22",
+            "target_date": "2025-04-23",
+            "actual_inr_per_quintal": "600.00",
+            "prediction_inr_per_quintal": "1013.39",
+            "absolute_error_inr_per_quintal": "413.39"
+          },
+          {
+            "origin_date": "2025-04-24",
+            "target_date": "2025-04-25",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "683.04",
+            "absolute_error_inr_per_quintal": "416.96"
+          },
+          {
+            "origin_date": "2025-04-27",
+            "target_date": "2025-04-28",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "1050.00",
+            "absolute_error_inr_per_quintal": "250.00"
+          },
+          {
+            "origin_date": "2025-04-28",
+            "target_date": "2025-04-29",
+            "actual_inr_per_quintal": "1000.00",
+            "prediction_inr_per_quintal": "1050.00",
+            "absolute_error_inr_per_quintal": "50.00"
+          },
+          {
+            "origin_date": "2025-05-01",
+            "target_date": "2025-05-02",
+            "actual_inr_per_quintal": "700.00",
+            "prediction_inr_per_quintal": "959.82",
+            "absolute_error_inr_per_quintal": "259.82"
+          },
+          {
+            "origin_date": "2025-05-02",
+            "target_date": "2025-05-03",
+            "actual_inr_per_quintal": "650.00",
+            "prediction_inr_per_quintal": "959.82",
+            "absolute_error_inr_per_quintal": "309.82"
+          },
+          {
+            "origin_date": "2025-05-08",
+            "target_date": "2025-05-09",
+            "actual_inr_per_quintal": "1200.00",
+            "prediction_inr_per_quintal": "690.18",
+            "absolute_error_inr_per_quintal": "509.82"
+          },
+          {
+            "origin_date": "2025-05-20",
+            "target_date": "2025-05-21",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "1116.96",
+            "absolute_error_inr_per_quintal": "316.96"
+          },
+          {
+            "origin_date": "2025-09-12",
+            "target_date": "2025-09-13",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "895.54",
+            "absolute_error_inr_per_quintal": "95.54"
+          },
+          {
+            "origin_date": "2025-09-14",
+            "target_date": "2025-09-15",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "817.86",
+            "absolute_error_inr_per_quintal": "17.86"
+          },
+          {
+            "origin_date": "2025-09-15",
+            "target_date": "2025-09-16",
+            "actual_inr_per_quintal": "1000.00",
+            "prediction_inr_per_quintal": "817.86",
+            "absolute_error_inr_per_quintal": "182.14"
+          },
+          {
+            "origin_date": "2025-09-16",
+            "target_date": "2025-09-17",
+            "actual_inr_per_quintal": "500.00",
+            "prediction_inr_per_quintal": "814.29",
+            "absolute_error_inr_per_quintal": "314.29"
+          },
+          {
+            "origin_date": "2025-09-17",
+            "target_date": "2025-09-18",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "971.43",
+            "absolute_error_inr_per_quintal": "171.43"
+          },
+          {
+            "origin_date": "2025-09-18",
+            "target_date": "2025-09-19",
+            "actual_inr_per_quintal": "900.00",
+            "prediction_inr_per_quintal": "585.71",
+            "absolute_error_inr_per_quintal": "314.29"
+          },
+          {
+            "origin_date": "2025-09-19",
+            "target_date": "2025-09-20",
+            "actual_inr_per_quintal": "1200.00",
+            "prediction_inr_per_quintal": "810.71",
+            "absolute_error_inr_per_quintal": "389.29"
+          },
+          {
+            "origin_date": "2025-09-21",
+            "target_date": "2025-09-22",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "1117.86",
+            "absolute_error_inr_per_quintal": "317.86"
+          },
+          {
+            "origin_date": "2025-09-22",
+            "target_date": "2025-09-23",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "1117.86",
+            "absolute_error_inr_per_quintal": "317.86"
+          },
+          {
+            "origin_date": "2025-09-23",
+            "target_date": "2025-09-24",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "820.54",
+            "absolute_error_inr_per_quintal": "279.46"
+          },
+          {
+            "origin_date": "2025-09-24",
+            "target_date": "2025-09-25",
+            "actual_inr_per_quintal": "950.00",
+            "prediction_inr_per_quintal": "813.39",
+            "absolute_error_inr_per_quintal": "136.61"
+          },
+          {
+            "origin_date": "2025-09-25",
+            "target_date": "2025-09-26",
+            "actual_inr_per_quintal": "820.00",
+            "prediction_inr_per_quintal": "1036.61",
+            "absolute_error_inr_per_quintal": "216.61"
+          },
+          {
+            "origin_date": "2025-09-26",
+            "target_date": "2025-09-27",
+            "actual_inr_per_quintal": "900.00",
+            "prediction_inr_per_quintal": "926.79",
+            "absolute_error_inr_per_quintal": "26.79"
+          },
+          {
+            "origin_date": "2025-09-28",
+            "target_date": "2025-09-29",
+            "actual_inr_per_quintal": "950.00",
+            "prediction_inr_per_quintal": "891.43",
+            "absolute_error_inr_per_quintal": "58.57"
+          },
+          {
+            "origin_date": "2025-09-29",
+            "target_date": "2025-09-30",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "891.43",
+            "absolute_error_inr_per_quintal": "208.57"
+          },
+          {
+            "origin_date": "2025-10-02",
+            "target_date": "2025-10-03",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "1050.36",
+            "absolute_error_inr_per_quintal": "49.64"
+          },
+          {
+            "origin_date": "2025-10-03",
+            "target_date": "2025-10-04",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "1050.36",
+            "absolute_error_inr_per_quintal": "49.64"
+          },
+          {
+            "origin_date": "2025-10-07",
+            "target_date": "2025-10-08",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "1057.50",
+            "absolute_error_inr_per_quintal": "42.50"
+          },
+          {
+            "origin_date": "2025-10-08",
+            "target_date": "2025-10-09",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "1057.50",
+            "absolute_error_inr_per_quintal": "257.50"
+          },
+          {
+            "origin_date": "2025-10-10",
+            "target_date": "2025-10-11",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "843.21",
+            "absolute_error_inr_per_quintal": "256.79"
+          },
+          {
+            "origin_date": "2025-10-12",
+            "target_date": "2025-10-13",
+            "actual_inr_per_quintal": "1150.00",
+            "prediction_inr_per_quintal": "1071.79",
+            "absolute_error_inr_per_quintal": "78.21"
+          },
+          {
+            "origin_date": "2025-10-13",
+            "target_date": "2025-10-14",
+            "actual_inr_per_quintal": "1100.00",
+            "prediction_inr_per_quintal": "1071.79",
+            "absolute_error_inr_per_quintal": "28.21"
+          },
+          {
+            "origin_date": "2025-10-14",
+            "target_date": "2025-10-15",
+            "actual_inr_per_quintal": "900.00",
+            "prediction_inr_per_quintal": "1108.39",
+            "absolute_error_inr_per_quintal": "208.39"
+          },
+          {
+            "origin_date": "2025-10-16",
+            "target_date": "2025-10-17",
+            "actual_inr_per_quintal": "650.00",
+            "prediction_inr_per_quintal": "928.04",
+            "absolute_error_inr_per_quintal": "278.04"
+          },
+          {
+            "origin_date": "2025-10-17",
+            "target_date": "2025-10-18",
+            "actual_inr_per_quintal": "500.00",
+            "prediction_inr_per_quintal": "928.04",
+            "absolute_error_inr_per_quintal": "428.04"
+          },
+          {
+            "origin_date": "2025-10-22",
+            "target_date": "2025-10-23",
+            "actual_inr_per_quintal": "600.00",
+            "prediction_inr_per_quintal": "611.96",
+            "absolute_error_inr_per_quintal": "11.96"
+          },
+          {
+            "origin_date": "2025-10-24",
+            "target_date": "2025-10-25",
+            "actual_inr_per_quintal": "800.00",
+            "prediction_inr_per_quintal": "683.04",
+            "absolute_error_inr_per_quintal": "116.96"
+          }
+        ],
+        "price_unit": "INR/quintal",
+        "rounding_note": "Displayed prices/errors are rounded to INR .01; aggregate metrics use the original full-precision frozen predictions. This is historical evaluation, not a current forecast."
+      },
+      "current_unavailability": {
+        "error": {
+          "code": "stale_market_data",
+          "message": "The selected series is stale or has insufficient recent history; inspect the dated historical evaluation instead",
+          "request_id": "7400823a-3ff7-405e-affd-e43dda2c6d82",
+          "details": {}
+        }
+      }
+    },
+    {
+      "commodity": "Potato",
+      "historical": {
+        "research_only": true,
+        "source_kind": "secondary",
+        "scope": {
+          "market": "Bengaluru APMC",
+          "commodity": "Potato",
+          "variety": "local",
+          "grade": "unspecified"
+        },
+        "horizon": 1,
+        "selected_model": "naive",
+        "model_version": "research-snapshot-v1-8e1e377ccdb250bd",
+        "status": "evaluated",
+        "final_n": 31,
+        "metrics": {
+          "n": 31,
+          "mae_inr_per_quintal": 161.29032258064515,
+          "rmse_inr_per_quintal": 246.26238301925568,
+          "smape_pct": 7.0927943749488565,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 7.473841554559043,
+          "directional_accuracy": 0.41935483870967744,
+          "p90_absolute_error_inr_per_quintal": 500.0,
+          "p90_overprediction_inr_per_quintal": 500.0
+        },
+        "naive_metrics": {
+          "n": 31,
+          "mae_inr_per_quintal": 161.29032258064515,
+          "rmse_inr_per_quintal": 246.26238301925568,
+          "smape_pct": 7.0927943749488565,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 7.473841554559043,
+          "directional_accuracy": 0.41935483870967744,
+          "p90_absolute_error_inr_per_quintal": 500.0,
+          "p90_overprediction_inr_per_quintal": 500.0
+        },
+        "train_end": "2023-12-31",
+        "validation_end": "2024-12-31",
+        "test_start": "2025-01-01",
+        "test_end": "2025-02-21",
+        "source": [
+          {
+            "source": "India Data Portal AGMARKNET mirror (secondary)",
+            "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+            "sha256": "347b369257342aa4eecbe929e9c99790b693514820374270af33582d1025faae",
+            "fetched_at": "2026-11-04T19:36:43.125215+00:00",
+            "source_kind": "secondary",
+            "upstream_source_url": "https://agmarknet.gov.in/",
+            "license": "Open Data Commons Attribution License"
+          }
+        ],
+        "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts.",
+        "points": [
+          {
+            "origin_date": "2025-01-01",
+            "target_date": "2025-01-02",
+            "actual_inr_per_quintal": "2700.00",
+            "prediction_inr_per_quintal": "2400.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-01-02",
+            "target_date": "2025-01-03",
+            "actual_inr_per_quintal": "2700.00",
+            "prediction_inr_per_quintal": "2700.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-03",
+            "target_date": "2025-01-04",
+            "actual_inr_per_quintal": "2700.00",
+            "prediction_inr_per_quintal": "2700.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-05",
+            "target_date": "2025-01-06",
+            "actual_inr_per_quintal": "2800.00",
+            "prediction_inr_per_quintal": "2700.00",
+            "absolute_error_inr_per_quintal": "100.00"
+          },
+          {
+            "origin_date": "2025-01-06",
+            "target_date": "2025-01-07",
+            "actual_inr_per_quintal": "2800.00",
+            "prediction_inr_per_quintal": "2700.00",
+            "absolute_error_inr_per_quintal": "100.00"
+          },
+          {
+            "origin_date": "2025-01-08",
+            "target_date": "2025-01-09",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2800.00",
+            "absolute_error_inr_per_quintal": "600.00"
+          },
+          {
+            "origin_date": "2025-01-09",
+            "target_date": "2025-01-10",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2800.00",
+            "absolute_error_inr_per_quintal": "600.00"
+          },
+          {
+            "origin_date": "2025-01-14",
+            "target_date": "2025-01-15",
+            "actual_inr_per_quintal": "2500.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-01-15",
+            "target_date": "2025-01-16",
+            "actual_inr_per_quintal": "2500.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-01-16",
+            "target_date": "2025-01-17",
+            "actual_inr_per_quintal": "2500.00",
+            "prediction_inr_per_quintal": "2500.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-17",
+            "target_date": "2025-01-18",
+            "actual_inr_per_quintal": "2500.00",
+            "prediction_inr_per_quintal": "2500.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-19",
+            "target_date": "2025-01-20",
+            "actual_inr_per_quintal": "2500.00",
+            "prediction_inr_per_quintal": "2500.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-20",
+            "target_date": "2025-01-21",
+            "actual_inr_per_quintal": "2700.00",
+            "prediction_inr_per_quintal": "2500.00",
+            "absolute_error_inr_per_quintal": "200.00"
+          },
+          {
+            "origin_date": "2025-01-21",
+            "target_date": "2025-01-22",
+            "actual_inr_per_quintal": "2700.00",
+            "prediction_inr_per_quintal": "2500.00",
+            "absolute_error_inr_per_quintal": "200.00"
+          },
+          {
+            "origin_date": "2025-01-22",
+            "target_date": "2025-01-23",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2700.00",
+            "absolute_error_inr_per_quintal": "500.00"
+          },
+          {
+            "origin_date": "2025-01-23",
+            "target_date": "2025-01-24",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2700.00",
+            "absolute_error_inr_per_quintal": "500.00"
+          },
+          {
+            "origin_date": "2025-01-26",
+            "target_date": "2025-01-27",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-27",
+            "target_date": "2025-01-28",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-28",
+            "target_date": "2025-01-29",
+            "actual_inr_per_quintal": "2200.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-01-29",
+            "target_date": "2025-01-30",
+            "actual_inr_per_quintal": "1900.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-01-30",
+            "target_date": "2025-01-31",
+            "actual_inr_per_quintal": "1900.00",
+            "prediction_inr_per_quintal": "2200.00",
+            "absolute_error_inr_per_quintal": "300.00"
+          },
+          {
+            "origin_date": "2025-02-03",
+            "target_date": "2025-02-04",
+            "actual_inr_per_quintal": "1900.00",
+            "prediction_inr_per_quintal": "1900.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-02-10",
+            "target_date": "2025-02-11",
+            "actual_inr_per_quintal": "1800.00",
+            "prediction_inr_per_quintal": "1900.00",
+            "absolute_error_inr_per_quintal": "100.00"
+          },
+          {
+            "origin_date": "2025-02-12",
+            "target_date": "2025-02-13",
+            "actual_inr_per_quintal": "1600.00",
+            "prediction_inr_per_quintal": "1800.00",
+            "absolute_error_inr_per_quintal": "200.00"
+          },
+          {
+            "origin_date": "2025-02-13",
+            "target_date": "2025-02-14",
+            "actual_inr_per_quintal": "1600.00",
+            "prediction_inr_per_quintal": "1800.00",
+            "absolute_error_inr_per_quintal": "200.00"
+          },
+          {
+            "origin_date": "2025-02-14",
+            "target_date": "2025-02-15",
+            "actual_inr_per_quintal": "1600.00",
+            "prediction_inr_per_quintal": "1600.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-02-16",
+            "target_date": "2025-02-17",
+            "actual_inr_per_quintal": "1600.00",
+            "prediction_inr_per_quintal": "1600.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-02-17",
+            "target_date": "2025-02-18",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "1600.00",
+            "absolute_error_inr_per_quintal": "100.00"
+          },
+          {
+            "origin_date": "2025-02-18",
+            "target_date": "2025-02-19",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "1600.00",
+            "absolute_error_inr_per_quintal": "100.00"
+          },
+          {
+            "origin_date": "2025-02-19",
+            "target_date": "2025-02-20",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "1500.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          },
+          {
+            "origin_date": "2025-02-20",
+            "target_date": "2025-02-21",
+            "actual_inr_per_quintal": "1500.00",
+            "prediction_inr_per_quintal": "1500.00",
+            "absolute_error_inr_per_quintal": "0.00"
+          }
+        ],
+        "price_unit": "INR/quintal",
+        "rounding_note": "Displayed prices/errors are rounded to INR .01; aggregate metrics use the original full-precision frozen predictions. This is historical evaluation, not a current forecast."
+      },
+      "current_unavailability": {
+        "error": {
+          "code": "stale_market_data",
+          "message": "The selected series is stale or has insufficient recent history; inspect the dated historical evaluation instead",
+          "request_id": "ae3594d3-c8f8-4f2c-98fa-be7ca7e7b204",
+          "details": {}
+        }
+      }
+    }
+  ]
+}

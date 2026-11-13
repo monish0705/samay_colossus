@@ -1,0 +1,73 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-35245f4e3dabb00e",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-15",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "local",
+    "grade": "medium",
+    "market": "Bengaluru APMC",
+    "commodity": "Potato",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "result": {
+    "horizon": 7,
+    "champion": "median_14",
+    "n": 34,
+    "status": "evaluated",
+    "metrics": {
+      "n": 34,
+      "mae_inr_per_quintal": 532.3529411764706,
+      "rmse_inr_per_quintal": 1006.0113436385357,
+      "smape_pct": 19.80241157138776,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 23.086734693877553,
+      "directional_accuracy": 0.38235294117647056,
+      "p90_absolute_error_inr_per_quintal": 2200.0,
+      "p90_overprediction_inr_per_quintal": 200.0
+    },
+    "baseline_metrics": {
+      "naive": {
+        "n": 34,
+        "mae_inr_per_quintal": 482.3529411764706,
+        "rmse_inr_per_quintal": 934.3132111185137,
+        "smape_pct": 18.340984306608306,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 20.918367346938776,
+        "directional_accuracy": 0.35294117647058826,
+        "p90_absolute_error_inr_per_quintal": 2200.0,
+        "p90_overprediction_inr_per_quintal": 200.0
+      },
+      "mean_14": {
+        "n": 34,
+        "mae_inr_per_quintal": 514.2857142857143,
+        "rmse_inr_per_quintal": 968.0055856892409,
+        "smape_pct": 18.97641071469942,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 22.303206997084548,
+        "directional_accuracy": 0.5294117647058824,
+        "p90_absolute_error_inr_per_quintal": 2128.5714285714284,
+        "p90_overprediction_inr_per_quintal": 200.0
+      },
+      "median_14": {
+        "n": 34,
+        "mae_inr_per_quintal": 532.3529411764706,
+        "rmse_inr_per_quintal": 1006.0113436385357,
+        "smape_pct": 19.80241157138776,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 23.086734693877553,
+        "directional_accuracy": 0.38235294117647056,
+        "p90_absolute_error_inr_per_quintal": 2200.0,
+        "p90_overprediction_inr_per_quintal": 200.0
+      }
+    }
+  }
+}

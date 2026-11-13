@@ -93,6 +93,31 @@ def examples(vintages, start, end, horizon, freeze):
 
 
 def rolling_folds(vintages, plan, horizon):
+    if plan.candidate_suite == "recent_v3":
+        # Fixed sample-count policy for shorter, irregularly reported series.
+        # Boundaries use only development origins/availability, never price errors.
+        frame = examples(vintages, plan.start, plan.train_end, horizon, plan.train_end + timedelta(days=1))
+        initial = 60
+        while initial < len(frame):
+            first = date.fromisoformat(frame.iloc[initial].origin_date)
+            if len(examples(vintages, plan.start, first-timedelta(days=1), horizon, first)) >= 60:
+                break
+            initial += 1
+        if len(frame) < initial + 3 * 14:
+            return []
+        indices = np.linspace(initial, len(frame), 4, dtype=int)
+        folds = []
+        for lo, hi in zip(indices, indices[1:], strict=False):
+            first = date.fromisoformat(frame.iloc[lo].origin_date)
+            train = examples(vintages, plan.start, first - timedelta(days=1), horizon, first)
+            # Each row's features are already constructed at its own decision
+            # cutoff. Validation origins and targets never repeat across folds;
+            # all validation targets settle inside the training partition.
+            valid = frame.iloc[lo:hi].copy()
+            if len(train) < 60 or len(valid) < 14:
+                return []
+            folds.append((train, valid))
+        return folds
     days = (plan.train_end - plan.start).days + 1
     boundaries = [plan.start + timedelta(days=int(days * part)) for part in (.5, .67, .84)] + [plan.train_end + timedelta(days=1)]
     folds = []
@@ -106,6 +131,17 @@ def rolling_folds(vintages, plan, horizon):
 
 
 def estimator(name):
+    if name.startswith("ridge_return_"):
+        from sklearn.linear_model import Ridge
+        from sklearn.pipeline import make_pipeline
+        from sklearn.preprocessing import StandardScaler
+        return make_pipeline(StandardScaler(), Ridge(alpha=float(name.rsplit("_",1)[1])))
+    if name == "hist_gradient_boosting_return":
+        from sklearn.ensemble import HistGradientBoostingRegressor
+        return HistGradientBoostingRegressor(max_iter=80,max_leaf_nodes=7,min_samples_leaf=30,learning_rate=.04,l2_regularization=10,random_state=SEED,early_stopping=False)
+    if name == "lightgbm_return":
+        from lightgbm import LGBMRegressor
+        return LGBMRegressor(n_estimators=80,num_leaves=7,min_child_samples=30,learning_rate=.04,reg_lambda=10,random_state=SEED,n_jobs=1,verbosity=-1,deterministic=True,force_col_wise=True)
     if name.startswith("ridge_"):
         from sklearn.linear_model import Ridge
         from sklearn.pipeline import make_pipeline
@@ -120,11 +156,28 @@ def estimator(name):
     return None
 
 
+def relative_inputs(frame):
+    """Only existing causal inputs; normalize price levels and encode known calendars."""
+    inputs=frame[FEATURES].copy()
+    base=np.maximum(frame.lag_1_obs_inr_per_quintal.to_numpy(dtype=float),.01)
+    for column in inputs:
+        if column.endswith("inr_per_quintal"):
+            inputs[column]=inputs[column]/base-(0 if "std_" in column else 1)
+    for column,period in (("origin_weekday",7),("target_weekday",7),("origin_month",12),("target_month",12)):
+        angle=2*np.pi*inputs[column]/period
+        inputs[column+"_sin"]=np.sin(angle)
+        inputs[column+"_cos"]=np.cos(angle)
+    return inputs
+
+
 def fit(name, frame):
     model = estimator(name)
     if model is not None:
         with thread_context():
-            model.fit(frame[FEATURES], frame[TARGET])
+            if "_return" in name:
+                model.fit(relative_inputs(frame),frame[TARGET]/frame.lag_1_obs_inr_per_quintal-1)
+            else:
+                model.fit(frame[FEATURES], frame[TARGET])
     return model
 
 
@@ -137,6 +190,12 @@ def predict_rows(name, model, frame):
     elif name == "seasonal_naive":
         # Registered fallback is part of this candidate, identical in all partitions.
         result = frame.seasonal_price.fillna(frame.lag_1_obs_inr_per_quintal).to_numpy()
+    elif name.startswith("blend_naive_mean14_"):
+        weight=float(name.rsplit("_",1)[1])/100
+        result=(1-weight)*frame.lag_1_obs_inr_per_quintal.to_numpy()+weight*frame.rolling_mean_14_obs_inr_per_quintal.to_numpy()
+    elif "_return" in name:
+        with thread_context():
+            result=frame.lag_1_obs_inr_per_quintal.to_numpy()*(1+model.predict(relative_inputs(frame)))
     else:
         with thread_context():
             result = model.predict(frame[FEATURES])
@@ -163,12 +222,22 @@ def select_horizon(vintages, plan: Plan, horizon):
         return result, None, None
     train = examples(vintages, plan.start, plan.train_end, horizon, plan.train_end + timedelta(days=1))
     validation = examples(vintages, plan.train_end + timedelta(days=1), plan.validation_end, horizon, plan.validation_end + timedelta(days=1))
-    candidates = list(BASELINES) + ["ridge_1", "ridge_10", "ridge_100", "hist_gradient_boosting"]
+    learned_eligible = plan.candidate_suite != "recent_v3" or (len(train) >= 120 and len(validation) >= 30 and reliability["train_span_calendar_days"] >= 180)
+    candidates = list(BASELINES)
+    if learned_eligible:
+        candidates += ["ridge_1", "ridge_10", "ridge_100", "hist_gradient_boosting"]
+    if plan.candidate_suite in {"relative_v2", "recent_v3"}:
+        candidates += ["blend_naive_mean14_25","blend_naive_mean14_50"]
+        if learned_eligible:
+            candidates += ["ridge_return_10","ridge_return_100","hist_gradient_boosting_return"]
+    result["learned_model_eligible"] = learned_eligible
     seasonal_supported = all(len(t) >= 56 and v.seasonal_price.notna().mean() >= .9 for t, v in folds)
     if seasonal_supported:
         # Initial coverage qualifies a seasonal candidate; CV skill gates promotion below.
         candidates.append("seasonal_naive")
     skips = {"seasonal_naive": "Insufficient training-fold weekly coverage"} if not seasonal_supported else {}
+    if not learned_eligible:
+        skips["learned_models"] = "Recent-series baseline-only mode: learned models require >=120 training / >=30 validation examples and >=180 eligible calendar days"
     if min(len(t) for t, _ in folds) >= 500:
         try:
             import lightgbm  # noqa: F401
@@ -177,6 +246,15 @@ def select_horizon(vintages, plan: Plan, horizon):
             skips["lightgbm"] = "Optional LightGBM dependency not installed"
     else:
         skips["lightgbm"] = "Requires >=500 reliable training samples in every CV fold"
+    if plan.candidate_suite in {"relative_v2", "recent_v3"}:
+        if min(len(t) for t,_ in folds) >= 250:
+            try:
+                import lightgbm  # noqa: F401
+                candidates.append("lightgbm_return")
+            except ImportError:
+                skips["lightgbm_return"]="Optional LightGBM dependency not installed"
+        else:
+            skips["lightgbm_return"]="Low-capacity seven-leaf return model requires >=250 samples in every CV fold"
     fitted = {}
     for name in candidates:
         fold_metrics = []
@@ -222,6 +300,7 @@ def save_champion(folder: Path, comparison, model, development, plan, fingerprin
     metadata["plan"] = plan.serializable()
     metadata["training_samples"] = len(development)
     metadata["runtime"] = runtime_versions()
+    metadata["input_transform"] = "Causal price inputs relative to latest observed price; deterministic cyclic calendar encodings; target fractional return" if "_return" in comparison["champion"] else "Original causal feature schema"
     (folder / "metadata.json").write_text(json.dumps(metadata, indent=2, allow_nan=False), encoding="utf-8")
     return metadata
 

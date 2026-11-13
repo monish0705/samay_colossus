@@ -1,0 +1,12 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-8e1e377ccdb250bd",
+  "result": {
+    "horizon": 3,
+    "champion": "naive",
+    "n": 29,
+    "status": "insufficient_final_samples",
+    "metrics": null,
+    "baseline_metrics": null
+  }
+}

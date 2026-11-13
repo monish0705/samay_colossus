@@ -1,0 +1,142 @@
+{
+  "version": "0990452219d57b9a-champion-77d",
+  "algorithm_version": "samay-forecast-v1",
+  "candidate": "naive",
+  "horizon": 77,
+  "market": "Bengaluru APMC",
+  "commodity": "Potato",
+  "variety": "local",
+  "grade": "medium",
+  "feature_schema": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "training_window": [
+    "2025-12-31",
+    "2026-08-19"
+  ],
+  "trained_before": "2026-11-05T12:03:38.111706+00:00",
+  "seed": 42,
+  "dataset_fingerprint": "0a805f98526a31ecbeafde25a77ace3a4d0653834142325c22bb17436fa7de9a",
+  "model_sha256": "6c09635decb8153d3c12e3782a69fd2eb097426f912547d351a8647b27d5580a",
+  "comparison": {
+    "horizon": 77,
+    "sample_policy": {
+      "effective_train_samples": 98,
+      "effective_validation_samples": 0,
+      "available_development_pairs": 145,
+      "nonoverlapping_benchmark_cases": 3,
+      "train_span_calendar_days": 178,
+      "status": "baseline_only_limited_evidence"
+    },
+    "status": "baseline_only",
+    "champion": "naive",
+    "comparisons": [],
+    "learned_model_eligible": false,
+    "final_evaluation": "not_performed; existing final period excluded",
+    "reason": [
+      "insufficient_separated_train_validation_folds_for_model_selection"
+    ],
+    "selection_train_end": "2026-07-15",
+    "selection_reason": "Predeclared last-observed-price rule; not selected/tuned on these errors",
+    "retrospective_benchmark": {
+      "n": 145,
+      "mae_inr_per_quintal": 593.7931034482758,
+      "rmse_inr_per_quintal": 682.5408917900211,
+      "smape_pct": 40.05899202465731,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 40.252454417952315,
+      "directional_accuracy": 0.04827586206896552,
+      "p90_absolute_error_inr_per_quintal": 1000.0,
+      "p90_overprediction_inr_per_quintal": 900.0
+    },
+    "nonoverlapping_benchmark": {
+      "n": 3,
+      "mae_inr_per_quintal": 500.0,
+      "rmse_inr_per_quintal": 613.7317546507323,
+      "smape_pct": 29.827688651218065,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 32.608695652173914,
+      "directional_accuracy": 0.3333333333333333,
+      "p90_absolute_error_inr_per_quintal": 780.0,
+      "p90_overprediction_inr_per_quintal": 640.0
+    }
+  },
+  "created_at": "2026-11-05T12:03:34.964050+00:00",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-15",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "local",
+    "grade": "medium",
+    "market": "Bengaluru APMC",
+    "commodity": "Potato",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "training_samples": 186,
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": "4.7.0"
+  },
+  "input_transform": "Original causal feature schema",
+  "research_only": true,
+  "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts. This extension has NO new final test. Selection validation scores are not final accuracy.",
+  "selection_report": "models/crop-horizons/0990452219d57b9a/comparison.json",
+  "source": [
+    {
+      "source": "India Data Portal AGMARKNET mirror (secondary)",
+      "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+      "sha256": "397b05980a524fd6e853b2bb082b57a1c31fd04ac6c342be93945fbda20ebdc8",
+      "fetched_at": "2026-11-04T19:36:59.824210+00:00",
+      "source_kind": "secondary",
+      "upstream_source_url": "https://agmarknet.gov.in/",
+      "license": "Open Data Commons Attribution License"
+    },
+    {
+      "source": "Official OGD / AGMARKNET historical APMC observations",
+      "url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+      "sha256": "43ab05654c103a55ec7e9171de347f346bd1560e242dd080d2bccf9d2aed53a2",
+      "fetched_at": "2026-11-05T08:39:55.871780+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": "Government Open Data License - India"
+    }
+  ],
+  "empirical_calibration": {
+    "radii": {},
+    "reason": "No independent long-horizon residual calibration; sensitivity scenarios are not prediction intervals"
+  },
+  "horizon_evidence_status": "baseline_only",
+  "refit_policy": "Frozen development-selected configuration. No new final holdout evaluation.",
+  "selection_report_sha256": "4c73c686beb59b1f7485637aabe67e8454ca0e48b9bdc13c1efd1a453b42eb9d",
+  "training_source_fingerprint": "04eac7ff91dae2a51c5a9bd673e630490fbeb430f53284ec0cd3be614e182b4a"
+}

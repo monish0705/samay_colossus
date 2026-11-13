@@ -1,0 +1,14 @@
+Existing local database preserved
+{
+  "corrected_observations": 0,
+  "observations_by_kind": {
+    "demo": 7305,
+    "fixture": 3,
+    "official": 3938,
+    "secondary": 5834
+  },
+  "action": "Reclassified in place; original generated values retained for audit; no authentic observations removed"
+}
+SAMAY ready: http://127.0.0.1:5174
+Swagger: http://127.0.0.1:8011/docs
+No data or model is fabricated by startup.

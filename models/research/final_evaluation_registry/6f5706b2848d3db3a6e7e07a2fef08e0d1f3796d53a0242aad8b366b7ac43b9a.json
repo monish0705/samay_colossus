@@ -1,0 +1,73 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-dfc4c731994b0419",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-15",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "puna",
+    "grade": "local",
+    "market": "Hubballi APMC",
+    "commodity": "Onion",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "result": {
+    "horizon": 1,
+    "champion": "blend_naive_mean14_25",
+    "n": 34,
+    "status": "evaluated",
+    "metrics": {
+      "n": 34,
+      "mae_inr_per_quintal": 377.9411764705882,
+      "rmse_inr_per_quintal": 479.0145164426493,
+      "smape_pct": 9.159446259547641,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 8.92981236970118,
+      "directional_accuracy": 0.5588235294117647,
+      "p90_absolute_error_inr_per_quintal": 715.7142857142853,
+      "p90_overprediction_inr_per_quintal": 529.1071428571424
+    },
+    "baseline_metrics": {
+      "naive": {
+        "n": 34,
+        "mae_inr_per_quintal": 400.0,
+        "rmse_inr_per_quintal": 523.0003936563585,
+        "smape_pct": 9.719479867796402,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 9.45100764419736,
+        "directional_accuracy": 0.11764705882352941,
+        "p90_absolute_error_inr_per_quintal": 700.0,
+        "p90_overprediction_inr_per_quintal": 600.0
+      },
+      "mean_14": {
+        "n": 34,
+        "mae_inr_per_quintal": 433.6134453781512,
+        "rmse_inr_per_quintal": 538.4941878945012,
+        "smape_pct": 10.452324883505312,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 10.245209967239154,
+        "directional_accuracy": 0.5588235294117647,
+        "p90_absolute_error_inr_per_quintal": 857.1428571428572,
+        "p90_overprediction_inr_per_quintal": 304.99999999999983
+      },
+      "median_14": {
+        "n": 34,
+        "mae_inr_per_quintal": 455.88235294117646,
+        "rmse_inr_per_quintal": 570.8610627299574,
+        "smape_pct": 11.008123434692527,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 10.771369006254343,
+        "directional_accuracy": 0.5,
+        "p90_absolute_error_inr_per_quintal": 939.9999999999999,
+        "p90_overprediction_inr_per_quintal": 269.99999999999994
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "plan": {
+    "start": "2025-07-03",
+    "train_end": "2026-06-30",
+    "validation_end": "2026-11-04",
+    "holdout_end": "2026-11-05",
+    "variety": "tomato",
+    "grade": "local",
+    "market": "Kolar APMC",
+    "commodity": "Tomato",
+    "min_train": 120,
+    "min_validation": 30,
+    "min_train_span_days": 180,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7
+  },
+  "artifact_sha256": {}
+}

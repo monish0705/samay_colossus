@@ -1,0 +1,62 @@
+{
+  "fetched_at": "2026-11-04T18:43:38.859800+00:00",
+  "filters_sha256": "35ee19d9e5435e894ee2a24217a0e1a5bd1d175659430e1f21568316f89ae1be",
+  "series": [
+    {
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "status": "captured",
+      "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=112&stateId=16&commodityId=65&includeExcel=false",
+      "fetched_at": "2026-11-04T18:43:39.200185+00:00",
+      "sha256": "3de6537e91e29a64a161c9d735250aa3417fa775ef2b8e65fa6300bda9de561f",
+      "modal_observations": 5,
+      "not_reported": 2,
+      "file": "tomato.json"
+    },
+    {
+      "market": "Shimoga APMC",
+      "commodity": "Arecanut(Betelnut/Supari)",
+      "status": "captured",
+      "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=753&stateId=16&commodityId=118&includeExcel=false",
+      "fetched_at": "2026-11-04T18:43:39.561312+00:00",
+      "sha256": "08f23de206e0081a5d512be0bb3d94d09e0319ed2b3c7272977ce13b079aaea8",
+      "modal_observations": 30,
+      "not_reported": 19,
+      "file": "arecanut.json"
+    },
+    {
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "status": "captured",
+      "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=762&stateId=16&commodityId=111&includeExcel=false",
+      "fetched_at": "2026-11-04T18:43:39.811691+00:00",
+      "sha256": "e85a4aa5994a532bb177a3a8c438e844accb3bb4cdce8dfd3e4a4d727035342f",
+      "modal_observations": 8,
+      "not_reported": 6,
+      "file": "copra.json"
+    },
+    {
+      "market": "APMC Hubballi",
+      "commodity": "Onion",
+      "status": "captured",
+      "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=108&stateId=16&commodityId=23&includeExcel=false",
+      "fetched_at": "2026-11-04T18:43:40.143248+00:00",
+      "sha256": "b06b18421972b2672d7822df8c873833415f653498fceebdb6c935dd8faa7fca",
+      "modal_observations": 12,
+      "not_reported": 2,
+      "file": "onion.json"
+    },
+    {
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "status": "captured",
+      "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=99&stateId=16&commodityId=24&includeExcel=false",
+      "fetched_at": "2026-11-04T18:43:40.401086+00:00",
+      "sha256": "441fd68cd778ec5cb2563d68ab674baac080d5ff63f7661fc061499d3d658f53",
+      "modal_observations": 12,
+      "not_reported": 2,
+      "file": "potato.json"
+    }
+  ],
+  "limitations": "Public last-week modal-only captures; no min/max, grade or original publication timestamps inferred. Historical daily training requires verified official CSV exports."
+}

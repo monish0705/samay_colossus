@@ -1,0 +1,73 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-a0b204e8241fd7c0",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-31",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "other",
+    "grade": "local",
+    "market": "Tiptur APMC",
+    "commodity": "Copra",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "result": {
+    "horizon": 1,
+    "champion": "median_14",
+    "n": 39,
+    "status": "evaluated",
+    "metrics": {
+      "n": 39,
+      "mae_inr_per_quintal": 689.7435897435897,
+      "rmse_inr_per_quintal": 964.1656416899457,
+      "smape_pct": 3.7951704943984748,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 3.8340935005701255,
+      "directional_accuracy": 0.6410256410256411,
+      "p90_absolute_error_inr_per_quintal": 1800.0000000000007,
+      "p90_overprediction_inr_per_quintal": 710.0000000000001
+    },
+    "baseline_metrics": {
+      "naive": {
+        "n": 39,
+        "mae_inr_per_quintal": 974.3589743589744,
+        "rmse_inr_per_quintal": 1361.5601910478117,
+        "smape_pct": 5.345463661580554,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 5.416191562143672,
+        "directional_accuracy": 0.15384615384615385,
+        "p90_absolute_error_inr_per_quintal": 2100.0000000000014,
+        "p90_overprediction_inr_per_quintal": 1500.0
+      },
+      "mean_14": {
+        "n": 39,
+        "mae_inr_per_quintal": 746.5201465201463,
+        "rmse_inr_per_quintal": 955.00965060973,
+        "smape_pct": 4.108731545017203,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 4.14969864798827,
+        "directional_accuracy": 0.6153846153846154,
+        "p90_absolute_error_inr_per_quintal": 1752.857142857143,
+        "p90_overprediction_inr_per_quintal": 871.4285714285711
+      },
+      "median_14": {
+        "n": 39,
+        "mae_inr_per_quintal": 689.7435897435897,
+        "rmse_inr_per_quintal": 964.1656416899457,
+        "smape_pct": 3.7951704943984748,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 3.8340935005701255,
+        "directional_accuracy": 0.6410256410256411,
+        "p90_absolute_error_inr_per_quintal": 1800.0000000000007,
+        "p90_overprediction_inr_per_quintal": 710.0000000000001
+      }
+    }
+  }
+}

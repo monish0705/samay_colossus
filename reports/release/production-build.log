@@ -7,8 +7,13 @@ transforming...
 ✓ 2166 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                   0.36 kB │ gzip:   0.27 kB
-dist/assets/index-Cap9Leyv.css   31.56 kB │ gzip:   8.17 kB
-dist/assets/index-Cj1BcqGO.js   481.56 kB │ gzip: 142.53 kB
+dist/index.html                   0.37 kB │ gzip:   0.27 kB
+dist/assets/index-DTI7EkXe.css   43.14 kB │ gzip:  10.69 kB
+dist/assets/index-BsKibwHT.js   559.92 kB │ gzip: 163.76 kB
 
-✓ built in 761ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.33s

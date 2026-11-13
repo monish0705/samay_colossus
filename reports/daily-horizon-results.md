@@ -1,0 +1,50 @@
+# Daily crop horizon evidence
+
+Retrospective snapshot research. Original publication/revision times are unverified.
+New horizons exclude the previously consumed final period. No new final accuracy is claimed.
+Most additions are predeclared last-observed-price baselines, not trained ML.
+
+| Crop | Saved current-grade calendar days | New daily artifacts | Development-selected | Fixed baseline only |
+|---|---|---:|---:|---:|
+| Arecanut / rashi / local | 1–73 (every day) | 70 | 1 | 69 |
+| Copra / other / local | 1–60 (every day) | 57 | 2 | 55 |
+| Onion / puna / local | 1–83 (every day) | 80 | 9 | 71 |
+| Potato / local / medium | 1–84 (every day) | 81 | 3 | 78 |
+| Tomato / tomato / local | 1–7 (every day) | 4 | 3 | 1 |
+
+| Crop | Days | Evidence | Pairs / selection validation n | Nonoverlapping cases | MAE INR/quintal | RMSE INR/quintal | WAPE error % |
+|---|---:|---|---|---:|---:|---:|---:|
+| Arecanut | 14 | fixed-rule retrospective benchmark | 140 / 19 | 14 | 1532.17 | 1992.46 | 2.91 |
+| Arecanut | 30 | fixed-rule retrospective benchmark | 130 / 10 | 7 | 1922.10 | 2390.78 | 3.67 |
+| Arecanut | 60 | fixed-rule retrospective benchmark | 111 / 0 | 3 | 1592.99 | 2036.41 | 3.05 |
+| Arecanut | 90 | INSUFFICIENT | 92 / 0 | 2 | unavailable | unavailable | unavailable |
+| Arecanut | 120 | INSUFFICIENT | 72 / 0 | 1 | unavailable | unavailable | unavailable |
+| Arecanut | 180 | INSUFFICIENT | 31 / 0 | 1 | unavailable | unavailable | unavailable |
+| Arecanut | 365 | INSUFFICIENT | 0 / 0 | 0 | unavailable | unavailable | unavailable |
+| Arecanut | 730 | INSUFFICIENT | 0 / 0 | 0 | unavailable | unavailable | unavailable |
+| Copra | 14 | fixed-rule retrospective benchmark | 145 / 25 | 12 | 1434.48 | 2480.41 | 7.63 |
+| Copra | 30 | fixed-rule retrospective benchmark | 131 / 12 | 5 | 1337.40 | 2100.49 | 7.13 |
+| Copra | 60 | fixed-rule retrospective benchmark | 107 / 0 | 3 | 1492.52 | 2399.24 | 8.04 |
+| Copra | 90 | INSUFFICIENT | 81 / 0 | 2 | unavailable | unavailable | unavailable |
+| Copra | 120 | INSUFFICIENT | 55 / 0 | 1 | unavailable | unavailable | unavailable |
+| Copra | 180 | INSUFFICIENT | 5 / 0 | 1 | unavailable | unavailable | unavailable |
+| Copra | 365 | INSUFFICIENT | 0 / 0 | 0 | unavailable | unavailable | unavailable |
+| Onion | 14 | fixed-rule retrospective benchmark | 175 / 31 | 16 | 268.57 | 403.70 | 13.82 |
+| Onion | 30 | fixed-rule retrospective benchmark | 164 / 20 | 8 | 325.61 | 494.11 | 16.51 |
+| Onion | 60 | fixed-rule retrospective benchmark | 139 / 0 | 4 | 447.48 | 683.20 | 21.90 |
+| Onion | 90 | INSUFFICIENT | 118 / 0 | 2 | unavailable | unavailable | unavailable |
+| Onion | 120 | INSUFFICIENT | 99 / 0 | 2 | unavailable | unavailable | unavailable |
+| Potato | 14 | fixed-rule retrospective benchmark | 195 / 35 | 16 | 214.87 | 280.02 | 14.17 |
+| Potato | 30 | fixed-rule retrospective benchmark | 184 / 22 | 8 | 316.30 | 384.91 | 21.38 |
+| Potato | 60 | fixed-rule retrospective benchmark | 159 / 0 | 4 | 506.92 | 593.15 | 34.79 |
+| Potato | 90 | INSUFFICIENT | 136 / 0 | 2 | unavailable | unavailable | unavailable |
+| Potato | 120 | INSUFFICIENT | 111 / 0 | 2 | unavailable | unavailable | unavailable |
+| Potato | 180 | INSUFFICIENT | 61 / 0 | 1 | unavailable | unavailable | unavailable |
+
+WAPE is percentage error; 100 minus WAPE is not an accuracy score.
+Overlapping daily errors are dependent; the nonoverlapping count exposes how little independent long-horizon evidence exists.
+Three nonoverlapping cases are a minimal baseline-only gate, not proof of stable forecast quality or interval coverage.
+Validation errors participated in selection and are optimistic as performance estimates. Previously reported short-horizon final errors remain unchanged.
+A baseline may output the same point at several horizons because its rule is to retain the latest observed price. No upward trend is invented.
+No empirical interval is available for these additions; user stress bounds are assumptions, not calibrated probabilities.
+Audit rows and exact candidate comparisons live alongside each frozen comparison.json. Missing targets are excluded, never interpolated.

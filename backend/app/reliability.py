@@ -58,7 +58,9 @@ def point(vintages, plan, origin, horizon, champion=None):
     if horizon not in (1, 3, 7):
         response["flags"].append("unsupported_horizon")
         return response
-    if plan.market != "Kolar APMC" or plan.commodity != "Tomato":
+    supported_markets = {"Kolar APMC", "Shivamogga Mandi", "Hubballi APMC", "Tiptur APMC", "Bengaluru APMC"}
+    supported_commodities = {"Tomato", "Arecanut", "Onion", "Copra", "Potato"}
+    if plan.market not in supported_markets or plan.commodity not in supported_commodities:
         response["flags"].append("unsupported_series")
         return response
     if len(history) < POLICY["minimum_history"]:

@@ -1,0 +1,17 @@
+# Hash-pinned evidence must retain identical bytes on Windows and Linux.
+* text=auto
+*.py text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+data/raw/** -text
+data/context/** -text
+data/processed/** -text
+data/prepared/** -text
+models/** -text
+reports/** -text
+research-registry.json -text
+research-serving-registry.json -text

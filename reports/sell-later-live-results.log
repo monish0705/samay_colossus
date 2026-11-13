@@ -1,0 +1,3 @@
+hold_all hold sell 0 hold 20 days 2 projected_gain_INR 66088.71 later_net_INR 350788.71
+sell_some_hold_rest partial_sell_and_hold sell 10 hold 10 days 2 projected_gain_INR 32944.35 later_net_INR 175344.35
+sell_now_when_future_unattractive sell_now sell 20 hold 0 days 0 projected_gain_INR 0.00 later_net_INR 0.00

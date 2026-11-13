@@ -14,7 +14,7 @@ from sqlalchemy import select
 
 from app.features import Plan, asof, empty_vintages, midnight
 from app.forecasting import examples, predict_rows, runtime_versions, save_champion, score, select_horizon
-from app.ingestion import SourceManifest
+from app.ingestion import SourceManifest, district_name, market_district
 from app.models import ImportBatch, ImportRow
 
 LIMITATION = ("RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. "
@@ -28,7 +28,7 @@ def snapshot(session, plan: Plan, *, final=False):
     """SQL excludes holdout rows unless final evaluation was explicitly reserved."""
     end = plan.holdout_end if final else plan.validation_end
     stmt = select(ImportRow, ImportBatch).join(ImportBatch, ImportRow.batch_id == ImportBatch.id).where(
-        ImportBatch.data_kind == "official", ImportRow.status.in_(["inserted", "revised", "duplicates"]),
+        ImportBatch.data_kind.in_(["official", "secondary"] if plan.source_kind == "verified" else [plan.source_kind]), ImportRow.status.in_(["inserted", "revised", "duplicates"]),
         ImportRow.normalized["report_date"].as_string() >= plan.start.isoformat(),
         ImportRow.normalized["report_date"].as_string() <= end.isoformat(),
         ImportRow.normalized["market"].as_string() == plan.market,
@@ -40,19 +40,21 @@ def snapshot(session, plan: Plan, *, final=False):
         if batch.id not in sources:
             manifest = SourceManifest.model_validate(batch.manifest)
             path = Path(batch.archive_path)
-            if manifest.data_kind != "official" or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at:
+            if manifest.data_kind != batch.data_kind or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at:
                 raise ValueError("Snapshot source manifest mismatch")
-            if not manifest.source_url.startswith(("https://agmarknet.gov.in/", "https://www.agmarknet.gov.in/", "https://data.gov.in/", "https://www.data.gov.in/")):
+            allowed = ("https://agmarknet.gov.in/", "https://www.agmarknet.gov.in/", "https://data.gov.in/", "https://www.data.gov.in/") if batch.data_kind == "official" else ("https://ckandev.indiadataportal.com/",)
+            if not manifest.source_url.startswith(allowed):
                 raise ValueError("Unsupported government provenance")
             if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != batch.file_sha256 or manifest.sha256 != batch.file_sha256:
                 raise ValueError("Snapshot archive integrity failure")
             if any(marker in batch.source_label.casefold() for marker in ("fixture", "test_only", "demo")):
                 raise ValueError("Test data cannot enter real research results")
             sources[batch.id] = {"source": batch.source_label, "url": batch.source_url, "sha256": batch.file_sha256,
-                "fetched_at": batch.fetched_at.isoformat()}
+                "fetched_at": batch.fetched_at.isoformat(), "source_kind":batch.data_kind,
+                "upstream_source_url":manifest.upstream_source_url, "license":manifest.license}
         n = row.normalized
         prices = [float(n[key]) for key in ("min", "modal", "max")]
-        if n["state"] != "Karnataka" or n["district"] != "Kolar" or n["price_unit"] != "INR/quintal" or not 0 <= prices[0] <= prices[1] <= prices[2]:
+        if n["state"] != "Karnataka" or district_name(n["district"]) != market_district(plan.market) or n["price_unit"] != "INR/quintal" or not 0 <= prices[0] <= prices[1] <= prices[2]:
             raise ValueError("Invalid snapshot scope/units/price ordering")
         rows.append({"report_date": date.fromisoformat(n["report_date"]), "available_at": pd.Timestamp(batch.fetched_at),
             "price": prices[1], "batch_id": batch.id, "row_id": row.id, "file_sha256": batch.file_sha256})
@@ -84,6 +86,9 @@ def run(session, plan: Plan, output: Path, evaluate_final=False):
     output.mkdir(parents=True, exist_ok=True)
     # Refuse new selection against a holdout that has already supplied research feedback.
     registry = output / "final_evaluation_registry"
+    from app.holdout_guard import assert_untouched
+    for horizon in (1,3,7):
+        assert_untouched(registry,plan,horizon)
     keys = {}
     for horizon in (1, 3, 7):
         key = {k: getattr(plan, k) for k in ("market", "commodity", "variety", "grade")}
@@ -128,7 +133,7 @@ def run(session, plan: Plan, output: Path, evaluate_final=False):
                 dated["prediction_inr_per_quintal"] = predict_rows(comparison["champion"], model, test)
                 dated.to_csv(folder / f"final-predictions-{horizon}d.csv", index=False)
             final_results.append(result)
-            keys[horizon].write_text(json.dumps({"state": "consumed", "run": folder.name, "result": result}, indent=2), encoding="utf-8")
+            keys[horizon].write_text(json.dumps({"state": "consumed", "run": folder.name, "plan":plan.serializable(), "result": result}, indent=2), encoding="utf-8")
         report.update(final_holdout="consumed once after selection frozen", final_evaluation={"results": final_results,
             "source": final_sources, "evaluated_at": datetime.now(UTC).isoformat()})
         report_file.write_text(json.dumps(report, indent=2, allow_nan=False), encoding="utf-8")

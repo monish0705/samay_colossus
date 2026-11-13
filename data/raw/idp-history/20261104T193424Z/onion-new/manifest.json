@@ -1,0 +1,12 @@
+{
+  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+  "data_kind": "secondary",
+  "fetched_at": "2026-11-04T19:36:58.468313+00:00",
+  "price_unit": "INR/quintal",
+  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+  "date_format": "%Y-%m-%d",
+  "sha256": "9591b22bde2438e0376c49228aee8c79132fa293a6cf302fa5e30a0da35bf17b",
+  "upstream_source_url": "https://agmarknet.gov.in/",
+  "license": "Open Data Commons Attribution License"
+}

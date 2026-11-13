@@ -1,10 +1,10 @@
 {
-  "verified_at": "2026-11-04T06:49:36.395568+00:00",
+  "verified_at": "2026-11-04T20:09:41.823456+00:00",
   "results": [
     {
       "check": "migrations",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "-m",
         "alembic",
         "-c",
@@ -12,30 +12,30 @@
         "upgrade",
         "head"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 0,
-      "seconds": 1.02,
+      "seconds": 1.11,
       "log": "reports\\release\\migrations.log"
     },
     {
       "check": "schema-drift",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "-m",
         "alembic",
         "-c",
         "backend/alembic.ini",
         "check"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 0,
-      "seconds": 0.95,
+      "seconds": 1.03,
       "log": "reports\\release\\schema-drift.log"
     },
     {
       "check": "backend-lint",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "-m",
         "ruff",
         "check",
@@ -43,7 +43,7 @@
         "scripts",
         "tests"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 0,
       "seconds": 0.16,
       "log": "reports\\release\\backend-lint.log"
@@ -51,28 +51,28 @@
     {
       "check": "backend-tests",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "-m",
         "pytest",
         "tests",
         "-q"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 0,
-      "seconds": 44.12,
+      "seconds": 32.47,
       "log": "reports\\release\\backend-tests.log"
     },
     {
       "check": "dependency-check",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "-m",
         "pip",
         "check"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 0,
-      "seconds": 0.84,
+      "seconds": 1.05,
       "log": "reports\\release\\dependency-check.log"
     },
     {
@@ -81,9 +81,9 @@
         "C:\\Program Files\\nodejs\\npm.cmd",
         "test"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\frontend",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\frontend",
       "exit_code": 0,
-      "seconds": 4.3,
+      "seconds": 6.2,
       "log": "reports\\release\\frontend-tests.log"
     },
     {
@@ -93,9 +93,9 @@
         "run",
         "typecheck"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\frontend",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\frontend",
       "exit_code": 0,
-      "seconds": 2.83,
+      "seconds": 4.22,
       "log": "reports\\release\\frontend-typecheck.log"
     },
     {
@@ -105,9 +105,9 @@
         "run",
         "lint"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\frontend",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\frontend",
       "exit_code": 0,
-      "seconds": 3.59,
+      "seconds": 5.34,
       "log": "reports\\release\\frontend-lint.log"
     },
     {
@@ -117,20 +117,20 @@
         "run",
         "build"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\frontend",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\frontend",
       "exit_code": 0,
-      "seconds": 3.91,
+      "seconds": 5.91,
       "log": "reports\\release\\production-build.log"
     },
     {
       "check": "http-e2e",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "scripts/run_e2e.py"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 0,
-      "seconds": 13.12,
+      "seconds": 12.19,
       "log": "reports\\release\\http-e2e.log"
     },
     {
@@ -140,9 +140,9 @@
         "audit",
         "--omit=dev"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\frontend",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\frontend",
       "exit_code": 0,
-      "seconds": 2.61,
+      "seconds": 2.5,
       "log": "reports\\release\\runtime-npm-audit.log"
     },
     {
@@ -152,20 +152,20 @@
         "audit",
         "--json"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\frontend",
-      "exit_code": 1,
-      "seconds": 4.22,
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\frontend",
+      "exit_code": 0,
+      "seconds": 1.69,
       "log": "reports\\release\\full-npm-audit.log"
     },
     {
       "check": "authentic-demo-readiness",
       "command": [
-        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Scripts\\python.exe",
         "scripts/check_readiness.py"
       ],
-      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-agritech",
+      "cwd": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2",
       "exit_code": 2,
-      "seconds": 1.33,
+      "seconds": 1.55,
       "log": "reports\\release\\authentic-demo-readiness.log"
     }
   ],

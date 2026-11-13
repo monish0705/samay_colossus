@@ -58,6 +58,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/context": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Market Context */
+        get: operations["market_context_api_v1_context_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/commodities": {
         parameters: {
             query?: never;
@@ -143,6 +160,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/models/horizons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Model Horizons */
+        get: operations["model_horizons_api_v1_models_horizons_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/models/evaluation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Model Evaluation */
+        get: operations["model_evaluation_api_v1_models_evaluation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/data/status": {
         parameters: {
             query?: never;
@@ -152,6 +203,46 @@ export interface paths {
         };
         /** Data Status */
         get: operations["data_status_api_v1_data_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/predict/multi-factor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retired Multi Factor
+         * @deprecated
+         */
+        get: operations["retired_multi_factor_api_v1_predict_multi_factor_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/storage/nearby": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retired Storage
+         * @deprecated
+         */
+        get: operations["retired_storage_api_v1_storage_nearby_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -186,6 +277,23 @@ export interface components {
             /** Upper Inr Per Quintal */
             upper_inr_per_quintal: string;
         };
+        /** CalendarEvent */
+        CalendarEvent: {
+            /** Name */
+            name: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Source Url */
+            source_url: string;
+            /**
+             * Note
+             * @default Published calendar event; not a confirmed mandi closure or an estimated price increase.
+             */
+            note: string;
+        };
         /** CommodityResponse */
         CommodityResponse: {
             /** Id */
@@ -194,6 +302,74 @@ export interface components {
             name: string;
             /** Data Source */
             data_source: string;
+        };
+        /** ConditionFactorImpact */
+        ConditionFactorImpact: {
+            /** Condition */
+            condition: string;
+            /** Category */
+            category: string;
+            /**
+             * Impact
+             * @enum {string}
+             */
+            impact: "profit" | "loss" | "neutral";
+            /** Price Effect Inr Per Quintal */
+            price_effect_inr_per_quintal: string;
+            /** Percentage Effect */
+            percentage_effect: number;
+            /** Description */
+            description: string;
+            /** Evidence Basis */
+            evidence_basis: string;
+        };
+        /** ContextSource */
+        ContextSource: {
+            /** Name */
+            name: string;
+            /** Url */
+            url: string;
+            /**
+             * Fetched At
+             * Format: date-time
+             */
+            fetched_at: string;
+            /** Sha256 */
+            sha256: string;
+            /** Status */
+            status: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
+        /** CropDomainProfile */
+        CropDomainProfile: {
+            /** Commodity */
+            commodity: string;
+            /** Market */
+            market: string;
+            /** Optimal Storage Duration */
+            optimal_storage_duration: string;
+            /** Spoilage Risk */
+            spoilage_risk: string;
+            /** Drivers */
+            drivers: components["schemas"]["CropDriverItem"][];
+        };
+        /** CropDriverItem */
+        CropDriverItem: {
+            /** Category */
+            category: string;
+            /**
+             * Impact
+             * @enum {string}
+             */
+            impact: "bullish" | "bearish" | "neutral" | "watch";
+            /** Title */
+            title: string;
+            /** Description */
+            description: string;
         };
         /** CropStorageProfile */
         CropStorageProfile: {
@@ -214,6 +390,15 @@ export interface components {
             status: string;
             /** Official Observations */
             official_observations: number;
+            /**
+             * Secondary Observations
+             * @default 0
+             */
+            secondary_observations: number;
+            /** Latest Secondary Report Date */
+            latest_secondary_report_date?: string | null;
+            /** Latest Secondary Fetched At */
+            latest_secondary_fetched_at?: string | null;
             /** Fixture Observations */
             fixture_observations: number;
             /** Demo Observations */
@@ -228,9 +413,93 @@ export interface components {
              */
             note: string;
         };
+        /** DecisionPolicy */
+        DecisionPolicy: {
+            /**
+             * Downside Fraction
+             * @default 0.10
+             */
+            downside_fraction: number | string;
+            /**
+             * Adverse Fraction
+             * @default 0.20
+             */
+            adverse_fraction: number | string;
+            /**
+             * Upside Fraction
+             * @default 0.10
+             */
+            upside_fraction: number | string;
+            /** Assumption Source */
+            assumption_source: string;
+            /**
+             * Long Horizon Mode
+             * @default require_user_price
+             * @enum {string}
+             */
+            long_horizon_mode: "require_user_price" | "flat_reference" | "saved_forecast";
+            /**
+             * Storage Exposure
+             * @default unknown
+             * @enum {string}
+             */
+            storage_exposure: "protected" | "outdoor" | "unknown";
+            /**
+             * Block Holding On Rain Risk
+             * @default false
+             */
+            block_holding_on_rain_risk: boolean;
+            /**
+             * Rainfall Stop Threshold Mm
+             * @default 20
+             */
+            rainfall_stop_threshold_mm: number | string;
+        };
+        /** DecisionSupport */
+        DecisionSupport: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "hold" | "partial_sell_and_hold" | "sell_now" | "infeasible" | "insufficient_evidence";
+            /** Basis */
+            basis: string;
+            /** Conditional */
+            conditional: boolean;
+            plan: components["schemas"]["SellingPlan"] | null;
+            safe_fallback_plan: components["schemas"]["SellingPlan"] | null;
+            best_holding_plan?: components["schemas"]["SellingPlan"] | null;
+            holding_economics?: components["schemas"]["HoldingEconomics"] | null;
+            /** Reasons */
+            reasons: string[];
+            /** Horizon Comparisons */
+            horizon_comparisons: components["schemas"]["SellingPlan"][];
+            context: components["schemas"]["MarketContext"];
+            /** Note */
+            note: string;
+        };
         /** ErrorEnvelope */
         ErrorEnvelope: {
             error: components["schemas"]["ApiError"];
+        };
+        /** EvaluationPoint */
+        EvaluationPoint: {
+            /**
+             * Origin Date
+             * Format: date
+             */
+            origin_date: string;
+            /**
+             * Target Date
+             * Format: date
+             */
+            target_date: string;
+            /** Actual Inr Per Quintal */
+            actual_inr_per_quintal: string;
+            /** Prediction Inr Per Quintal */
+            prediction_inr_per_quintal: string;
+            /** Absolute Error Inr Per Quintal */
+            absolute_error_inr_per_quintal: string;
         };
         /** Freshness */
         Freshness: {
@@ -254,6 +523,8 @@ export interface components {
              * @default official
              */
             data_kind: string;
+            /** Reference Modal Price Inr Per Quintal */
+            reference_modal_price_inr_per_quintal?: string | null;
         };
         /** HealthResponse */
         HealthResponse: {
@@ -263,6 +534,67 @@ export interface components {
             service: string;
             /** Version */
             version: string;
+        };
+        /** HistoricalEvaluation */
+        HistoricalEvaluation: {
+            /** Research Only */
+            research_only: boolean;
+            /** Source Kind */
+            source_kind: string;
+            /** Scope */
+            scope: {
+                [key: string]: string;
+            };
+            /** Horizon */
+            horizon: number;
+            /** Selected Model */
+            selected_model: string;
+            /** Model Version */
+            model_version: string;
+            /** Status */
+            status: string;
+            /** Final N */
+            final_n: number;
+            /** Metrics */
+            metrics: {
+                [key: string]: number | null;
+            } | null;
+            /** Naive Metrics */
+            naive_metrics: {
+                [key: string]: number | null;
+            } | null;
+            /**
+             * Train End
+             * Format: date
+             */
+            train_end: string;
+            /**
+             * Validation End
+             * Format: date
+             */
+            validation_end: string;
+            /**
+             * Test Start
+             * Format: date
+             */
+            test_start: string;
+            /**
+             * Test End
+             * Format: date
+             */
+            test_end: string;
+            /** Source */
+            source: {
+                [key: string]: unknown;
+            }[];
+            /** Limitations */
+            limitations: string;
+            /** Points */
+            points: components["schemas"]["EvaluationPoint"][];
+            /** Price Unit */
+            price_unit: string;
+            /** Rounding Note */
+            rounding_note: string;
         };
         /** HistoryResponse */
         HistoryResponse: {
@@ -276,7 +608,70 @@ export interface components {
             next_offset: number | null;
             /**
              * Note
-             * @default Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed.
+             * @default Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed. Verified queries show the latest fetched version per date/variety/grade; individual source classes remain queryable.
+             */
+            note: string;
+        };
+        /** HoldingEconomics */
+        HoldingEconomics: {
+            /** Is Profitable */
+            is_profitable: boolean;
+            /** Projected Diff Inr */
+            projected_diff_inr: string;
+            /** Today Net Sale Inr */
+            today_net_sale_inr: string;
+            /** Later Central Net Inr */
+            later_central_net_inr: string;
+            /** Holding Days */
+            holding_days: number;
+            /** Sell Today Quintals */
+            sell_today_quintals: string;
+            /** Hold Quintals */
+            hold_quintals: string;
+            /** Storage Cost Inr */
+            storage_cost_inr: string;
+            /** Deterioration Loss Quintals */
+            deterioration_loss_quintals: string;
+            /** Break Even Price Inr Per Quintal */
+            break_even_price_inr_per_quintal?: string | null;
+            /** Verdict Title */
+            verdict_title: string;
+            /** Verdict Reason */
+            verdict_reason: string;
+        };
+        /** HorizonAvailability */
+        HorizonAvailability: {
+            /** Market */
+            market: string;
+            /** Commodity */
+            commodity: string;
+            /** Variety */
+            variety: string;
+            /** Grade */
+            grade: string;
+            /** Planning Ceiling Calendar Days */
+            planning_ceiling_calendar_days: number;
+            /** Saved Horizons */
+            saved_horizons: number[];
+            /** Requested Horizon */
+            requested_horizon?: number | null;
+            /** Requested Status */
+            requested_status?: string | null;
+            /**
+             * Reasons
+             * @default []
+             */
+            reasons: string[];
+            /**
+             * Sample Counts
+             * @default {}
+             */
+            sample_counts: {
+                [key: string]: unknown;
+            };
+            /**
+             * Note
+             * @default Saved research baselines are not validated advice. Missing dates are not interpolated; planning ceilings are not shelf-life guarantees.
              */
             note: string;
         };
@@ -293,6 +688,47 @@ export interface components {
              */
             note: string;
         };
+        /** MarketContext */
+        MarketContext: {
+            /**
+             * Status
+             * @default unavailable
+             * @enum {string}
+             */
+            status: "available" | "partial" | "unavailable";
+            /** Market */
+            market: string;
+            /** Commodity */
+            commodity: string;
+            /**
+             * Decision At
+             * Format: date-time
+             */
+            decision_at: string;
+            /** Location Label */
+            location_label?: string | null;
+            /** Weather */
+            weather?: components["schemas"]["WeatherDay"][];
+            /** Events */
+            events?: components["schemas"]["CalendarEvent"][];
+            /** News */
+            news?: components["schemas"]["NewsItem"][];
+            /** Sources */
+            sources?: components["schemas"]["ContextSource"][];
+            /** Warnings */
+            warnings?: string[];
+            domain_profile?: components["schemas"]["CropDomainProfile"] | null;
+            /**
+             * Numeric Price Adjustment Applied
+             * @default false
+             */
+            numeric_price_adjustment_applied: boolean;
+            /**
+             * Note
+             * @default Weather is for the market city, not the farm. News and calendar events are context, not learned causal price adjustments. Future dates beyond the weather/calendar source coverage are unknown.
+             */
+            note: string;
+        };
         /** MarketResponse */
         MarketResponse: {
             /** Id */
@@ -306,6 +742,11 @@ export interface components {
         };
         /** ModelStatusItem */
         ModelStatusItem: {
+            /**
+             * Source Kind
+             * @default official
+             */
+            source_kind: string;
             /** Market */
             market: string;
             /** Commodity */
@@ -337,6 +778,14 @@ export interface components {
             final_holdout_metrics?: {
                 [key: string]: number | null;
             } | null;
+            /** Evidence Status */
+            evidence_status?: string | null;
+            /** Model Name */
+            model_name?: string | null;
+            /** Retrospective Benchmark Metrics */
+            retrospective_benchmark_metrics?: {
+                [key: string]: number | null;
+            } | null;
         };
         /** ModelsStatus */
         ModelsStatus: {
@@ -349,6 +798,27 @@ export interface components {
              * @default []
              */
             research_studies: components["schemas"]["ResearchStudy"][];
+            /**
+             * Research Models
+             * @default []
+             */
+            research_models: components["schemas"]["ModelStatusItem"][];
+        };
+        /** NewsItem */
+        NewsItem: {
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+            /**
+             * Published At
+             * Format: date-time
+             */
+            published_at: string;
+            /** Source */
+            source: string;
+            /** Topics */
+            topics?: string[];
         };
         /** OptimizationResponse */
         OptimizationResponse: {
@@ -423,11 +893,26 @@ export interface components {
             grade: string;
             /**
              * Horizon
-             * @enum {integer}
+             * @description Exact calendar-day horizon; requires a saved artifact for the selected crop/variety/grade
              */
-            horizon: 1 | 3 | 7;
+            horizon: number;
             /** Origin Date */
             origin_date?: string | null;
+        };
+        /** PredictionAttribution */
+        PredictionAttribution: {
+            /** Base Price Inr Per Quintal */
+            base_price_inr_per_quintal: string;
+            /** Predicted Price Inr Per Quintal */
+            predicted_price_inr_per_quintal: string;
+            /** Net Price Change Inr Per Quintal */
+            net_price_change_inr_per_quintal: string;
+            /** Net Change Percentage */
+            net_change_percentage: number;
+            /** Factors */
+            factors: components["schemas"]["ConditionFactorImpact"][];
+            /** Summary */
+            summary: string;
         };
         /** PredictionResponse */
         PredictionResponse: {
@@ -487,6 +972,7 @@ export interface components {
              * @default INR/quintal
              */
             price_unit: string;
+            attribution?: components["schemas"]["PredictionAttribution"] | null;
         };
         /** PriceResponse */
         PriceResponse: {
@@ -577,6 +1063,7 @@ export interface components {
              * @enum {string}
              */
             risk_tolerance: "conservative" | "balanced" | "aggressive";
+            decision_policy?: components["schemas"]["DecisionPolicy"] | null;
         };
         /** RecommendationHolding */
         RecommendationHolding: {
@@ -609,6 +1096,8 @@ export interface components {
             adverse_inr_per_quintal: number | string;
             /** Adverse Assumption */
             adverse_assumption: string;
+            /** Scenario Price Inr Per Quintal */
+            scenario_price_inr_per_quintal?: number | string | null;
         };
         /** RecommendationResponse */
         RecommendationResponse: {
@@ -622,6 +1111,7 @@ export interface components {
             /** Reliability Warnings */
             reliability_warnings: string[];
             optimization: components["schemas"]["OptimizationResponse"];
+            decision_support?: components["schemas"]["DecisionSupport"] | null;
         };
         /** ResearchHorizon */
         ResearchHorizon: {
@@ -646,6 +1136,11 @@ export interface components {
         };
         /** ResearchStudy */
         ResearchStudy: {
+            /**
+             * Source Kind
+             * @default official
+             */
+            source_kind: string;
             /** Version */
             version: string;
             /**
@@ -802,6 +1297,20 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** WeatherDay */
+        WeatherDay: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Max Temperature C */
+            max_temperature_c?: number | null;
+            /** Precipitation Mm */
+            precipitation_mm?: number | null;
+            /** Precipitation Probability Percent */
+            precipitation_probability_percent?: number | null;
+        };
     };
     responses: never;
     parameters: never;
@@ -834,7 +1343,7 @@ export interface operations {
     markets_api_v1_markets_get: {
         parameters: {
             query?: {
-                data_kind?: "official" | "fixture" | "demo";
+                data_kind?: "verified" | "official" | "secondary" | "fixture" | "demo";
             };
             header?: never;
             path?: never;
@@ -851,7 +1360,7 @@ export interface operations {
                     "application/json": components["schemas"]["MarketResponse"][];
                 };
             };
-            /** @description Unprocessable Entity */
+            /** @description Unprocessable Content */
             422: {
                 headers: {
                     [name: string]: unknown;
@@ -889,7 +1398,7 @@ export interface operations {
                 end_date?: string | null;
                 variety?: string | null;
                 grade?: string | null;
-                data_kind?: "official" | "fixture" | "demo";
+                data_kind?: "verified" | "official" | "secondary" | "fixture" | "demo";
                 limit?: number;
                 offset?: number;
             };
@@ -908,7 +1417,7 @@ export interface operations {
                     "application/json": components["schemas"]["HistoryResponse"];
                 };
             };
-            /** @description Unprocessable Entity */
+            /** @description Unprocessable Content */
             422: {
                 headers: {
                     [name: string]: unknown;
@@ -927,6 +1436,75 @@ export interface operations {
                 };
             };
             /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    market_context_api_v1_context_get: {
+        parameters: {
+            query: {
+                market: string;
+                commodity: string;
+                days?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketContext"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1275,6 +1853,149 @@ export interface operations {
             };
         };
     };
+    model_horizons_api_v1_models_horizons_get: {
+        parameters: {
+            query: {
+                market: string;
+                commodity: string;
+                variety: string;
+                grade: string;
+                horizon?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HorizonAvailability"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    model_evaluation_api_v1_models_evaluation_get: {
+        parameters: {
+            query: {
+                variety: string;
+                grade: string;
+                market?: string;
+                commodity?: string;
+                /** @description Exact calendar horizon. New horizons may have development-only evidence, not a final evaluation. */
+                horizon?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HistoricalEvaluation"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
     data_status_api_v1_data_status_get: {
         parameters: {
             query?: never;
@@ -1291,6 +2012,143 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DataStatus"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    retired_multi_factor_api_v1_predict_multi_factor_get: {
+        parameters: {
+            query?: {
+                horizon?: number;
+                base_price?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    retired_storage_api_v1_storage_nearby_get: {
+        parameters: {
+            query?: {
+                quantity?: number;
+                days?: number;
+                today_price?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description No official observation */

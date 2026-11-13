@@ -19,6 +19,7 @@ def main():
     folder = Path(args.folder)
     os.environ["SAMAY_DATABASE_URL"] = f"sqlite:///{(folder / 'test-only.db').as_posix()}"
     os.environ["SAMAY_ENVIRONMENT"] = "test"
+    os.environ["SAMAY_ENABLE_RESEARCH_FORECASTS"] = "false"
     os.environ["SAMAY_HISTORICAL_DEMO_DATE"] = "2025-11-04"
     os.environ["SAMAY_SERVICE_REGISTRY_PATH"] = str(folder / "registry.json")
     (folder / "research-registry.json").write_text("[]")

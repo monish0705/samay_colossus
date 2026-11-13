@@ -1,0 +1,13 @@
+
+> samay-frontend@0.1.0 test:e2e
+> vitest run --config vitest.e2e.config.ts
+
+
+ RUN  v5.1.0 C:/Users/Suhan/OneDrive/文件/ChatGPT/agritech/samay-sub2/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  01:44:06
+   Duration  2.94s (tests 42%, environment 30%, setup 11%, import 9%, transform 7%)
+

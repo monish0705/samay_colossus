@@ -1,10 +1,85 @@
 [
   {
     "directory": "models/research/research-snapshot-v1-6dd9ea73854cc050",
-    "comparison_sha256": "d213ca56321e219c73a295fdca6571354db9ecfb290356bc8ee0aaf7c5d4e709"
+    "comparison_sha256": "d213ca56321e219c73a295fdca6571354db9ecfb290356bc8ee0aaf7c5d4e709",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "db29fcf537ce75ad2ffa57a5431f22b9b18047d3cb411edd8fd1a434b454ccc7",
+      "final-predictions-3d.csv": "a9112c9aa85e1d3c935704a4768c436ad00c19f972576e9a175bde40b38ec83b",
+      "final-predictions-7d.csv": "25d1d3c6ef27ea2b3da59f107cb50a800f5c938b197ba2d8381aedb88df15458"
+    }
   },
   {
     "directory": "models/research/research-snapshot-v1-bf5682f4a2bfbde9",
-    "comparison_sha256": "7e84e584ce192b3f549a8ae0cf4833ed5de23efff3d86f3ae3aa81379b2bc477"
+    "comparison_sha256": "7e84e584ce192b3f549a8ae0cf4833ed5de23efff3d86f3ae3aa81379b2bc477",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "80ee400de026401b07284aaa9a2d1cbc21ed2aab2d3943b564cd1c147790b994",
+      "final-predictions-3d.csv": "b0f098bede658a04b107d0521914388e9a00a5c92b95e7c605ce9a33e5830d48",
+      "final-predictions-7d.csv": "33dc470f92202cf0d81bfd61ee67c73426cefb92e1f04096baa285e27255f338"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-ace0b738d62a1d97",
+    "comparison_sha256": "cb4c5797bf8208b6fa21eff78175032c60da75275f18d55b5f5cb418c8496105",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "2527e7c0bbd083e494935424690c8d875dde7903662282b68f0b37ffebcb0dc1",
+      "final-predictions-3d.csv": "b5c936c181d19d43f9819ce2d103f81929995d993d8e4363c397bf4b7b95d5e6",
+      "final-predictions-7d.csv": "e83f059f9fb90bb4bdf23d107c30a47721fa4d14b75623fc366ef6adbb529ea0"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-52875c5dff4eac15",
+    "comparison_sha256": "aa8efa8d1b42c94482517ea75ae2d5793c280aa64238891455bf4399e3c0ca27",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "8165064210f0e77f27adb87c536ea7b96e4227b95adeca6c46cc0a2c50210c61",
+      "final-predictions-3d.csv": "588a33d72e7bdeed6c0541159beb8f93169941f627de711a67e7b6502dae180f",
+      "final-predictions-7d.csv": "4c2df9babb3be4acd834fed8197096eebde75abda5c4e96fdf7e3ba4c3224487"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-20d2b14759154880",
+    "comparison_sha256": "ab9246e293d6f1467a496b4c1e7fb0cd58bc6eb35f81e83a1da87cf0ea6c6d2d",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "14685a4fc6424583f7ff500f45e96da8f515b95abf9df81a3f36d74c2c767090",
+      "final-predictions-3d.csv": "5ddf639910029c7bc305fc78c161fae0e63518268cddd96544c57b513465172f",
+      "final-predictions-7d.csv": "d410bc84a162c10820861d3d2d3f2c6ad61ceed0b9f0252b57336bdfcd3aa415"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-8e1e377ccdb250bd",
+    "comparison_sha256": "b7133c48063fe941426e612d9c48691f1d0b9dbaa061177cd147b63458b8ac0b",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "1427d17bff27b839c0413afbf49e349a030b90574e8d6d0ae32ac96bbcf72e6b"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-a0b204e8241fd7c0",
+    "comparison_sha256": "99079d7249a9ebaae0c7cceae96fd0f8758207e36505b041ec20eeadffcc7131",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "1e233438882c1adba854b1f75c57f35004ed5ff7474d63b05ac56da21eca25f7",
+      "final-predictions-3d.csv": "1417c6353651e1fb9bbb03bce2718dd01ab372b8545647cbe831ac4c467d6bbd",
+      "final-predictions-7d.csv": "682876b795ec38a06f998d79e0cd09d54bc860f9e0e42463189586281321a6ef"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-a18c6b2407216a5a",
+    "comparison_sha256": "37165840c25933b643dc08c1d78c2348fae3b3a5483c46e04113a5c3ea061b75",
+    "prediction_sha256": {}
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-dfc4c731994b0419",
+    "comparison_sha256": "539852c4b785960787bea8822c6472d82a996e35cb0d5ac6d5eb3fd53a87a283",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "a6e56145a3eb5c10fd8520d560205afa0b9aa8c5cc8a60397f44ea32fb200e68",
+      "final-predictions-3d.csv": "78487e0887f04ba2c9f6e0f88702237c13f784c5d2ccabd26e9270cd52f969e5"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-35245f4e3dabb00e",
+    "comparison_sha256": "4dbc70c6472dc365e711a36bec1245bc8e549a06cb04f403b9ff463fd96d91ef",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "215ce863411c6ef25e2637b47a3d37a6b0446fff0d06645112fb4cb0ed869be4",
+      "final-predictions-3d.csv": "5a47f4aff99d0bb2a7c2a8a234ab792252921c6b5d3e5892bbf6623a20d1c634",
+      "final-predictions-7d.csv": "1ed33b3d017dc4595531a9a402ec8646c36da495c1924edfcd17575e8b35701a"
+    }
   }
 ]

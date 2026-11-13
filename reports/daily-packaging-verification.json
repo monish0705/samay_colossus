@@ -1,0 +1,7 @@
+{
+  "hash_sensitive_files_checked": 2039,
+  "byte_mismatches": [],
+  "isolated_index": true,
+  "user_staging_unchanged": true,
+  "required_publish_step": "git add --all; git add --renormalize -- data models reports research-registry.json research-serving-registry.json"
+}

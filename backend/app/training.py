@@ -46,6 +46,9 @@ def train_run(session, feature_run: Path, output: Path, evaluate_final=False):
         if evaluate_final and report.get("status") == "selected" and report.get("final_evaluation") is None:
             raise ValueError("Frozen run exists without final evaluation; use a fresh explicitly reviewed evaluation workflow, not automatic retraining")
         return root, report
+    from app.holdout_guard import assert_untouched
+    for horizon in (1,3,7):
+        assert_untouched(output/"final_evaluation_registry",plan,horizon)
     root.mkdir(parents=True, exist_ok=False)
     report = {"version": root.name, "dataset_fingerprint": fingerprint, "source_vintages_sha256": data_hash,
         "runtime": runtime_versions(),
@@ -93,7 +96,8 @@ def train_run(session, feature_run: Path, output: Path, evaluate_final=False):
                 predictions["prediction_inr_per_quintal"] = predict_rows(comparison["champion"], model, test)
                 predictions.to_csv(root / f"final-predictions-{horizon}d.csv", index=False)
             final.append(result)
-            lock.write_text(json.dumps({"state": "consumed", "model_version": root.name, "result": result}, indent=2), encoding="utf-8")
+            reservation=json.loads(lock.read_text())
+            lock.write_text(json.dumps({"state": "consumed", "model_version": root.name, "key":reservation["key"], "result": result}, indent=2), encoding="utf-8")
         report["final_evaluation"] = {"results": final, "source": final_provenance, "evaluated_at": datetime.now(UTC).isoformat()}
         report_path.write_text(json.dumps(report, indent=2, allow_nan=False), encoding="utf-8")
     lines = ["# SAMAY model comparison", "", f"Status: {report['status']}", "", "Wholesale modal prices in INR/quintal. No percentage here represents guaranteed farmer outcomes.", ""]

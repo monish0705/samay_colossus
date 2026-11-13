@@ -6,5 +6,5 @@ from app.main import app
 
 if __name__ == "__main__":
     path = ROOT / "frontend" / "openapi.json"
-    path.write_text(json.dumps(app.openapi(), indent=2), encoding="utf-8")
+    path.write_text(json.dumps(app.openapi(), indent=2), encoding="utf-8", newline="\n")
     print(f"Exported {len(app.openapi()['paths'])} API paths")

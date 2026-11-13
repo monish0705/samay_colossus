@@ -1,0 +1,17 @@
+Prepared official observations restored; recommendation history is empty
+Bundled research profile; previous samay.db and .env are preserved. Forecasts remain limited-evidence research.
+Custom SQLite path preserved; import or restore explicitly
+{
+  "corrected_observations": 0,
+  "observations_by_kind": {
+    "demo": 7305,
+    "fixture": 3,
+    "official": 3938,
+    "secondary": 5834
+  },
+  "action": "Reclassified in place; original generated values retained for audit; no authentic observations removed"
+}
+Verified bundled profile: 3938 official + 5834 secondary observations; 322 research model artifacts
+SAMAY ready: http://127.0.0.1:5181
+Swagger: http://127.0.0.1:8021/docs
+No data or model is fabricated by startup.

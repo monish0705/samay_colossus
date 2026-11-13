@@ -1,0 +1,30 @@
+{
+  "source_page": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d",
+  "download_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+  "api_url": "https://ckandev.indiadataportal.com/api/action/datastore_search",
+  "resource_id": "078fd1ea-dab6-4aca-aed9-3a4b8b2c761d",
+  "pages": [
+    {
+      "file": "page-000000.json",
+      "sha256": "ad4bfad68bb612ed779f22fd7f09e10ee94221f0e9778ef638e5d3c0684b2cad",
+      "request": {
+        "resource_id": "078fd1ea-dab6-4aca-aed9-3a4b8b2c761d",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Potato",
+          "market_center_name": "Bengaluru Apmc"
+        },
+        "limit": 1000,
+        "offset": 0,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 300,
+      "fetched_at": "2026-11-04T19:36:59.820856+00:00"
+    }
+  ],
+  "records": 300,
+  "conversion": "Map documented headers only; preserve all observed dates, varieties, grades, prices and units. Grade missing in old source is explicitly unspecified.",
+  "first_date": "2025-11-07",
+  "last_date": "2026-05-30"
+}

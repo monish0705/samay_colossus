@@ -1,16 +1,37 @@
 # SAMAY · Team Resonance · COLOSSUS 3.0
 
-Cash-aware market decision support for Karnataka / Kolar / Kolar APMC / Tomato.
+Cash-aware market decision support for five Karnataka crop/market series.
 FastAPI + SQLite/Alembic, causal forecasting and empirical uncertainty, Decimal
 sale optimization, and a responsive English/Kannada React dashboard.
 
-**Current state, 2026-11-04:** 1,943 genuine AGMARKNET observations are imported
-from 2021–2026. Two grade-specific retrospective studies compared baseline and ML
-candidates and saved six frozen baseline champions. See [actual model results](docs/MODEL-RESULTS.md)
-and [source provenance](docs/ACQUISITION.md). Research results appear separately
-on the Transparency screen. Validated live forecasts remain unavailable because
-original publication/revision history is unverified. No guaranteed accuracy or
-profit improvement is claimed.
+**Current state, 5 November 2026:** fresh official OGD histories were obtained for
+Copra, Arecanut, Onion and Potato, with reports through 3–4 November 2026. All four
+now return saved research forecasts at 1/3/7 calendar days through the browser UI.
+The database stores 3,938 official and 5,834 separately labeled secondary rows;
+source overlaps are deduplicated for training/history, and demo data is excluded.
+There are ten frozen short-horizon studies and 322 registered research serving
+artifacts, including 292 new daily-horizon artifacts. Current series cover every
+calendar day through Tomato 7, Copra 60, Arecanut 73, Onion 83 and Potato 84 days.
+Most additions are explicitly predeclared last-price baselines; longer unsupported
+dates stay unavailable. The new extension has no new untouched final test.
+
+See [daily horizons and measured errors](docs/DAILY-HORIZONS.md) and
+[cash-aware decisions with dated weather/news context](docs/SELL-HOLD-ADVISOR.md).
+The advisor compares conditional hold plans with an immediate-sale fallback,
+preserving cash, costs, storage loss and downside. Weather/news are reviewable
+context, not unvalidated numeric price adjustments.
+
+See [current crop training and measured errors](docs/CURRENT-CROP-MODELS.md) and
+[the computed report](reports/current-crop-models.md). All champions remain
+baselines in those frozen short-horizon final studies; advanced ML did not
+consistently beat them. Sparse final sets have no
+claimed reliable final score, calibrated intervals are unavailable for the new
+series, and all models remain research-only with no guaranteed selling price.
+
+See [additional data/model handoff](docs/SECONDARY-MODELS.md),
+[actual errors and sample sizes](reports/corrected-model-readiness.md),
+[original tomato comparisons](docs/MODEL-RESULTS.md), and
+[initial engineering corrections](docs/CORRECTIONS.md).
 
 ## Windows two-command setup and launch
 
@@ -20,7 +41,7 @@ repository root; no activation or execution-policy change is required.
 
 ```powershell
 python scripts/setup_local.py
-.\.venv\Scripts\python.exe scripts/start_local.py
+.\.venv\Scripts\python.exe scripts/start_local.py --enable-research
 ```
 
 Setup installs pinned Python packages and `npm ci`; it needs internet and preserves
@@ -31,6 +52,44 @@ backend `http://127.0.0.1:8010` and frontend `http://127.0.0.1:5173`, and checks
 the API contract. Ctrl+C stops only children it launched. Swagger: backend `/docs`.
 Health is process liveness, not forecast readiness. Restart existing listeners
 after code/configuration changes.
+
+### Other computer: app opens but data/models are missing
+
+Check out **`sub2`**, then use the isolated bundled research profile. An existing
+installation may still point to an empty database, disable research models in
+its old `.env`, or reuse a backend that was started before the update.
+
+```powershell
+git switch sub2
+git pull --ff-only origin sub2
+.\.venv\Scripts\python.exe scripts/start_local.py --bundled-research --backend-port 8012 --frontend-port 5175
+```
+
+Open **http://127.0.0.1:5175 on that computer**. If dependencies are missing, stop
+the old Vite preview, run `python scripts/setup_local.py`, then repeat the launch.
+Use Python 3.12 for the pinned dependencies and saved artifacts.
+
+This profile verifies the bundled database, copies it to an isolated
+`.local-data/bundled-<hash>.db`, explicitly enables the saved research registries
+and ignores an old historical replay date. It preserves your original `samay.db`,
+`.env` and previous profile history. It refuses occupied ports rather than reusing
+a backend with different settings. Startup must verify **3,938 official + 5,834
+secondary observations and 322 research artifacts** before reporting ready.
+Research baselines remain limited evidence, not validated farmer advice.
+
+Verification: a fresh clone of remote `sub2`, with freshly installed dependencies,
+restored those observation counts, loaded all 322 model artifacts and returned a
+real Copra 30-day forecast. No retraining or separate model download is needed.
+
+For fresh ports and optional hourly internet context refresh:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/start_local.py --backend-port 8011 --frontend-port 5174 --enable-research --refresh-context
+```
+
+Omit `--refresh-context` for offline operation with prepared authentic history
+and saved models. Cached context expires visibly; this flag does not update mandi
+price observations. No live market-price feed is implied.
 
 The launcher uses a same-origin `/backend` Vite proxy. Independent terminals:
 

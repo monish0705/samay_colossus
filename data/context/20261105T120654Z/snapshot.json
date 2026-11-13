@@ -1,0 +1,1253 @@
+{
+  "schema_version": "samay-context-v1",
+  "sources": [
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Kolar%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T12:06:55.341993+00:00",
+        "sha256": "cce7a540387cc820d39ac88b7fec9811ff50676622feb8fb28280bf382a699e4",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "geocoding",
+      "archive": "source-01.dat",
+      "market": "Kolar APMC",
+      "location": {
+        "name": "Kolār",
+        "latitude": 13.13768,
+        "longitude": 78.12999,
+        "country_code": "IN",
+        "admin1": "Karnataka"
+      }
+    },
+    {
+      "source": {
+        "name": "Open-Meteo city weather forecast",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=13.13768&longitude=78.12999&daily=temperature_2m_max%2Cprecipitation_sum%2Cprecipitation_probability_max&timezone=Asia%2FKolkata&forecast_days=16",
+        "fetched_at": "2026-11-05T12:06:56.518043+00:00",
+        "sha256": "2c02b59a04bf2ba41e7d680036d3214147aaf673b0ff467215741aa4db375df0",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "weather",
+      "archive": "source-02.dat",
+      "market": "Kolar APMC",
+      "location_label": "Kolār, Karnataka — market-city proxy, not farm conditions",
+      "days": [
+        {
+          "date": "2026-11-05",
+          "max_temperature_c": 27.5,
+          "precipitation_mm": 8.3,
+          "precipitation_probability_percent": 100
+        },
+        {
+          "date": "2026-11-06",
+          "max_temperature_c": 25.7,
+          "precipitation_mm": 5.0,
+          "precipitation_probability_percent": 98
+        },
+        {
+          "date": "2026-11-07",
+          "max_temperature_c": 26.7,
+          "precipitation_mm": 5.8,
+          "precipitation_probability_percent": 86
+        },
+        {
+          "date": "2026-11-08",
+          "max_temperature_c": 26.7,
+          "precipitation_mm": 8.3,
+          "precipitation_probability_percent": 96
+        },
+        {
+          "date": "2026-11-09",
+          "max_temperature_c": 26.4,
+          "precipitation_mm": 4.5,
+          "precipitation_probability_percent": 86
+        },
+        {
+          "date": "2026-11-10",
+          "max_temperature_c": 27.0,
+          "precipitation_mm": 0.9,
+          "precipitation_probability_percent": 24
+        },
+        {
+          "date": "2026-11-11",
+          "max_temperature_c": 27.4,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 14
+        },
+        {
+          "date": "2026-11-12",
+          "max_temperature_c": 27.6,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 33
+        },
+        {
+          "date": "2026-11-13",
+          "max_temperature_c": 26.9,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 35
+        },
+        {
+          "date": "2026-11-14",
+          "max_temperature_c": 26.1,
+          "precipitation_mm": 3.6,
+          "precipitation_probability_percent": 47
+        },
+        {
+          "date": "2026-11-15",
+          "max_temperature_c": 27.2,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 33
+        },
+        {
+          "date": "2026-11-16",
+          "max_temperature_c": 25.8,
+          "precipitation_mm": 4.2,
+          "precipitation_probability_percent": 25
+        },
+        {
+          "date": "2026-11-17",
+          "max_temperature_c": 26.3,
+          "precipitation_mm": 1.8,
+          "precipitation_probability_percent": 25
+        },
+        {
+          "date": "2026-11-18",
+          "max_temperature_c": 26.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 24
+        },
+        {
+          "date": "2026-11-19",
+          "max_temperature_c": 25.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 27
+        },
+        {
+          "date": "2026-11-20",
+          "max_temperature_c": 27.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 35
+        }
+      ]
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Tiptur%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T12:06:57.431824+00:00",
+        "sha256": "fda110e179ca9840bf1f2dfdbe719927e2a0b7d1ed8850fb3ee339e6390b9d98",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "geocoding",
+      "archive": "source-03.dat",
+      "market": "Tiptur APMC",
+      "location": {
+        "name": "Tiptūr",
+        "latitude": 13.2563,
+        "longitude": 76.47768,
+        "country_code": "IN",
+        "admin1": "Karnataka"
+      }
+    },
+    {
+      "source": {
+        "name": "Open-Meteo city weather forecast",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=13.2563&longitude=76.47768&daily=temperature_2m_max%2Cprecipitation_sum%2Cprecipitation_probability_max&timezone=Asia%2FKolkata&forecast_days=16",
+        "fetched_at": "2026-11-05T12:06:58.319290+00:00",
+        "sha256": "8de64e3fb5e33987d487c9e1016c84f6adadf41fcafdee6adab0396744b25340",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "weather",
+      "archive": "source-04.dat",
+      "market": "Tiptur APMC",
+      "location_label": "Tiptūr, Karnataka — market-city proxy, not farm conditions",
+      "days": [
+        {
+          "date": "2026-11-05",
+          "max_temperature_c": 29.1,
+          "precipitation_mm": 2.7,
+          "precipitation_probability_percent": 79
+        },
+        {
+          "date": "2026-11-06",
+          "max_temperature_c": 27.9,
+          "precipitation_mm": 1.9,
+          "precipitation_probability_percent": 92
+        },
+        {
+          "date": "2026-11-07",
+          "max_temperature_c": 28.6,
+          "precipitation_mm": 0.9,
+          "precipitation_probability_percent": 43
+        },
+        {
+          "date": "2026-11-08",
+          "max_temperature_c": 28.5,
+          "precipitation_mm": 2.1,
+          "precipitation_probability_percent": 68
+        },
+        {
+          "date": "2026-11-09",
+          "max_temperature_c": 28.2,
+          "precipitation_mm": 8.7,
+          "precipitation_probability_percent": 58
+        },
+        {
+          "date": "2026-11-10",
+          "max_temperature_c": 27.7,
+          "precipitation_mm": 2.4,
+          "precipitation_probability_percent": 49
+        },
+        {
+          "date": "2026-11-11",
+          "max_temperature_c": 27.9,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 11
+        },
+        {
+          "date": "2026-11-12",
+          "max_temperature_c": 28.3,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 15
+        },
+        {
+          "date": "2026-11-13",
+          "max_temperature_c": 27.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 19
+        },
+        {
+          "date": "2026-11-14",
+          "max_temperature_c": 27.4,
+          "precipitation_mm": 2.4,
+          "precipitation_probability_percent": 31
+        },
+        {
+          "date": "2026-11-15",
+          "max_temperature_c": 29.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 31
+        },
+        {
+          "date": "2026-11-16",
+          "max_temperature_c": 29.3,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 19
+        },
+        {
+          "date": "2026-11-17",
+          "max_temperature_c": 28.7,
+          "precipitation_mm": 4.8,
+          "precipitation_probability_percent": 21
+        },
+        {
+          "date": "2026-11-18",
+          "max_temperature_c": 29.3,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 22
+        },
+        {
+          "date": "2026-11-19",
+          "max_temperature_c": 27.6,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 18
+        },
+        {
+          "date": "2026-11-20",
+          "max_temperature_c": 28.2,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 29
+        }
+      ]
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Shivamogga%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T12:06:59.423082+00:00",
+        "sha256": "9e5f21c5ed2cf575285debe9a429002d85df8c5c0564908134a7c281f40eb190",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "geocoding",
+      "archive": "source-05.dat",
+      "market": "Shivamogga Mandi",
+      "location": {
+        "name": "Shivamogga",
+        "latitude": 13.93157,
+        "longitude": 75.56791,
+        "country_code": "IN",
+        "admin1": "Karnataka"
+      }
+    },
+    {
+      "source": {
+        "name": "Open-Meteo city weather forecast",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=13.93157&longitude=75.56791&daily=temperature_2m_max%2Cprecipitation_sum%2Cprecipitation_probability_max&timezone=Asia%2FKolkata&forecast_days=16",
+        "fetched_at": "2026-11-05T12:07:00.302326+00:00",
+        "sha256": "49b5ee1c6f87e80278f78eca81db472566d62032678cd3da1d0dbcc7373388a6",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "weather",
+      "archive": "source-06.dat",
+      "market": "Shivamogga Mandi",
+      "location_label": "Shivamogga, Karnataka — market-city proxy, not farm conditions",
+      "days": [
+        {
+          "date": "2026-11-05",
+          "max_temperature_c": 33.0,
+          "precipitation_mm": 1.2,
+          "precipitation_probability_percent": 25
+        },
+        {
+          "date": "2026-11-06",
+          "max_temperature_c": 32.1,
+          "precipitation_mm": 1.9,
+          "precipitation_probability_percent": 76
+        },
+        {
+          "date": "2026-11-07",
+          "max_temperature_c": 32.5,
+          "precipitation_mm": 1.7,
+          "precipitation_probability_percent": 56
+        },
+        {
+          "date": "2026-11-08",
+          "max_temperature_c": 31.7,
+          "precipitation_mm": 3.0,
+          "precipitation_probability_percent": 71
+        },
+        {
+          "date": "2026-11-09",
+          "max_temperature_c": 31.0,
+          "precipitation_mm": 7.2,
+          "precipitation_probability_percent": 42
+        },
+        {
+          "date": "2026-11-10",
+          "max_temperature_c": 29.8,
+          "precipitation_mm": 1.2,
+          "precipitation_probability_percent": 18
+        },
+        {
+          "date": "2026-11-11",
+          "max_temperature_c": 30.3,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 9
+        },
+        {
+          "date": "2026-11-12",
+          "max_temperature_c": 31.2,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 7
+        },
+        {
+          "date": "2026-11-13",
+          "max_temperature_c": 31.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 7
+        },
+        {
+          "date": "2026-11-14",
+          "max_temperature_c": 30.5,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 18
+        },
+        {
+          "date": "2026-11-15",
+          "max_temperature_c": 32.5,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 31
+        },
+        {
+          "date": "2026-11-16",
+          "max_temperature_c": 32.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 24
+        },
+        {
+          "date": "2026-11-17",
+          "max_temperature_c": 32.5,
+          "precipitation_mm": 0.6,
+          "precipitation_probability_percent": 19
+        },
+        {
+          "date": "2026-11-18",
+          "max_temperature_c": 33.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 15
+        },
+        {
+          "date": "2026-11-19",
+          "max_temperature_c": 33.9,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 16
+        },
+        {
+          "date": "2026-11-20",
+          "max_temperature_c": 33.7,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 24
+        }
+      ]
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Hubli%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T12:07:01.429211+00:00",
+        "sha256": "9d8921058263be5b091cf83428b5e2abb041a56dd6793f10e213fbe5804676bd",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "geocoding",
+      "archive": "source-07.dat",
+      "market": "Hubballi APMC",
+      "location": {
+        "name": "Hubli",
+        "latitude": 17.58662,
+        "longitude": 76.51148,
+        "country_code": "IN",
+        "admin1": "Karnataka"
+      }
+    },
+    {
+      "source": {
+        "name": "Open-Meteo city weather forecast",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=17.58662&longitude=76.51148&daily=temperature_2m_max%2Cprecipitation_sum%2Cprecipitation_probability_max&timezone=Asia%2FKolkata&forecast_days=16",
+        "fetched_at": "2026-11-05T12:07:05.102108+00:00",
+        "sha256": "e63142a33897409428046f37f19e574ef3c7f19aac32b367c46f83747bb52dfd",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "weather",
+      "archive": "source-08.dat",
+      "market": "Hubballi APMC",
+      "location_label": "Hubli, Karnataka — market-city proxy, not farm conditions",
+      "days": [
+        {
+          "date": "2026-11-05",
+          "max_temperature_c": 31.3,
+          "precipitation_mm": 0.3,
+          "precipitation_probability_percent": 41
+        },
+        {
+          "date": "2026-11-06",
+          "max_temperature_c": 31.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 35
+        },
+        {
+          "date": "2026-11-07",
+          "max_temperature_c": 31.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 6
+        },
+        {
+          "date": "2026-11-08",
+          "max_temperature_c": 31.7,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 0
+        },
+        {
+          "date": "2026-11-09",
+          "max_temperature_c": 31.3,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 0
+        },
+        {
+          "date": "2026-11-10",
+          "max_temperature_c": 30.9,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 0
+        },
+        {
+          "date": "2026-11-11",
+          "max_temperature_c": 30.6,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 0
+        },
+        {
+          "date": "2026-11-12",
+          "max_temperature_c": 30.5,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 0
+        },
+        {
+          "date": "2026-11-13",
+          "max_temperature_c": 30.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 0
+        },
+        {
+          "date": "2026-11-14",
+          "max_temperature_c": 31.4,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 2
+        },
+        {
+          "date": "2026-11-15",
+          "max_temperature_c": 31.9,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 4
+        },
+        {
+          "date": "2026-11-16",
+          "max_temperature_c": 31.9,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 4
+        },
+        {
+          "date": "2026-11-17",
+          "max_temperature_c": 32.0,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 4
+        },
+        {
+          "date": "2026-11-18",
+          "max_temperature_c": 32.0,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 6
+        },
+        {
+          "date": "2026-11-19",
+          "max_temperature_c": 31.0,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 8
+        },
+        {
+          "date": "2026-11-20",
+          "max_temperature_c": 31.5,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 6
+        }
+      ]
+    },
+    {
+      "source": {
+        "name": "Open-Meteo / GeoNames city lookup",
+        "url": "https://geocoding-api.open-meteo.com/v1/search?name=Bengaluru%2C+Karnataka&countryCode=IN&count=10&language=en&format=json",
+        "fetched_at": "2026-11-05T12:07:06.529154+00:00",
+        "sha256": "9ca9bb3ec22c4106ebb2e1478271f3ecec0eb195b60e9ff29020de5b5dcadded",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "geocoding",
+      "archive": "source-09.dat",
+      "market": "Bengaluru APMC",
+      "location": {
+        "name": "Bengaluru",
+        "latitude": 12.97194,
+        "longitude": 77.59369,
+        "country_code": "IN",
+        "admin1": "Karnataka"
+      }
+    },
+    {
+      "source": {
+        "name": "Open-Meteo city weather forecast",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=12.97194&longitude=77.59369&daily=temperature_2m_max%2Cprecipitation_sum%2Cprecipitation_probability_max&timezone=Asia%2FKolkata&forecast_days=16",
+        "fetched_at": "2026-11-05T12:07:07.866739+00:00",
+        "sha256": "2f6d3c7569ecef602d806ffc7e3d24e91f318da00d23bbf868b4126aba9d1023",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "weather",
+      "archive": "source-10.dat",
+      "market": "Bengaluru APMC",
+      "location_label": "Bengaluru, Karnataka — market-city proxy, not farm conditions",
+      "days": [
+        {
+          "date": "2026-11-05",
+          "max_temperature_c": 27.6,
+          "precipitation_mm": 5.0,
+          "precipitation_probability_percent": 92
+        },
+        {
+          "date": "2026-11-06",
+          "max_temperature_c": 26.9,
+          "precipitation_mm": 9.0,
+          "precipitation_probability_percent": 97
+        },
+        {
+          "date": "2026-11-07",
+          "max_temperature_c": 27.9,
+          "precipitation_mm": 4.4,
+          "precipitation_probability_percent": 73
+        },
+        {
+          "date": "2026-11-08",
+          "max_temperature_c": 27.3,
+          "precipitation_mm": 5.5,
+          "precipitation_probability_percent": 86
+        },
+        {
+          "date": "2026-11-09",
+          "max_temperature_c": 27.5,
+          "precipitation_mm": 3.0,
+          "precipitation_probability_percent": 71
+        },
+        {
+          "date": "2026-11-10",
+          "max_temperature_c": 26.6,
+          "precipitation_mm": 1.5,
+          "precipitation_probability_percent": 24
+        },
+        {
+          "date": "2026-11-11",
+          "max_temperature_c": 27.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 12
+        },
+        {
+          "date": "2026-11-12",
+          "max_temperature_c": 27.5,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 24
+        },
+        {
+          "date": "2026-11-13",
+          "max_temperature_c": 27.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 25
+        },
+        {
+          "date": "2026-11-14",
+          "max_temperature_c": 27.8,
+          "precipitation_mm": 3.0,
+          "precipitation_probability_percent": 41
+        },
+        {
+          "date": "2026-11-15",
+          "max_temperature_c": 28.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 35
+        },
+        {
+          "date": "2026-11-16",
+          "max_temperature_c": 28.8,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 22
+        },
+        {
+          "date": "2026-11-17",
+          "max_temperature_c": 28.3,
+          "precipitation_mm": 2.4,
+          "precipitation_probability_percent": 25
+        },
+        {
+          "date": "2026-11-18",
+          "max_temperature_c": 28.1,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 29
+        },
+        {
+          "date": "2026-11-19",
+          "max_temperature_c": 27.0,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 24
+        },
+        {
+          "date": "2026-11-20",
+          "max_temperature_c": 29.4,
+          "precipitation_mm": 0.0,
+          "precipitation_probability_percent": 35
+        }
+      ]
+    },
+    {
+      "source": {
+        "name": "LPSC / ISRO Bengaluru 2026 calendar",
+        "url": "https://www.lpsc.gov.in/holidaysBangalore2026.html",
+        "fetched_at": "2026-11-05T12:07:08.137072+00:00",
+        "sha256": "43c36422f381bb5496e156f57f31728fd312b228f845426272c2b657505e4d0f",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "calendar",
+      "archive": "source-11.dat",
+      "events": [
+        {
+          "name": "Makara Sankranthi",
+          "date": "2026-01-14",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Republic Day",
+          "date": "2026-01-26",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Ugadi",
+          "date": "2026-03-19",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Id-ul-Fitr *",
+          "date": "2026-03-21",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Mahavir Jayanti",
+          "date": "2026-03-31",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Good Friday",
+          "date": "2026-04-03",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Buddha Purnima",
+          "date": "2026-05-01",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Id-ul-Zuha* (Bakrid)",
+          "date": "2026-05-27",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Muharram *",
+          "date": "2026-06-26",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Independence Day",
+          "date": "2026-08-15",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Milad Un Nabi or Id-E-Milad (Birthday of Prophet Mohammad) *",
+          "date": "2026-08-26",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Ganesh Chaturthi",
+          "date": "2026-09-14",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Mahatma Gandhi's Birthday",
+          "date": "2026-10-02",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Dussehra (Vijay Dashami)",
+          "date": "2026-10-20",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Diwali (Deepavali)",
+          "date": "2026-11-08",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Guru Nanak's Birthday",
+          "date": "2026-11-24",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        },
+        {
+          "name": "Christmas Day",
+          "date": "2026-12-25",
+          "source_url": "https://www.lpsc.gov.in/holidaysBangalore2026.html"
+        }
+      ],
+      "covered_years": [
+        2026
+      ]
+    },
+    {
+      "source": {
+        "name": "PIB official RSS directory",
+        "url": "https://www.pib.gov.in/ViewRss.aspx?lang=1&reg=3",
+        "fetched_at": "2026-11-05T12:07:11.645044+00:00",
+        "sha256": "93e5f0b1191b9f7d7f4b9bad0a509c0fe42e7e4b9524870cc3f81252cd0112e8",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "news_directory",
+      "archive": "source-12.dat"
+    },
+    {
+      "source": {
+        "name": "Press Information Bureau government releases",
+        "url": "https://www.pib.gov.in/RssMain.aspx?ModId=6&Lang=1&Regid=3",
+        "fetched_at": "2026-11-05T12:07:12.726082+00:00",
+        "sha256": "5bf61bc745a0b2896f159e6ef21b330bc394d86a7d83a9e83a865eea3ef54d45",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "news",
+      "archive": "source-13.dat",
+      "items": []
+    },
+    {
+      "source": {
+        "name": "The Hindu BusinessLine agriculture headlines",
+        "url": "https://www.thehindubusinessline.com/economy/agri-business/feeder/default.rss",
+        "fetched_at": "2026-11-05T12:07:13.054687+00:00",
+        "sha256": "a0a231bc551bc6dd45b483b819ed1c12e60cabe6720962a1ae1d7144483062e0",
+        "status": "available",
+        "note": ""
+      },
+      "kind": "news",
+      "archive": "source-14.dat",
+      "items": [
+        {
+          "title": "IMD update: More rain for Tamil Nadu, Kerala, Karnataka as easterlies pick up",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/imd-update-more-rain-for-tamil-nadu-kerala-karnataka-as-easterlies-pick-up/article71669741.ece",
+          "published_at": "2026-11-05T11:55:03+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "Tomato",
+            "Onion",
+            "Potato",
+            "Copra",
+            "Arecanut"
+          ]
+        },
+        {
+          "title": "Hyderabad to host Poultry India Expo from November 25 to 27",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/hyderabad-to-host-poultry-india-expo-from-november-25-to-27/article71669518.ece",
+          "published_at": "2026-11-05T11:26:52+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "CMFRI records 161 marine mammal stranding along Indian coast in 2024–25",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/cmfri-records-161-marine-mammal-stranding-along-indian-coast-in-202425/article71669460.ece",
+          "published_at": "2026-11-05T10:30:00+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "El Nino may keep global rice prices elevated until Q1 2027",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/el-nino-may-keep-global-rice-prices-elevated-until-q1-2027/article71664205.ece",
+          "published_at": "2026-11-05T09:56:34+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Bay of Bengal countries launch ocean research network for fisheries management",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/bay-of-bengal-countries-launch-ocean-research-network-for-fisheries-management/article71669047.ece",
+          "published_at": "2026-11-05T07:55:48+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Germany's Dr Heinisch Agro Solutions wins registration for nano copper fertilizer in 4 Indian states",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/germanys-dr-heinisch-agro-solutions-wins-registration-for-nano-copper-fertilizer-in-4-indian-states/article71668717.ece",
+          "published_at": "2026-11-05T05:51:10+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "Nandini ghee, butter, paneer and Trupti milk prices revised in Bengaluru",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/nandini-ghee-butter-paneer-and-trupti-milk-prices-revised-in-bengaluru/article71668626.ece",
+          "published_at": "2026-11-05T04:34:05+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "GIZ, Pepsico India, Bayer partner to advance climate-resilient maize farming in India",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/giz-pepsico-india-bayer-partner-to-advance-climate-resilient-maize-farming-in-india/article71668571.ece",
+          "published_at": "2026-11-05T04:10:43+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "altM raises $10.3 million from Rainmatter, Mela Ventures to expand manufacturing",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/altm-raises-103-million-from-rainmatter-mela-ventures-to-expand-manufacturing/article71667289.ece",
+          "published_at": "2026-11-05T03:40:18+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Trade body sees India’s 2026-27 cotton output shrink 14% on dip in area, drought",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/trade-body-sees-indias-2026-27-cotton-output-shrink-14-on-dip-in-area-drought/article71666279.ece",
+          "published_at": "2026-11-04T16:46:18+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Triveni reassessing sugarcane outlook in Uttar Pradesh after unseasonal heavy rain",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/triveni-reassessing-sugarcane-outlook-in-uttar-pradesh-after-unseasonal-heavy-rain/article71665975.ece",
+          "published_at": "2026-11-04T16:00:41+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Rythu Bharosa SMS to 2.73 lakh farmers sparks call for cybercrime probe",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/rythu-bharosa-sms-to-273-lakh-farmers-sparks-call-for-cybercrime-probe/article71666173.ece",
+          "published_at": "2026-11-04T15:57:57+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "FarMart expands ‘Project EverGrain’ to Madhya Pradesh",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/farmart-expands-project-evergrain-to-madhya-pradesh/article71665317.ece",
+          "published_at": "2026-11-04T14:40:29+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "Eight Aries Agro leaders complete ‘Next-Gen Leaders Programme’ at IIM-A",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/eight-aries-agro-leaders-complete-next-gen-leaders-programme-at-iim-a/article71665346.ece",
+          "published_at": "2026-11-04T14:37:55+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Sowing seeds of Parivartan in Kashmir",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/sowing-seeds-of-parivartan-in-kashmir/article71665127.ece",
+          "published_at": "2026-11-04T13:22:49+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Marine heatwaves, shifting fish populations threaten coastal livelihoods, warn scientists",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/marine-heatwaves-shifting-fish-populations-threaten-coastal-livelihoods-warn-scientists/article71665101.ece",
+          "published_at": "2026-11-04T11:18:10+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "SC Agrotech launches AgriBridge digital marketplace as shares rally 37% in seven sessions",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/sg-agrotech-launches-agribridge-digital-marketplace-as-shares-rally-37-in-seven-sessions/article71664431.ece",
+          "published_at": "2026-11-04T09:53:56+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Bayer CropScience Q2 Results: Net up 9% to ₹166.2 cr despite drop in revenues",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/bayer-cropscience-q2-net-up-9-at-1662-cr-despite-drop-in-revenues/article71664165.ece",
+          "published_at": "2026-11-04T09:50:30+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Sugar prices rise over ₹4 per kg in a month amid tight supplies",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/sugar-prices-rise-over-4-per-kg-in-a-month-amid-tight-supplies/article71664745.ece",
+          "published_at": "2026-11-04T09:28:57+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Coonoor tea manufacturers oppose Tea Board curbs on new CTC factories",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/coonoor-tea-manufacturers-oppose-tea-board-curbs-on-new-ctc-factories/article71664554.ece",
+          "published_at": "2026-11-04T08:28:14+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Dubai takes a shine to Kullu’s Sinduri pomegranates",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/dubai-takes-a-shine-to-kullus-sinduri-pomegranates/article71661284.ece",
+          "published_at": "2026-11-03T16:03:15+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "AP CM Naidu directs officials to ensure crop insurance for cyclone-hit farmers",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/ap-cm-naidu-directs-officials-to-ensure-crop-insurance-for-cyclone-hit-farmers/article71661719.ece",
+          "published_at": "2026-11-03T14:48:37+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "John Deere India sells more than 1 lakh tractors in a year",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/john-deere-india-sells-more-than-1-lakh-tractors-in-a-year/article71661114.ece",
+          "published_at": "2026-11-03T14:17:30+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Supreme Court strikes down Delhi HC order quashing registration granted for herbicide to control weeds",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/supreme-court-strikes-down-delhi-hc-order-quashing-registration-granted-for-herbicide-to-control-weeds/article71660951.ece",
+          "published_at": "2026-11-03T13:26:33+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "India may reimpose broken rice export restrictions as prices cross $360 per tonne: IREF",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/india-may-reimpose-broken-rice-export-restrictions-as-prices-cross-360-per-tonne-iref/article71660565.ece",
+          "published_at": "2026-11-03T12:23:16+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Natural rubber prices touch all-time high of ₹300 per kg",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/natural-rubber-prices-touch-all-time-high-of-300-per-kg/article71660468.ece",
+          "published_at": "2026-11-03T12:13:41+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Hit by feed costs, poultry industry seeks duty-free maize imports",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/hit-by-feed-costs-poultry-industry-seeks-duty-free-maize-imports/article71660457.ece",
+          "published_at": "2026-11-03T11:01:42+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Coonoor Auction: Tea prices rise on blenders support, export demand",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/coonoor-auction-tea-prices-rise-on-blenders-support-export-demand/article71660273.ece",
+          "published_at": "2026-11-03T10:20:19+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Over 30,000 ha of crops damaged by Murasu cyclone in Andhra",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/over-30000-ha-of-crops-damaged-by-murasu-cyclone-in-andhra/article71660144.ece",
+          "published_at": "2026-11-03T09:03:31+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "India has never allowed import of GM products, will not do so in future: Goyal",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/india-has-never-allowed-import-of-gm-products-will-not-do-so-in-future-goyal/article71660018.ece",
+          "published_at": "2026-11-03T08:51:29+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Tamil Nadu announces Deepavali bonus for 5,190 sugar mill workers",
+          "url": "https://www.thehindubusinessline.com/news/national/tamil-nadu-announces-deepavali-bonus-for-5190-sugar-mill-workers/article71658521.ece",
+          "published_at": "2026-11-03T02:16:53+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "India’s rabi acreage down 46% as sowing of all crops gets delayed",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/indias-rabi-acreage-down-46-as-sowing-of-all-crops-gets-delayed/article71657455.ece",
+          "published_at": "2026-11-02T16:38:50+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Telangana to call for tenders for deploying AI in market yards",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/telangana-to-call-for-tenders-for-deploying-ai-in-market-yards/article71657608.ece",
+          "published_at": "2026-11-02T16:30:20+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Cyclone Murasu Highlights: Andhra's Prakasam on high alert; vulnerable groups shifted to safety; landfall expected by 4 am near Ongole",
+          "url": "https://www.thehindubusinessline.com/news/cylone-murasu-live-news-updates-november-2-2026/article71655444.ece",
+          "published_at": "2026-11-02T16:18:26+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "India’s sugar production up at a record high of 8.5 lakh tonnes in October",
+          "url": "https://www.thehindubusinessline.com/markets/commodities/indias-sugar-production-up-at-a-record-high-of-85-lakh-tonnes-in-october/article71657166.ece",
+          "published_at": "2026-11-02T15:22:09+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Despite rise in area, India’s tur output may shrink to 20-25 lt on drought impact",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/despite-rise-in-area-indias-tur-output-may-shrink-to-20-25-lt-on-drought-impact/article71657336.ece",
+          "published_at": "2026-11-02T14:58:23+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "India’s 2026-27 cotton imports to scale new peak amid crop concerns, duty relief",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/indias-2026-27-cotton-imports-to-scale-new-peak-amid-crop-concerns-duty-relief/article71649049.ece",
+          "published_at": "2026-11-02T13:39:45+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Easterly waves may keep Tamil Nadu, Kerala wet post-cyclone Murasu",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/imd-update-murasu-skirts-chennai-heads-to-south-ap-as-ports-stay-warned/article71655371.ece",
+          "published_at": "2026-11-02T12:11:08+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Escorts Kubota Q2 results: Profit drops to ₹250 crore as rising costs squeeze tractor margins",
+          "url": "https://www.thehindubusinessline.com/companies/escorts-kubota-q2-results-profit-drops-to-250-crore-as-rising-costs-squeeze-tractor-margins/article71656162.ece",
+          "published_at": "2026-11-02T11:10:03+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Severe cylone Murasu closest to Nellore at 11.30 am",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/severe-cylone-murasu-closest-to-nellore-at-1130-am/article71656026.ece",
+          "published_at": "2026-11-02T09:59:48+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Hikal inks a multi-year global CDMO contract with Europe-based agrochem company",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/hikal-inks-a-multi-year-global-cdmo-contract-with-europe-based-agrochem-company/article71655763.ece",
+          "published_at": "2026-11-02T09:25:16+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "India’s coir exports surge 52% to ₹6,614 crore in FY26",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/indias-coir-exports-surge-52-to-6614-crore-in-fy26/article71655440.ece",
+          "published_at": "2026-11-02T08:17:08+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Kochi to host global symposium on changing oceans from Wednesday",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/kochi-to-host-global-symposium-on-changing-oceans-from-wednesday/article71655737.ece",
+          "published_at": "2026-11-02T07:47:02+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Saffron blooms in Leh within 30 days in high-altitude cultivation experiment",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/saffron-blooms-in-leh-within-30-days-in-high-altitude-cultivation-experiment/article71653066.ece",
+          "published_at": "2026-11-01T13:33:24+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "IMD update: Cyclone Murasu forms, to intensify as severe cyclone",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/imd-update-andhra-pradesh-coast-now-faces-a-second-severe-cyclone/article71652107.ece",
+          "published_at": "2026-11-01T08:58:27+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Why gold has become a strategic asset for Indian investors",
+          "url": "https://www.thehindubusinessline.com/markets/gold/why-gold-has-become-a-strategic-asset-for-indian-investors/article71650132.ece",
+          "published_at": "2026-11-01T05:05:53+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Amid price rise, Indian govt doubles weekly wheat auction quantity",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/amid-price-rise-indian-govt-doubles-weekly-wheat-auction-quantity/article71650009.ece",
+          "published_at": "2026-10-31T15:02:16+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "IMD sees better November rain in key wheat-growing regions",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/imd-sees-better-november-rain-in-key-wheat-growing-regions/article71649620.ece",
+          "published_at": "2026-10-31T13:39:32+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Centre extends duty exemption on cotton imports till Dec-end",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/centre-extends-duty-exemption-on-cotton-imports-till-dec-end/article71648202.ece",
+          "published_at": "2026-10-31T12:29:27+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "IMD update: AP coast braces for a second cyclone, hot on heels of Arnab",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/imd-update-ap-coast-braces-for-a-second-cyclone-hot-on-heels-of-arnab/article71648635.ece",
+          "published_at": "2026-10-31T11:29:21+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Best Agrolife Q2 profit rises 48% to ₹57 cr",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/best-agrolife-q2-profit-rises-48-to-57-cr/article71648915.ece",
+          "published_at": "2026-10-31T09:56:01+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Govt allows agarwood oil and chips exports from Guwahati airport",
+          "url": "https://www.thehindubusinessline.com/economy/logistics/govt-allows-agarwood-oil-and-chips-exports-from-guwahati-airport/article71648880.ece",
+          "published_at": "2026-10-31T09:48:24+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Milk price hike inevitable to protect farmers amid drought: Karnataka CM Shivakumar",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/milk-price-hike-inevitable-to-protect-farmers-amid-drought-karnataka-cm-shivakumar/article71648823.ece",
+          "published_at": "2026-10-31T09:45:31+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "Maharashtra earmarks 5% district funds for fodder schemes amid drought, bans interstate movement",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/maharashtra-earmarks-5-district-funds-for-fodder-schemes-amid-drought-bans-interstate-movement/article71648245.ece",
+          "published_at": "2026-10-31T06:09:58+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "The missing map: Why farm boundary data are agritech’s unsung foundation",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/the-missing-map-why-farm-boundary-data-are-agritechs-unsung-foundation/article71646008.ece",
+          "published_at": "2026-10-31T03:54:44+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "Beyond technology: How drone innovation can support India’s farming communities",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/beyond-technology-how-drone-innovation-can-support-indias-farming-communities/article71646565.ece",
+          "published_at": "2026-10-31T03:43:24+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "India’s ethanol transition: Can grain-based feedstocks fill the gap left by sugar?",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/indias-ethanol-transition-can-grain-based-feedstocks-fill-the-gap-left-by-sugar/article71646593.ece",
+          "published_at": "2026-10-31T03:29:36+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Indian millers bid higher rates to get FCI’s wheat, offtake 100% in many States",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/indian-millers-bid-higher-rates-to-get-fcis-wheat-offtake-100-in-many-states/article71645756.ece",
+          "published_at": "2026-10-30T16:35:43+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": []
+        },
+        {
+          "title": "Indian agri scientists find value in the use of iron ore tailings in farming",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/indian-agri-scientists-find-use-of-iron-ore-tailings-beneficial-in-agriculture/article71645077.ece",
+          "published_at": "2026-10-30T16:01:38+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        },
+        {
+          "title": "Building an El Niño-resilient Indian agriculture is imperative to safeguard food security",
+          "url": "https://www.thehindubusinessline.com/economy/agri-business/building-an-el-nino-resilient-indian-agriculture-is-imperative-to-safeguard-food-security/article71645302.ece",
+          "published_at": "2026-10-30T15:35:40+00:00",
+          "source": "The Hindu BusinessLine",
+          "topics": [
+            "general_agriculture"
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "Live evidence starts at actual capture time. No headline sentiment or festival multiplier was applied to market prices."
+}

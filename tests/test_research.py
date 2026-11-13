@@ -49,5 +49,9 @@ def test_research_freezes_selection_before_loading_final_and_consumes_once(tmp_p
     _, repeat = run(None, plan, tmp_path, True)
     assert repeat == result and before == (folder / "comparison.json").read_bytes()
     # Altering a development plan cannot grant a second evaluation on the same holdout.
-    with pytest.raises(ValueError, match="already been reserved"):
+    with pytest.raises(ValueError, match="already.*reserved"):
         run(None, replace(plan, train_end=plan.train_end - timedelta(days=1)), tmp_path, True)
+    # Changing just the end date must not allow overlapping held-out targets to
+    # become a new test after their outcomes have supplied feedback.
+    with pytest.raises(ValueError, match="overlapping date boundaries"):
+        run(None, replace(plan, holdout_end=plan.holdout_end - timedelta(days=1)), tmp_path, True)

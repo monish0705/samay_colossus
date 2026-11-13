@@ -23,6 +23,7 @@ from test_backend import ROOT
 def api(tmp_path, monkeypatch):
     monkeypatch.setenv("SAMAY_DATABASE_URL", f"sqlite:///{(tmp_path / 'api.db').as_posix()}")
     monkeypatch.setenv("SAMAY_ENVIRONMENT", "test")
+    monkeypatch.setenv("SAMAY_ENABLE_RESEARCH_FORECASTS", "false")
     monkeypatch.delenv("SAMAY_SERVICE_REGISTRY_PATH", raising=False)
     empty_research = tmp_path / "research-registry.json"
     empty_research.write_text("[]")
@@ -148,7 +149,7 @@ def test_imported_dataset_saved_model_reliability_and_real_optimizer_flow(api, t
 
 def test_validation_cors_swagger_and_safe_errors(api, monkeypatch, caplog):
     client, engine = api
-    for horizon in (0, 2, True, "3"):
+    for horizon in (0, 8, True, "3"):
         response = client.post("/api/v1/predict", json={"variety": "local", "grade": "faq", "horizon": horizon})
         assert response.status_code == 422
         assert "input" not in response.json()["error"]["details"]

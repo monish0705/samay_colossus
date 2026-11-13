@@ -1,0 +1,12 @@
+{
+  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+  "data_kind": "official",
+  "fetched_at": "2026-11-05T08:39:45.844636Z",
+  "price_unit": "INR/quintal",
+  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+  "date_format": "%d/%m/%Y",
+  "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+  "upstream_source_url": null,
+  "license": "Government Open Data License - India"
+}

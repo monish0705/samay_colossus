@@ -1,0 +1,56 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-52875c5dff4eac15",
+  "result": {
+    "horizon": 7,
+    "champion": "median_14",
+    "n": 158,
+    "status": "evaluated",
+    "metrics": {
+      "n": 158,
+      "mae_inr_per_quintal": 1834.503164556962,
+      "rmse_inr_per_quintal": 2475.2785756150224,
+      "smape_pct": 3.0732277911898214,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 3.119567892843693,
+      "directional_accuracy": 0.5759493670886076,
+      "p90_absolute_error_inr_per_quintal": 4036.7500000000005,
+      "p90_overprediction_inr_per_quintal": 1765.9000000000003
+    },
+    "baseline_metrics": {
+      "naive": {
+        "n": 158,
+        "mae_inr_per_quintal": 1728.2974683544303,
+        "rmse_inr_per_quintal": 2227.0459133120717,
+        "smape_pct": 2.957830418625163,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.938965380778503,
+        "directional_accuracy": 0.006329113924050633,
+        "p90_absolute_error_inr_per_quintal": 3759.000000000001,
+        "p90_overprediction_inr_per_quintal": 1773.000000000002
+      },
+      "mean_14": {
+        "n": 158,
+        "mae_inr_per_quintal": 1886.5497287522608,
+        "rmse_inr_per_quintal": 2532.6891786885412,
+        "smape_pct": 3.1592507796944793,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 3.2080729408225523,
+        "directional_accuracy": 0.5886075949367089,
+        "p90_absolute_error_inr_per_quintal": 4227.450000000003,
+        "p90_overprediction_inr_per_quintal": 1496.828571428574
+      },
+      "median_14": {
+        "n": 158,
+        "mae_inr_per_quintal": 1834.503164556962,
+        "rmse_inr_per_quintal": 2475.2785756150224,
+        "smape_pct": 3.0732277911898214,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 3.119567892843693,
+        "directional_accuracy": 0.5759493670886076,
+        "p90_absolute_error_inr_per_quintal": 4036.7500000000005,
+        "p90_overprediction_inr_per_quintal": 1765.9000000000003
+      }
+    }
+  }
+}

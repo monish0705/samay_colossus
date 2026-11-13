@@ -1,0 +1,469 @@
+{
+  "version": "41317315acf51111-champion-3d",
+  "algorithm_version": "samay-forecast-v1",
+  "candidate": "naive",
+  "horizon": 3,
+  "market": "Shivamogga Mandi",
+  "commodity": "Arecanut",
+  "variety": "rashi",
+  "grade": "local",
+  "feature_schema": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "training_window": [
+    "2026-01-30",
+    "2026-10-31"
+  ],
+  "trained_before": "2026-11-05T09:12:12.737094+00:00",
+  "seed": 42,
+  "dataset_fingerprint": "c9ef72fe779d8c7f1c6ac142b1a632652dc7886d0721f22d8858baf464f2d239",
+  "model_sha256": "6c09635decb8153d3c12e3782a69fd2eb097426f912547d351a8647b27d5580a",
+  "comparison": {
+    "horizon": 3,
+    "sample_policy": {
+      "horizon_calendar_days": 3,
+      "status": "development_viable_not_trained",
+      "effective_train_samples": 120,
+      "effective_validation_samples": 27,
+      "train_span_calendar_days": 179,
+      "training_observed_date_coverage": 0.5431654676258992,
+      "exclusions": {
+        "train/eligible": 120,
+        "train/embargo_target_crosses_split": 3,
+        "train/insufficient_causal_history": 28,
+        "train/missing_target_at_label_freeze": 127,
+        "validation/eligible": 27,
+        "validation/embargo_target_crosses_split": 3,
+        "validation/missing_target_at_label_freeze": 16
+      },
+      "reasons": [],
+      "holdout_samples": "reserved_not_evaluated",
+      "embargo": "Purge origins whose exact +3-calendar-day target crosses partition end; labels must be available before next partition begins"
+    },
+    "status": "selected",
+    "comparisons": [
+      {
+        "candidate": "naive",
+        "cv": [
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 753.8421052631579,
+            "rmse_inr_per_quintal": 935.5839437428764,
+            "smape_pct": 1.4364284814165127,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.4353458037956544,
+            "directional_accuracy": 0.0,
+            "p90_absolute_error_inr_per_quintal": 1244.3999999999996,
+            "p90_overprediction_inr_per_quintal": 1058.6
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1192.0526315789473,
+            "rmse_inr_per_quintal": 1468.0034239168447,
+            "smape_pct": 2.2939721491462763,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.3105542412529165,
+            "directional_accuracy": 0.0,
+            "p90_absolute_error_inr_per_quintal": 2399.999999999999,
+            "p90_overprediction_inr_per_quintal": 1839.9999999999989
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 590.3684210526316,
+            "rmse_inr_per_quintal": 722.5855986444935,
+            "smape_pct": 1.1314271772721463,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.129893991224359,
+            "directional_accuracy": 0.0,
+            "p90_absolute_error_inr_per_quintal": 1136.0,
+            "p90_overprediction_inr_per_quintal": 361.9999999999998
+          }
+        ],
+        "cv_mean_mae": 845.4210526315788,
+        "cv_std_mae": 254.0288697504019,
+        "validation": {
+          "n": 27,
+          "mae_inr_per_quintal": 911.4814814814815,
+          "rmse_inr_per_quintal": 1278.4839111663123,
+          "smape_pct": 1.7706305635146924,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 1.7826086641589904,
+          "directional_accuracy": 0.14814814814814814,
+          "p90_absolute_error_inr_per_quintal": 2198.000000000002,
+          "p90_overprediction_inr_per_quintal": 1500.0
+        }
+      },
+      {
+        "candidate": "mean_14",
+        "cv": [
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1010.684210526317,
+            "rmse_inr_per_quintal": 1229.0569686647639,
+            "smape_pct": 1.912730002632464,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.9243835418758626,
+            "directional_accuracy": 0.5263157894736842,
+            "p90_absolute_error_inr_per_quintal": 1681.2857142857174,
+            "p90_overprediction_inr_per_quintal": 1681.2857142857174
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1113.1992481203017,
+            "rmse_inr_per_quintal": 1356.508080376504,
+            "smape_pct": 2.1523569008419856,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.157712819019581,
+            "directional_accuracy": 0.8421052631578947,
+            "p90_absolute_error_inr_per_quintal": 2086.9285714285725,
+            "p90_overprediction_inr_per_quintal": 2086.9285714285725
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 740.1466165413535,
+            "rmse_inr_per_quintal": 876.0787067244241,
+            "smape_pct": 1.4205609130163284,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.4165514021973067,
+            "directional_accuracy": 0.47368421052631576,
+            "p90_absolute_error_inr_per_quintal": 1290.6142857142854,
+            "p90_overprediction_inr_per_quintal": 0.0
+          }
+        ],
+        "cv_mean_mae": 954.676691729324,
+        "cv_std_mae": 157.3630581454687,
+        "validation": {
+          "n": 27,
+          "mae_inr_per_quintal": 1242.500000000001,
+          "rmse_inr_per_quintal": 1509.13964786476,
+          "smape_pct": 2.4176905788097884,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.4299904169392024,
+          "directional_accuracy": 0.5555555555555556,
+          "p90_absolute_error_inr_per_quintal": 2521.557142857144,
+          "p90_overprediction_inr_per_quintal": 2521.557142857144
+        }
+      },
+      {
+        "candidate": "median_14",
+        "cv": [
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1057.5263157894738,
+            "rmse_inr_per_quintal": 1263.0720486179719,
+            "smape_pct": 1.9976713001916424,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.0135728014847505,
+            "directional_accuracy": 0.5263157894736842,
+            "p90_absolute_error_inr_per_quintal": 1749.9999999999998,
+            "p90_overprediction_inr_per_quintal": 1749.9999999999998
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1273.6842105263158,
+            "rmse_inr_per_quintal": 1583.7106660259033,
+            "smape_pct": 2.456530206836264,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.468780636598551,
+            "directional_accuracy": 0.8421052631578947,
+            "p90_absolute_error_inr_per_quintal": 2395.0,
+            "p90_overprediction_inr_per_quintal": 2395.0
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 771.6842105263158,
+            "rmse_inr_per_quintal": 905.9253483825835,
+            "smape_pct": 1.4821447993686099,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.4769105553473791,
+            "directional_accuracy": 0.47368421052631576,
+            "p90_absolute_error_inr_per_quintal": 1374.0,
+            "p90_overprediction_inr_per_quintal": 1.999999999999993
+          }
+        ],
+        "cv_mean_mae": 1034.298245614035,
+        "cv_std_mae": 205.59775847198387,
+        "validation": {
+          "n": 27,
+          "mae_inr_per_quintal": 1335.2407407407406,
+          "rmse_inr_per_quintal": 1679.5453115958805,
+          "smape_pct": 2.591406408551138,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.611365959200644,
+          "directional_accuracy": 0.5555555555555556,
+          "p90_absolute_error_inr_per_quintal": 2927.2000000000003,
+          "p90_overprediction_inr_per_quintal": 2927.2000000000003
+        }
+      },
+      {
+        "candidate": "blend_naive_mean14_25",
+        "cv": [
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 791.0977443609016,
+            "rmse_inr_per_quintal": 950.6493013300042,
+            "smape_pct": 1.5052427911254413,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.5062820447847465,
+            "directional_accuracy": 0.5263157894736842,
+            "p90_absolute_error_inr_per_quintal": 1139.214285714284,
+            "p90_overprediction_inr_per_quintal": 1139.214285714284
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1116.70582706767,
+            "rmse_inr_per_quintal": 1377.8637636469937,
+            "smape_pct": 2.1519647575846803,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.164509616949886,
+            "directional_accuracy": 0.8421052631578947,
+            "p90_absolute_error_inr_per_quintal": 2210.1035714285704,
+            "p90_overprediction_inr_per_quintal": 2119.4464285714284
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 592.8505639097742,
+            "rmse_inr_per_quintal": 733.0879923868392,
+            "smape_pct": 1.1361272508445432,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.134644513440038,
+            "directional_accuracy": 0.47368421052631576,
+            "p90_absolute_error_inr_per_quintal": 1213.946428571426,
+            "p90_overprediction_inr_per_quintal": 182.8499999999998
+          }
+        ],
+        "cv_mean_mae": 833.5513784461153,
+        "cv_std_mae": 215.95959108104458,
+        "validation": {
+          "n": 27,
+          "mae_inr_per_quintal": 950.0231481481484,
+          "rmse_inr_per_quintal": 1222.7650214389014,
+          "smape_pct": 1.8489083430731037,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 1.8579856304792044,
+          "directional_accuracy": 0.5555555555555556,
+          "p90_absolute_error_inr_per_quintal": 1849.3214285714294,
+          "p90_overprediction_inr_per_quintal": 1427.6571428571451
+        },
+        "cv_folds_beating_all_baselines": 0,
+        "promotion_eligible": false
+      },
+      {
+        "candidate": "blend_naive_mean14_50",
+        "cv": [
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 832.5639097744355,
+            "rmse_inr_per_quintal": 1009.4967259158396,
+            "smape_pct": 1.5818920032581898,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.5852352978735151,
+            "directional_accuracy": 0.5263157894736842,
+            "p90_absolute_error_inr_per_quintal": 1312.4285714285695,
+            "p90_overprediction_inr_per_quintal": 1312.4285714285695
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1094.8063909774444,
+            "rmse_inr_per_quintal": 1326.8433984212095,
+            "smape_pct": 2.1137418106729897,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.122061965228086,
+            "directional_accuracy": 0.8421052631578947,
+            "p90_absolute_error_inr_per_quintal": 2398.892857142858,
+            "p90_overprediction_inr_per_quintal": 2398.892857142858
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 605.8590225563917,
+            "rmse_inr_per_quintal": 763.8136874618939,
+            "smape_pct": 1.1609618918094318,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.1595411351693925,
+            "directional_accuracy": 0.47368421052631576,
+            "p90_absolute_error_inr_per_quintal": 1250.6785714285681,
+            "p90_overprediction_inr_per_quintal": 61.78571428571582
+          }
+        ],
+        "cv_mean_mae": 844.4097744360905,
+        "cv_std_mae": 199.7875966347842,
+        "validation": {
+          "n": 27,
+          "mae_inr_per_quintal": 1037.2976190476193,
+          "rmse_inr_per_quintal": 1247.342075819611,
+          "smape_pct": 2.021259223404648,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.028670642897034,
+          "directional_accuracy": 0.5555555555555556,
+          "p90_absolute_error_inr_per_quintal": 2032.7428571428552,
+          "p90_overprediction_inr_per_quintal": 1793.9214285714302
+        },
+        "cv_folds_beating_all_baselines": 1,
+        "promotion_eligible": false
+      },
+      {
+        "candidate": "seasonal_naive",
+        "cv": [
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 898.0526315789474,
+            "rmse_inr_per_quintal": 1091.190296491815,
+            "smape_pct": 1.7052081724354824,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.7099284682095406,
+            "directional_accuracy": 0.631578947368421,
+            "p90_absolute_error_inr_per_quintal": 1573.9999999999998,
+            "p90_overprediction_inr_per_quintal": 1494.0
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 1113.842105263158,
+            "rmse_inr_per_quintal": 1478.732547612455,
+            "smape_pct": 2.156918502294593,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.158958868278311,
+            "directional_accuracy": 0.6842105263157895,
+            "p90_absolute_error_inr_per_quintal": 2500.0,
+            "p90_overprediction_inr_per_quintal": 2500.0
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 652.3157894736842,
+            "rmse_inr_per_quintal": 809.212677789181,
+            "smape_pct": 1.2511008985422816,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 1.2484537868623256,
+            "directional_accuracy": 0.5263157894736842,
+            "p90_absolute_error_inr_per_quintal": 1246.0,
+            "p90_overprediction_inr_per_quintal": 333.99999999999983
+          }
+        ],
+        "cv_mean_mae": 888.0701754385965,
+        "cv_std_mae": 188.5495021022274,
+        "validation": {
+          "n": 27,
+          "mae_inr_per_quintal": 1224.8148148148148,
+          "rmse_inr_per_quintal": 1586.935084672011,
+          "smape_pct": 2.3812704183988993,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 2.395403028189265,
+          "directional_accuracy": 0.48148148148148145,
+          "p90_absolute_error_inr_per_quintal": 2695.8,
+          "p90_overprediction_inr_per_quintal": 2695.8
+        },
+        "cv_folds_beating_all_baselines": 0,
+        "promotion_eligible": false
+      }
+    ],
+    "champion": "naive",
+    "learned_model_eligible": false,
+    "skipped": {
+      "learned_models": "Recent-series baseline-only mode: learned models require >=120 training / >=30 validation examples and >=180 eligible calendar days",
+      "lightgbm": "Requires >=500 reliable training samples in every CV fold",
+      "lightgbm_return": "Low-capacity seven-leaf return model requires >=250 samples in every CV fold"
+    },
+    "selection_reason": "Lowest validation MAE among reliable candidates; CV variability and p90 overprediction break ties. ML/seasonal promotion requires beating every core baseline in >=2/3 CV folds and beating the best validation baseline on validation and mean CV MAE.",
+    "folds": [
+      {
+        "train_n": 61,
+        "validation_n": 19,
+        "train_start": "2026-01-30",
+        "train_end": "2026-05-03",
+        "validation_start": "2026-05-08",
+        "validation_end": "2026-06-02"
+      },
+      {
+        "train_n": 80,
+        "validation_n": 19,
+        "train_start": "2026-01-30",
+        "train_end": "2026-05-31",
+        "validation_start": "2026-06-05",
+        "validation_end": "2026-06-30"
+      },
+      {
+        "train_n": 99,
+        "validation_n": 19,
+        "train_start": "2026-01-30",
+        "train_end": "2026-06-28",
+        "validation_start": "2026-07-03",
+        "validation_end": "2026-07-27"
+      }
+    ]
+  },
+  "created_at": "2026-11-05T09:12:12.733090+00:00",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-31",
+    "validation_end": "2026-11-04",
+    "holdout_end": "2026-11-05",
+    "variety": "rashi",
+    "grade": "local",
+    "market": "Shivamogga Mandi",
+    "commodity": "Arecanut",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "training_samples": 179,
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": "4.7.0"
+  },
+  "input_transform": "Original causal feature schema",
+  "research_only": true,
+  "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts.",
+  "selection_report": "models/research/research-snapshot-v1-a18c6b2407216a5a/comparison.json",
+  "selection_report_sha256": "37165840c25933b643dc08c1d78c2348fae3b3a5483c46e04113a5c3ea061b75",
+  "refit_policy": "Frozen selected configuration; all eligible current snapshot rows. No retuning or new final evaluation.",
+  "empirical_calibration": {
+    "radii": {},
+    "reason": "No calibration transfers to a refitted learned model"
+  },
+  "source": [
+    {
+      "source": "India Data Portal AGMARKNET mirror (secondary)",
+      "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+      "sha256": "70e4b87e255c8d805a983d88cdfee917334b59330fd54b482ed9a6fac63b7b83",
+      "fetched_at": "2026-11-04T19:36:57.354594+00:00",
+      "source_kind": "secondary",
+      "upstream_source_url": "https://agmarknet.gov.in/",
+      "license": "Open Data Commons Attribution License"
+    },
+    {
+      "source": "Official OGD / AGMARKNET historical APMC observations",
+      "url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+      "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+      "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": "Government Open Data License - India"
+    }
+  ]
+}

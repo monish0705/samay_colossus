@@ -1,0 +1,80 @@
+{
+  "base_remote_commit": "6e5e40ea29503f2f011497c2f0e4c29f7d478917",
+  "fresh_clone_and_dependency_install_succeeded": true,
+  "profile_test_applies_new_launcher_code_to_disposable_clone": true,
+  "legacy_db_and_env_hashes_unchanged": true,
+  "official_observations": 3938,
+  "secondary_observations": 5834,
+  "research_models": 322,
+  "historical_demo_date": null,
+  "copra_30d_prediction": {
+    "schema_version": "samay-reliability-v1",
+    "prediction_inr_per_quintal": "18500.00",
+    "intervals": [],
+    "horizon_calendar_days": 30,
+    "timestamp": "2026-11-05T14:29:11.658835+00:00",
+    "target_date": "2026-12-05",
+    "model_version": "daec5736ea5fc9b2-champion-30d",
+    "reliability_status": "limited evidence",
+    "flags": [
+      "retrospective_research_only",
+      "historical_publication_unverified",
+      "interval_coverage_not_guaranteed",
+      "empirical_interval_unavailable",
+      "short_history_baseline_only",
+      "extended_horizon_no_new_final_test",
+      "predeclared_persistence_baseline_not_trained_ml"
+    ],
+    "market": "Tiptur APMC",
+    "commodity": "Copra",
+    "variety": "other",
+    "grade": "local",
+    "latest_report_date": "2026-11-03",
+    "observation_age_calendar_days": 2,
+    "data_source": {
+      "mode": "research_only",
+      "sources": [
+        {
+          "batch_id": 12,
+          "sha256": "098d3a2b89b22d22bcf3c65b58652d1f4385e806077a1ce4ffebb1c441c1227a",
+          "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+          "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+          "fetched_at": "2026-11-04T19:36:56.251654+00:00",
+          "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+          "source_kind": "secondary"
+        },
+        {
+          "batch_id": 18,
+          "sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+          "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+          "source_label": "Official OGD / AGMARKNET historical APMC observations",
+          "fetched_at": "2026-11-05T08:39:40.860344+00:00",
+          "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+          "source_kind": "official"
+        }
+      ],
+      "selection_report": "models/crop-horizons/daec5736ea5fc9b2/comparison.json",
+      "input_decision_at": "2026-11-05T14:29:11.658835+00:00",
+      "horizon_evidence_status": "baseline_only",
+      "evaluation_metrics": {
+        "n": 131,
+        "mae_inr_per_quintal": 1337.4045801526718,
+        "rmse_inr_per_quintal": 2100.49067331952,
+        "smape_pct": 6.932896787296476,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 7.128036128402295,
+        "directional_accuracy": 0.16793893129770993,
+        "p90_absolute_error_inr_per_quintal": 3000.0,
+        "p90_overprediction_inr_per_quintal": 2000.0
+      },
+      "calibration": {
+        "radii": {},
+        "reason": "No independent long-horizon residual calibration; sensitivity scenarios are not prediction intervals"
+      },
+      "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts. This extension has NO new final test. Selection validation scores are not final accuracy."
+    },
+    "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+    "request_id": "d30c0c05-3933-4834-b0c0-0599ad167a50",
+    "price_unit": "INR/quintal"
+  }
+}

@@ -1,0 +1,10 @@
+saved_forecast_conditional_comparison 200 partial_sell_and_hold sell 10 hold 10 days 3
+zero_storage 200 sell_now sell 20 hold 0 days 0
+infeasible_cash 409 infeasible sell None hold None days None
+falling_user_future_quote 200 sell_now sell 20 hold 0 days 0
+high_storage_cost 200 sell_now sell 20 hold 0 days 0
+ninety_day_buyer_quote 200 partial_sell_and_hold sell 10 hold 10 days 90
+ninety_day_outdoor_weather_rule 200 sell_now sell 20 hold 0 days 0
+thirty_day_saved_forecast 200 partial_sell_and_hold sell 10 hold 10 days 30
+unsupported_year_forecast 200 insufficient_evidence sell None hold None days None
+REPORT reports\sell-hold-live-verification.json

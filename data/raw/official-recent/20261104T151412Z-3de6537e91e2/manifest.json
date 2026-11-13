@@ -1,0 +1,69 @@
+{
+  "source": "Official AGMARKNET 2.0",
+  "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=112&stateId=16&commodityId=65&includeExcel=false",
+  "fetched_at": "2026-11-04T15:14:12.665472+00:00",
+  "sha256": "3de6537e91e29a64a161c9d735250aa3417fa775ef2b8e65fa6300bda9de561f",
+  "observations": [
+    {
+      "report_date": "2026-10-31",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "Tomato",
+      "modal_price_inr_per_quintal": "1400.0",
+      "raw_price_unit": "Rs./Quintal",
+      "price_unit": "INR/quintal"
+    },
+    {
+      "report_date": "2026-10-30",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "Tomato",
+      "modal_price_inr_per_quintal": "1400.0",
+      "raw_price_unit": "Rs./Quintal",
+      "price_unit": "INR/quintal"
+    },
+    {
+      "report_date": "2026-10-29",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "Tomato",
+      "modal_price_inr_per_quintal": "1400.0",
+      "raw_price_unit": "Rs./Quintal",
+      "price_unit": "INR/quintal"
+    },
+    {
+      "report_date": "2026-10-28",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "Tomato",
+      "modal_price_inr_per_quintal": "1330.0",
+      "raw_price_unit": "Rs./Quintal",
+      "price_unit": "INR/quintal"
+    },
+    {
+      "report_date": "2026-10-27",
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "Tomato",
+      "modal_price_inr_per_quintal": "1200.0",
+      "raw_price_unit": "Rs./Quintal",
+      "price_unit": "INR/quintal"
+    }
+  ],
+  "not_reported": [
+    {
+      "date": "2026-11-02",
+      "variety": "Tomato"
+    },
+    {
+      "date": "2026-11-01",
+      "variety": "Tomato"
+    }
+  ],
+  "limitations": [
+    "Last week only; insufficient for training.",
+    "No minimum/maximum prices or grade in this response; none inferred.",
+    "Current downloaded snapshot; original historical publication/revision times are not established.",
+    "Not imported into the complete min/modal/max observation table because required fields are absent."
+  ]
+}

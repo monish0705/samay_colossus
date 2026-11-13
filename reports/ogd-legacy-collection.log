@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\Suhan\OneDrive\文件\ChatGPT\agritech\samay-sub2\scripts\collect_ogd_history.py", line 175, in <module>
+    main()
+  File "C:\Users\Suhan\OneDrive\文件\ChatGPT\agritech\samay-sub2\scripts\collect_ogd_history.py", line 171, in main
+    collect(args.output_dir, args.do_import, legacy=args.legacy, start=args.start_date)
+  File "C:\Users\Suhan\OneDrive\文件\ChatGPT\agritech\samay-sub2\scripts\collect_ogd_history.py", line 115, in collect
+    raw = fetch(endpoint + "?" + urlencode({**query, "api-key": credential}))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Suhan\OneDrive\文件\ChatGPT\agritech\samay-sub2\scripts\collect_ogd_history.py", line 54, in fetch
+    raise RuntimeError(f"Official OGD HTTP {exc.code}; no credential or URL logged") from None
+RuntimeError: Official OGD HTTP 502; no credential or URL logged

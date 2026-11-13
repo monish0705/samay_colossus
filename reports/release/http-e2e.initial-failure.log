@@ -1,0 +1,152 @@
+
+> samay-frontend@0.1.0 test:e2e
+> vitest run --config vitest.e2e.config.ts
+
+
+ RUN  v5.1.0 C:/Users/Suhan/OneDrive/文件/ChatGPT/agritech/samay-sub2/frontend
+
+ ❯ e2e/http.test.tsx (3 tests | 1 failed) 2348ms
+   ❯ real HTTP end-to-end service integration — synthetic TEST_ONLY temporary database (3)
+     × loads a saved baseline and its chronologically calibrated empirical intervals 1074ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  e2e/http.test.tsx > real HTTP end-to-end service integration — synthetic TEST_ONLY temporary database > loads a saved baseline and its chronologically calibrated empirical intervals
+TestingLibraryElementError: Unable to find an element with the text: Saved artifact available. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell mode-farmer"[39m
+    [36m>[39m
+      [36m<a[39m
+        [33mclass[39m=[32m"skip-link"[39m
+        [33mhref[39m=[32m"#main-content"[39m
+      [36m>[39m
+        [0mSkip to content[0m
+      [36m</a>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar "[39m
+      [36m>[39m
+        [36m<a[39m
+          [33mclass[39m=[32m"brand"[39m
+          [33mdata-discover[39m=[32m"true"[39m
+          [33mhref[39m=[32m"/"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-sprout"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"25"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"25"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M5 21h14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m<...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell mode-farmer"[39m
+    [36m>[39m
+      [36m<a[39m
+        [33mclass[39m=[32m"skip-link"[39m
+        [33mhref[39m=[32m"#main-content"[39m
+      [36m>[39m
+        [0mSkip to content[0m
+      [36m</a>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar "[39m
+      [36m>[39m
+        [36m<a[39m
+          [33mclass[39m=[32m"brand"[39m
+          [33mdata-discover[39m=[32m"true"[39m
+          [33mhref[39m=[32m"/"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"brand-mark"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-sprout"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"25"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"25"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M5 21h14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m<...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ e2e/http.test.tsx:19:18
+     17|   it('loads a saved baseline and its chronologically calibrated empiri…
+     18|     show('/forecast');
+     19|     await screen.findByText('Saved artifact available');
+       |                  ^
+     20|     fireEvent.click(screen.getByRole('button', { name: 'Get forecast' …
+     21|     expect(await screen.findByText(/90% nominal empirical band/)).toBe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:42:05
+   Duration  4.92s (tests 50%, environment 26%, transform 8%, setup 8%, import 7%)
+
+
+Fixture server diagnostic log:
+{"event": "http_request", "request_id": "64a8c24d-5716-432e-aaa9-b5f51758845d", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 0.0}
+{"event": "http_request", "request_id": "37567980-2a9a-4a3e-8140-2d1dcfb69aca", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 15.0}
+{"event": "http_request", "request_id": "57647103-4dc0-4251-9b88-7b33c10aac14", "method": "GET", "route": "/api/v1/commodities", "status": 200, "duration_ms": 47.0}
+{"event": "http_request", "request_id": "f62ff063-86e4-40e0-81ee-342d54324aec", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 47.0}
+{"event": "http_request", "request_id": "f0c13dd4-f86e-46a0-b6e3-c183944d93d4", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 47.0}
+{"event": "http_request", "request_id": "8ddd7b6a-d561-4341-9f1b-7111465c6a1b", "method": "GET", "route": "/api/v1/prices/history", "status": 200, "duration_ms": 94.0}
+{"event": "http_request", "request_id": "8b508218-6d61-486e-b825-ea30eb6be06f", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 78.0}
+{"event": "http_request", "request_id": "1ae5399e-dd1e-4b9f-a1d7-f800675a62cf", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 0.0}
+{"event": "http_request", "request_id": "12ac5c4e-6aa4-4af4-a106-bf693ae6d47d", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "0ede3e33-982b-4d51-add6-a26949f1a50c", "method": "GET", "route": "/api/v1/commodities", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "ba86f55c-cffd-40f3-8a70-e8df6796a540", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "27e37684-be41-4d99-b2ee-58cd7eacd19c", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 31.0}
+{"event": "http_request", "request_id": "37cae1b1-b62a-4b24-9685-a076de150a78", "method": "GET", "route": "/api/v1/commodities", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "b14d7df9-6853-45c1-bcc6-13e5ea1dd070", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "1e597b7d-03a1-4027-8c49-8f935699f536", "method": "GET", "route": "/api/v1/prices/latest", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "6d539a86-94bb-432e-a018-6330b7ff6148", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "8fe3376e-d7b3-48c7-b508-6dc6a84628d8", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "b7fdc8eb-d070-4460-986d-a1560a07b1e2", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "8953423c-7f33-4ee6-9f87-558d5fdf322c", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "cba8ea8b-41ef-41e1-a399-ffc67a0dad05", "method": "POST", "route": "/api/v1/recommend", "status": 200, "duration_ms": 63.0}
+

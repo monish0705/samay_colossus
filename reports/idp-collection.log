@@ -1,0 +1,9 @@
+{"commodity": "Copra", "market": "Tiptur", "source": "old", "n": 1259, "first_date": "2021-01-01", "last_date": "2025-10-25", "folder": "data/raw/idp-history/20261104T193424Z/copra-old"}
+{"commodity": "Arecanut(Betelnut/Supari)", "market": "Shimoga", "source": "old", "n": 1064, "first_date": "2021-01-01", "last_date": "2025-10-23", "folder": "data/raw/idp-history/20261104T193424Z/arecanut-old"}
+{"commodity": "Onion", "market": "Hubli (Amaragol)", "source": "old", "n": 1299, "first_date": "2021-01-01", "last_date": "2025-10-25", "folder": "data/raw/idp-history/20261104T193424Z/onion-old"}
+{"commodity": "Potato", "market": "Bangalore", "source": "old", "n": 993, "first_date": "2021-01-01", "last_date": "2025-02-21", "folder": "data/raw/idp-history/20261104T193424Z/potato-old"}
+{"commodity": "Copra", "market": "Tiptur Apmc", "source": "new", "n": 121, "first_date": "2025-10-28", "last_date": "2026-05-30", "folder": "data/raw/idp-history/20261104T193424Z/copra-new"}
+{"commodity": "Arecanut(Betelnut/Supari)", "market": "Shimoga Apmc", "source": "new", "n": 598, "first_date": "2025-10-27", "last_date": "2026-05-30", "folder": "data/raw/idp-history/20261104T193424Z/arecanut-new"}
+{"commodity": "Onion", "market": "Hubballi Apmc", "source": "new", "n": 203, "first_date": "2025-10-27", "last_date": "2026-05-30", "folder": "data/raw/idp-history/20261104T193424Z/onion-new"}
+{"commodity": "Potato", "market": "Bengaluru Apmc", "source": "new", "n": 300, "first_date": "2025-11-07", "last_date": "2026-05-30", "folder": "data/raw/idp-history/20261104T193424Z/potato-new"}
+ARCHIVE: data\raw\idp-history\20261104T193424Z

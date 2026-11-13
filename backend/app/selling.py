@@ -37,7 +37,7 @@ class SaleCosts(Input):
 
 class CropStorageProfile(Input):
     commodity: Name
-    maximum_holding_days: Annotated[StrictInt, Field(ge=0, le=365)]
+    maximum_holding_days: Annotated[StrictInt, Field(ge=0, le=730)]
     storage_conditions: Name
     assumption_source: Name
 
@@ -70,7 +70,7 @@ class PriceScenarios(Input):
 
 
 class HoldingOption(Input):
-    days: Annotated[StrictInt, Field(ge=1, le=365)]
+    days: Annotated[StrictInt, Field(ge=1, le=730)]
     daily_loss_fractions: tuple[Rate, ...]
     daily_storage_inr_per_quintal: tuple[Nonnegative, ...]
     fixed_storage_inr: Nonnegative = D(0)
@@ -100,7 +100,7 @@ class SellingRequest(Input):
     decision_increment_quintals: Annotated[Quantity, Field(gt=0)]
     market_quantity_step_quintals: Annotated[Quantity, Field(gt=0)]
     minimum_sale_lot_quintals: Annotated[Quantity, Field(gt=0)]
-    maximum_horizon_days: Annotated[StrictInt, Field(ge=0, le=365)]
+    maximum_horizon_days: Annotated[StrictInt, Field(ge=0, le=730)]
     crop_storage_profile: CropStorageProfile
     today_sale_costs: SaleCosts
     holding_options: tuple[HoldingOption, ...] = ()
@@ -242,7 +242,7 @@ def _optimize(request):
             future = {key: sale(marketable, getattr(scenario, key + "_inr_per_quintal"), option.future_sale_costs) for key in ("adverse", "lower", "central", "upper")}
             plans.append(plan(now, held, option.days, cash, today_sale, marketable, loss, rounding_loss, storage, storage - upfront, future, eligible, warning, option))
     def rank(p):
-        return (p["risk_adjusted_objective_inr"], p["downside_total_net_inr"], p["sell_today_quintals"], -p["holding_days"])
+        return (p["risk_adjusted_objective_inr"], p["total_net_inr"]["central"], p["downside_total_net_inr"], -p["holding_days"])
     safe = [p for p in plans if p["recommendation_eligible"]]
     selected = max(safe, key=rank) if safe else None
     best_scenario = max(plans, key=rank) if plans else None
@@ -305,5 +305,7 @@ def scenarios_from_reliability(response, *, adverse_inr_per_quintal: Decimal,
         upper_inr_per_quintal=money(D(str(interval.upper_inr_per_quintal)) * multiplier),
         reliability_status=response.reliability_status, market=response.market, commodity=response.commodity,
         variety=response.variety, grade=response.grade, target_date=response.target_date, issued_at=response.timestamp,
-        model_version=response.model_version, source=str(response.data_source), flags=tuple(response.flags),
+        model_version=response.model_version,
+        source="Saved forecast service: " + str(response.data_source.get("source") or response.data_source.get("mode") or "official archived observations")[:800] + "; full source lineage is in predictions.data_source",
+        flags=tuple(response.flags),
         price_basis_assumption=price_basis_assumption, adverse_assumption=adverse_assumption)

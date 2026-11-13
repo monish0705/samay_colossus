@@ -227,6 +227,7 @@ export const api = {
   latest: (scope: Scope, signal?: AbortSignal) => unwrap(client.GET('/api/v1/prices/latest', { params: { query: scope }, signal })),
   context: (scope: Scope, days = 7, signal?: AbortSignal) => unwrap(client.GET('/api/v1/context', { params: { query: { market: scope.market, commodity: scope.commodity, days } }, signal })),
   predict: (scope: Scope, horizon: number, signal?: AbortSignal) => unwrap(client.POST('/api/v1/predict', { body: { ...scope, horizon }, signal })),
+  mandiComparison: (body: Schema<'MandiComparisonRequest'>, signal?: AbortSignal) => unwrap(client.POST('/api/v1/mandi-comparison', { body, signal })),
   recommend: async (body: RecommendInput, signal?: AbortSignal): Promise<Recommendation> => {
     let result;
     try { result = await client.POST('/api/v1/recommend', { body, signal }); } catch { throw new ApiError('Cannot reach the backend. No plan has been calculated.'); }

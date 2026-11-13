@@ -23,6 +23,13 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def replay_mode(self):
+        if self.database_url.startswith("sqlite:///") and not self.database_url.startswith("sqlite:////") and ":memory:" not in self.database_url:
+            rel_part = self.database_url.replace("sqlite:///", "")
+            if rel_part.startswith("./"):
+                rel_part = rel_part[2:]
+            path = Path(rel_part)
+            if not path.is_absolute():
+                self.database_url = f"sqlite:///{(ROOT / path).resolve().as_posix()}"
         if self.bundled_research_mode:
             if self.environment == 'production':
                 raise ValueError('Bundled research mode is for local development/test only')

@@ -1360,6 +1360,87 @@
           }
         }
       }
+    },
+    "/api/v1/mandi-comparison": {
+      "post": {
+        "tags": [
+          "mandi advisor"
+        ],
+        "summary": "Mandi Comparison",
+        "operationId": "mandi_comparison_api_v1_mandi_comparison_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MandiComparisonRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MandiComparisonResponseSchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2492,6 +2573,225 @@
         ],
         "title": "LatestResponse"
       },
+      "MandiComparisonRequest": {
+        "properties": {
+          "commodity": {
+            "type": "string",
+            "title": "Commodity",
+            "default": "Tomato"
+          },
+          "quantity_quintals": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Quantity Quintals",
+            "description": "Harvest quantity in quintals"
+          },
+          "local_mandi": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Local Mandi"
+          },
+          "user_price_override": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Price Override"
+          },
+          "variety": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variety"
+          },
+          "grade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade"
+          }
+        },
+        "type": "object",
+        "required": [
+          "quantity_quintals"
+        ],
+        "title": "MandiComparisonRequest"
+      },
+      "MandiComparisonResponseSchema": {
+        "properties": {
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "quantity_quintals": {
+            "type": "string",
+            "title": "Quantity Quintals"
+          },
+          "local_mandi": {
+            "type": "string",
+            "title": "Local Mandi"
+          },
+          "recommended_mandi": {
+            "type": "string",
+            "title": "Recommended Mandi"
+          },
+          "recommendation_summary": {
+            "type": "string",
+            "title": "Recommendation Summary"
+          },
+          "recommendation_summary_kn": {
+            "type": "string",
+            "title": "Recommendation Summary Kn"
+          },
+          "mandis": {
+            "items": {
+              "$ref": "#/components/schemas/MandiOptionSchema"
+            },
+            "type": "array",
+            "title": "Mandis"
+          }
+        },
+        "type": "object",
+        "required": [
+          "commodity",
+          "quantity_quintals",
+          "local_mandi",
+          "recommended_mandi",
+          "recommendation_summary",
+          "recommendation_summary_kn",
+          "mandis"
+        ],
+        "title": "MandiComparisonResponseSchema"
+      },
+      "MandiOptionSchema": {
+        "properties": {
+          "mandi_name": {
+            "type": "string",
+            "title": "Mandi Name"
+          },
+          "district": {
+            "type": "string",
+            "title": "District"
+          },
+          "distance_km": {
+            "type": "integer",
+            "title": "Distance Km"
+          },
+          "travel_time_hours": {
+            "type": "number",
+            "title": "Travel Time Hours"
+          },
+          "modal_price_inr_per_quintal": {
+            "type": "string",
+            "title": "Modal Price Inr Per Quintal"
+          },
+          "price_basis": {
+            "type": "string",
+            "title": "Price Basis"
+          },
+          "is_local": {
+            "type": "boolean",
+            "title": "Is Local"
+          },
+          "gross_revenue_inr": {
+            "type": "string",
+            "title": "Gross Revenue Inr"
+          },
+          "commission_inr": {
+            "type": "string",
+            "title": "Commission Inr"
+          },
+          "market_fee_inr": {
+            "type": "string",
+            "title": "Market Fee Inr"
+          },
+          "transport_cost_inr": {
+            "type": "string",
+            "title": "Transport Cost Inr"
+          },
+          "handling_inr": {
+            "type": "string",
+            "title": "Handling Inr"
+          },
+          "net_cash_inr": {
+            "type": "string",
+            "title": "Net Cash Inr"
+          },
+          "net_realization_inr_per_quintal": {
+            "type": "string",
+            "title": "Net Realization Inr Per Quintal"
+          },
+          "diff_vs_local_inr": {
+            "type": "string",
+            "title": "Diff Vs Local Inr"
+          },
+          "is_recommended": {
+            "type": "boolean",
+            "title": "Is Recommended"
+          },
+          "tag": {
+            "type": "string",
+            "title": "Tag"
+          },
+          "tag_kn": {
+            "type": "string",
+            "title": "Tag Kn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "mandi_name",
+          "district",
+          "distance_km",
+          "travel_time_hours",
+          "modal_price_inr_per_quintal",
+          "price_basis",
+          "is_local",
+          "gross_revenue_inr",
+          "commission_inr",
+          "market_fee_inr",
+          "transport_cost_inr",
+          "handling_inr",
+          "net_cash_inr",
+          "net_realization_inr_per_quintal",
+          "diff_vs_local_inr",
+          "is_recommended",
+          "tag",
+          "tag_kn"
+        ],
+        "title": "MandiOptionSchema"
+      },
       "MarketContext": {
         "properties": {
           "status": {
@@ -3529,6 +3829,13 @@
             "title": "Risk Tolerance",
             "default": "conservative"
           },
+          "cash_deadline_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 0.0,
+            "title": "Cash Deadline Days",
+            "default": 0
+          },
           "decision_policy": {
             "anyOf": [
               {
@@ -4145,6 +4452,11 @@
           "cash_surplus_inr": {
             "type": "string",
             "title": "Cash Surplus Inr"
+          },
+          "cash_deadline_days": {
+            "type": "integer",
+            "title": "Cash Deadline Days",
+            "default": 0
           },
           "later_sales": {
             "additionalProperties": {

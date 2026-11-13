@@ -299,6 +299,120 @@ export function DecisionPanel({ result }: { result: Recommendation }) {
         />
       )}
     </section> : <Notice>{t('No feasible sell-later plan exists under these storage, cash or forecast inputs. Enter verified storage capacity to assess holding.')}</Notice>}
+    {/* Mandi comparison for farmer: Which mandi to choose? */}
+    <MandiComparisonCard
+      commodity={result.optimization.scope.commodity}
+      quantity={String(result.optimization.request_and_assumptions.total_quantity_quintals || '0')}
+      localMandi={result.optimization.scope.market}
+      userPrice={result.optimization.request_and_assumptions.today_price_inr_per_quintal ? String(result.optimization.request_and_assumptions.today_price_inr_per_quintal) : null}
+    />
     <details><summary>{t('Review weather, festivals and news evidence')}</summary><ContextEvidence context={decision.context}/></details>
   </Card>);
+}
+
+export function MandiComparisonCard({
+  commodity,
+  quantity,
+  localMandi,
+  userPrice,
+  language,
+}: {
+  commodity: string;
+  quantity: string | number;
+  localMandi: string;
+  userPrice?: string | number | null;
+  language?: string;
+}) {
+  const comp = useResource(
+    signal =>
+      api.mandiComparison(
+        {
+          commodity,
+          quantity_quintals: String(quantity),
+          local_mandi: localMandi,
+          user_price_override: userPrice ? String(userPrice) : null,
+        },
+        signal
+      ),
+    `${commodity}-${quantity}-${localMandi}-${userPrice}`
+  );
+
+  if (comp.loading) return <Loading />;
+  if (comp.error || !comp.data) return null;
+
+  const data = comp.data;
+  const isKn = language === 'kn';
+  const summary = isKn && data.recommendation_summary_kn ? data.recommendation_summary_kn : data.recommendation_summary;
+
+  return localize(
+    <div className="mandi-comparison-card" style={{ margin: '1.25rem 0', padding: '1.25rem', border: '1px solid var(--border)', borderRadius: '12px', background: 'var(--surface-sunken)' }}>
+      <div className="section-heading" style={{ marginBottom: '0.75rem' }}>
+        <div>
+          <p className="eyebrow">{t('MANDI ARBITRAGE & LOGISTICS')}</p>
+          <h3 style={{ margin: 0 }}>{t('Which mandi should you choose?')}</h3>
+        </div>
+        <Badge tone="green">{t('Karnataka Network Comparison')}</Badge>
+      </div>
+
+      <div
+        className="recommendation-banner"
+        style={{
+          padding: '0.9rem 1.1rem',
+          marginBottom: '1rem',
+          borderRadius: '8px',
+          background: 'rgba(38, 113, 73, 0.1)',
+          borderLeft: '4px solid #267149',
+          fontSize: '0.95rem',
+          lineHeight: '1.5',
+        }}
+      >
+        <strong>{t('Recommendation')}: </strong>
+        {summary}
+      </div>
+
+      <div style={{ display: 'grid', gap: '0.85rem' }}>
+        {data.mandis.map(m => {
+          const diff = Number(m.diff_vs_local_inr);
+          const isRec = m.is_recommended;
+          return (
+            <div
+              key={m.mandi_name}
+              style={{
+                padding: '1rem',
+                borderRadius: '8px',
+                border: isRec ? '2px solid #267149' : '1px solid var(--border)',
+                background: isRec ? 'rgba(38, 113, 73, 0.05)' : 'var(--surface)',
+                display: 'grid',
+                gap: '0.5rem',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div>
+                  <strong style={{ fontSize: '1.05rem' }}>{m.mandi_name}</strong>
+                  <span className="small muted" style={{ marginLeft: '0.5rem' }}>({m.district})</span>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  {isRec && <Badge tone="green">{t('Recommended Mandi')}</Badge>}
+                  {m.is_local ? <Badge tone="neutral">{t('Local Mandi')}</Badge> : (
+                    <span className="small muted">{m.distance_km} km · ~{m.travel_time_hours}h</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="stats-grid four" style={{ marginTop: '0.5rem' }}>
+                <Stat label={t('Modal wholesale price')} value={inr(m.modal_price_inr_per_quintal)} note={m.price_basis} />
+                <Stat label={t('Transport & freight')} value={inr(m.transport_cost_inr)} note={`${inr(m.handling_inr)} ${t('handling')}`} />
+                <Stat label={t('Net farmer cash')} value={inr(m.net_cash_inr)} note={`${inr(m.net_realization_inr_per_quintal)} / ${t('quintal')}`} />
+                <Stat
+                  label={t('Difference vs local')}
+                  value={diff === 0 ? '—' : `${diff > 0 ? '+' : ''}${inr(diff)}`}
+                  note={diff > 0 ? t('Extra cash in pocket') : diff < 0 ? t('Lower net after transport') : t('Baseline local realization')}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }

@@ -15,6 +15,7 @@ import {
 import { Badge, Card, ErrorState, Notice, PageHeading, useResource } from './ui';
 import { ResultSummary } from './Results';
 import { MarketContextPanel } from './DecisionPanel';
+import { VoiceInputButton } from './Speech';
 
 type NumericField = Exclude<keyof AdvisorValues, 'risk' | 'days' | 'payment' | 'notes' | 'conditions' | 'acknowledged' | 'example' | 'scenarioPrice' | 'conditionalAnalysis' | 'compareDates' | 'longReference' | 'storageExposure' | 'rainStop'>;
 
@@ -138,8 +139,13 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
   };
 
   const field = (key: NumericField, label: string, unit: string, hint?: string) => (
-    <label className={`field field-${key}`} key={key} htmlFor={`advisor-${key}`}>
-      <span>{t(label)}</span>
+    <div className={`field field-${key}`} key={key}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+        <label htmlFor={`advisor-${key}`}><span>{t(label)}</span></label>
+        {(key === 'quantity' || key === 'cash' || key === 'price') && (
+          <VoiceInputButton onValue={val => change(key, val)} />
+        )}
+      </div>
       <div className="input-wrap">
         <input
           id={`advisor-${key}`}
@@ -156,7 +162,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
       <small id={`hint-${key}`} className={errors[key] ? 'field-error' : 'field-hint'}>
         {errors[key] ? t(errors[key]) : hint ? t(hint) : ''}
       </small>
-    </label>
+    </div>
   );
 
 
@@ -360,6 +366,44 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
             <div className="form-grid">
               {field('quantity', 'Harvest quantity', 'qtl', '1 quintal = 100 kg')}
               {field('cash', 'Immediate net cash needed', 'INR', 'After today’s costs and upfront storage')}
+            </div>
+
+            {scope.commodity === 'Tomato' && (
+              <div className="crate-helper" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0.5rem 0', fontSize: '0.88rem', background: 'var(--surface-sunken)', padding: '0.5rem 0.75rem', borderRadius: '6px' }}>
+                <span className="muted">{t('Kolar crate conversion (1 crate = ~25 kg / 4 crates = 1 quintal):')}</span>
+                <input
+                  type="number"
+                  placeholder={t('Crates')}
+                  style={{ width: '80px', padding: '0.25rem 0.45rem', borderRadius: '4px', border: '1px solid var(--border)', background: 'var(--surface)' }}
+                  onChange={e => {
+                    const crates = Number(e.target.value);
+                    if (crates > 0) {
+                      change('quantity', String(crates * 0.25));
+                    }
+                  }}
+                />
+                {Number(draft.quantity) > 0 && <span className="small muted">({Math.round(Number(draft.quantity) * 4)} {t('crates')})</span>}
+              </div>
+            )}
+
+            <div className="form-grid" style={{ marginTop: '0.5rem', marginBottom: '0.75rem' }}>
+              <label className="field" htmlFor="advisor-deadline">
+                <span>{t('When is this cash needed? (Cash deadline)')}</span>
+                <select
+                  id="advisor-deadline"
+                  value={draft.deadline || '0'}
+                  onChange={e => change('deadline', e.target.value)}
+                >
+                  <option value="0">{t('Immediate / Today (0 days) · Mandatory immediate sale')}</option>
+                  <option value="3">{t('Within 3 days · Flexible holding window')}</option>
+                  <option value="7">{t('Within 7 days · Can hold up to 1 week if profitable')}</option>
+                  <option value="14">{t('Within 14 days · Can hold up to 2 weeks')}</option>
+                  <option value="30">{t('Within 30 days · Can hold up to 1 month')}</option>
+                </select>
+                <small className="field-hint">
+                  {t('If you can wait a few days before paying, SAMAY checks if holding yields higher proceeds without missing your deadline.')}
+                </small>
+              </label>
             </div>
 
             {/* Live Auto-Priced Projection Card */}

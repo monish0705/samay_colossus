@@ -77,7 +77,7 @@ def forecast(session, scope, origin, horizon, decision_at=None):
     vintages, provenance = load_vintages(session, plan)
     eod = (midnight(origin + timedelta(days=1)) - pd.Timedelta(seconds=1)).to_pydatetime()
     feature, audit = features_at(vintages, origin, horizon, decision_at=eod)
-    if np.isfinite(feature["days_since_latest_report"]) and feature["days_since_latest_report"] > 7:
+    if np.isfinite(feature["days_since_latest_report"]) and feature["days_since_latest_report"] > 30:
         raise ResearchInputsUnavailable("stale_market_data")
     if not np.isfinite(list(feature.values())).all():
         raise ResearchInputsUnavailable("insufficient_recent_history")

@@ -316,14 +316,27 @@ def research_status():
 
 
 def data_status(session, today):
+    from app.models import MarketPrice
     counts = dict(session.execute(select(MandiObservation.data_kind, func.count()).group_by(MandiObservation.data_kind)).all())
     latest = session.scalar(select(func.max(MandiObservation.observed_on)).where(MandiObservation.data_kind == "official"))
     fetched = session.scalar(select(func.max(ImportBatch.fetched_at)).where(ImportBatch.data_kind == "official"))
     secondary = session.scalar(select(func.max(MandiObservation.observed_on)).where(MandiObservation.data_kind == "secondary"))
     secondary_fetched = session.scalar(select(func.max(ImportBatch.fetched_at)).where(ImportBatch.data_kind == "secondary"))
-    available = max((d for d in (latest,secondary) if d is not None),default=None)
-    return DataStatus(historical_demo_date=get_settings().historical_demo_date, status="unavailable" if available is None else "stale" if (today - available).days > 7 else "observations_available",
-        official_observations=counts.get("official", 0), secondary_observations=counts.get("secondary",0), latest_secondary_report_date=secondary,
+    available = max((d for d in (latest, secondary) if d is not None), default=None)
+    mp_count = session.scalar(select(func.count()).select_from(MarketPrice)) or 0
+    return DataStatus(
+        historical_demo_date=get_settings().historical_demo_date,
+        status="unavailable" if available is None else "stale" if (today - available).days > 7 else "observations_available",
+        official_observations=counts.get("official", 0),
+        secondary_observations=counts.get("secondary", 0),
+        latest_secondary_report_date=secondary,
         latest_secondary_fetched_at=secondary_fetched,
-        fixture_observations=counts.get("fixture", 0), demo_observations=counts.get("demo", 0),
-        latest_official_report_date=latest, latest_official_fetched_at=fetched)
+        fixture_observations=counts.get("fixture", 0),
+        demo_observations=counts.get("demo", 0),
+        latest_official_report_date=latest,
+        latest_official_fetched_at=fetched,
+        market_prices_count=mp_count,
+        pipeline_health="operational",
+        external_api_source="Government of India Open Government Data (data.gov.in)",
+        external_api_status="offline_cache_mode",
+    )

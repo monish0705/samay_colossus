@@ -251,6 +251,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/mandi-comparison": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mandi Comparison */
+        post: operations["mandi_comparison_api_v1_mandi_comparison_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -688,6 +705,83 @@ export interface components {
              */
             note: string;
         };
+        /** MandiComparisonRequest */
+        MandiComparisonRequest: {
+            /**
+             * Commodity
+             * @default Tomato
+             */
+            commodity: string;
+            /**
+             * Quantity Quintals
+             * @description Harvest quantity in quintals
+             */
+            quantity_quintals: number | string;
+            /** Local Mandi */
+            local_mandi?: string | null;
+            /** User Price Override */
+            user_price_override?: number | string | null;
+            /** Variety */
+            variety?: string | null;
+            /** Grade */
+            grade?: string | null;
+        };
+        /** MandiComparisonResponseSchema */
+        MandiComparisonResponseSchema: {
+            /** Commodity */
+            commodity: string;
+            /** Quantity Quintals */
+            quantity_quintals: string;
+            /** Local Mandi */
+            local_mandi: string;
+            /** Recommended Mandi */
+            recommended_mandi: string;
+            /** Recommendation Summary */
+            recommendation_summary: string;
+            /** Recommendation Summary Kn */
+            recommendation_summary_kn: string;
+            /** Mandis */
+            mandis: components["schemas"]["MandiOptionSchema"][];
+        };
+        /** MandiOptionSchema */
+        MandiOptionSchema: {
+            /** Mandi Name */
+            mandi_name: string;
+            /** District */
+            district: string;
+            /** Distance Km */
+            distance_km: number;
+            /** Travel Time Hours */
+            travel_time_hours: number;
+            /** Modal Price Inr Per Quintal */
+            modal_price_inr_per_quintal: string;
+            /** Price Basis */
+            price_basis: string;
+            /** Is Local */
+            is_local: boolean;
+            /** Gross Revenue Inr */
+            gross_revenue_inr: string;
+            /** Commission Inr */
+            commission_inr: string;
+            /** Market Fee Inr */
+            market_fee_inr: string;
+            /** Transport Cost Inr */
+            transport_cost_inr: string;
+            /** Handling Inr */
+            handling_inr: string;
+            /** Net Cash Inr */
+            net_cash_inr: string;
+            /** Net Realization Inr Per Quintal */
+            net_realization_inr_per_quintal: string;
+            /** Diff Vs Local Inr */
+            diff_vs_local_inr: string;
+            /** Is Recommended */
+            is_recommended: boolean;
+            /** Tag */
+            tag: string;
+            /** Tag Kn */
+            tag_kn: string;
+        };
         /** MarketContext */
         MarketContext: {
             /**
@@ -1063,6 +1157,11 @@ export interface components {
              * @enum {string}
              */
             risk_tolerance: "conservative" | "balanced" | "aggressive";
+            /**
+             * Cash Deadline Days
+             * @default 0
+             */
+            cash_deadline_days: number;
             decision_policy?: components["schemas"]["DecisionPolicy"] | null;
         };
         /** RecommendationHolding */
@@ -1268,6 +1367,11 @@ export interface components {
             cash_today_inr: string;
             /** Cash Surplus Inr */
             cash_surplus_inr: string;
+            /**
+             * Cash Deadline Days
+             * @default 0
+             */
+            cash_deadline_days: number;
             /** Later Sales */
             later_sales: {
                 [key: string]: components["schemas"]["SaleLedger"];
@@ -2149,6 +2253,75 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    mandi_comparison_api_v1_mandi_comparison_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MandiComparisonRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MandiComparisonResponseSchema"];
                 };
             };
             /** @description No official observation */

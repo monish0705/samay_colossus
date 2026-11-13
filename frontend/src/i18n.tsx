@@ -1,13 +1,17 @@
 import { cloneElement, isValidElement, useSyncExternalStore, type ReactElement, type ReactNode } from 'react';
 import { kannada } from './locales/kn';
 export type Language = 'en' | 'kn';
-let language: Language = 'en';
-try { if (localStorage.getItem('samay-language') === 'kn') language = 'kn'; } catch { /* Storage is optional. */ }
+let language: Language = 'kn';
+try {
+  const saved = localStorage.getItem('samay-language');
+  if (saved === 'en') language = 'en';
+  else if (saved === 'kn') language = 'kn';
+} catch { /* Storage is optional. */ }
 const listeners = new Set<() => void>();
 const dictionary = new Map(Object.entries(kannada).map(([key, value]) => [key.toLowerCase(), value]));
 export function setLanguage(value: Language) { language = value; try { localStorage.setItem('samay-language', value); } catch { /* No financial data is stored. */ } listeners.forEach(listener => listener()); }
 export const getLanguage = () => language;
-export function useLanguage() { return useSyncExternalStore(callback => { listeners.add(callback); return () => { listeners.delete(callback); }; }, getLanguage, () => 'en' as Language); }
+export function useLanguage() { return useSyncExternalStore(callback => { listeners.add(callback); return () => { listeners.delete(callback); }; }, getLanguage, () => 'kn' as Language); }
 export function t(text: string, values: Record<string, string | number> = {}, locale: Language = language): string {
   const key = text.trim();
   let translated = locale === 'kn' ? dictionary.get(key.toLowerCase()) || key : key;

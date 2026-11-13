@@ -1,0 +1,15 @@
+C:\Users\Suhan\OneDrive\文件\ChatGPT\agritech\samay-sub2\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+{"event": "startup_readiness", "database": "initialized", "forecast_demo_ready": false, "research_artifacts_configured": 322, "issues": ["Research artifacts are configured separately; no validated production model is deployed", "No current validated saved-model prediction passed the readiness check"]}
+{"event": "http_request", "request_id": "23428caa-0903-4986-899f-5fe1279dcd94", "method": "POST", "route": "/api/v1/predict", "status": 200, "duration_ms": 172.0}
+Tomato 200 1255.71 2026-11-07
+{"event": "http_request", "request_id": "a37fa3c1-2b1a-4c11-99fc-e808fac6aa32", "method": "POST", "route": "/api/v1/predict", "status": 200, "duration_ms": 109.0}
+Copra 200 17500.00 2026-11-09
+{"event": "http_request", "request_id": "1600b8cd-ffe0-45c7-aa5a-6a42bfe2d28e", "method": "POST", "route": "/api/v1/predict", "status": 200, "duration_ms": 110.0}
+Arecanut 200 48009.00 2026-11-06
+{"event": "http_request", "request_id": "6b48dbdd-bf1f-45c2-bc70-ecf7d3665066", "method": "POST", "route": "/api/v1/predict", "status": 200, "duration_ms": 94.0}
+Onion 200 4200.00 2026-11-11
+{"event": "http_request", "request_id": "50e7bf28-d0e6-478c-9754-1961cde7221c", "method": "POST", "route": "/api/v1/predict", "status": 200, "duration_ms": 94.0}
+Potato 200 3000.00 2026-11-11
+{"event": "http_request", "request_id": "6363b05e-6656-45e6-b7d4-4e8110f2ca0e", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 16.0}
+{'historical_demo_date': None, 'status': 'observations_available', 'official_observations': 3988, 'secondary_observations': 5834, 'latest_secondary_report_date': '2026-05-30', 'latest_secondary_fetched_at': '2026-11-04T19:36:59.824210Z', 'fixture_observations': 3, 'demo_observations': 7305, 'latest_official_report_date': '2026-11-11', 'latest_official_fetched_at': '2026-11-12T16:47:53.653790Z', 'note': 'Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations.', 'market_prices_count': 0, 'pipeline_health': 'operational', 'external_api_source': 'Government of India Open Government Data (data.gov.in)', 'external_api_status': 'offline_cache_mode', 'series_summary': []}

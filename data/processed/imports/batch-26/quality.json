@@ -1,0 +1,50 @@
+{
+  "batch_id": 26,
+  "counts": {
+    "records": 5,
+    "inserted": 5,
+    "revised": 0,
+    "duplicates": 0,
+    "stale": 0,
+    "quarantined": 0,
+    "filtered": 0
+  },
+  "data_kind": "official",
+  "source": "Official OGD / AGMARKNET historical APMC observations",
+  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+  "file_sha256": "07a4ca32b7fe318163c653fd67d70466a23602e14ed5e94fffe9c07a41de8be7",
+  "fetched_at": "2026-11-12T16:47:53.653790+00:00",
+  "generated_at": "2026-11-12T16:47:53.696247+00:00",
+  "date_range": [
+    "2026-11-03",
+    "2026-11-07"
+  ],
+  "missing_calendar_dates": [],
+  "missing_days_count": 0,
+  "missing_days_note": "Unreported dates, not proof of data loss; no rows imputed. Union across varieties/grades.",
+  "modal_price_distribution_inr_per_quintal": {
+    "count": 5.0,
+    "mean": 1132.0,
+    "std": 140.24977718342373,
+    "min": 1000.0,
+    "25%": 1000.0,
+    "50%": 1130.0,
+    "75%": 1200.0,
+    "max": 1330.0
+  },
+  "distribution_basis": "validated in-scope input rows including duplicates/stale, not unique current observations",
+  "report_age_days": 5,
+  "provenance_verification": "Local file provenance asserted by operator manifest; not independently network-authenticated",
+  "current_snapshot_records": 1948,
+  "current_snapshot_modal_distribution_inr_per_quintal": {
+    "count": 1948.0,
+    "mean": 1336.2053388090349,
+    "std": 1077.8228335568208,
+    "min": 100.0,
+    "25%": 667.0,
+    "50%": 1060.0,
+    "75%": 1530.0,
+    "max": 9330.0
+  },
+  "output_directory": "C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\data\\processed\\imports\\batch-26"
+}

@@ -1,0 +1,11 @@
+State,District,Market,Commodity,Variety,Grade,Arrival_Date,Min_Price,Max_Price,Modal_Price,Price_Unit
+Karnataka,Dharwad,APMC Hubballi,Onion,Local,Local,02/11/2026,500,5000,4900,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Puna,Local,02/11/2026,2000,5300,4000,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Local,Local,04/11/2026,500,5100,4600,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Puna,Local,04/11/2026,1000,5200,4500,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Local,Local,05/11/2026,500,5100,4700,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Puna,Local,05/11/2026,1500,4800,4300,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Local,Local,06/11/2026,500,5200,4800,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Puna,Local,06/11/2026,1500,4900,4500,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Local,Local,11/11/2026,500,4900,4500,INR/quintal
+Karnataka,Dharwad,APMC Hubballi,Onion,Puna,Local,11/11/2026,1000,4700,4200,INR/quintal

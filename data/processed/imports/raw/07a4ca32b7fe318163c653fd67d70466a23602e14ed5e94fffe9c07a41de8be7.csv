@@ -1,0 +1,6 @@
+State,District,Market,Commodity,Variety,Grade,Arrival_Date,Min_Price,Max_Price,Modal_Price,Price_Unit
+Karnataka,Kolar,Kolar APMC,Tomato,Tomato,Local,03/11/2026,330,2660,1330,INR/quintal
+Karnataka,Kolar,Kolar APMC,Tomato,Tomato,Local,04/11/2026,300,2330,1000,INR/quintal
+Karnataka,Kolar,Kolar APMC,Tomato,Tomato,Local,05/11/2026,330,2330,1200,INR/quintal
+Karnataka,Kolar,Kolar APMC,Tomato,Tomato,Local,06/11/2026,300,2330,1130,INR/quintal
+Karnataka,Kolar,Kolar APMC,Tomato,Tomato,Local,07/11/2026,300,2000,1000,INR/quintal

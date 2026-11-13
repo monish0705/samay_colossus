@@ -1,0 +1,11 @@
+State,District,Market,Commodity,Variety,Grade,Arrival_Date,Min_Price,Max_Price,Modal_Price,Price_Unit
+Karnataka,Tumakuru,Tiptur APMC,Copra,Copra,Local,02/11/2026,30000,32100,30739,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,02/11/2026,8300,18600,17000,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,03/11/2026,11500,20000,18500,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,04/11/2026,9000,18000,17500,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Copra,Local,05/11/2026,29800,32000,31500,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,05/11/2026,9500,18000,17500,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,06/11/2026,11800,18100,18000,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,07/11/2026,9500,19000,17300,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Copra,Local,09/11/2026,30000,32100,31707,INR/quintal
+Karnataka,Tumakuru,Tiptur APMC,Copra,Other,Local,09/11/2026,8500,17000,17000,INR/quintal

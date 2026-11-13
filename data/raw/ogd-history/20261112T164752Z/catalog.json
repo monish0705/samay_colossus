@@ -1,0 +1,30 @@
+{
+  "publisher_page": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+  "endpoint": "https://api.data.gov.in/resource/35985678-0d79-46b4-9ed6-6f13308a1d24",
+  "source_kind": "official",
+  "series": [
+    {
+      "commodity": "Tomato",
+      "market": "Kolar APMC",
+      "records": 296,
+      "import_records": 5,
+      "folder": "data/raw/ogd-history/20261112T164752Z/tomato",
+      "first_date": "2025-11-01",
+      "last_date": "2026-11-07",
+      "import": {
+        "counts": {
+          "records": 5,
+          "inserted": 5,
+          "revised": 0,
+          "duplicates": 0,
+          "stale": 0,
+          "quarantined": 0,
+          "filtered": 0
+        }
+      }
+    }
+  ],
+  "discovery": "Resource and download credential discovered from the official publisher page; credential omitted from archives.",
+  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+  "limitations": "Current retrospective government snapshot. Original publication/revision timestamps unavailable; grade/variety breaks remain separate."
+}

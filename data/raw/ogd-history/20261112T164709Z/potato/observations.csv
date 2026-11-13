@@ -1,0 +1,15 @@
+State,District,Market,Commodity,Variety,Grade,Arrival_Date,Min_Price,Max_Price,Modal_Price,Price_Unit
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,02/11/2026,3200,4600,4000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,02/11/2026,1200,2600,2000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,04/11/2026,3200,4600,4000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,04/11/2026,1200,2600,2000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,05/11/2026,3200,4600,4000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,05/11/2026,1200,2600,2000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,06/11/2026,3200,4600,4000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,06/11/2026,1200,2600,2000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,07/11/2026,3200,4600,4000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,07/11/2026,1200,2600,2000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,09/11/2026,3200,4600,4000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,09/11/2026,1200,2600,2000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Local,Medium,11/11/2026,2400,3600,3000,INR/quintal
+Karnataka,Bengaluru,Bengaluru APMC,Potato,Potato,Medium,11/11/2026,1400,2400,1900,INR/quintal

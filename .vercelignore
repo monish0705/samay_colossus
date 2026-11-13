@@ -1,0 +1,14 @@
+.git/
+.venv/
+.local-data/
+.pytest_cache/
+.ruff_cache/
+**/__pycache__/
+**/node_modules/
+.env*
+**/.env*
+/samay.db*
+data/raw/
+data/processed/backups/
+reports/
+tests/

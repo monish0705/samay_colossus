@@ -1,0 +1,15 @@
+C:\Users\Suhan\OneDrive\文件\ChatGPT\agritech\samay-sub2\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+{"event": "startup_readiness", "database": "initialized", "forecast_demo_ready": false, "research_artifacts_configured": 322, "issues": ["Research artifacts are configured separately; no validated production model is deployed", "No current validated saved-model prediction passed the readiness check"]}
+{"event": "http_request", "request_id": "55deec6d-3892-4e47-9bf6-655d54db89e4", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 0.0}
+{"event": "http_request", "request_id": "8b4118c2-b699-4d31-b5ab-4ac63fc93dda", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "0df88264-bc30-47ac-b26b-36b00ac9005f", "method": "GET", "route": "/api/v1/crops", "status": 200, "duration_ms": 31.0}
+{"event": "http_request", "request_id": "868da9bf-b14a-4f8e-b5ca-7a8c6705335d", "method": "GET", "route": "/api/v1/prices", "status": 200, "duration_ms": 0.0}
+{"event": "http_request", "request_id": "7d28f594-d37f-4df4-8603-b05bc824d7e5", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 234.0}
+{"event": "http_request", "request_id": "f5efaf4d-d356-4943-b475-1c50582154b4", "method": "POST", "route": "/api/v1/recommend", "status": 200, "duration_ms": 15234.0}
+/backend/api/health 200
+/backend/api/v1/markets 200
+/backend/api/v1/crops 200
+/backend/api/v1/prices?commodity=Tomato 200
+/backend/api/v1/models/status 200
+Recommendation 200 hold forecasts 60 wire_bytes 344591

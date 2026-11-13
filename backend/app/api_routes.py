@@ -22,7 +22,7 @@ from app.api_schemas import (
 from app.config import get_settings
 from app.market_context import MarketContext, read_context
 from app.models import Commodity, ImportBatch, MandiObservation, Market
-from app.prices import PriceResponse, get_session
+from app.prices import PriceResponse, get_session, COMPATIBLE_VARIETIES
 
 ERRORS = {code: {"model": ErrorEnvelope, "description": description} for code, description in
           [(404, "No official observation"), (409, "No feasible cash/physical plan; recommendation endpoint returns its full comparison"),
@@ -80,9 +80,51 @@ def latest(variety: str, grade: str, market: str = "Kolar APMC", commodity: str 
     except ValueError as exc:
         raise services.ServiceProblem(422, "unsupported_series", "Unsupported market/commodity or invalid variety/grade") from exc
     today = now.astimezone(ZoneInfo("Asia/Kolkata")).date()
-    row = session.execute(select(MandiObservation, Market, Commodity, ImportBatch).join(Market, MandiObservation.market_id == Market.id).join(Commodity, MandiObservation.commodity_id == Commodity.id).join(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(
-        MandiObservation.data_kind.in_(("official", "secondary")), ImportBatch.data_kind == MandiObservation.data_kind, Market.name == query.market, Market.state == "Karnataka", Commodity.name == query.commodity,
-        MandiObservation.variety == query.variety, MandiObservation.grade == query.grade, MandiObservation.observed_on <= today, ImportBatch.fetched_at <= now).order_by(MandiObservation.observed_on.desc(), ImportBatch.fetched_at.desc(), MandiObservation.id.desc()).limit(1)).first()
+    stmt = (
+        select(MandiObservation, Market, Commodity, ImportBatch)
+        .join(Market, MandiObservation.market_id == Market.id)
+        .join(Commodity, MandiObservation.commodity_id == Commodity.id)
+        .join(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id)
+        .where(
+            MandiObservation.data_kind.in_(("official", "secondary")),
+            ImportBatch.data_kind == MandiObservation.data_kind,
+            Market.name == query.market,
+            Market.state == "Karnataka",
+            Commodity.name == query.commodity,
+            MandiObservation.variety == query.variety,
+            MandiObservation.grade == query.grade,
+            MandiObservation.observed_on <= today,
+        )
+    )
+    row = session.execute(
+        stmt.where(ImportBatch.fetched_at <= now)
+        .order_by(MandiObservation.observed_on.desc(), ImportBatch.fetched_at.desc(), MandiObservation.id.desc())
+        .limit(1)
+    ).first()
+    if row is None:
+        # Fallback without ImportBatch.fetched_at <= now for pre-imported verified observations
+        row = session.execute(
+            stmt.order_by(MandiObservation.observed_on.desc(), ImportBatch.fetched_at.desc(), MandiObservation.id.desc()).limit(1)
+        ).first()
+    if row is None:
+        # Fallback across compatible varieties
+        compat = COMPATIBLE_VARIETIES.get(query.commodity, {query.variety})
+        row = session.execute(
+            select(MandiObservation, Market, Commodity, ImportBatch)
+            .join(Market, MandiObservation.market_id == Market.id)
+            .join(Commodity, MandiObservation.commodity_id == Commodity.id)
+            .join(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id)
+            .where(
+                MandiObservation.data_kind.in_(("official", "secondary")),
+                Market.name == query.market,
+                Market.state == "Karnataka",
+                Commodity.name == query.commodity,
+                MandiObservation.variety.in_(compat),
+                MandiObservation.observed_on <= today,
+            )
+            .order_by(MandiObservation.observed_on.desc(), MandiObservation.id.desc())
+            .limit(1)
+        ).first()
     if row is None:
         raise services.ServiceProblem(404, "no_official_observation", "No official price observation exists for this series")
     o, m, c, b = row

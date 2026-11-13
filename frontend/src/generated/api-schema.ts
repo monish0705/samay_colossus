@@ -303,6 +303,26 @@ export interface components {
             /** Data Source */
             data_source: string;
         };
+        /** ConditionFactorImpact */
+        ConditionFactorImpact: {
+            /** Condition */
+            condition: string;
+            /** Category */
+            category: string;
+            /**
+             * Impact
+             * @enum {string}
+             */
+            impact: "profit" | "loss" | "neutral";
+            /** Price Effect Inr Per Quintal */
+            price_effect_inr_per_quintal: string;
+            /** Percentage Effect */
+            percentage_effect: number;
+            /** Description */
+            description: string;
+            /** Evidence Basis */
+            evidence_basis: string;
+        };
         /** ContextSource */
         ContextSource: {
             /** Name */
@@ -879,6 +899,21 @@ export interface components {
             /** Origin Date */
             origin_date?: string | null;
         };
+        /** PredictionAttribution */
+        PredictionAttribution: {
+            /** Base Price Inr Per Quintal */
+            base_price_inr_per_quintal: string;
+            /** Predicted Price Inr Per Quintal */
+            predicted_price_inr_per_quintal: string;
+            /** Net Price Change Inr Per Quintal */
+            net_price_change_inr_per_quintal: string;
+            /** Net Change Percentage */
+            net_change_percentage: number;
+            /** Factors */
+            factors: components["schemas"]["ConditionFactorImpact"][];
+            /** Summary */
+            summary: string;
+        };
         /** PredictionResponse */
         PredictionResponse: {
             /**
@@ -937,6 +972,7 @@ export interface components {
              * @default INR/quintal
              */
             price_unit: string;
+            attribution?: components["schemas"]["PredictionAttribution"] | null;
         };
         /** PriceResponse */
         PriceResponse: {

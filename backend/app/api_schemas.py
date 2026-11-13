@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from app.decision_support import CROP_PLANNING_CEILINGS, DecisionPolicy
 from app.ingestion import commodity_name, label, market_name
 from app.market_context import MarketContext
+from app.prediction_attribution import ConditionFactorImpact, PredictionAttribution
 from app.reliability import ReliabilityForecast
 from app.selling import HoldingOption, Name, Nonnegative, SellingRequest
 
@@ -71,6 +72,7 @@ class PredictionResponse(ReliabilityForecast):
     intervals: list[ApiInterval] = Field(default_factory=list)
     request_id: str
     price_unit: str = "INR/quintal"
+    attribution: PredictionAttribution | None = None
 
 
 class RecommendationHolding(HoldingOption):

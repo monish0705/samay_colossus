@@ -1467,6 +1467,54 @@
         ],
         "title": "CommodityResponse"
       },
+      "ConditionFactorImpact": {
+        "properties": {
+          "condition": {
+            "type": "string",
+            "title": "Condition"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "profit",
+              "loss",
+              "neutral"
+            ],
+            "title": "Impact"
+          },
+          "price_effect_inr_per_quintal": {
+            "type": "string",
+            "title": "Price Effect Inr Per Quintal"
+          },
+          "percentage_effect": {
+            "type": "number",
+            "title": "Percentage Effect"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "evidence_basis": {
+            "type": "string",
+            "title": "Evidence Basis"
+          }
+        },
+        "type": "object",
+        "required": [
+          "condition",
+          "category",
+          "impact",
+          "price_effect_inr_per_quintal",
+          "percentage_effect",
+          "description",
+          "evidence_basis"
+        ],
+        "title": "ConditionFactorImpact"
+      },
       "ContextSource": {
         "properties": {
           "name": {
@@ -3006,6 +3054,47 @@
           }
         ]
       },
+      "PredictionAttribution": {
+        "properties": {
+          "base_price_inr_per_quintal": {
+            "type": "string",
+            "title": "Base Price Inr Per Quintal"
+          },
+          "predicted_price_inr_per_quintal": {
+            "type": "string",
+            "title": "Predicted Price Inr Per Quintal"
+          },
+          "net_price_change_inr_per_quintal": {
+            "type": "string",
+            "title": "Net Price Change Inr Per Quintal"
+          },
+          "net_change_percentage": {
+            "type": "number",
+            "title": "Net Change Percentage"
+          },
+          "factors": {
+            "items": {
+              "$ref": "#/components/schemas/ConditionFactorImpact"
+            },
+            "type": "array",
+            "title": "Factors"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "base_price_inr_per_quintal",
+          "predicted_price_inr_per_quintal",
+          "net_price_change_inr_per_quintal",
+          "net_change_percentage",
+          "factors",
+          "summary"
+        ],
+        "title": "PredictionAttribution"
+      },
       "PredictionResponse": {
         "properties": {
           "schema_version": {
@@ -3136,6 +3225,16 @@
             "type": "string",
             "title": "Price Unit",
             "default": "INR/quintal"
+          },
+          "attribution": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PredictionAttribution"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",

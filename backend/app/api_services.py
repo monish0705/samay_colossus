@@ -74,13 +74,26 @@ def resolve(scope, horizon):
     raise ServiceProblem(503, "missing_model", "No saved model is deployed for this series")
 
 
-def api_prediction(result, request_id):
+def api_prediction(result, request_id, session=None):
     payload = result.model_dump()
+    pred_val = None
     if result.prediction_inr_per_quintal is not None:
-        payload["prediction_inr_per_quintal"] = money(Decimal(str(result.prediction_inr_per_quintal)))
+        pred_val = money(Decimal(str(result.prediction_inr_per_quintal)))
+        payload["prediction_inr_per_quintal"] = pred_val
     payload["intervals"] = [{"nominal_level": Decimal(str(i.nominal_level)),
         "lower_inr_per_quintal": Decimal(str(i.lower_inr_per_quintal)).quantize(Decimal(".01"), rounding=ROUND_FLOOR),
         "upper_inr_per_quintal": Decimal(str(i.upper_inr_per_quintal)).quantize(Decimal(".01"), rounding=ROUND_CEILING)} for i in result.intervals]
+    if pred_val is not None:
+        from app.prediction_attribution import build_attribution
+        payload["attribution"] = build_attribution(
+            commodity=result.commodity,
+            market=result.market,
+            horizon=result.horizon_calendar_days,
+            predicted_price=pred_val,
+            session=session,
+            variety=result.variety,
+            grade=result.grade
+        )
     return PredictionResponse(**payload, request_id=request_id)
 
 
@@ -98,7 +111,7 @@ def predict(session, body: PredictRequest, origin, request_id, decision_at=None)
             raise ServiceProblem(503,failure.code,"The selected series/horizon has no usable saved forecast, insufficient evidence or stale inputs; inspect model availability and dated evaluation") from failure
         except (ValueError, OSError, KeyError, ImportError) as failure:
             raise ServiceProblem(503, "research_forecast_unavailable", "No usable saved research forecast exists for these historical inputs; no price was invented") from failure
-        return result, api_prediction(result, request_id)
+        return result, api_prediction(result, request_id, session=session)
     try:
         result = reliable_forecast(session, plan, origin, body.horizon, entry.evidence, artifact)
     except (ValueError, OSError, KeyError, ImportError) as exc:
@@ -106,7 +119,7 @@ def predict(session, body: PredictRequest, origin, request_id, decision_at=None)
     if result.prediction_inr_per_quintal is None:
         code = "stale_market_data" if result.reliability_status == "stale data" else "forecast_unavailable"
         raise ServiceProblem(503, code, "No usable historically available forecast for this request")
-    return result, api_prediction(result, request_id)
+    return result, api_prediction(result, request_id, session=session)
 
 
 def freshness(session, scope, origin, decision_at=None):

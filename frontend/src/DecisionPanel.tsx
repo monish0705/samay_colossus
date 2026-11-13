@@ -40,6 +40,130 @@ export function CropDomainCard({ profile }: { profile: NonNullable<Schema<'Marke
   );
 }
 
+export function PredictionAttributionCard({
+  attribution,
+  commodity,
+  horizon,
+}: {
+  attribution: Schema<'PredictionAttribution'>;
+  commodity: string;
+  horizon: number;
+}) {
+  const isProfit = Number(attribution.net_price_change_inr_per_quintal) >= 0;
+
+  return localize(
+    <div
+      className="prediction-attribution-panel"
+      style={{
+        marginTop: '1.25rem',
+        padding: '1.15rem',
+        borderRadius: '10px',
+        border: isProfit ? '1px solid rgba(22, 163, 74, 0.4)' : '1px solid rgba(234, 88, 12, 0.4)',
+        background: isProfit ? 'rgba(22, 163, 74, 0.03)' : 'rgba(234, 88, 12, 0.03)',
+      }}
+    >
+      <div className="section-heading" style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div>
+          <p className="eyebrow" style={{ color: isProfit ? '#15803d' : '#c2410c', margin: 0, fontWeight: 700 }}>
+            {t('PREDICTION CONDITIONS & DRIVERS')}
+          </p>
+          <h4 style={{ margin: '0.2rem 0 0', fontSize: '1.1rem' }}>
+            {t('What conditions shaped this future price?')} ({t(commodity)} · {horizon} {t(horizon > 1 ? 'days' : 'day')})
+          </h4>
+        </div>
+        <Badge tone={isProfit ? 'green' : 'amber'}>
+          {isProfit ? t('Net Profit Gain') : t('Net Downside Drag')} ({attribution.net_price_change_inr_per_quintal.startsWith('-') ? '' : '+'}{attribution.net_price_change_inr_per_quintal} INR/qtl)
+        </Badge>
+      </div>
+
+      <div className="stats-grid three" style={{ margin: '0.75rem 0 1rem' }}>
+        <Stat
+          label={t('Today observed modal price')}
+          value={inr(attribution.base_price_inr_per_quintal)}
+          note={t('Recent authenticated APMC wholesale baseline')}
+        />
+        <Stat
+          label={`${horizon} ${t('days predicted future price')}`}
+          value={inr(attribution.predicted_price_inr_per_quintal)}
+          note={t('Forecasted future mandi auction value')}
+        />
+        <Stat
+          label={isProfit ? t('Projected price gain') : t('Projected price drag / loss')}
+          value={`${attribution.net_price_change_inr_per_quintal.startsWith('-') ? '' : '+'}${inr(attribution.net_price_change_inr_per_quintal)}`}
+          note={`${attribution.net_change_percentage >= 0 ? '+' : ''}${attribution.net_change_percentage.toFixed(1)}% ${t('vs today baseline')}`}
+        />
+      </div>
+
+      <div
+        style={{
+          padding: '0.75rem 1rem',
+          borderRadius: '7px',
+          background: 'var(--surface-sunken)',
+          border: '1px solid var(--border-subtle)',
+          marginBottom: '1rem',
+          fontSize: '0.9rem',
+          lineHeight: 1.5,
+        }}
+      >
+        <strong>{t('Farmer summary')}: </strong>
+        <span>{attribution.summary}</span>
+      </div>
+
+      <h5 style={{ margin: '0.75rem 0 0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+        {t('Individual condition effects on future price (Profit vs Loss breakdown)')}:
+      </h5>
+
+      <div style={{ display: 'grid', gap: '0.65rem' }}>
+        {attribution.factors.map(f => {
+          const isFactorProfit = f.impact === 'profit';
+          const isFactorLoss = f.impact === 'loss';
+          return (
+            <div
+              key={f.condition}
+              style={{
+                padding: '0.85rem 1rem',
+                borderRadius: '8px',
+                border: isFactorProfit
+                  ? '1px solid rgba(22, 163, 74, 0.35)'
+                  : isFactorLoss
+                  ? '1px solid rgba(220, 38, 38, 0.35)'
+                  : '1px solid var(--border-subtle)',
+                background: isFactorProfit
+                  ? 'rgba(22, 163, 74, 0.05)'
+                  : isFactorLoss
+                  ? 'rgba(220, 38, 38, 0.05)'
+                  : 'var(--surface-sunken)',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '1.1rem' }}>{isFactorProfit ? '🟢' : isFactorLoss ? '🔴' : '⚪'}</span>
+                  <strong style={{ fontSize: '0.95rem' }}>{f.condition}</strong>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Badge tone={isFactorProfit ? 'green' : isFactorLoss ? 'red' : 'neutral'}>
+                    {isFactorProfit
+                      ? `+${inr(f.price_effect_inr_per_quintal)}/qtl ${t('Profit Driver')}`
+                      : `${inr(f.price_effect_inr_per_quintal)}/qtl ${t('Loss Driver')}`}
+                  </Badge>
+                  <span className="small muted" style={{ fontSize: '0.78rem' }}>({f.category})</span>
+                </div>
+              </div>
+              <p style={{ margin: '0.3rem 0 0.4rem', fontSize: '0.88rem', lineHeight: 1.45 }}>
+                {f.description}
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: 'var(--muted)' }}>
+                <span>{t('Evidence basis')}: {f.evidence_basis}</span>
+                <span>{f.percentage_effect}% {t('contribution')}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function ContextEvidence({ context }: { context: Schema<'MarketContext'> }) {
   const weather = context.weather || [], events = context.events || [], news = context.news || [];
   return localize(<>
@@ -167,6 +291,13 @@ export function DecisionPanel({ result }: { result: Recommendation }) {
         <Stat label={t('Adverse gain or loss against selling now')} value={inr(later.difference_vs_sell_all_now_inr.adverse)} note={t('User-reviewed stress scenario, not a prediction interval')}/>
       </div>
       <Notice>{t('This is the feasible holding plan with the highest central net proceeds. Your risk preference can still select immediate sale. Production costs were not supplied, so this is a comparison with selling now, not total farm profit.')}</Notice>
+      {laterPrediction?.attribution && (
+        <PredictionAttributionCard
+          attribution={laterPrediction.attribution}
+          commodity={laterPrediction.commodity}
+          horizon={later.holding_days}
+        />
+      )}
     </section> : <Notice>{t('No feasible sell-later plan exists under these storage, cash or forecast inputs. Enter verified storage capacity to assess holding.')}</Notice>}
     <details><summary>{t('Review weather, festivals and news evidence')}</summary><ContextEvidence context={decision.context}/></details>
   </Card>);

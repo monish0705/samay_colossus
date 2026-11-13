@@ -6,7 +6,7 @@ import { api, ApiError, CROP_SCOPES, type Prediction, type Scope } from './api';
 import { useApp } from './state';
 import { ActionLink, Badge, Card, Empty, ErrorState, Loading, Notice, PageHeading, Stat, dateLabel, inr, useResource } from './ui';
 import { PriceChart, EvaluationChart } from './Charts';
-import { MarketContextPanel } from './DecisionPanel';
+import { MarketContextPanel, PredictionAttributionCard } from './DecisionPanel';
 
 export function Dashboard() {
   const { scope, setScope, catalog } = useApp();
@@ -498,6 +498,13 @@ export function Forecast() {
               {evidence?.evidence_status && <Notice><strong>{t(evidence.evidence_status==='baseline_only' ? 'Predeclared last-price baseline; not trained ML' : 'Development-selected model; no new final test')}</strong><p>{t('Model')}: {evidence.model_name}</p>{evidenceMetrics && <p>{t(evidence.validation_metrics ? 'Selection validation MAE' : 'Retrospective baseline MAE')}: {inr(evidenceMetrics.mae_inr_per_quintal)} / {t('quintal')} · n={evidenceMetrics.n} · {t('Not final-test accuracy')}</p>}</Notice>}
               {relevant.flags.length > 0 && (
                 <Notice>{relevant.flags.map(w => warningText(w)).join(' · ')}</Notice>
+              )}
+              {relevant.attribution && (
+                <PredictionAttributionCard
+                  attribution={relevant.attribution}
+                  commodity={scope.commodity}
+                  horizon={relevant.horizon_calendar_days}
+                />
               )}
             </div>
           ) : (

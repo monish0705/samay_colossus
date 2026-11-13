@@ -4,17 +4,22 @@ Cash-aware market decision support for Karnataka / Kolar / Kolar APMC / Tomato.
 FastAPI + SQLite/Alembic, causal forecasting and empirical uncertainty, Decimal
 sale optimization, and a responsive English/Kannada React dashboard.
 
-**Current state, 2026-11-04:** 1,943 genuine AGMARKNET observations are imported
-from 2021–2026. Two grade-specific retrospective studies compared baseline and ML
-candidates and saved six frozen baseline champions. See [actual model results](docs/MODEL-RESULTS.md)
-and [source provenance](docs/ACQUISITION.md). Research results appear separately
-on the Transparency screen. Validated live forecasts remain unavailable because
-original publication/revision history is unverified. No guaranteed accuracy or
-profit improvement is claimed.
-  
+**Current state, 5 November 2026:** 7,777 usable observations are stored:
+1,943 direct government records plus 5,834 separately labeled India Data Portal
+AGMARKNET mirror records. Four additional crops now have chronological research
+studies; there are six frozen studies and 18 saved research artifacts. The 7,304
+legacy generated observations remain demo data and are excluded from training.
 
+The UI includes historical actual-versus-predicted charts and honest naive comparisons.
+Some selections lose to naive; Potato/3d and /7d have insufficient final examples.
+Additional histories are stale for current forecasting, and all models remain
+research-only. No perfect accuracy, live validation or guaranteed selling price is claimed.
 
-  
+See [additional data/model handoff](docs/SECONDARY-MODELS.md),
+[actual errors and sample sizes](reports/corrected-model-readiness.md),
+[original tomato comparisons](docs/MODEL-RESULTS.md), and
+[initial engineering corrections](docs/CORRECTIONS.md).
+
 ## Windows two-command setup and launch
 
 Prerequisites: Python 3.12 recommended (3.11+ source requirement), Node.js 22.12+

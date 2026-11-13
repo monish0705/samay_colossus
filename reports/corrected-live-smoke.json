@@ -1,0 +1,1626 @@
+[
+  {
+    "path": "/api/health",
+    "result": {
+      "status": "ok",
+      "service": "samay",
+      "version": "0.1.0"
+    }
+  },
+  {
+    "path": "/api/v1/markets",
+    "result": [
+      {
+        "id": 1,
+        "name": "Kolar APMC",
+        "district": "Kolar",
+        "state": "Karnataka"
+      }
+    ]
+  },
+  {
+    "path": "/api/v1/data/status",
+    "result": {
+      "historical_demo_date": null,
+      "status": "observations_available",
+      "official_observations": 1943,
+      "fixture_observations": 3,
+      "demo_observations": 7305,
+      "latest_official_report_date": "2026-10-31",
+      "latest_official_fetched_at": "2026-11-04T09:38:58.059991Z",
+      "note": "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+    }
+  },
+  {
+    "path": "/api/v1/models/status",
+    "result": {
+      "status": "no_models_deployed",
+      "production_models": 0,
+      "research_models": 6
+    }
+  },
+  {
+    "path": "/api/v1/predict",
+    "result": {
+      "schema_version": "samay-reliability-v1",
+      "prediction_inr_per_quintal": "1255.71",
+      "intervals": [
+        {
+          "nominal_level": "0.8",
+          "lower_inr_per_quintal": "769.28",
+          "upper_inr_per_quintal": "1742.15"
+        },
+        {
+          "nominal_level": "0.9",
+          "lower_inr_per_quintal": "769.28",
+          "upper_inr_per_quintal": "1742.15"
+        }
+      ],
+      "horizon_calendar_days": 3,
+      "timestamp": "2026-11-04T19:07:44.987985+00:00",
+      "target_date": "2026-11-08",
+      "model_version": "1f3005b630413c3d-champion-3d",
+      "reliability_status": "limited evidence",
+      "flags": [
+        "retrospective_research_only",
+        "historical_publication_unverified",
+        "interval_coverage_not_guaranteed"
+      ],
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "latest_report_date": "2026-10-31",
+      "observation_age_calendar_days": 5,
+      "data_source": {
+        "mode": "research_only",
+        "sources": [
+          {
+            "batch_id": 7,
+            "sha256": "490ce2ca1aa0cf47ce0e63b69a1739bca590952eb189373b540671f62e52d54b",
+            "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+            "source_label": "AGMARKNET 2.0 official browser CSV export",
+            "fetched_at": "2026-11-04T09:37:35.834938+00:00",
+            "unit_evidence": "Original government export Price Unit column: Rs./Quintal; original bytes and SHA256 retained alongside import CSV"
+          },
+          {
+            "batch_id": 8,
+            "sha256": "eff22083797f7cd74ab99938c0fa810022a68fd1115e929e7747d8d34461e8dc",
+            "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+            "source_label": "AGMARKNET 2.0 official browser CSV export",
+            "fetched_at": "2026-11-04T09:38:58.059991+00:00",
+            "unit_evidence": "Original government export Price Unit column: Rs./Quintal; original bytes and SHA256 retained alongside import CSV"
+          }
+        ],
+        "selection_report": "models/research/research-snapshot-v1-bf5682f4a2bfbde9/comparison.json",
+        "calibration": {
+          "radii": {
+            "0.8": 486.4285714285711,
+            "0.9": 486.4285714285711
+          },
+          "calibration_n": 28,
+          "calibration_blocks": 4,
+          "diagnostic_n": 26,
+          "calibration_end": "2026-10-01",
+          "diagnostic_start": "2026-10-02",
+          "later_subset_coverage": {
+            "0.8": {
+              "coverage": 0.9615384615384616,
+              "mean_width_inr_per_quintal": 972.8571428571421,
+              "n": 26
+            },
+            "0.9": {
+              "coverage": 0.9615384615384616,
+              "mean_width_inr_per_quintal": 972.8571428571421,
+              "n": 26
+            }
+          },
+          "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+        },
+        "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+      },
+      "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+      "request_id": "b04434c2-3a65-49ba-b9bd-fb0d06554bef",
+      "price_unit": "INR/quintal"
+    }
+  },
+  {
+    "path": "/api/v1/recommend",
+    "result": {
+      "request_id": "b9289549-28d9-4f1c-b543-1617a11cc8b7",
+      "history_id": 9,
+      "market_data": {
+        "report_date": "2026-10-31",
+        "fetched_at": "2026-11-04T09:38:58.059991Z",
+        "source": "AGMARKNET 2.0 official browser CSV export",
+        "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+        "file_sha256": "eff22083797f7cd74ab99938c0fa810022a68fd1115e929e7747d8d34461e8dc",
+        "stale": false,
+        "data_kind": "official"
+      },
+      "predictions": [
+        {
+          "schema_version": "samay-reliability-v1",
+          "prediction_inr_per_quintal": "1255.71",
+          "intervals": [
+            {
+              "nominal_level": "0.8",
+              "lower_inr_per_quintal": "769.28",
+              "upper_inr_per_quintal": "1742.15"
+            },
+            {
+              "nominal_level": "0.9",
+              "lower_inr_per_quintal": "769.28",
+              "upper_inr_per_quintal": "1742.15"
+            }
+          ],
+          "horizon_calendar_days": 3,
+          "timestamp": "2026-11-04T19:07:45.123289+00:00",
+          "target_date": "2026-11-08",
+          "model_version": "1f3005b630413c3d-champion-3d",
+          "reliability_status": "limited evidence",
+          "flags": [
+            "retrospective_research_only",
+            "historical_publication_unverified",
+            "interval_coverage_not_guaranteed"
+          ],
+          "market": "Kolar APMC",
+          "commodity": "Tomato",
+          "variety": "tomato",
+          "grade": "local",
+          "latest_report_date": "2026-10-31",
+          "observation_age_calendar_days": 5,
+          "data_source": {
+            "mode": "research_only",
+            "sources": [
+              {
+                "batch_id": 7,
+                "sha256": "490ce2ca1aa0cf47ce0e63b69a1739bca590952eb189373b540671f62e52d54b",
+                "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+                "source_label": "AGMARKNET 2.0 official browser CSV export",
+                "fetched_at": "2026-11-04T09:37:35.834938+00:00",
+                "unit_evidence": "Original government export Price Unit column: Rs./Quintal; original bytes and SHA256 retained alongside import CSV"
+              },
+              {
+                "batch_id": 8,
+                "sha256": "eff22083797f7cd74ab99938c0fa810022a68fd1115e929e7747d8d34461e8dc",
+                "source_url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+                "source_label": "AGMARKNET 2.0 official browser CSV export",
+                "fetched_at": "2026-11-04T09:38:58.059991+00:00",
+                "unit_evidence": "Original government export Price Unit column: Rs./Quintal; original bytes and SHA256 retained alongside import CSV"
+              }
+            ],
+            "selection_report": "models/research/research-snapshot-v1-bf5682f4a2bfbde9/comparison.json",
+            "calibration": {
+              "radii": {
+                "0.8": 486.4285714285711,
+                "0.9": 486.4285714285711
+              },
+              "calibration_n": 28,
+              "calibration_blocks": 4,
+              "diagnostic_n": 26,
+              "calibration_end": "2026-10-01",
+              "diagnostic_start": "2026-10-02",
+              "later_subset_coverage": {
+                "0.8": {
+                  "coverage": 0.9615384615384616,
+                  "mean_width_inr_per_quintal": 972.8571428571421,
+                  "n": 26
+                },
+                "0.9": {
+                  "coverage": 0.9615384615384616,
+                  "mean_width_inr_per_quintal": 972.8571428571421,
+                  "n": 26
+                }
+              },
+              "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+            },
+            "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+          },
+          "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+          "request_id": "b9289549-28d9-4f1c-b543-1617a11cc8b7",
+          "price_unit": "INR/quintal"
+        }
+      ],
+      "reliability_warnings": [
+        "3d:historical_publication_unverified",
+        "3d:interval_coverage_not_guaranteed",
+        "3d:limited evidence",
+        "3d:retrospective_research_only"
+      ],
+      "optimization": {
+        "schema_version": "samay-selling-v1",
+        "status": "sell_all_now",
+        "recommendation_basis": "today_only_safe_fallback",
+        "has_unreliable_or_missing_scenarios": true,
+        "decision_at": "2026-11-04T19:07:45.123289Z",
+        "scope": {
+          "commodity": "Tomato",
+          "market": "Kolar APMC",
+          "variety": "tomato",
+          "grade": "local"
+        },
+        "units": {
+          "money": "INR",
+          "price": "INR/quintal",
+          "quantity": "quintals"
+        },
+        "sell_all_now": {
+          "sale": {
+            "gross_inr": "20000.00",
+            "commission_inr": "1000.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "300.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "18700.00"
+          },
+          "meets_minimum_lot": true,
+          "meets_cash_requirement": true
+        },
+        "maximum_today_net_cash_upper_bound_inr": "18700.00",
+        "cash_requirement_achievable_on_grid": true,
+        "recommended_plan": {
+          "sell_today_quintals": "20",
+          "hold_initial_quintals": "0",
+          "holding_days": 0,
+          "later_saleable_quintals": "0",
+          "deterioration_loss_quintals": "0",
+          "rounding_discard_quintals": "0",
+          "storage_cost_inr": "0",
+          "storage_paid_today_inr": "0",
+          "storage_paid_later_inr": "0",
+          "today_sale": {
+            "gross_inr": "20000.00",
+            "commission_inr": "1000.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "300.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "18700.00"
+          },
+          "cash_today_inr": "18700.00",
+          "cash_surplus_inr": "8700.00",
+          "later_sales": {
+            "adverse": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            },
+            "lower": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            },
+            "central": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            },
+            "upper": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            }
+          },
+          "central_later_net_after_storage_inr": "0.00",
+          "total_net_inr": {
+            "adverse": "18700.00",
+            "lower": "18700.00",
+            "central": "18700.00",
+            "upper": "18700.00"
+          },
+          "downside_total_net_inr": "18700.00",
+          "difference_vs_sell_all_now_inr": {
+            "adverse": "0.00",
+            "lower": "0.00",
+            "central": "0.00",
+            "upper": "0.00"
+          },
+          "risk_adjusted_objective_inr": "18700.00",
+          "recommendation_eligible": true,
+          "warnings": [],
+          "break_even_future_price_inr_per_quintal": null,
+          "assumptions": {
+            "today": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data"
+          }
+        },
+        "best_scenario_only_or_validated_plan": {
+          "sell_today_quintals": "20",
+          "hold_initial_quintals": "0",
+          "holding_days": 0,
+          "later_saleable_quintals": "0",
+          "deterioration_loss_quintals": "0",
+          "rounding_discard_quintals": "0",
+          "storage_cost_inr": "0",
+          "storage_paid_today_inr": "0",
+          "storage_paid_later_inr": "0",
+          "today_sale": {
+            "gross_inr": "20000.00",
+            "commission_inr": "1000.00",
+            "market_fee_inr": "0.00",
+            "transport_inr": "300.00",
+            "handling_inr": "0.00",
+            "fixed_transaction_inr": "0.00",
+            "net_inr": "18700.00"
+          },
+          "cash_today_inr": "18700.00",
+          "cash_surplus_inr": "8700.00",
+          "later_sales": {
+            "adverse": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            },
+            "lower": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            },
+            "central": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            },
+            "upper": {
+              "gross_inr": "0.00",
+              "commission_inr": "0.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "0.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "0.00"
+            }
+          },
+          "central_later_net_after_storage_inr": "0.00",
+          "total_net_inr": {
+            "adverse": "18700.00",
+            "lower": "18700.00",
+            "central": "18700.00",
+            "upper": "18700.00"
+          },
+          "downside_total_net_inr": "18700.00",
+          "difference_vs_sell_all_now_inr": {
+            "adverse": "0.00",
+            "lower": "0.00",
+            "central": "0.00",
+            "upper": "0.00"
+          },
+          "risk_adjusted_objective_inr": "18700.00",
+          "recommendation_eligible": true,
+          "warnings": [],
+          "break_even_future_price_inr_per_quintal": null,
+          "assumptions": {
+            "today": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data"
+          }
+        },
+        "feasible_plans": [
+          {
+            "sell_today_quintals": "20",
+            "hold_initial_quintals": "0",
+            "holding_days": 0,
+            "later_saleable_quintals": "0",
+            "deterioration_loss_quintals": "0",
+            "rounding_discard_quintals": "0",
+            "storage_cost_inr": "0",
+            "storage_paid_today_inr": "0",
+            "storage_paid_later_inr": "0",
+            "today_sale": {
+              "gross_inr": "20000.00",
+              "commission_inr": "1000.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "300.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "18700.00"
+            },
+            "cash_today_inr": "18700.00",
+            "cash_surplus_inr": "8700.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "0.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "0.00"
+              },
+              "lower": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "0.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "0.00"
+              },
+              "central": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "0.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "0.00"
+              },
+              "upper": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "0.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "0.00"
+              }
+            },
+            "central_later_net_after_storage_inr": "0.00",
+            "total_net_inr": {
+              "adverse": "18700.00",
+              "lower": "18700.00",
+              "central": "18700.00",
+              "upper": "18700.00"
+            },
+            "downside_total_net_inr": "18700.00",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "0.00",
+              "lower": "0.00",
+              "central": "0.00",
+              "upper": "0.00"
+            },
+            "risk_adjusted_objective_inr": "18700.00",
+            "recommendation_eligible": true,
+            "warnings": [],
+            "break_even_future_price_inr_per_quintal": null,
+            "assumptions": {
+              "today": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data"
+            }
+          },
+          {
+            "sell_today_quintals": "11",
+            "hold_initial_quintals": "9",
+            "holding_days": 3,
+            "later_saleable_quintals": "8.73",
+            "deterioration_loss_quintals": "0.267309",
+            "rounding_discard_quintals": "0.002691",
+            "storage_cost_inr": "53.46",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "53.46",
+            "today_sale": {
+              "gross_inr": "11000.00",
+              "commission_inr": "550.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "210.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "10240.00"
+            },
+            "cash_today_inr": "10240.00",
+            "cash_surplus_inr": "240.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "187.30",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-187.30"
+              },
+              "lower": {
+                "gross_inr": "6715.90",
+                "commission_inr": "335.80",
+                "market_fee_inr": "0.00",
+                "transport_inr": "187.30",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "6192.80"
+              },
+              "central": {
+                "gross_inr": "10962.35",
+                "commission_inr": "548.12",
+                "market_fee_inr": "0.00",
+                "transport_inr": "187.30",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "10226.93"
+              },
+              "upper": {
+                "gross_inr": "15208.88",
+                "commission_inr": "760.44",
+                "market_fee_inr": "0.00",
+                "transport_inr": "187.30",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "14261.14"
+              }
+            },
+            "central_later_net_after_storage_inr": "10173.47",
+            "total_net_inr": {
+              "adverse": "9999.24",
+              "lower": "16379.34",
+              "central": "20413.47",
+              "upper": "24447.68"
+            },
+            "downside_total_net_inr": "9999.24",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-8700.76",
+              "lower": "-2320.66",
+              "central": "1713.47",
+              "upper": "5747.68"
+            },
+            "risk_adjusted_objective_inr": "15206.36",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1049.11",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "12",
+            "hold_initial_quintals": "8",
+            "holding_days": 3,
+            "later_saleable_quintals": "7.76",
+            "deterioration_loss_quintals": "0.237608",
+            "rounding_discard_quintals": "0.002392",
+            "storage_cost_inr": "47.52",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "47.52",
+            "today_sale": {
+              "gross_inr": "12000.00",
+              "commission_inr": "600.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "220.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "11180.00"
+            },
+            "cash_today_inr": "11180.00",
+            "cash_surplus_inr": "1180.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "177.60",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-177.60"
+              },
+              "lower": {
+                "gross_inr": "5969.69",
+                "commission_inr": "298.48",
+                "market_fee_inr": "0.00",
+                "transport_inr": "177.60",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "5493.61"
+              },
+              "central": {
+                "gross_inr": "9744.31",
+                "commission_inr": "487.22",
+                "market_fee_inr": "0.00",
+                "transport_inr": "177.60",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "9079.49"
+              },
+              "upper": {
+                "gross_inr": "13519.01",
+                "commission_inr": "675.95",
+                "market_fee_inr": "0.00",
+                "transport_inr": "177.60",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "12665.46"
+              }
+            },
+            "central_later_net_after_storage_inr": "9031.97",
+            "total_net_inr": {
+              "adverse": "10954.88",
+              "lower": "16626.09",
+              "central": "20211.97",
+              "upper": "23797.94"
+            },
+            "downside_total_net_inr": "10954.88",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-7745.12",
+              "lower": "-2073.91",
+              "central": "1511.97",
+              "upper": "5097.94"
+            },
+            "risk_adjusted_objective_inr": "15583.43",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1050.62",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "13",
+            "hold_initial_quintals": "7",
+            "holding_days": 3,
+            "later_saleable_quintals": "6.79",
+            "deterioration_loss_quintals": "0.207907",
+            "rounding_discard_quintals": "0.002093",
+            "storage_cost_inr": "41.58",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "41.58",
+            "today_sale": {
+              "gross_inr": "13000.00",
+              "commission_inr": "650.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "230.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "12120.00"
+            },
+            "cash_today_inr": "12120.00",
+            "cash_surplus_inr": "2120.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "167.90",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-167.90"
+              },
+              "lower": {
+                "gross_inr": "5223.48",
+                "commission_inr": "261.17",
+                "market_fee_inr": "0.00",
+                "transport_inr": "167.90",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "4794.41"
+              },
+              "central": {
+                "gross_inr": "8526.27",
+                "commission_inr": "426.31",
+                "market_fee_inr": "0.00",
+                "transport_inr": "167.90",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "7932.06"
+              },
+              "upper": {
+                "gross_inr": "11829.13",
+                "commission_inr": "591.46",
+                "market_fee_inr": "0.00",
+                "transport_inr": "167.90",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "11069.77"
+              }
+            },
+            "central_later_net_after_storage_inr": "7890.48",
+            "total_net_inr": {
+              "adverse": "11910.52",
+              "lower": "16872.83",
+              "central": "20010.48",
+              "upper": "23148.19"
+            },
+            "downside_total_net_inr": "11910.52",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-6789.48",
+              "lower": "-1827.17",
+              "central": "1310.48",
+              "upper": "4448.19"
+            },
+            "risk_adjusted_objective_inr": "15960.50",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1052.56",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "14",
+            "hold_initial_quintals": "6",
+            "holding_days": 3,
+            "later_saleable_quintals": "5.82",
+            "deterioration_loss_quintals": "0.178206",
+            "rounding_discard_quintals": "0.001794",
+            "storage_cost_inr": "35.64",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "35.64",
+            "today_sale": {
+              "gross_inr": "14000.00",
+              "commission_inr": "700.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "240.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "13060.00"
+            },
+            "cash_today_inr": "13060.00",
+            "cash_surplus_inr": "3060.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "158.20",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-158.20"
+              },
+              "lower": {
+                "gross_inr": "4477.27",
+                "commission_inr": "223.86",
+                "market_fee_inr": "0.00",
+                "transport_inr": "158.20",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "4095.21"
+              },
+              "central": {
+                "gross_inr": "7308.23",
+                "commission_inr": "365.41",
+                "market_fee_inr": "0.00",
+                "transport_inr": "158.20",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "6784.62"
+              },
+              "upper": {
+                "gross_inr": "10139.25",
+                "commission_inr": "506.96",
+                "market_fee_inr": "0.00",
+                "transport_inr": "158.20",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "9474.09"
+              }
+            },
+            "central_later_net_after_storage_inr": "6748.98",
+            "total_net_inr": {
+              "adverse": "12866.16",
+              "lower": "17119.57",
+              "central": "19808.98",
+              "upper": "22498.45"
+            },
+            "downside_total_net_inr": "12866.16",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-5833.84",
+              "lower": "-1580.43",
+              "central": "1108.98",
+              "upper": "3798.45"
+            },
+            "risk_adjusted_objective_inr": "16337.57",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1055.14",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "15",
+            "hold_initial_quintals": "5",
+            "holding_days": 3,
+            "later_saleable_quintals": "4.85",
+            "deterioration_loss_quintals": "0.148505",
+            "rounding_discard_quintals": "0.001495",
+            "storage_cost_inr": "29.70",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "29.70",
+            "today_sale": {
+              "gross_inr": "15000.00",
+              "commission_inr": "750.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "250.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "14000.00"
+            },
+            "cash_today_inr": "14000.00",
+            "cash_surplus_inr": "4000.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "148.50",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-148.50"
+              },
+              "lower": {
+                "gross_inr": "3731.06",
+                "commission_inr": "186.55",
+                "market_fee_inr": "0.00",
+                "transport_inr": "148.50",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "3396.01"
+              },
+              "central": {
+                "gross_inr": "6090.19",
+                "commission_inr": "304.51",
+                "market_fee_inr": "0.00",
+                "transport_inr": "148.50",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "5637.18"
+              },
+              "upper": {
+                "gross_inr": "8449.38",
+                "commission_inr": "422.47",
+                "market_fee_inr": "0.00",
+                "transport_inr": "148.50",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "7878.41"
+              }
+            },
+            "central_later_net_after_storage_inr": "5607.48",
+            "total_net_inr": {
+              "adverse": "13821.80",
+              "lower": "17366.31",
+              "central": "19607.48",
+              "upper": "21848.71"
+            },
+            "downside_total_net_inr": "13821.80",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-4878.20",
+              "lower": "-1333.69",
+              "central": "907.48",
+              "upper": "3148.71"
+            },
+            "risk_adjusted_objective_inr": "16714.64",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1058.76",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "16",
+            "hold_initial_quintals": "4",
+            "holding_days": 3,
+            "later_saleable_quintals": "3.88",
+            "deterioration_loss_quintals": "0.118804",
+            "rounding_discard_quintals": "0.001196",
+            "storage_cost_inr": "23.76",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "23.76",
+            "today_sale": {
+              "gross_inr": "16000.00",
+              "commission_inr": "800.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "260.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "14940.00"
+            },
+            "cash_today_inr": "14940.00",
+            "cash_surplus_inr": "4940.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "138.80",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-138.80"
+              },
+              "lower": {
+                "gross_inr": "2984.85",
+                "commission_inr": "149.24",
+                "market_fee_inr": "0.00",
+                "transport_inr": "138.80",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "2696.81"
+              },
+              "central": {
+                "gross_inr": "4872.15",
+                "commission_inr": "243.61",
+                "market_fee_inr": "0.00",
+                "transport_inr": "138.80",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "4489.74"
+              },
+              "upper": {
+                "gross_inr": "6759.50",
+                "commission_inr": "337.98",
+                "market_fee_inr": "0.00",
+                "transport_inr": "138.80",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "6282.72"
+              }
+            },
+            "central_later_net_after_storage_inr": "4465.98",
+            "total_net_inr": {
+              "adverse": "14777.44",
+              "lower": "17613.05",
+              "central": "19405.98",
+              "upper": "21198.96"
+            },
+            "downside_total_net_inr": "14777.44",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-3922.56",
+              "lower": "-1086.95",
+              "central": "705.98",
+              "upper": "2498.96"
+            },
+            "risk_adjusted_objective_inr": "17091.71",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1064.18",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "17",
+            "hold_initial_quintals": "3",
+            "holding_days": 3,
+            "later_saleable_quintals": "2.91",
+            "deterioration_loss_quintals": "0.089103",
+            "rounding_discard_quintals": "0.000897",
+            "storage_cost_inr": "17.82",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "17.82",
+            "today_sale": {
+              "gross_inr": "17000.00",
+              "commission_inr": "850.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "270.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "15880.00"
+            },
+            "cash_today_inr": "15880.00",
+            "cash_surplus_inr": "5880.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "129.10",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-129.10"
+              },
+              "lower": {
+                "gross_inr": "2238.63",
+                "commission_inr": "111.93",
+                "market_fee_inr": "0.00",
+                "transport_inr": "129.10",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "1997.60"
+              },
+              "central": {
+                "gross_inr": "3654.12",
+                "commission_inr": "182.71",
+                "market_fee_inr": "0.00",
+                "transport_inr": "129.10",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "3342.31"
+              },
+              "upper": {
+                "gross_inr": "5069.63",
+                "commission_inr": "253.48",
+                "market_fee_inr": "0.00",
+                "transport_inr": "129.10",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "4687.05"
+              }
+            },
+            "central_later_net_after_storage_inr": "3324.49",
+            "total_net_inr": {
+              "adverse": "15733.08",
+              "lower": "17859.78",
+              "central": "19204.49",
+              "upper": "20549.23"
+            },
+            "downside_total_net_inr": "15733.08",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-2966.92",
+              "lower": "-840.22",
+              "central": "504.49",
+              "upper": "1849.23"
+            },
+            "risk_adjusted_objective_inr": "17468.79",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1073.22",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          },
+          {
+            "sell_today_quintals": "18",
+            "hold_initial_quintals": "2",
+            "holding_days": 3,
+            "later_saleable_quintals": "1.94",
+            "deterioration_loss_quintals": "0.059402",
+            "rounding_discard_quintals": "0.000598",
+            "storage_cost_inr": "11.88",
+            "storage_paid_today_inr": "0.00",
+            "storage_paid_later_inr": "11.88",
+            "today_sale": {
+              "gross_inr": "18000.00",
+              "commission_inr": "900.00",
+              "market_fee_inr": "0.00",
+              "transport_inr": "280.00",
+              "handling_inr": "0.00",
+              "fixed_transaction_inr": "0.00",
+              "net_inr": "16820.00"
+            },
+            "cash_today_inr": "16820.00",
+            "cash_surplus_inr": "6820.00",
+            "later_sales": {
+              "adverse": {
+                "gross_inr": "0.00",
+                "commission_inr": "0.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "119.40",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "-119.40"
+              },
+              "lower": {
+                "gross_inr": "1492.42",
+                "commission_inr": "74.62",
+                "market_fee_inr": "0.00",
+                "transport_inr": "119.40",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "1298.40"
+              },
+              "central": {
+                "gross_inr": "2436.08",
+                "commission_inr": "121.80",
+                "market_fee_inr": "0.00",
+                "transport_inr": "119.40",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "2194.88"
+              },
+              "upper": {
+                "gross_inr": "3379.75",
+                "commission_inr": "168.99",
+                "market_fee_inr": "0.00",
+                "transport_inr": "119.40",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "3091.36"
+              }
+            },
+            "central_later_net_after_storage_inr": "2183.00",
+            "total_net_inr": {
+              "adverse": "16688.72",
+              "lower": "18106.52",
+              "central": "19003.00",
+              "upper": "19899.48"
+            },
+            "downside_total_net_inr": "16688.72",
+            "difference_vs_sell_all_now_inr": {
+              "adverse": "-2011.28",
+              "lower": "-593.48",
+              "central": "303.00",
+              "upper": "1199.48"
+            },
+            "risk_adjusted_objective_inr": "17845.86",
+            "recommendation_eligible": false,
+            "warnings": [
+              "scenario_only_unreliable_or_outdated_prediction"
+            ],
+            "break_even_future_price_inr_per_quintal": "1091.31",
+            "assumptions": {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          }
+        ],
+        "rejected_counts": {
+          "storage_capacity": 10,
+          "immediate_net_cash_shortfall": 1,
+          "future_quantity_below_minimum_lot_after_loss": 1
+        },
+        "risk_tolerance": "balanced",
+        "request_and_assumptions": {
+          "commodity": "Tomato",
+          "market": "Kolar APMC",
+          "variety": "tomato",
+          "grade": "local",
+          "decision_at": "2026-11-04T19:07:45.123289Z",
+          "total_quantity_quintals": "20",
+          "today_price_inr_per_quintal": "1000",
+          "today_price_assumption": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data",
+          "required_net_cash_inr": "10000",
+          "storage_capacity_quintals": "10",
+          "decision_increment_quintals": "1",
+          "market_quantity_step_quintals": "0.01",
+          "minimum_sale_lot_quintals": "1",
+          "maximum_horizon_days": 7,
+          "crop_storage_profile": {
+            "commodity": "Tomato",
+            "maximum_holding_days": 3,
+            "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+            "assumption_source": "Illustrative user assumption, not a verified tomato holding recommendation"
+          },
+          "today_sale_costs": {
+            "fixed_transport_inr": "100",
+            "fixed_transaction_inr": "0",
+            "transport_inr_per_quintal": "10",
+            "handling_inr_per_quintal": "0",
+            "market_fee_rate": "0",
+            "commission_rate": "0.05",
+            "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+          },
+          "holding_options": [
+            {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "fixed_storage_inr": "0",
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "scenarios": {
+                "adverse_inr_per_quintal": "0",
+                "lower_inr_per_quintal": "769.29",
+                "central_inr_per_quintal": "1255.71",
+                "upper_inr_per_quintal": "1742.14",
+                "reliability_status": "limited evidence",
+                "market": "Kolar APMC",
+                "commodity": "Tomato",
+                "variety": "tomato",
+                "grade": "local",
+                "target_date": "2026-11-08",
+                "issued_at": "2026-11-04T19:07:45.123289Z",
+                "model_version": "1f3005b630413c3d-champion-3d",
+                "source": "Saved forecast service: research_only; full source lineage is in predictions.data_source",
+                "price_basis_assumption": "EXAMPLE_ONLY user assumption",
+                "adverse_assumption": "EXAMPLE_ONLY stress",
+                "flags": [
+                  "retrospective_research_only",
+                  "historical_publication_unverified",
+                  "interval_coverage_not_guaranteed"
+                ]
+              }
+            }
+          ],
+          "risk_tolerance": "balanced"
+        },
+        "explanations": [
+          "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+          "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+          "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+          "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+          "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+          "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+          "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+          "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+          "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+          "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+        ]
+      }
+    }
+  }
+]

@@ -41,12 +41,14 @@
             "required": false,
             "schema": {
               "enum": [
+                "verified",
                 "official",
+                "secondary",
                 "fixture",
                 "demo"
               ],
               "type": "string",
-              "default": "official",
+              "default": "verified",
               "title": "Data Kind"
             }
           }
@@ -199,12 +201,14 @@
             "required": false,
             "schema": {
               "enum": [
+                "verified",
                 "official",
+                "secondary",
                 "fixture",
                 "demo"
               ],
               "type": "string",
-              "default": "official",
+              "default": "verified",
               "title": "Data Kind"
             }
           },
@@ -730,6 +734,131 @@
         }
       }
     },
+    "/api/v1/models/evaluation": {
+      "get": {
+        "tags": [
+          "operations"
+        ],
+        "summary": "Model Evaluation",
+        "operationId": "model_evaluation_api_v1_models_evaluation_get",
+        "parameters": [
+          {
+            "name": "variety",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Variety"
+            }
+          },
+          {
+            "name": "grade",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Grade"
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Kolar APMC",
+              "title": "Market"
+            }
+          },
+          {
+            "name": "commodity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Tomato",
+              "title": "Commodity"
+            }
+          },
+          {
+            "name": "horizon",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 7,
+              "minimum": 1,
+              "description": "Calendar horizon: 1, 3 or 7",
+              "default": 3,
+              "title": "Horizon"
+            },
+            "description": "Calendar horizon: 1, 3 or 7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoricalEvaluation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/data/status": {
       "get": {
         "tags": [
@@ -745,6 +874,207 @@
                 "schema": {
                   "$ref": "#/components/schemas/DataStatus"
                 }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/predict/multi-factor": {
+      "get": {
+        "tags": [
+          "forecasting"
+        ],
+        "summary": "Retired Multi Factor",
+        "operationId": "retired_multi_factor_api_v1_predict_multi_factor_get",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "horizon",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 730,
+              "minimum": 1,
+              "default": 3,
+              "title": "Horizon"
+            }
+          },
+          {
+            "name": "base_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "default": 1400,
+              "title": "Base Price"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/storage/nearby": {
+      "get": {
+        "tags": [
+          "selling"
+        ],
+        "summary": "Retired Storage",
+        "operationId": "retired_storage_api_v1_storage_nearby_get",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "quantity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "default": 20,
+              "title": "Quantity"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 730,
+              "minimum": 1,
+              "default": 3,
+              "title": "Days"
+            }
+          },
+          {
+            "name": "today_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "default": 1400,
+              "title": "Today Price"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -888,7 +1218,7 @@
           },
           "maximum_holding_days": {
             "type": "integer",
-            "maximum": 365.0,
+            "maximum": 730.0,
             "minimum": 0.0,
             "title": "Maximum Holding Days"
           },
@@ -936,6 +1266,35 @@
           "official_observations": {
             "type": "integer",
             "title": "Official Observations"
+          },
+          "secondary_observations": {
+            "type": "integer",
+            "title": "Secondary Observations",
+            "default": 0
+          },
+          "latest_secondary_report_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Secondary Report Date"
+          },
+          "latest_secondary_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Secondary Fetched At"
           },
           "fixture_observations": {
             "type": "integer",
@@ -997,6 +1356,41 @@
           "error"
         ],
         "title": "ErrorEnvelope"
+      },
+      "EvaluationPoint": {
+        "properties": {
+          "origin_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Origin Date"
+          },
+          "target_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Target Date"
+          },
+          "actual_inr_per_quintal": {
+            "type": "string",
+            "title": "Actual Inr Per Quintal"
+          },
+          "prediction_inr_per_quintal": {
+            "type": "string",
+            "title": "Prediction Inr Per Quintal"
+          },
+          "absolute_error_inr_per_quintal": {
+            "type": "string",
+            "title": "Absolute Error Inr Per Quintal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin_date",
+          "target_date",
+          "actual_inr_per_quintal",
+          "prediction_inr_per_quintal",
+          "absolute_error_inr_per_quintal"
+        ],
+        "title": "EvaluationPoint"
       },
       "Freshness": {
         "properties": {
@@ -1093,6 +1487,163 @@
           "version"
         ],
         "title": "HealthResponse"
+      },
+      "HistoricalEvaluation": {
+        "properties": {
+          "research_only": {
+            "type": "boolean",
+            "title": "Research Only"
+          },
+          "source_kind": {
+            "type": "string",
+            "title": "Source Kind"
+          },
+          "scope": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Scope"
+          },
+          "horizon": {
+            "type": "integer",
+            "title": "Horizon"
+          },
+          "selected_model": {
+            "type": "string",
+            "title": "Selected Model"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "final_n": {
+            "type": "integer",
+            "title": "Final N"
+          },
+          "metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metrics"
+          },
+          "naive_metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Naive Metrics"
+          },
+          "train_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Train End"
+          },
+          "validation_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Validation End"
+          },
+          "test_start": {
+            "type": "string",
+            "format": "date",
+            "title": "Test Start"
+          },
+          "test_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Test End"
+          },
+          "source": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Source"
+          },
+          "limitations": {
+            "type": "string",
+            "title": "Limitations"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/EvaluationPoint"
+            },
+            "type": "array",
+            "title": "Points"
+          },
+          "price_unit": {
+            "type": "string",
+            "title": "Price Unit"
+          },
+          "rounding_note": {
+            "type": "string",
+            "title": "Rounding Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "research_only",
+          "source_kind",
+          "scope",
+          "horizon",
+          "selected_model",
+          "model_version",
+          "status",
+          "final_n",
+          "metrics",
+          "naive_metrics",
+          "train_end",
+          "validation_end",
+          "test_start",
+          "test_end",
+          "source",
+          "limitations",
+          "points",
+          "price_unit",
+          "rounding_note"
+        ],
+        "title": "HistoricalEvaluation"
       },
       "HistoryResponse": {
         "properties": {
@@ -1194,6 +1745,11 @@
       },
       "ModelStatusItem": {
         "properties": {
+          "source_kind": {
+            "type": "string",
+            "title": "Source Kind",
+            "default": "official"
+          },
           "market": {
             "type": "string",
             "title": "Market"
@@ -1337,6 +1893,14 @@
             },
             "type": "array",
             "title": "Research Studies",
+            "default": []
+          },
+          "research_models": {
+            "items": {
+              "$ref": "#/components/schemas/ModelStatusItem"
+            },
+            "type": "array",
+            "title": "Research Models",
             "default": []
           }
         },
@@ -1929,7 +2493,7 @@
           },
           "maximum_horizon_days": {
             "type": "integer",
-            "maximum": 365.0,
+            "maximum": 730.0,
             "minimum": 0.0,
             "title": "Maximum Horizon Days"
           },
@@ -1983,7 +2547,7 @@
         "properties": {
           "days": {
             "type": "integer",
-            "maximum": 365.0,
+            "maximum": 730.0,
             "minimum": 1.0,
             "title": "Days"
           },
@@ -2091,6 +2655,22 @@
             "maxLength": 1000,
             "minLength": 1,
             "title": "Adverse Assumption"
+          },
+          "scenario_price_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scenario Price Inr Per Quintal"
           }
         },
         "additionalProperties": false,
@@ -2241,6 +2821,11 @@
       },
       "ResearchStudy": {
         "properties": {
+          "source_kind": {
+            "type": "string",
+            "title": "Source Kind",
+            "default": "official"
+          },
           "version": {
             "type": "string",
             "title": "Version"

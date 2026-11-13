@@ -23,6 +23,7 @@ from test_backend import ROOT
 def api(tmp_path, monkeypatch):
     monkeypatch.setenv("SAMAY_DATABASE_URL", f"sqlite:///{(tmp_path / 'api.db').as_posix()}")
     monkeypatch.setenv("SAMAY_ENVIRONMENT", "test")
+    monkeypatch.setenv("SAMAY_ENABLE_RESEARCH_FORECASTS", "false")
     monkeypatch.delenv("SAMAY_SERVICE_REGISTRY_PATH", raising=False)
     empty_research = tmp_path / "research-registry.json"
     empty_research.write_text("[]")

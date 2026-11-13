@@ -1,11 +1,11 @@
 import { localize, t, warningText } from './i18n';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, CalendarDays, Coins, History, Info, Leaf, ShieldCheck, Sprout, TrendingDown, TrendingUp } from 'lucide-react';
-import { api, ApiError, CROP_SCOPES, type Prediction } from './api';
+import { ArrowRight, ArrowUpRight, CalendarDays, Coins, History, Leaf, ShieldCheck, Sprout, TrendingDown, TrendingUp } from 'lucide-react';
+import { api, ApiError, CROP_SCOPES, type Prediction, type Scope } from './api';
 import { useApp } from './state';
 import { ActionLink, Badge, Card, Empty, ErrorState, Loading, Notice, PageHeading, Stat, dateLabel, inr, useResource } from './ui';
-import { PriceChart } from './Charts';
+import { PriceChart, EvaluationChart } from './Charts';
 
 export function Dashboard() {
   const { scope, setScope, catalog } = useApp();
@@ -89,9 +89,9 @@ export function Dashboard() {
           icon={<CalendarDays size={18} />}
         />
         <Stat
-          label={t('Price forecasts')}
-          value={catalog.data?.models.models.filter(m => m.model_version).length || t('Not ready')}
-          note={t('Evidence and freshness checked per request')}
+          label={t('Saved forecast artifacts')}
+          value={((catalog.data?.models.models.filter(m => m.model_version).length || 0) + (catalog.data?.models.research_models?.length || 0)) || t('Not ready')}
+          note={t('Research artifacts are not validated live models; freshness is checked per request.')}
           icon={<TrendingUp size={18} />}
         />
       </div>
@@ -179,7 +179,7 @@ export function Dashboard() {
 }
 
 export function Insights() {
-  const { scope, setScope, mode } = useApp();
+  const { scope, setScope } = useApp();
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [offset, setOffset] = useState(0);
@@ -430,6 +430,31 @@ export function Insights() {
   );
 }
 
+export function HistoricalEvaluationCard({ scope, horizon }: { scope: Scope; horizon: 1 | 3 | 7 }) {
+  const evaluation = useResource(signal => api.evaluation(scope,horizon,signal), JSON.stringify({scope,horizon}));
+  const data = evaluation.data;
+  return <Card>
+    <h2>{t('Historical evaluation: actual versus predicted')}</h2>
+    <Notice>{t('These are frozen historical test predictions, not a current forecast or guaranteed selling prices.')}</Notice>
+    {evaluation.loading ? <Loading/> : evaluation.error ? <Notice>{t('No historical evaluation is available for this exact series.')}</Notice> : data ? <>
+      <p>{data.scope.market} · {data.scope.commodity} · {data.scope.variety} / {data.scope.grade}</p>
+      <Badge tone="amber">{t(data.source_kind === 'secondary' ? 'Secondary mirror: India Data Portal' : 'Official government export')}</Badge>
+      <p>{t('Final test')}: {dateLabel(data.test_start)} – {dateLabel(data.test_end)} · {data.final_n} {t('observed targets')} · {data.selected_model}</p>
+      {data.metrics ? <div className="stats-grid three">
+        <Stat label={t('MAE / quintal')} value={inr(data.metrics.mae_inr_per_quintal)} note={t('Frozen final test; lower error is better')}/>
+        <Stat label={t('Naive MAE / quintal')} value={inr(data.naive_metrics?.mae_inr_per_quintal)} note={t('Identical target dates')}/>
+        <Stat label={t('WAPE')} value={data.metrics.wape_pct == null ? '—' : `${Number(data.metrics.wape_pct).toFixed(2)}%`} note={t('Percentage error, not accuracy')}/>
+      </div> : <Notice tone="amber">{t('Insufficient final test observations: no reliable final accuracy metric is reported.')}</Notice>}
+      {data.scope.grade === 'unspecified' && <Notice>{t('The older source does not report grade. It has not been inferred or merged with graded records.')}</Notice>}
+      <EvaluationChart points={data.points}/>
+      {data.points.length > 0 && <details><summary>{t('Inspect dated predictions and actual observations')}</summary><div className="table-scroll"><table>
+        <thead><tr><th>{t('Decision date')}</th><th>{t('Target date')}</th><th>{t('Actual / quintal')}</th><th>{t('Predicted / quintal')}</th><th>{t('Absolute error / quintal')}</th></tr></thead>
+        <tbody>{data.points.slice(-20).map(p => <tr key={p.target_date}><td>{dateLabel(p.origin_date)}</td><td>{dateLabel(p.target_date)}</td><td>{inr(p.actual_inr_per_quintal)}</td><td>{inr(p.prediction_inr_per_quintal)}</td><td>{inr(p.absolute_error_inr_per_quintal)}</td></tr>)}</tbody>
+      </table></div></details>}
+    </> : null}
+  </Card>;
+}
+
 export function Forecast() {
   const { scope, setScope, catalog, predictionHistory, rememberPrediction } = useApp();
   const [horizon, setHorizon] = useState<1 | 3 | 7>(3);
@@ -440,6 +465,8 @@ export function Forecast() {
   const supported = catalog.data?.models.models
     .filter(m => m.market === scope.market && m.commodity === scope.commodity && m.variety === scope.variety && m.grade === scope.grade && m.model_version)
     .map(m => m.horizon) || [];
+  const researchSupported = (catalog.data?.models.research_models || []).filter(m => m.market === scope.market && m.commodity === scope.commodity && m.variety === scope.variety && m.grade === scope.grade).map(m => m.horizon).filter(h => !supported.includes(h));
+  for (const h of researchSupported) if (!supported.includes(h)) supported.push(h);
 
   const request = async () => {
     setBusy(true);
@@ -498,7 +525,7 @@ export function Forecast() {
                 onClick={() => { setHorizon(day); setResult(null); setError(null); }}
               >
                 <strong>{day} {t(day > 1 ? 'days' : 'day')}</strong>
-                <span>{supported.includes(day) ? t('Saved artifact available') : t('Not deployed')}</span>
+                <span>{supported.includes(day) ? t(researchSupported.includes(day) ? 'Research only · limited evidence' : 'Saved artifact available') : t('Not deployed')}</span>
               </button>
             ))}
           </div>
@@ -575,6 +602,7 @@ export function Forecast() {
         </Card>
       </div>
 
+      <HistoricalEvaluationCard scope={scope} horizon={horizon}/>
       <Card>
         <h2>{t('Prediction history')}</h2>
         <p className="muted small">
@@ -641,6 +669,7 @@ export function Transparency() {
               value={data?.official_observations ?? '—'}
               note={t('Operator-attested government provenance')}
             />
+            <Stat label={t('Secondary mirror observations')} value={data?.secondary_observations ?? 0} note={t('India Data Portal / ISB; upstream AGMARKNET; ODC Attribution')}/>
             <Stat
               label={t('Latest official report')}
               value={dateLabel(data?.latest_official_report_date)}

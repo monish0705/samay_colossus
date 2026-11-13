@@ -7,14 +7,14 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-from app.ingestion import SourceManifest
+from app.ingestion import SourceManifest, commodity_name, district_name, market_district, market_name
 
 MAPPING = {"State/UT": "State", "District": "District", "Market": "Market", "Commodity": "Commodity", "Variety": "Variety",
            "Grade": "Grade", "Min Price": "Min_Price", "Max Price": "Max_Price", "Modal Price": "Modal_Price",
            "Price Unit": "Price_Unit", "Price Date": "Arrival_Date"}
 
 
-def convert(raw, manifest, start, end):
+def convert(raw, manifest, start, end, market="Kolar APMC", commodity="Tomato"):
     rows = [row for row in csv.reader(io.StringIO(raw.decode("utf-8-sig"))) if any(cell.strip() for cell in row)]
     if not rows or not any("Daily Price Report" in cell for cell in rows[0]):
         raise ValueError("Missing official report title prelude")
@@ -30,7 +30,7 @@ def convert(raw, manifest, start, end):
             raise ValueError("Malformed official CSV row width")
         source = dict(zip(fields, cells, strict=True))
         # Validate dates/scope/units now; business-quality quarantines remain the importer's responsibility.
-        if source["State/UT"] != "Karnataka" or source["District"] != "Kolar" or source["Market"] != "Kolar APMC" or source["Commodity"] != "Tomato":
+        if source["State/UT"] != "Karnataka" or district_name(source["District"]) != market_district(market) or market_name(source["Market"]) != market_name(market) or commodity_name(source["Commodity"]) != commodity_name(commodity):
             raise ValueError("Unexpected official export scope")
         report_date = datetime.strptime(source["Price Date"], "%d-%m-%Y").date()
         if not start <= report_date <= end:
@@ -46,13 +46,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--file", type=Path, required=True)
     parser.add_argument("--year", type=int, required=True)
+    parser.add_argument("--market", default="Kolar APMC")
+    parser.add_argument("--commodity", default="Tomato")
     parser.add_argument("--output-dir", type=Path, default=Path("data/raw/official-history"))
     args = parser.parse_args()
     from datetime import date
     start, end = date(args.year, 1, 1), date(args.year, 12, 31)
     raw = args.file.read_bytes()
     fetched = datetime.fromtimestamp(args.file.stat().st_mtime, UTC)
-    base = f"kolar-tomato-{args.year}"
+    base = f"{market_name(args.market).removesuffix(' APMC').lower().replace(' ', '-')}-{commodity_name(args.commodity).lower()}-{args.year}"
     args.output_dir.mkdir(parents=True, exist_ok=True)
     original = args.output_dir / f"{base}.original.csv"
     if original.exists() and original.read_bytes() != raw:
@@ -60,7 +62,7 @@ def main():
     original.write_bytes(raw)
     manifest = SourceManifest(source_label="AGMARKNET 2.0 official browser CSV export", source_url="https://agmarknet.gov.in/daily-price-and-arrival-report",
         data_kind="official", fetched_at=fetched, price_unit="INR/quintal", unit_evidence="Original government export Price Unit column: Rs./Quintal; original bytes and SHA256 retained alongside import CSV", date_format="%d-%m-%Y")
-    normalized, count = convert(raw, manifest, start, end)
+    normalized, count = convert(raw, manifest, start, end, args.market, args.commodity)
     target = args.output_dir / f"{base}.csv"
     target.write_bytes(normalized)
     manifest = manifest.model_copy(update={"sha256": hashlib.sha256(normalized).hexdigest()})

@@ -58,19 +58,20 @@ class HistoryResponse(BaseModel):
 
 
 @router.get("/markets", response_model=list[MarketResponse])
-def markets(data_kind: Literal["official", "fixture", "demo"] = "official", session: Session = Depends(get_session)):
-    if get_settings().environment == "production" and data_kind != "official":
+def markets(data_kind: Literal["verified", "official", "secondary", "fixture", "demo"] = "verified", session: Session = Depends(get_session)):
+    if get_settings().environment == "production" and data_kind in {"fixture", "demo"}:
         raise HTTPException(422, "Non-official records are disabled in production")
-    return session.scalars(select(Market).where(exists().where(MandiObservation.market_id == Market.id, MandiObservation.data_kind == data_kind)).order_by(Market.state, Market.district, Market.name)).all()
+    kinds = ("official", "secondary") if data_kind == "verified" else (data_kind,)
+    return session.scalars(select(Market).where(exists().where(MandiObservation.market_id == Market.id, MandiObservation.data_kind.in_(kinds))).order_by(Market.state, Market.district, Market.name)).all()
 
 
 @router.get("/prices/history", response_model=HistoryResponse)
 def history(market: str = "Kolar APMC", commodity: str = "Tomato", start_date: date | None = None,
             end_date: date | None = None, variety: str | None = None, grade: str | None = None,
-            data_kind: Literal["official", "fixture", "demo"] = "official",
+            data_kind: Literal["verified", "official", "secondary", "fixture", "demo"] = "verified",
             limit: int = Query(100, ge=1, le=1000), offset: int = Query(0, ge=0),
             session: Session = Depends(get_session)):
-    if get_settings().environment == "production" and data_kind != "official":
+    if get_settings().environment == "production" and data_kind in {"fixture", "demo"}:
         raise HTTPException(422, "Non-official records are disabled in production")
     if start_date and end_date and start_date > end_date:
         raise HTTPException(422, "start_date must be <= end_date")
@@ -78,8 +79,9 @@ def history(market: str = "Kolar APMC", commodity: str = "Tomato", start_date: d
         market, commodity = market_name(market), commodity_name(commodity)
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from exc
+    kinds = ("official", "secondary") if data_kind == "verified" else (data_kind,)
     stmt = select(MandiObservation, Market, Commodity, ImportBatch).join(Market, MandiObservation.market_id == Market.id).join(Commodity, MandiObservation.commodity_id == Commodity.id).outerjoin(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(
-        Market.name == market, Market.state == "Karnataka", Commodity.name == commodity, MandiObservation.data_kind == data_kind)
+        Market.name == market, Market.state == "Karnataka", Commodity.name == commodity, MandiObservation.data_kind.in_(kinds))
     if start_date:
         stmt = stmt.where(MandiObservation.observed_on >= start_date)
     if end_date:

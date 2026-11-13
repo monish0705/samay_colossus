@@ -43,8 +43,14 @@ class Plan:
     min_train_span_days: int = 180
     min_train_coverage: float = .5
     max_price_age_days: int = 7
+    source_kind: str = "official"
+    candidate_suite: str = "v1"
 
     def validate(self):
+        if self.source_kind not in {"official", "secondary"}:
+            raise ValueError("Only explicitly scoped official or verified secondary series are eligible")
+        if self.candidate_suite not in {"v1", "relative_v2"}:
+            raise ValueError("Unknown predeclared candidate suite")
         if not self.start < self.train_end < self.validation_end < self.holdout_end:
             raise ValueError("Require start < train_end < validation_end < holdout_end")
         if (self.holdout_end - self.start).days > 36600:
@@ -76,7 +82,7 @@ def load_vintages(session: Session, plan: Plan, *, final_evaluation: bool = Fals
     """
     end = plan.holdout_end if final_evaluation else plan.validation_end
     stmt = select(ImportRow, ImportBatch).join(ImportBatch, ImportRow.batch_id == ImportBatch.id).where(
-        ImportBatch.data_kind == "official",
+        ImportBatch.data_kind == plan.source_kind,
         ImportBatch.fetched_at < midnight(end + timedelta(days=1)).to_pydatetime(),
         ImportRow.normalized["report_date"].as_string() <= end.isoformat(),
         ImportRow.normalized["market"].as_string() == plan.market,
@@ -97,14 +103,16 @@ def load_vintages(session: Session, plan: Plan, *, final_evaluation: bool = Fals
             if manifest.source_label != batch.source_label or (manifest.sha256 and manifest.sha256.lower() != batch.file_sha256) or any(marker in batch.source_label.casefold() for marker in ("fixture", "demo_data")):
                 raise ValueError(f"Source label/hash mismatch or fixture marker in official batch {batch.id}")
             parsed = urlsplit(batch.source_url)
-            if manifest.data_kind != "official" or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at or not manifest.unit_evidence.strip() or parsed.scheme != "https" or parsed.hostname not in {"data.gov.in", "www.data.gov.in", "agmarknet.gov.in", "www.agmarknet.gov.in"} or parsed.query or parsed.username or parsed.fragment:
+            hosts = {"data.gov.in", "www.data.gov.in", "agmarknet.gov.in", "www.agmarknet.gov.in"} if plan.source_kind == "official" else {"ckandev.indiadataportal.com"}
+            if manifest.data_kind != plan.source_kind or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at or not manifest.unit_evidence.strip() or parsed.scheme != "https" or parsed.hostname not in hosts or parsed.query or parsed.username or parsed.fragment:
                 raise ValueError(f"Invalid official source attestation for batch {batch.id}")
             archive = Path(batch.archive_path)
             if not archive.is_file() or hashlib.sha256(archive.read_bytes()).hexdigest() != batch.file_sha256:
                 raise ValueError(f"Missing/tampered raw archive for batch {batch.id}")
             batches[batch.id] = {"batch_id": batch.id, "sha256": batch.file_sha256, "source_url": batch.source_url, "source_label": batch.source_label, "fetched_at": batch.fetched_at.isoformat(), "unit_evidence": manifest.unit_evidence}
         n = row.normalized
-        if n["state"] != "Karnataka" or n["district"] != "Kolar" or n["price_unit"] != "INR/quintal":
+        from app.ingestion import district_name, market_district
+        if n["state"] != "Karnataka" or district_name(n["district"]) != market_district(plan.market) or n["price_unit"] != "INR/quintal":
             raise ValueError("Scope/unit mismatch in normalized ledger")
         prices = [float(n[k]) for k in ("min", "modal", "max")]
         if not all(np.isfinite(prices)) or not 0 <= prices[0] <= prices[1] <= prices[2] or prices[1] <= 0:
@@ -122,16 +130,23 @@ def asof(vintages: pd.DataFrame, cutoff: pd.Timestamp, before: date | None = Non
     frame = vintages.loc[mask].copy()
     if frame.empty:
         return frame
+    # The common immutable snapshot has one vintage per report date. Avoid a
+    # repeated groupby over its entire history; the result is exactly identical.
+    if frame.report_date.is_unique:
+        return frame.sort_values("report_date")
     # Do not silently resolve ambiguous simultaneous source vintages.
     if (frame.groupby(["report_date", "available_at"]).price.nunique() > 1).any():
         raise ValueError("Conflicting prices at identical report/availability timestamp")
     return frame.sort_values(["report_date", "available_at", "row_id"]).drop_duplicates("report_date", keep="last").sort_values("report_date")
 
 
-def features_at(vintages: pd.DataFrame, origin: date, horizon: int) -> tuple[dict, dict]:
+def features_at(vintages: pd.DataFrame, origin: date, horizon: int, *, decision_at=None) -> tuple[dict, dict]:
     if horizon not in (1, 3, 7):
         raise ValueError("Supported horizons: 1, 3, 7 calendar days")
-    history = asof(vintages, midnight(origin), before=origin)
+    cutoff = midnight(origin) if decision_at is None else pd.Timestamp(decision_at)
+    if cutoff.tzinfo is None or not midnight(origin) <= cutoff < midnight(origin+timedelta(days=1)):
+        raise ValueError("Decision timestamp must be timezone-aware and inside the selected origin date")
+    history = asof(vintages, cutoff, before=origin)
     values = history.price.to_numpy(dtype=float)
     features = {f"lag_{n}_obs_inr_per_quintal": float(values[-n]) if len(values) >= n else np.nan for n in LAGS}
     for n in WINDOWS:
@@ -143,7 +158,7 @@ def features_at(vintages: pd.DataFrame, origin: date, horizon: int) -> tuple[dic
     features.update(origin_weekday=origin.weekday(), origin_month=origin.month, target_weekday=target.weekday(), target_month=target.month, days_since_latest_report=age,
                     history_30_obs_span_days=(history.iloc[-1].report_date - history.iloc[-30].report_date).days if len(history) >= 30 else np.nan)
     used = history.tail(30)
-    audit = {"decision_at": midnight(origin).isoformat(), "history_count": len(history),
+    audit = {"decision_at": cutoff.isoformat(), "history_count": len(history),
              "max_feature_report_date": used.report_date.max().isoformat() if len(used) else None,
              "max_feature_available_at": used.available_at.max().isoformat() if len(used) else None,
              "source_row_ids": used.row_id.tolist()}

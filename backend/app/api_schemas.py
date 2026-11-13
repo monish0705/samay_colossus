@@ -168,6 +168,7 @@ class RecommendationResponse(BaseModel):
 
 
 class ModelStatusItem(BaseModel):
+    source_kind: str = "official"
     market: str
     commodity: str
     variety: str
@@ -193,6 +194,7 @@ class ResearchHorizon(BaseModel):
 
 
 class ResearchStudy(BaseModel):
+    source_kind: str = "official"
     version: str
     research_only: bool = True
     market: str
@@ -212,12 +214,46 @@ class ModelsStatus(BaseModel):
     status: str
     models: list[ModelStatusItem]
     research_studies: list[ResearchStudy] = []
+    research_models: list[ModelStatusItem] = []
+
+
+class EvaluationPoint(BaseModel):
+    origin_date: date
+    target_date: date
+    actual_inr_per_quintal: Decimal
+    prediction_inr_per_quintal: Decimal
+    absolute_error_inr_per_quintal: Decimal
+
+
+class HistoricalEvaluation(BaseModel):
+    research_only: bool
+    source_kind: str
+    scope: dict[str,str]
+    horizon: int
+    selected_model: str
+    model_version: str
+    status: str
+    final_n: int
+    metrics: dict[str, float | int | None] | None
+    naive_metrics: dict[str, float | int | None] | None
+    train_end: date
+    validation_end: date
+    test_start: date
+    test_end: date
+    source: list[dict]
+    limitations: str
+    points: list[EvaluationPoint]
+    price_unit: str
+    rounding_note: str
 
 
 class DataStatus(BaseModel):
     historical_demo_date: date | None = None
     status: str
     official_observations: int
+    secondary_observations: int = 0
+    latest_secondary_report_date: date | None = None
+    latest_secondary_fetched_at: datetime | None = None
     fixture_observations: int
     demo_observations: int
     latest_official_report_date: date | None

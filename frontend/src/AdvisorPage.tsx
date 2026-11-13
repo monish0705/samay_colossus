@@ -1,16 +1,13 @@
 import { localize, t } from './i18n';
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Calculator, CheckCircle2, ChevronDown, Coins, Info, RefreshCw, Scale, ShieldCheck, SlidersHorizontal, Sparkles, Store, TrendingUp, Warehouse } from 'lucide-react';
+import { ArrowRight, Calculator, Coins, SlidersHorizontal } from 'lucide-react';
 import { api, CROP_SCOPES, type CropScopeConfig } from './api';
 import { useApp } from './state';
 import {
   buildRecommendation,
-  calculateMultiFactorPrediction,
-  evaluateNearbyStorage,
   exampleAdvisor,
   getEffectiveAdvisorValues,
-  kolarApmcWarehouse,
   validateAdvisor,
   type AdvisorValues,
 } from './advisor';
@@ -26,32 +23,20 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
   const [error, setError] = useState<unknown>(null);
   const [dirty, setDirty] = useState(false);
   const [hasStorage, setHasStorage] = useState(Number(draft.capacity) > 0);
-  const [overrideQuote, setOverrideQuote] = useState(Boolean(draft.price && draft.price !== '1400'));
-  
+  const [overrideQuote, setOverrideQuote] = useState(Boolean(draft.price));
+
   const activeCrop: CropScopeConfig = CROP_SCOPES[scope.commodity] || CROP_SCOPES['Tomato'];
-  const [nearbyDays, setNearbyDays] = useState<string>(activeCrop.defaultDays);
+
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
 
   const latest = useResource(signal => api.latest(scope, signal), JSON.stringify(scope));
-  const latestPrice = latest.data?.observation?.modal_price_inr_per_quintal || activeCrop.defaultPrice;
-  const latestDate = latest.data?.observation?.report_date || '2026-10-31';
+  const referencePrice = latest.data?.observation?.modal_price_inr_per_quintal || '';
+  const latestPrice = latest.data?.stale ? '' : referencePrice;
   const effectiveDraft = getEffectiveAdvisorValues(draft, latestPrice, scope.commodity);
+  const latestDate = latest.data?.observation?.report_date || '';
   const appliedPrice = draft.price || latestPrice;
   const estimatedGross = Math.round(Number(draft.quantity || 0) * Number(appliedPrice));
-
-  const multiFactor = calculateMultiFactorPrediction(
-    Number(appliedPrice),
-    Number(draft.days || activeCrop.defaultDays),
-    scope.commodity
-  );
-  const nearbyStorageEval = evaluateNearbyStorage(
-    Number(draft.quantity || activeCrop.defaultQuantity),
-    Number(nearbyDays),
-    Number(appliedPrice),
-    activeCrop.warehouse,
-    scope.commodity
-  );
 
   const selectCrop = (cropKey: string) => {
     const nextCrop = CROP_SCOPES[cropKey];
@@ -82,7 +67,6 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
       conditions: nextCrop.warehouse.facilityType,
       example: false,
     });
-    setNearbyDays(nextCrop.defaultDays);
     setOverrideQuote(false);
     setErrors({});
     setDirty(true);
@@ -110,7 +94,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
       if (!draft.quantity || draft.quantity.trim() === '' || Number(draft.quantity) <= 0) {
         issues.quantity = 'Enter a value greater than zero.';
       }
-      if (draft.price && Number(draft.price) <= 0) {
+      if (!(Number(draft.price || latestPrice) > 0)) {
         issues.price = 'Enter a value greater than zero.';
       }
     } else if (step === 2) {
@@ -127,6 +111,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
   };
 
   const change = <K extends keyof AdvisorValues>(key: K, value: AdvisorValues[K]) => {
+    if (key === 'price' && value) setOverrideQuote(true);
     setDraft({ ...draft, [key]: value, example: false });
     setDirty(true);
     setErrors(old => ({ ...old, [key]: '' }));
@@ -147,24 +132,6 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
         example: false,
       });
     }
-    setDirty(true);
-  };
-
-  const applyNearbyWarehouse = () => {
-    const qty = draft.quantity || activeCrop.defaultQuantity;
-    setDraft({
-      ...draft,
-      capacity: qty,
-      days: nearbyDays,
-      limit: String(activeCrop.maxDays),
-      loss: activeCrop.dailyLossPercent,
-      storage: String(activeCrop.warehouse.dailyRatePerQuintal),
-      storageFixed: '0',
-      payment: 'later',
-      notes: `${draft.notes || 'Farmer quote'} · Storing at ${activeCrop.warehouse.name}`,
-      example: false,
-    });
-    setHasStorage(true);
     setDirty(true);
   };
 
@@ -190,8 +157,8 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
     </label>
   );
 
-  const problems = validateAdvisor(effectiveDraft, scope.commodity);
-  const canSubmit = Number(draft.quantity || 0) > 0 && Object.keys(problems).length === 0;
+
+
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
@@ -289,14 +256,16 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
 
       <div className="advisor-layout">
         <form onSubmit={submit} noValidate className={`advisor-form ${explorer ? '' : `journey-view step-${step}`}`}>
-          
+
+          {Boolean(latest.error) && <Notice tone="amber">{t('Verified observations could not be loaded. Enter a buyer quote; no government rate is substituted.')}</Notice>}
+          {latest.data?.stale && <Notice tone="amber">{t('Historical price only. Enter a current buyer quote; a stale observation is never used as today’s price.')}</Notice>}
           {/* STEP 0: Market & Crop Scope */}
           {!explorer && (
             <Card className="journey-market" hidden={step !== 0}>
               <p className="eyebrow">{t('STEP 1')}</p>
               <h2>{t('Select Karnataka Market & Crop')}</h2>
               <p className="muted small">
-                {t('Choose your commodity to load authentic APMC market observations, researched storage profiles, and multi-factor pricing drivers.')}
+                {t('Select a crop. Historical observations and model availability are checked separately; storage and costs are user assumptions.')}
               </p>
 
               <div className="crop-selector-grid">
@@ -331,15 +300,15 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                 <p className="small muted">
                   {t(activeCrop.durabilityTextEn)}
                 </p>
+                <Notice tone="amber">{t('Storage profiles and costs are illustrative assumptions. Verify them locally before calculating.')}</Notice>
                 <div className="crop-detail-meta">
-                  <span><strong>{t('Holding Horizon:')}</strong> {activeCrop.holdingOptions.join(', ')} {t('days')} (max {activeCrop.maxDays}d)</span>
-                  <span><strong>{t('Daily Loss:')}</strong> ~{activeCrop.dailyLossPercent}%/{t('day')}</span>
-                  <span><strong>{t('Nearby Facility:')}</strong> {activeCrop.warehouse.name} (₹{activeCrop.warehouse.dailyRatePerQuintal}/{t('qtl')}/{t('day')})</span>
+                  <span><strong>{t('Scenario holding dates:')}</strong> {activeCrop.holdingOptions.join(', ')} {t('days')} (max {activeCrop.maxDays}d)</span>
+                  <span><strong>{t('Illustrative daily loss assumption:')}</strong> ~{activeCrop.dailyLossPercent}%/{t('day')}</span>
                 </div>
                 <div className="reference-price-pill" style={{ marginTop: '12px' }}>
                   <Coins size={16} />
                   <span>
-                    {t('Official wholesale reference:')} <strong>₹{latestPrice} / {t('qtl')}</strong> ({latestDate})
+                    {t('Observed wholesale reference:')} <strong>{referencePrice ? `₹${referencePrice} / ${t('qtl')}` : t('Unavailable')}</strong> {latestDate && `(${latestDate})`}
                   </span>
                 </div>
               </div>
@@ -394,7 +363,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
               <div className="auto-gross-value-box">
                 <div className="projection-main-row">
                   <div>
-                    <span className="small muted">{t('Government Reference Rate:')}</span>
+                    <span className="small muted">{t('Assumed gross price today:')}</span>
                     <strong className="rate-badge">₹{appliedPrice} / {t('qtl')}</strong>
                     <small className="muted"> ({scope.market} · {latestDate})</small>
                   </div>
@@ -406,7 +375,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                 </div>
 
                 {/* Override quote toggle */}
-                {!overrideQuote ? (
+                {!overrideQuote && appliedPrice ? (
                   <button
                     type="button"
                     className="text-button override-toggle-btn"
@@ -426,20 +395,14 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                         setOverrideQuote(false);
                       }}
                     >
-                      {t('Reset to official government rate')} (₹{latestPrice})
+                      {latestPrice ? `${t('Use observed wholesale reference')} (₹${latestPrice})` : t('No observed reference available')}
                     </button>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Hidden field rendered for tests when overrideQuote is false */}
-            {(!overrideQuote && step === 1) && (
-              <div style={{ display: 'none' }}>
-                {field('price', 'Expected buyer price today', 'INR / qtl')}
-              </div>
-            )}
-
+            {explorer && field('price', 'Expected buyer price today', 'INR / qtl', 'Your gross quote, not the mandi modal price')}
             {explorer && (
               <div className="scenario-sliders">
                 <label>
@@ -497,87 +460,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
 
             {/* When farmer has NO on-farm storage: Show Nearby Storage Evaluation */}
             {!hasStorage ? (
-              <div className="nearby-storage-card">
-                <div className="nearby-header">
-                  <Warehouse size={20} />
-                  <div>
-                    <strong>{t('Nearby Commercial Storage Facility')}</strong>
-                    <p className="small muted">
-                      {activeCrop.warehouse.name} · {activeCrop.warehouse.location} ({activeCrop.warehouse.distanceKm} km {t('from mandi')})
-                    </p>
-                    <small className="muted" style={{ display: 'block', marginTop: '3px' }}>
-                      {t(activeCrop.warehouse.facilityType)}
-                    </small>
-                  </div>
-                  <Badge tone="green">₹{activeCrop.warehouse.dailyRatePerQuintal} / {t('qtl')} / {t('day')}</Badge>
-                </div>
-
-                <div className="nearby-controls">
-                  <label>
-                    <span className="small">{t('Evaluate holding duration at this warehouse:')}</span>
-                    <div className="duration-chips">
-                      {activeCrop.holdingOptions.map(d => (
-                        <button
-                          key={d}
-                          type="button"
-                          className={`chip ${nearbyDays === d ? 'is-active' : ''}`}
-                          onClick={() => setNearbyDays(d)}
-                        >
-                          {d} {t(Number(d) > 1 ? 'days' : 'day')}{d === activeCrop.defaultDays ? ` (${t('Recommended')})` : ''}
-                        </button>
-                      ))}
-                    </div>
-                  </label>
-                </div>
-
-                {/* Profit vs Sell Now Decision Box */}
-                <div className={`nearby-decision-box ${nearbyStorageEval.isProfitable ? 'is-profitable' : 'is-not-profitable'}`}>
-                  <div className="decision-title">
-                    {nearbyStorageEval.isProfitable ? <TrendingUp size={18} /> : <Scale size={18} />}
-                    <strong>{t(nearbyStorageEval.headline)}</strong>
-                  </div>
-                  <p className="small">{t(nearbyStorageEval.details)}</p>
-
-                  <div className="nearby-metrics-grid">
-                    <div>
-                      <span>{t('Storage Fee:')}</span>
-                      <strong>₹{nearbyStorageEval.storageFeeInr.toLocaleString('en-IN')}</strong>
-                    </div>
-                    <div>
-                      <span>{t('Spoilage Loss:')}</span>
-                      <strong>{nearbyStorageEval.spoilageLossQuintals} {t('qtl')}</strong>
-                    </div>
-                    <div>
-                      <span>{t('Projected Price:')}</span>
-                      <strong>₹{nearbyStorageEval.projectedPrice.toLocaleString('en-IN')} / {t('qtl')}</strong>
-                    </div>
-                    <div>
-                      <span>{t('Net Difference:')}</span>
-                      <strong className={nearbyStorageEval.isProfitable ? 'profit-text' : 'loss-text'}>
-                        {nearbyStorageEval.netProfitInr > 0 ? '+' : ''}₹{nearbyStorageEval.netProfitInr.toLocaleString('en-IN')}
-                      </strong>
-                    </div>
-                  </div>
-
-                  {nearbyStorageEval.isProfitable ? (
-                    <button
-                      type="button"
-                      className="button button-primary"
-                      style={{ marginTop: '12px' }}
-                      onClick={applyNearbyWarehouse}
-                    >
-                      <Store size={15} />
-                      {t('Use this warehouse in my sale plan')}
-                    </button>
-                  ) : (
-                    <div style={{ marginTop: '10px' }}>
-                      <Notice tone="neutral">
-                        {t('Selling today nets more cash. We recommend selling 100% of your harvest today.')}
-                      </Notice>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <Notice>{t('No verified storage facility or tariff is configured. Enter your actual storage quote and loss assumptions to compare plans.')}</Notice>
             ) : (
               <>
                 <div className="form-grid">
@@ -630,6 +513,18 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
               </>
             )}
 
+            {hasStorage && (
+              <div className="form-grid">
+                <label className="field" htmlFor="advisor-scenario-price">
+                  <span>{t('Optional future buyer price assumption')}</span>
+                  <input id="advisor-scenario-price" inputMode="decimal" value={draft.scenarioPrice || ''} onChange={e => change('scenarioPrice', e.target.value)} />
+                  <small>{t('Leave blank to request the saved forecast. Entering a price creates scenario-only analysis.')}</small>
+                  {errors.scenarioPrice && <small role="alert">{t(errors.scenarioPrice)}</small>}
+                </label>
+                {field('adverse', 'Adverse gross future price', 'INR / qtl', 'User-entered downside assumption')}
+              </div>
+            )}
+
             <details className="more-details">
               <summary>
                 <strong>{t(`More details · Transport, commission & mandi charges (${activeCrop.market} defaults)`)}</strong>
@@ -648,13 +543,12 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                 {field('minimumLot', 'Minimum marketable lot', 'qtl')}
                 {field('step', 'Market sale rounding step', 'qtl')}
               </div>
-              
+
               {mode === 'judge' && (
                 <div className="judge-advanced-assumptions">
                   <h4>{t('Farmer realization mapping & adverse stress assumption')}</h4>
                   <div className="form-grid">
                     {field('realization', 'Gross realization / mandi-price factor', '×', 'Explicit assumption from 0 to 2; not a calibrated model')}
-                    {field('adverse', 'Adverse gross future price', 'INR / qtl', 'User-defined stress price; must not exceed the forecast lower bound')}
                   </div>
                 </div>
               )}
@@ -700,7 +594,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
 
             <label className="checkbox-field" style={{ marginTop: '14px' }}>
               <input
-                id="advisor-acknowledged"
+                id="advisor-acknowledged-details"
                 type="checkbox"
                 checked={draft.acknowledged}
                 onChange={e => change('acknowledged', e.target.checked)}
@@ -731,7 +625,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
             <Card className="journey-review" hidden={step !== 4}>
               <p className="eyebrow">{t('STEP 5')}</p>
               <h2>{t('Review your assumptions')}</h2>
-              
+
               <dl className="review-grid">
                 <div>
                   <dt>{t('Harvest quantity')}</dt>
@@ -752,7 +646,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
               </dl>
 
               <div className="review-cost-summary">
-                <h4>{t('Documented cost & market defaults')}</h4>
+                <h4>{t('User assumptions: verify costs and storage conditions')}</h4>
                 <div className="cost-tags">
                   <span>{t('Commission')}: {effectiveDraft.commission}%</span>
                   <span>{t('Market fee')}: {effectiveDraft.marketFee}%</span>
@@ -826,35 +720,6 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
         </form>
 
         <aside className="advisor-side">
-          {/* Multi-Factor Price Prediction Sidebar Card */}
-          <Card>
-            <span className="icon-tile"><TrendingUp /></span>
-            <h2>{t('Multi-Factor Market Projection')}</h2>
-            <p className="small muted">{t(`Synthesizes 5 real market drivers for ${scope.market}:`)}</p>
-            <div className="multifactor-preview">
-              <div className="factor-row">
-                <span>{t('Base Market Reference')}</span>
-                <strong>₹{multiFactor.basePriceInr.toLocaleString('en-IN')}</strong>
-              </div>
-              {multiFactor.rows.map((row, idx) => (
-                <div className="factor-row" key={idx}>
-                  <div>
-                    <span>{t(row.title)}</span>
-                    <small className="muted" style={{ display: 'block', fontSize: '0.78rem' }}>{t(row.evidence)}</small>
-                  </div>
-                  <strong className={row.adjustment >= 0 ? 'positive' : 'negative'}>
-                    {row.adjustment >= 0 ? `+₹${row.adjustment}` : `-₹${Math.abs(row.adjustment)}`}
-                  </strong>
-                </div>
-              ))}
-              <div className="factor-row factor-total">
-                <span>{t(`Projected ${draft.days || activeCrop.defaultDays}-Day Future Price`)}</span>
-                <strong className="projected-price-highlight">₹{multiFactor.projectedPriceInr.toLocaleString('en-IN')} / {t('qtl')}</strong>
-              </div>
-              <small className="muted">{t('Empirical interval:')} ₹{multiFactor.lowerBandInr.toLocaleString('en-IN')} – ₹{multiFactor.upperBandInr.toLocaleString('en-IN')}</small>
-            </div>
-          </Card>
-
           <Card>
             <span className="icon-tile">{explorer ? <SlidersHorizontal /> : <Calculator />}</span>
             <h2>{t('Net cash comes first.')}</h2>

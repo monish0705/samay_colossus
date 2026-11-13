@@ -34,6 +34,7 @@ def main():
     env.update(PYTHONUTF8="1", VITE_API_BASE_URL="/backend", SAMAY_BACKEND_URL=f"http://127.0.0.1:{args.backend_port}")
     subprocess.run([str(python), "scripts/restore_prepared_data.py"], cwd=ROOT, env=env, check=True)
     subprocess.run([str(python), "-m", "alembic", "-c", "backend/alembic.ini", "upgrade", "head"], cwd=ROOT, env=env, check=True)
+    subprocess.run([str(python), "scripts/repair_data_provenance.py"], cwd=ROOT, env=env, check=True)
     backend = f"http://127.0.0.1:{args.backend_port}"
     frontend = f"http://127.0.0.1:{args.frontend_port}"
     owned = []
@@ -45,7 +46,7 @@ def main():
             node = shutil.which("node")
             if not node:
                 raise RuntimeError("Node.js is unavailable")
-            owned.append(subprocess.Popen([node, "node_modules/vite/bin/vite.js", "--host", "127.0.0.1", "--port", str(args.frontend_port), "--strictPort"], cwd=ROOT / "frontend", env=env, creationflags=flags))
+            owned.append(subprocess.Popen([node, str(ROOT / "frontend/node_modules/vite/bin/vite.js"), "--host", "127.0.0.1", "--port", str(args.frontend_port), "--strictPort"], cwd=ROOT / "frontend", env=env, creationflags=flags))
         for _ in range(60):
             if ready(backend + "/api/health") and ready(frontend):
                 break

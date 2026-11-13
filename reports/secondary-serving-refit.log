@@ -1,0 +1,19 @@
+REFIT Kolar APMC Tomato tomato faq 1d naive samples=1529 models\research-serving\a12f3115f0bc1266\champion-1d
+REFIT Kolar APMC Tomato tomato faq 3d naive samples=1525 models\research-serving\6d9e0366a16177e6\champion-3d
+REFIT Kolar APMC Tomato tomato faq 7d naive samples=1521 models\research-serving\55d83adaf57197a7\champion-7d
+REFIT Kolar APMC Tomato tomato local 1d naive samples=335 models\research-serving\b316e9f5fc2d154f\champion-1d
+REFIT Kolar APMC Tomato tomato local 3d mean_14 samples=333 models\research-serving\1f3005b630413c3d\champion-3d
+REFIT Kolar APMC Tomato tomato local 7d mean_14 samples=335 models\research-serving\61768c3f00bdacec\champion-7d
+REFIT Tiptur APMC Copra copra unspecified 1d naive samples=1078 models\research-serving\0716f26aab53f06e\champion-1d
+REFIT Tiptur APMC Copra copra unspecified 3d blend_naive_mean14_25 samples=1073 models\research-serving\3190c51f9377c92f\champion-3d
+REFIT Tiptur APMC Copra copra unspecified 7d blend_naive_mean14_25 samples=1062 models\research-serving\83d3a73a28bb26bf\champion-7d
+REFIT Shivamogga Mandi Arecanut bette unspecified 1d median_14 samples=925 models\research-serving\9339e02817831d4a\champion-1d
+REFIT Shivamogga Mandi Arecanut bette unspecified 3d median_14 samples=923 models\research-serving\0b9c4f101e1144f9\champion-3d
+REFIT Shivamogga Mandi Arecanut bette unspecified 7d median_14 samples=916 models\research-serving\3b626115986b3daa\champion-7d
+REFIT Hubballi APMC Onion local unspecified 1d blend_naive_mean14_25 samples=697 models\research-serving\9f64e29ec282ec1c\champion-1d
+REFIT Hubballi APMC Onion local unspecified 3d median_14 samples=690 models\research-serving\e1364f7e43a9970e\champion-3d
+REFIT Hubballi APMC Onion local unspecified 7d median_14 samples=677 models\research-serving\c17f9ca00c82a01d\champion-7d
+REFIT Bengaluru APMC Potato local unspecified 1d naive samples=926 models\research-serving\27b001ec4da18397\champion-1d
+REFIT Bengaluru APMC Potato local unspecified 3d naive samples=919 models\research-serving\a64877387dd698d2\champion-3d
+REFIT Bengaluru APMC Potato local unspecified 7d naive samples=921 models\research-serving\7cca0655ee90deff\champion-7d
+All artifacts remain RESEARCH ONLY / LIMITED EVIDENCE; original final metrics unchanged

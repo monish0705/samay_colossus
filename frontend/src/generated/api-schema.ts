@@ -143,6 +143,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/models/evaluation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Model Evaluation */
+        get: operations["model_evaluation_api_v1_models_evaluation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/data/status": {
         parameters: {
             query?: never;
@@ -152,6 +169,46 @@ export interface paths {
         };
         /** Data Status */
         get: operations["data_status_api_v1_data_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/predict/multi-factor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retired Multi Factor
+         * @deprecated
+         */
+        get: operations["retired_multi_factor_api_v1_predict_multi_factor_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/storage/nearby": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retired Storage
+         * @deprecated
+         */
+        get: operations["retired_storage_api_v1_storage_nearby_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -214,6 +271,15 @@ export interface components {
             status: string;
             /** Official Observations */
             official_observations: number;
+            /**
+             * Secondary Observations
+             * @default 0
+             */
+            secondary_observations: number;
+            /** Latest Secondary Report Date */
+            latest_secondary_report_date?: string | null;
+            /** Latest Secondary Fetched At */
+            latest_secondary_fetched_at?: string | null;
             /** Fixture Observations */
             fixture_observations: number;
             /** Demo Observations */
@@ -231,6 +297,25 @@ export interface components {
         /** ErrorEnvelope */
         ErrorEnvelope: {
             error: components["schemas"]["ApiError"];
+        };
+        /** EvaluationPoint */
+        EvaluationPoint: {
+            /**
+             * Origin Date
+             * Format: date
+             */
+            origin_date: string;
+            /**
+             * Target Date
+             * Format: date
+             */
+            target_date: string;
+            /** Actual Inr Per Quintal */
+            actual_inr_per_quintal: string;
+            /** Prediction Inr Per Quintal */
+            prediction_inr_per_quintal: string;
+            /** Absolute Error Inr Per Quintal */
+            absolute_error_inr_per_quintal: string;
         };
         /** Freshness */
         Freshness: {
@@ -263,6 +348,67 @@ export interface components {
             service: string;
             /** Version */
             version: string;
+        };
+        /** HistoricalEvaluation */
+        HistoricalEvaluation: {
+            /** Research Only */
+            research_only: boolean;
+            /** Source Kind */
+            source_kind: string;
+            /** Scope */
+            scope: {
+                [key: string]: string;
+            };
+            /** Horizon */
+            horizon: number;
+            /** Selected Model */
+            selected_model: string;
+            /** Model Version */
+            model_version: string;
+            /** Status */
+            status: string;
+            /** Final N */
+            final_n: number;
+            /** Metrics */
+            metrics: {
+                [key: string]: number | null;
+            } | null;
+            /** Naive Metrics */
+            naive_metrics: {
+                [key: string]: number | null;
+            } | null;
+            /**
+             * Train End
+             * Format: date
+             */
+            train_end: string;
+            /**
+             * Validation End
+             * Format: date
+             */
+            validation_end: string;
+            /**
+             * Test Start
+             * Format: date
+             */
+            test_start: string;
+            /**
+             * Test End
+             * Format: date
+             */
+            test_end: string;
+            /** Source */
+            source: {
+                [key: string]: unknown;
+            }[];
+            /** Limitations */
+            limitations: string;
+            /** Points */
+            points: components["schemas"]["EvaluationPoint"][];
+            /** Price Unit */
+            price_unit: string;
+            /** Rounding Note */
+            rounding_note: string;
         };
         /** HistoryResponse */
         HistoryResponse: {
@@ -306,6 +452,11 @@ export interface components {
         };
         /** ModelStatusItem */
         ModelStatusItem: {
+            /**
+             * Source Kind
+             * @default official
+             */
+            source_kind: string;
             /** Market */
             market: string;
             /** Commodity */
@@ -349,6 +500,11 @@ export interface components {
              * @default []
              */
             research_studies: components["schemas"]["ResearchStudy"][];
+            /**
+             * Research Models
+             * @default []
+             */
+            research_models: components["schemas"]["ModelStatusItem"][];
         };
         /** OptimizationResponse */
         OptimizationResponse: {
@@ -609,6 +765,8 @@ export interface components {
             adverse_inr_per_quintal: number | string;
             /** Adverse Assumption */
             adverse_assumption: string;
+            /** Scenario Price Inr Per Quintal */
+            scenario_price_inr_per_quintal?: number | string | null;
         };
         /** RecommendationResponse */
         RecommendationResponse: {
@@ -646,6 +804,11 @@ export interface components {
         };
         /** ResearchStudy */
         ResearchStudy: {
+            /**
+             * Source Kind
+             * @default official
+             */
+            source_kind: string;
             /** Version */
             version: string;
             /**
@@ -834,7 +997,7 @@ export interface operations {
     markets_api_v1_markets_get: {
         parameters: {
             query?: {
-                data_kind?: "official" | "fixture" | "demo";
+                data_kind?: "verified" | "official" | "secondary" | "fixture" | "demo";
             };
             header?: never;
             path?: never;
@@ -889,7 +1052,7 @@ export interface operations {
                 end_date?: string | null;
                 variety?: string | null;
                 grade?: string | null;
-                data_kind?: "official" | "fixture" | "demo";
+                data_kind?: "verified" | "official" | "secondary" | "fixture" | "demo";
                 limit?: number;
                 offset?: number;
             };
@@ -1275,6 +1438,78 @@ export interface operations {
             };
         };
     };
+    model_evaluation_api_v1_models_evaluation_get: {
+        parameters: {
+            query: {
+                variety: string;
+                grade: string;
+                market?: string;
+                commodity?: string;
+                /** @description Calendar horizon: 1, 3 or 7 */
+                horizon?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HistoricalEvaluation"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
     data_status_api_v1_data_status_get: {
         parameters: {
             query?: never;
@@ -1291,6 +1526,143 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DataStatus"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    retired_multi_factor_api_v1_predict_multi_factor_get: {
+        parameters: {
+            query?: {
+                horizon?: number;
+                base_price?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    retired_storage_api_v1_storage_nearby_get: {
+        parameters: {
+            query?: {
+                quantity?: number;
+                days?: number;
+                today_price?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description No official observation */

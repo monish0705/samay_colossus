@@ -1,0 +1,56 @@
+# SAMAY corrected data and model report
+
+All forecasts are retrospective research / limited evidence. This report reproduces original frozen results; it does not reopen final model selection.
+
+| Crop / variety / grade | Source | Horizon | Selected | Final n | MAE INR/quintal | Naive MAE | RMSE INR/quintal | WAPE % |
+|---|---|---:|---|---:|---:|---:|---:|---:|
+| Tomato / tomato / faq | official | 1d | naive | 136 | 108.31 | 108.31 | 174.17 | 14.87 |
+| Tomato / tomato / faq | official | 3d | naive | 132 | 138.79 | 138.79 | 209.92 | 18.91 |
+| Tomato / tomato / faq | official | 7d | naive | 128 | 140.31 | 140.31 | 235.94 | 18.98 |
+| Tomato / tomato / local | official | 1d | naive | 59 | 134.75 | 134.75 | 184.25 | 11.44 |
+| Tomato / tomato / local | official | 3d | mean_14 | 57 | 212.82 | 174.74 | 256.50 | 18.03 |
+| Tomato / tomato / local | official | 7d | mean_14 | 53 | 240.32 | 240.57 | 287.23 | 20.21 |
+| Copra / copra / unspecified | secondary | 1d | naive | 39 | 491.08 | 491.08 | 699.07 | 2.85 |
+| Copra / copra / unspecified | secondary | 3d | blend_naive_mean14_25 | 38 | 696.70 | 618.03 | 1053.45 | 4.05 |
+| Copra / copra / unspecified | secondary | 7d | blend_naive_mean14_25 | 36 | 1042.10 | 900.11 | 1504.35 | 5.99 |
+| Arecanut / bette / unspecified | secondary | 1d | median_14 | 163 | 1689.72 | 1471.26 | 2239.16 | 2.88 |
+| Arecanut / bette / unspecified | secondary | 3d | median_14 | 161 | 1725.79 | 1731.01 | 2317.91 | 2.94 |
+| Arecanut / bette / unspecified | secondary | 7d | median_14 | 158 | 1834.50 | 1728.30 | 2475.28 | 3.12 |
+| Onion / local / unspecified | secondary | 1d | blend_naive_mean14_25 | 68 | 236.59 | 253.38 | 322.88 | 22.32 |
+| Onion / local / unspecified | secondary | 3d | median_14 | 65 | 259.23 | 225.38 | 342.21 | 24.24 |
+| Onion / local / unspecified | secondary | 7d | median_14 | 59 | 265.85 | 277.12 | 353.50 | 24.75 |
+| Potato / local / unspecified | secondary | 1d | naive | 31 | 161.29 | 161.29 | 246.26 | 7.47 |
+| Potato / local / unspecified | secondary | 3d | naive | 29 | insufficient final samples | unavailable | unavailable | unavailable |
+| Potato / local / unspecified | secondary | 7d | naive | 26 | insufficient final samples | unavailable | unavailable | unavailable |
+
+## Current refits
+
+Configurations were fixed by the original studies; no new tuning against consumed final observations.
+
+- Tomato / tomato / faq 1d: naive; 1529 usable refit samples; version a12f3115f0bc1266-champion-1d.
+- Tomato / tomato / faq 3d: naive; 1525 usable refit samples; version 6d9e0366a16177e6-champion-3d.
+- Tomato / tomato / faq 7d: naive; 1521 usable refit samples; version 55d83adaf57197a7-champion-7d.
+- Tomato / tomato / local 1d: naive; 335 usable refit samples; version b316e9f5fc2d154f-champion-1d.
+- Tomato / tomato / local 3d: mean_14; 333 usable refit samples; version 1f3005b630413c3d-champion-3d.
+- Tomato / tomato / local 7d: mean_14; 335 usable refit samples; version 61768c3f00bdacec-champion-7d.
+- Copra / copra / unspecified 1d: naive; 1078 usable refit samples; version 0716f26aab53f06e-champion-1d.
+- Copra / copra / unspecified 3d: blend_naive_mean14_25; 1073 usable refit samples; version 3190c51f9377c92f-champion-3d.
+- Copra / copra / unspecified 7d: blend_naive_mean14_25; 1062 usable refit samples; version 83d3a73a28bb26bf-champion-7d.
+- Arecanut / bette / unspecified 1d: median_14; 925 usable refit samples; version 9339e02817831d4a-champion-1d.
+- Arecanut / bette / unspecified 3d: median_14; 923 usable refit samples; version 0b9c4f101e1144f9-champion-3d.
+- Arecanut / bette / unspecified 7d: median_14; 916 usable refit samples; version 3b626115986b3daa-champion-7d.
+- Onion / local / unspecified 1d: blend_naive_mean14_25; 697 usable refit samples; version 9f64e29ec282ec1c-champion-1d.
+- Onion / local / unspecified 3d: median_14; 690 usable refit samples; version e1364f7e43a9970e-champion-3d.
+- Onion / local / unspecified 7d: median_14; 677 usable refit samples; version c17f9ca00c82a01d-champion-7d.
+- Potato / local / unspecified 1d: naive; 926 usable refit samples; version 27b001ec4da18397-champion-1d.
+- Potato / local / unspecified 3d: naive; 919 usable refit samples; version a64877387dd698d2-champion-3d.
+- Potato / local / unspecified 7d: naive; 921 usable refit samples; version 7cca0655ee90deff-champion-7d.
+
+## Limitations
+
+- Four additional crops were trained on separately labeled India Data Portal secondary history. Their dated series are stale for current-day forecasting; no live prediction is invented.
+- Original publication/revision vintages are unverified. All serving artifacts remain research only, limited evidence.
+- Consumed test metrics are unchanged; current refits are not newly tested models. Do not describe 100 minus WAPE as accuracy.
+- Intervals are secondary retrospective block-residual diagnostics for the same stateless baseline rules, not guaranteed coverage.
+- Some selected baselines lose to naive on final observations; these results are retained without post-holdout reselection.
+- Potato 3d/7d have fewer than 30 final examples; no final metric is claimed. Unspecified grades were not inferred or merged with graded data.

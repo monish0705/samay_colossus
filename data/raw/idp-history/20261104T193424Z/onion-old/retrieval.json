@@ -1,0 +1,48 @@
+{
+  "source_page": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+  "download_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+  "api_url": "https://ckandev.indiadataportal.com/api/action/datastore_search",
+  "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+  "pages": [
+    {
+      "file": "page-000000.json",
+      "sha256": "a8b7d20f6134dad65ef79f99ba4e58c7e2fb6b969dc9809a8cdfd06aabd0ebad",
+      "request": {
+        "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Onion",
+          "market_center": "Hubli (Amaragol)"
+        },
+        "limit": 1000,
+        "offset": 0,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 1000,
+      "fetched_at": "2026-11-04T19:36:27.953781+00:00"
+    },
+    {
+      "file": "page-001000.json",
+      "sha256": "3a461a685feb31ed2347dca569c076edc3f7416db2714dcf9a1e5bbe9e3074c7",
+      "request": {
+        "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Onion",
+          "market_center": "Hubli (Amaragol)"
+        },
+        "limit": 1000,
+        "offset": 1000,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 299,
+      "fetched_at": "2026-11-04T19:36:36.759242+00:00"
+    }
+  ],
+  "records": 1299,
+  "conversion": "Map documented headers only; preserve all observed dates, varieties, grades, prices and units. Grade missing in old source is explicitly unspecified.",
+  "first_date": "2021-01-01",
+  "last_date": "2025-10-25"
+}

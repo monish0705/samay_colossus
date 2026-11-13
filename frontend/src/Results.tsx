@@ -3,12 +3,12 @@ import { explainRecommendation, explainChanges } from './explanations';
 import { ReadAloud } from './Speech';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertCircle, ArrowRight, CheckCircle2, ChevronRight, Download, RefreshCw, Scale, ShieldAlert, Sparkles, TrendingUp } from 'lucide-react';
-import { api, CROP_SCOPES, type Recommendation } from './api';
+import { AlertCircle, ArrowRight, CheckCircle2, Download, RefreshCw, Scale, Sparkles } from 'lucide-react';
+import { api, type Recommendation } from './api';
 import { useApp } from './state';
 import { Badge, Card, Empty, Notice, PageHeading, Stat, dateLabel, inr, qty } from './ui';
 import { ScenarioChart } from './Charts';
-import { buildRecommendation, calculateMultiFactorPrediction } from './advisor';
+import { buildRecommendation } from './advisor';
 
 export function ResultSummary({ result }: { result: Recommendation }) {
   const plan = result.optimization.recommended_plan;
@@ -80,8 +80,8 @@ export function Results() {
       const response = await api.recommend(req);
       setResult(response);
       setSimDirty(false);
-    } catch (e: any) {
-      setSimError(e?.message || 'Calculation error');
+    } catch (e: unknown) {
+      setSimError(e instanceof Error ? e.message : 'Calculation error');
     } finally {
       setSimBusy(false);
     }
@@ -207,6 +207,16 @@ export function Results() {
         />
       </div>
 
+      {output.best_scenario_only_or_validated_plan && !output.best_scenario_only_or_validated_plan.recommendation_eligible && output.best_scenario_only_or_validated_plan.holding_days > 0 && (
+        <Card>
+          <h2>{t('Best scenario-only plan: not validated advice')}</h2>
+          <Notice tone="amber">{t('This comparison uses uncertain prices or user assumptions. The operational safe fallback remains separate.')}</Notice>
+          <p>{t('Sell today')}: {qty(output.best_scenario_only_or_validated_plan.sell_today_quintals)} | {t('Hold initially')}: {qty(output.best_scenario_only_or_validated_plan.hold_initial_quintals)}</p>
+          <p>{t('Immediate net cash')}: {inr(output.best_scenario_only_or_validated_plan.cash_today_inr)}</p>
+          <p>{t('Central total net')}: {inr(output.best_scenario_only_or_validated_plan.total_net_inr.central)} | {t('Adverse total net')}: {inr(output.best_scenario_only_or_validated_plan.total_net_inr.adverse)}</p>
+        </Card>
+      )}
+
       {/* Side-by-Side Comparison of Feasible Plans */}
       {plan && (
         <Card className="plans-comparison">
@@ -310,70 +320,10 @@ export function Results() {
         </Card>
       )}
 
-      {/* Multi-Factor Agricultural Price Projection Card */}
+      {/* Explicit user scenario; calculations are performed by the backend. */}
       {(() => {
-        const comm = output.scope.commodity || scope.commodity || 'Tomato';
-        const cropConf = CROP_SCOPES[comm] || CROP_SCOPES['Tomato'];
-        const horizon = plan?.holding_days || Number(draft.days) || Number(cropConf.defaultDays);
-        const basePriceVal = Number(draft.price || cropConf.defaultPrice);
-        const multi = calculateMultiFactorPrediction(basePriceVal, horizon, comm);
-        const quickChips = comm === 'Arecanut'
-          ? ['38000', '42000', '46000', '48000', '52000', '56000']
-          : comm === 'Copra'
-          ? ['22000', '26000', '30500', '34000', '38000', '42000']
-          : comm === 'Onion'
-          ? ['1800', '2400', '3000', '3200', '3800', '4500']
-          : comm === 'Potato'
-          ? ['1400', '1800', '2100', '2400', '2800', '3200']
-          : ['1000', '1200', '1400', '1600', '1800', '2000'];
-
-        return (
-          <>
-            <Card className="multifactor-card">
-              <div className="section-heading">
-                <div>
-                  <Badge tone="green"><TrendingUp size={13} /> {t('Multi-Factor Analysis')}</Badge>
-                  <h2>{t(`How the ${horizon}-day future price was projected`)}</h2>
-                </div>
-                <span className="source-note">{t(`Synthesizes 5 real market drivers for ${output.scope.market}`)}</span>
-              </div>
-              <p className="small muted">
-                {t('Predictions are not black-box guesses. SAMAY analyses previous price momentum, today’s live rate, same-period last year, seasonal festival demand, and regional weather.')}
-              </p>
-
-              <div className="factors-table-wrap">
-                <table className="factors-table">
-                  <thead>
-                    <tr>
-                      <th>{t('Driver / Feature')}</th>
-                      <th>{t('Observed Evidence')}</th>
-                      <th>{t('Price Adjustment')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {multi.rows.map((row, idx) => (
-                      <tr key={idx}>
-                        <td><strong>{t(row.title)}</strong></td>
-                        <td>{t(row.evidence)}</td>
-                        <td className={row.adjustment >= 0 ? 'positive' : 'negative'}>
-                          {row.adjustment >= 0 ? `+₹${row.adjustment.toFixed(2)}` : `-₹${Math.abs(row.adjustment).toFixed(2)}`} / {t('qtl')}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colSpan={2}><strong>{t(`Projected Future Wholesale Price (${horizon}-Day):`)}</strong></td>
-                      <td><strong className="projected-total-highlight">₹{multi.projectedPriceInr.toLocaleString('en-IN')}.00 / {t('qtl')}</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <Notice tone="neutral">
-                {t(`Empirical 90% confidence band: ₹${multi.lowerBandInr.toLocaleString('en-IN')} – ₹${multi.upperBandInr.toLocaleString('en-IN')} / quintal. Weather and harvest supply shifts can alter realizations.`)}
-              </Notice>
-            </Card>
-
+        const quickChips = ['1000', '1400', '2000', '5000', '30000', '50000'];
+        return (<>
             {/* Scenario Explorer / Simulator */}
             <Card className="simulator-card">
               <div className="section-heading">
@@ -384,7 +334,7 @@ export function Results() {
                 <span className="source-note">{t('Evaluated through real backend optimizer')}</span>
               </div>
               <p className="small muted">
-                {t('No operational AI forecast is deployed. Test how future price changes affect your net proceeds after deterioration and storage fees.')}
+                {t('User-entered future prices are assumptions. Recalculate through the backend to compare proceeds after deterioration, costs and mandatory cash constraints.')}
               </p>
 
               <div className="simulator-controls">

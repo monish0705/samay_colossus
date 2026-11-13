@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { setLanguage, t } from './i18n';
 import { explainRecommendation, explainChanges } from './explanations';
-import { validateAdvisor, exampleAdvisor, buildRecommendation } from './advisor';
+import { validateAdvisor, exampleAdvisor, buildRecommendation, getEffectiveAdvisorValues, blankAdvisor } from './advisor';
 import { defaultScope, type Recommendation } from './api';
 import { ReadAloud } from './Speech';
 import recommendationFixture from './test/fixtures/recommendation.json';
@@ -14,6 +14,8 @@ import conditionalFixture from './test/fixtures/conditional-hold.json';
 const recommendation = recommendationFixture as Recommendation;
 const conditional = conditionalFixture as Recommendation;
 let research = false;
+let historical = false;
+let staleReference = false;
 let offline = false, rows: unknown[] = [], model = false, submitted: unknown[] = [], nextResult: Recommendation = recommendation;
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
@@ -26,14 +28,20 @@ const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
   if (path === '/api/v1/commodities') return json([]);
   if (path === '/api/v1/data/status') return json({ status: 'unavailable', official_observations: 0, fixture_observations: 3, demo_observations: 0, latest_official_report_date: null, latest_official_fetched_at: null, note: 'TEST_ONLY' });
   if (path === '/api/v1/models/status') return json({ status: model ? 'configured' : 'no_models_deployed', research_studies: research ? [{ ...defaultScope, version: 'TEST_ONLY_RESEARCH', research_only: true, train_start: '2021-01-01', train_end: '2023-12-31', validation_end: '2024-12-31', test_end: '2025-06-30', limitations: 'TEST_ONLY', source_fingerprint: 'TEST_ONLY', horizons: [{ horizon: 1, selected_model: 'naive', train_n: 120, validation_n: 30, final_n: 2, final_metrics: { mae_inr_per_quintal: 10, wape_pct: 1 }, naive_metrics: { mae_inr_per_quintal: 10 } }] }] : [], models: model ? [{ ...defaultScope, horizon: 3, model_version: 'TEST_ONLY', status: 'artifact_present', reliability_evidence_configured: false }] : [] });
+  if (path === '/api/v1/models/evaluation') {
+    if (!historical) return json({ error: { code: 'no_research_evaluation', message: 'TEST_ONLY no report', request_id: 'TEST_ONLY' } },404);
+    const points = Array.from({ length: 31 }, (_,i) => ({ origin_date: `2025-01-${String(i+1).padStart(2,'0')}`, target_date: new Date(Date.UTC(2025,0,i+4)).toISOString().slice(0,10), actual_inr_per_quintal: String(1000+i*10), prediction_inr_per_quintal: String(1010+i*10), absolute_error_inr_per_quintal: '10' }));
+    return json({ research_only: true, source_kind: 'secondary', scope: defaultScope, horizon: 3, selected_model: 'TEST_ONLY_NAIVE', model_version: 'TEST_ONLY', status: 'evaluated', final_n: points.length, metrics: { mae_inr_per_quintal: 10, wape_pct: 100*310/points.reduce((n,p) => n+Number(p.actual_inr_per_quintal),0) }, naive_metrics: { mae_inr_per_quintal: 10 }, train_end: '2023-12-31', validation_end: '2024-12-31', test_start: '2025-01-01', test_end: '2025-02-03', source: [], limitations: 'TEST_ONLY', points, price_unit: 'INR/quintal', rounding_note: 'TEST_ONLY' });
+  }
   if (path === '/api/v1/prices/history') return json({ items: rows, limit: 1000, offset: 0, next_offset: null });
+  if (path === '/api/v1/prices/latest' && staleReference) return json({ observation: { ...defaultScope, modal_price_inr_per_quintal: '99999', report_date: '2021-01-01' }, stale: true, age_calendar_days: 2000 });
   if (path === '/api/v1/prices/latest') return json({ error: { code: 'no_official_observation', message: 'No official observation', request_id: 'TEST_ONLY' } }, 404);
   if (path === '/api/v1/predict') return model ? json({ ...defaultScope, request_id: 'TEST_ONLY_PREDICTION', horizon_calendar_days: 3, timestamp: '2026-11-04T00:00:00+05:30', target_date: '2026-11-07', latest_report_date: '2026-11-03', reliability_status: 'limited evidence', prediction_inr_per_quintal: '1000.00', model_version: 'TEST_ONLY', intervals: [{ nominal_level: '.9', lower_inr_per_quintal: '900', upper_inr_per_quintal: '1100' }], flags: ['limited_unseen_interval_evidence'], data_source: { source: 'TEST_ONLY' } }) : json({ error: { code: 'missing_model', message: 'No saved model', request_id: 'TEST_ONLY' } }, 503);
   if (path === '/api/v1/recommend') { submitted.push(await request.clone().json()); return json(nextResult, nextResult.optimization.recommended_plan ? 200 : 409); }
   throw new Error(`Unexpected test request ${path}`);
 });
 const show = (path = '/') => render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>);
-beforeEach(() => { setLanguage('en'); research = false; offline = false; rows = []; model = false; submitted = []; nextResult = recommendation; vi.stubGlobal('fetch', mockFetch); mockFetch.mockClear(); });
+beforeEach(() => { setLanguage('en'); research = false; historical = false; staleReference = false; offline = false; rows = []; model = false; submitted = []; nextResult = recommendation; vi.stubGlobal('fetch', mockFetch); mockFetch.mockClear(); });
 afterEach(() => { vi.unstubAllGlobals(); setLanguage('en'); });
 
 describe('SAMAY farmer dashboard and Kannada journey', () => {
@@ -86,20 +94,22 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getByLabelText(/ಇಂದು ಖರೀದಿದಾರರಿಂದ ನಿರೀಕ್ಷಿಸುವ ಬೆಲೆ/)).toHaveValue('1000');
     expect(submitted).toHaveLength(0);
   });
-  it('allows quantity-only input with auto-projected reference price and submits successfully', async () => {
+  it('requires a manual buyer quote and acknowledgment when no observation is available', async () => {
     show('/advisor');
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.change(screen.getByLabelText(/Harvest quantity/), { target: { value: '30' } });
+    fireEvent.change(screen.getByLabelText(/Expected buyer price today/), { target: { value: '1400' } });
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.change(screen.getByLabelText(/Immediate net cash needed/), { target: { value: '10000' } });
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: /I understand these are my inputs/ }));
     const calcBtn = screen.getByRole('button', { name: 'Calculate my sale plan' });
     expect(calcBtn).not.toBeDisabled();
     fireEvent.click(calcBtn);
     expect(await screen.findByRole('heading', { name: 'Keep today’s cash needs covered.' })).toBeInTheDocument();
     expect(submitted).toHaveLength(1);
-    const sub = submitted[0] as any;
+    const sub = submitted[0] as Record<string, unknown>;
     expect(sub.total_quantity_quintals).toBe('30');
     expect(sub.today_price_inr_per_quintal).toBe('1400');
   });
@@ -165,12 +175,43 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    expect(screen.getAllByText(/Shivamogga MAMCOS Central Godown/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/No verified storage facility or tariff is configured/i)).toBeInTheDocument();
     expect(screen.getAllByText(/730 days/i).length).toBeGreaterThan(0);
   });
 });
 
+describe('stale historical quotes', () => {
+  it('shows the dated reference but requires a current manually entered buyer quote', async () => {
+    staleReference = true; show('/advisor');
+    expect(await screen.findByText(/Historical price only/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.change(screen.getByLabelText(/Harvest quantity/), { target: { value: '20' } });
+    expect(screen.getByLabelText(/Expected buyer price today/)).toHaveValue('');
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(submitted).toHaveLength(0);
+  });
+});
+
+describe('frozen historical evaluation', () => {
+  it('shows dated actual predictions, provenance and identical amounts after language switching', async () => {
+    historical = true; show('/forecast');
+    expect(await screen.findByText(/TEST_ONLY_NAIVE/)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /Historical observed and frozen/ })).toBeInTheDocument();
+    expect(screen.getByText('Secondary mirror: India Data Portal')).toBeInTheDocument();
+    expect(screen.getAllByText('₹10.00').length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: 'ಕನ್ನಡ' }));
+    expect(screen.getAllByText('₹10.00').length).toBeGreaterThan(0);
+    expect(screen.getByRole('heading', { name: 'ಹಿಂದಿನ ಪರೀಕ್ಷೆ: ನಿಜವಾದ ಮತ್ತು ಮುನ್ಸೂಚಿತ ಬೆಲೆಗಳು' })).toBeInTheDocument();
+  });
+});
+
 describe('deterministic explanation and request construction', () => {
+  it('preserves zero loss assumptions and never inserts a missing buyer quote', () => {
+    expect(getEffectiveAdvisorValues({ ...exampleAdvisor, loss: '0' }).loss).toBe('0');
+    expect(getEffectiveAdvisorValues(blankAdvisor).price).toBe('');
+    expect(validateAdvisor({ ...exampleAdvisor, price: '' }).price).toBeTruthy();
+  });
+
   it('keeps every currency amount identical in both languages', () => {
     const english = explainRecommendation(conditional, 'en').join(' '), kannada = explainRecommendation(conditional, 'kn').join(' ');
     expect(english.match(/₹[-\d.]+/g)).toEqual(kannada.match(/₹[-\d.]+/g));

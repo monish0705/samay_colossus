@@ -21,6 +21,19 @@ from app.prices import router as prices_router
 @asynccontextmanager
 async def lifespan(application):
     if get_settings().environment != "test":
+        from pathlib import Path
+
+        from sqlalchemy import inspect
+        from sqlalchemy.engine import make_url
+
+        from app.db import engine
+        from app.provenance_repair import repair
+
+        url = make_url(get_settings().database_url)
+        if url.get_backend_name() == "sqlite" and url.database and url.database != ":memory:" and inspect(engine).has_table("import_batches"):
+            corrected = repair(Path(url.database))
+            if corrected["corrected_observations"]:
+                logging.getLogger("samay.api").warning(json.dumps({"event":"legacy_synthetic_data_reclassified", **corrected}))
         from app.readiness import check
         result = check()
         application.state.readiness = result

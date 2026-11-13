@@ -305,5 +305,7 @@ def scenarios_from_reliability(response, *, adverse_inr_per_quintal: Decimal,
         upper_inr_per_quintal=money(D(str(interval.upper_inr_per_quintal)) * multiplier),
         reliability_status=response.reliability_status, market=response.market, commodity=response.commodity,
         variety=response.variety, grade=response.grade, target_date=response.target_date, issued_at=response.timestamp,
-        model_version=response.model_version, source=str(response.data_source), flags=tuple(response.flags),
+        model_version=response.model_version,
+        source="Saved forecast service: " + str(response.data_source.get("source") or response.data_source.get("mode") or "official archived observations")[:800] + "; full source lineage is in predictions.data_source",
+        flags=tuple(response.flags),
         price_basis_assumption=price_basis_assumption, adverse_assumption=adverse_assumption)

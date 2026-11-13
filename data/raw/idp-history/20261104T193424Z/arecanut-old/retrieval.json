@@ -1,0 +1,48 @@
+{
+  "source_page": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+  "download_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+  "api_url": "https://ckandev.indiadataportal.com/api/action/datastore_search",
+  "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+  "pages": [
+    {
+      "file": "page-000000.json",
+      "sha256": "f21c20092b30d049052fc6978bc594b6dbbfcbfcde7bf847e4b7c9a9b8cb858e",
+      "request": {
+        "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Arecanut(Betelnut/Supari)",
+          "market_center": "Shimoga"
+        },
+        "limit": 1000,
+        "offset": 0,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 1000,
+      "fetched_at": "2026-11-04T19:36:17.889332+00:00"
+    },
+    {
+      "file": "page-001000.json",
+      "sha256": "025695f00a882118d00d696d98788b9b75c08361a93ae01c4fa42179151c508f",
+      "request": {
+        "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Arecanut(Betelnut/Supari)",
+          "market_center": "Shimoga"
+        },
+        "limit": 1000,
+        "offset": 1000,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 64,
+      "fetched_at": "2026-11-04T19:36:21.601702+00:00"
+    }
+  ],
+  "records": 1064,
+  "conversion": "Map documented headers only; preserve all observed dates, varieties, grades, prices and units. Grade missing in old source is explicitly unspecified.",
+  "first_date": "2021-01-01",
+  "last_date": "2025-10-23"
+}

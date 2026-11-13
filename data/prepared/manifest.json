@@ -1,11 +1,14 @@
 {
-  "created_at": "2026-11-04T10:49:05.662024+00:00",
-  "database_sha256": "cf42a98497373d5a7a0ca223069b78742bb6ef889a9a5278c390c86c9f4e8680",
+  "created_at": "2026-11-04T19:59:07.981067+00:00",
+  "database_sha256": "490514bc879fe577d8a171ffda6123de279758f7115484b36000b127bd829bbc",
   "observation_counts": {
+    "demo": 7305,
     "fixture": 3,
-    "official": 9247
+    "official": 1943,
+    "secondary": 5834
   },
   "recommendation_history_rows": 0,
-  "archive_paths": "Repository-relative; start commands run from repository root",
-  "models": "Six explicitly retrospective research champions; not validated production forecasts"
+  "archive_paths": "Repository-relative; run from repository root",
+  "models": "Research-only frozen champions and refits; not validated live recommendations",
+  "provenance": "Official government exports and separately labeled India Data Portal / ISB AGMARKNET secondary mirrors; synthetic legacy rows remain demo and excluded"
 }

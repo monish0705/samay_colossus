@@ -1,0 +1,8 @@
+{"commodity": "Copra", "source": "old", "status": "already_imported", "counts": {"records": 1259, "inserted": 1259, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 0, "filtered": 0}}
+{"commodity": "Arecanut(Betelnut/Supari)", "source": "old", "status": "already_imported", "counts": {"records": 1064, "inserted": 1064, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 0, "filtered": 0}}
+{"commodity": "Onion", "source": "old", "status": "already_imported", "counts": {"records": 1299, "inserted": 1299, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 0, "filtered": 0}}
+{"commodity": "Potato", "source": "old", "status": "already_imported", "counts": {"records": 993, "inserted": 993, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 0, "filtered": 0}}
+{"commodity": "Copra", "source": "new", "status": "already_imported", "counts": {"records": 121, "inserted": 121, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 0, "filtered": 0}}
+{"commodity": "Arecanut(Betelnut/Supari)", "source": "new", "status": "already_imported", "counts": {"records": 598, "inserted": 597, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 1, "filtered": 0}}
+{"commodity": "Onion", "source": "new", "status": "already_imported", "counts": {"records": 203, "inserted": 201, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 2, "filtered": 0}}
+{"commodity": "Potato", "source": "new", "status": "already_imported", "counts": {"records": 300, "inserted": 300, "revised": 0, "duplicates": 0, "stale": 0, "quarantined": 0, "filtered": 0}}

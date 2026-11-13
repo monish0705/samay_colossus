@@ -1,3 +1,36 @@
+> Updated data/model status: see [SECONDARY-MODELS](SECONDARY-MODELS.md). The initial missing-history statements and earlier verification counts below are historical.
+
+# Current research demo — 5 November 2026
+
+Use `python scripts/setup_local.py`, then `.\.venv\Scripts\python.exe scripts/start_local.py`.
+The sample environment explicitly enables the saved research registry. Follow
+`docs/CORRECTIONS.md` if an existing `.env` needs the new entries.
+
+1. Open Dashboard: verify official source/report dates, not fabricated live prices.
+2. Select Kolar APMC / Tomato / tomato / local. On Forecast request 3 days.
+   The saved mean-14 baseline currently returns limited-evidence research output,
+   with dated source lineage and a retrospective empirical band. A stale/missing
+   dataset must produce an explicit error. No guaranteed farmer realization is implied.
+3. Open Advisor and load the labeled 20-quintal, INR 10,000-cash example. This is
+   illustrative farmer input. Calculate with zero storage: the real backend selects
+   a feasible immediate sale and exposes its cost ledger.
+4. Enable holding, enter an actual or explicitly illustrative storage quote/loss
+   assumption and future-price scenario. Examine the separate scenario-best plan,
+   its immediate cash and adverse outcome. Limited research does not authorize
+   confident operational holding advice.
+5. Lower the future scenario price or increase costs and recalculate; compare the
+   resulting backend figures. Turn storage off and verify held quantity is zero.
+6. Switch Kannada/English: amounts must stay identical. Inspect Transparency and
+   `reports/corrected-model-readiness.md`; explain the source-vintage limitations.
+
+This flow works offline with prepared data/artifacts and installed dependencies.
+The last complete source date is 31 October 2026; forecasts must reject stale inputs
+once the freshness limit is exceeded. Do not freeze the clock silently. Any later
+historical replay must be explicitly configured and visibly labeled.
+
+The following original guide is retained as historical context; current availability
+and errors are governed by the status above.
+
 # SAMAY demonstration
 
 > Update: 1,943 official records are now imported and six research-only champions

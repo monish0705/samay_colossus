@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     cors_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     service_registry_path: Path | None = None
     research_registry_path: Path | None = None
+    enable_research_forecasts: bool = False
+    research_serving_registry_path: Path | None = None
     historical_demo_date: date | None = None
 
     @model_validator(mode="after")

@@ -1,0 +1,38 @@
+[
+  {
+    "line_number": 31,
+    "status": "quarantined",
+    "reason": "Impossible min/modal/max ordering",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Dharwad",
+      "Market": "Hubballi Apmc",
+      "Commodity": "Onion",
+      "Variety": "Puna",
+      "Grade": "Large",
+      "Arrival_Date": "2025-11-17",
+      "Min_Price": "1000.0",
+      "Max_Price": "1900.0",
+      "Modal_Price": "450.0",
+      "Price_Unit": "Rs./Quintal"
+    }
+  },
+  {
+    "line_number": 44,
+    "status": "quarantined",
+    "reason": "Impossible min/modal/max ordering",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Dharwad",
+      "Market": "Hubballi Apmc",
+      "Commodity": "Onion",
+      "Variety": "Puna",
+      "Grade": "Local",
+      "Arrival_Date": "2025-11-26",
+      "Min_Price": "1500.0",
+      "Max_Price": "2000.0",
+      "Modal_Price": "450.0",
+      "Price_Unit": "Rs./Quintal"
+    }
+  }
+]

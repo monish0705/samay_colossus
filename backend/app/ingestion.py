@@ -11,7 +11,7 @@ from typing import Literal
 from urllib.parse import urlsplit
 
 import pandas as pd
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -22,12 +22,26 @@ class SourceManifest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     source_label: str
     source_url: str
-    data_kind: Literal["official", "fixture"]
+    data_kind: Literal["official", "secondary", "fixture"]
     fetched_at: datetime
     price_unit: str
     unit_evidence: str
     date_format: Literal["%d/%m/%Y", "%d-%m-%Y", "%Y-%m-%d"] = "%d/%m/%Y"
     sha256: str | None = None
+    upstream_source_url: str | None = None
+    license: str | None = None
+
+    @model_validator(mode="after")
+    def secondary_provenance(self):
+        if self.data_kind == "secondary":
+            parsed = urlsplit(self.source_url)
+            if parsed.scheme != "https" or parsed.hostname != "ckandev.indiadataportal.com" or parsed.query or parsed.fragment or parsed.username:
+                raise ValueError("Secondary source must use the verified public India Data Portal archive")
+            if not re.fullmatch(r"/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/(21ecb9f0-7bf9-42d0-af24-df2e230e4a0a|078fd1ea-dab6-4aca-aed9-3a4b8b2c761d)/download/apmc-arrivals-and-prices-(old|new)-source.csv", parsed.path):
+                raise ValueError("Unverified secondary resource")
+            if self.upstream_source_url != "https://agmarknet.gov.in/" or self.license != "Open Data Commons Attribution License" or not self.sha256:
+                raise ValueError("Secondary source requires upstream attribution, license and archive hash")
+        return self
 
     @field_validator("fetched_at")
     @classmethod
@@ -47,9 +61,9 @@ def market_name(value: str) -> str:
     name = label(value)
     if name in {"kolar", "kolar apmc", "kolar (apmc)", "kolar a.p.m.c."}:
         return "Kolar APMC"
-    if name in {"shivamogga", "shivamogga mandi", "shivamogga apmc", "shimoga", "shimoga apmc", "mamcos", "shivamogga (apmc)", "shivamogga / mamcos", "shivamogga mandi (apmc / mamcos)"}:
+    if name in {"shivamogga", "shivamogga mandi", "shivamogga apmc", "shimoga", "shimoga apmc", "shivamogga (apmc)"}:
         return "Shivamogga Mandi"
-    if name in {"hubballi", "hubballi apmc", "hubli", "hubli apmc", "amargol", "amaragol", "apmc amargol in hubballi (hubli)", "hubli (amargol)", "hubballi (amargol)", "apmc amargol in hubballi", "apmc amargol"}:
+    if name in {"hubballi", "hubballi apmc", "hubli", "hubli apmc", "amargol", "amaragol", "apmc amargol in hubballi (hubli)", "hubli (amargol)", "hubli (amaragol)", "hubballi (amargol)", "apmc amargol in hubballi", "apmc amargol", "apmc hubballi"}:
         return "Hubballi APMC"
     if name in {"tiptur", "tiptur apmc", "tiptur mandi", "tiptur apmc mandi", "tiptur (apmc)"}:
         return "Tiptur APMC"
@@ -62,7 +76,7 @@ def commodity_name(value: str) -> str:
     name = label(value)
     if name in {"tomato", "tomatoes"}:
         return "Tomato"
-    if name in {"arecanut", "areca nut", "betelnut", "betel nut", "adike", "supari"}:
+    if name in {"arecanut", "areca nut", "betelnut", "betel nut", "adike", "supari", "arecanut(betelnut/supari)"}:
         return "Arecanut"
     if name in {"onion", "onions", "eerulli", "pyaz"}:
         return "Onion"
@@ -71,6 +85,22 @@ def commodity_name(value: str) -> str:
     if name in {"potato", "potatoes", "aaloo", "alugadde"}:
         return "Potato"
     raise ValueError(f"Unsupported commodity: {value!r}")
+
+
+def market_district(market: str) -> str:
+    return {"Kolar APMC": "Kolar", "Shivamogga Mandi": "Shivamogga",
+            "Hubballi APMC": "Dharwad", "Tiptur APMC": "Tumakuru",
+            "Bengaluru APMC": "Bengaluru Urban"}[market_name(market)]
+
+
+def district_name(value: str) -> str:
+    aliases = {"kolar": "Kolar", "shimoga": "Shivamogga", "shivamogga": "Shivamogga",
+               "dharwad": "Dharwad", "tumkur": "Tumakuru", "tumakuru": "Tumakuru",
+               "bangalore": "Bengaluru Urban", "bangalore urban": "Bengaluru Urban",
+               "bengaluru": "Bengaluru Urban", "bengaluru urban": "Bengaluru Urban"}
+    if label(value) not in aliases:
+        raise ValueError("outside_scope")
+    return aliases[label(value)]
 
 
 def unit_factor(value: str) -> Decimal:
@@ -107,10 +137,12 @@ REQUIRED = {"state", "district", "market", "commodity", "variety", "report_date"
 
 
 def normalize(row: dict, manifest: SourceManifest) -> dict:
-    valid_districts = {"kolar", "shivamogga", "shimoga", "dharwad", "tumakuru", "tumkur", "bengaluru", "bengaluru urban", "bangalore"}
-    if label(row["state"]) != "karnataka" or label(row["district"]) not in valid_districts:
+    if label(row["state"]) != "karnataka":
         raise ValueError("outside_scope")
     market = market_name(row["market"])
+    district = district_name(row["district"])
+    if district != market_district(market):
+        raise ValueError("Market/district mismatch")
     commodity = commodity_name(row["commodity"])
     try:
         observed = datetime.strptime(row["report_date"].strip(), manifest.date_format).date()
@@ -127,7 +159,7 @@ def normalize(row: dict, manifest: SourceManifest) -> dict:
         raise ValueError("Price exceeds database precision")
     if not row["variety"].strip():
         raise ValueError("Missing variety")
-    return {"market": market, "commodity": commodity, "state": "Karnataka", "district": row["district"].strip().title(),
+    return {"market": market, "commodity": commodity, "state": "Karnataka", "district": district,
             "report_date": observed.isoformat(), "variety": label(row["variety"]),
             "grade": label(row.get("grade", "")) or "unspecified", "raw_unit": raw_unit,
             "price_unit": "INR/quintal", **{k: str(v.quantize(Decimal("0.01"))) for k, v in prices.items()}}
@@ -186,12 +218,17 @@ def import_csv(session: Session, path: Path, manifest: SourceManifest, output: P
         try:
             if None in raw or any(v is None for v in raw.values()):
                 raise ValueError("Malformed CSV row width")
-            if manifest.data_kind == "official" and any("demo_data" in str(v).casefold() or "test_fixture" in str(v).casefold() for v in raw.values()):
+            if manifest.data_kind in {"official", "secondary"} and any("demo_data" in str(v).casefold() or "test_fixture" in str(v).casefold() for v in raw.values()):
                 raise ValueError("Fixture/demo marker cannot enter official observations")
             row = {alias: raw[name] for name, alias in zip(reader.fieldnames, headers, strict=False) if alias}
-            if label(row["state"]) != "karnataka" or label(row["district"]) != "kolar":
+            if label(row["state"]) != "karnataka":
                 raise LookupError("outside_scope")
-            if label(row["market"]) not in {"kolar", "kolar apmc", "kolar (apmc)", "kolar a.p.m.c."} or label(row["commodity"]) != "tomato":
+            try:
+                requested = (market_name(market), commodity_name(commodity))
+                actual = (market_name(row["market"]), commodity_name(row["commodity"]))
+            except ValueError as exc:
+                raise LookupError("outside_scope") from exc
+            if actual != requested:
                 raise LookupError("outside_scope")
             normalized = normalize(row, manifest)
             observed = date.fromisoformat(normalized["report_date"])
@@ -199,14 +236,19 @@ def import_csv(session: Session, path: Path, manifest: SourceManifest, output: P
                 raise LookupError("outside_date_range")
             if Decimal(normalized["max"]) > suspicious_threshold or Decimal(normalized["modal"]) == 0:
                 raise ValueError("Suspicious zero modal or price above review threshold")
-            m = session.scalar(select(Market).where(Market.name == normalized["market"], Market.state == "Karnataka", Market.district == "Kolar"))
+            m = session.scalar(select(Market).where(Market.name == normalized["market"], Market.state == "Karnataka", Market.district == normalized["district"]))
             c = session.scalar(select(Commodity).where(Commodity.name == normalized["commodity"]))
             if m is None:
-                m = Market(name=normalized["market"], state="Karnataka", district="Kolar", data_source=manifest.source_label)
+                m = Market(name=normalized["market"], state="Karnataka", district=normalized["district"], data_source=manifest.source_label)
                 session.add(m)
             if c is None:
                 c = Commodity(name=normalized["commodity"], data_source=manifest.source_label)
                 session.add(c)
+            if manifest.data_kind in {"official", "secondary"}:
+                if m.data_source.startswith("DEMO_DATA"):
+                    m.data_source = manifest.source_label
+                if c.data_source.startswith("DEMO_DATA"):
+                    c.data_source = manifest.source_label
             session.flush()
             observation = session.scalar(select(MandiObservation).where(
                 MandiObservation.market_id == m.id, MandiObservation.commodity_id == c.id,

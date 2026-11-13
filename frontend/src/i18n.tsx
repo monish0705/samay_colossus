@@ -26,6 +26,12 @@ export function t(text: string, values: Record<string, string | number> = {}, lo
   return `${text.match(/^\s*/)?.[0] || ''}${translated}${text.match(/\s*$/)?.[0] || ''}`;
 }
 export const warningMessages: Record<string, string> = {
+  retrospective_research_only: 'Research forecast only; not validated farmer advice.',
+  historical_publication_unverified: 'Original historical publication and revision times are unverified.',
+  interval_coverage_not_guaranteed: 'Empirical interval coverage is not guaranteed.',
+  research_forecast_unavailable: 'No usable research forecast is available for this series and date.',
+  scenario_only_simulation: 'User-entered future price assumption; not a model forecast.',
+
   invalid_request: 'Please check the submitted values and required fields.', scenario_assumptions_invalid: 'The adverse price or realization factor conflicts with the forecast bounds. Review those assumptions.',
   economic_assumptions_invalid: 'Economic assumptions conflict with the available forecast. Review costs and price mapping.', future_decision: 'The decision date cannot be in the future.',
   unsupported_series: 'This market, crop, variety or grade is unsupported.', market_source_unavailable: 'The market source evidence is unavailable.',

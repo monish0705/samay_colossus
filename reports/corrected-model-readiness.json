@@ -1,0 +1,1654 @@
+{
+  "created_at": "2026-11-04T19:59:09.419655+00:00",
+  "mode": "retrospective_research_only",
+  "evaluations": [
+    {
+      "scope": {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "variety": "tomato",
+        "grade": "faq"
+      },
+      "horizon": 1,
+      "selected": "naive",
+      "final_metrics": {
+        "n": 136,
+        "mae_inr_per_quintal": 108.30882352941177,
+        "rmse_inr_per_quintal": 174.17241288954088,
+        "smape_pct": 15.338478485405025,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 14.86827495710104,
+        "directional_accuracy": 0.22794117647058823,
+        "p90_absolute_error_inr_per_quintal": 235.0,
+        "p90_overprediction_inr_per_quintal": 130.0
+      },
+      "naive_same_timestamps": {
+        "n": 136,
+        "mae_inr_per_quintal": 108.30882352941177,
+        "rmse_inr_per_quintal": 174.17241288954088,
+        "smape_pct": 15.338478485405025,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 14.86827495710104,
+        "directional_accuracy": 0.22794117647058823,
+        "p90_absolute_error_inr_per_quintal": 235.0,
+        "p90_overprediction_inr_per_quintal": 130.0
+      },
+      "status": "evaluated",
+      "final_n": 136,
+      "source_kind": "official",
+      "original_report": "models/research/research-snapshot-v1-6dd9ea73854cc050/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "variety": "tomato",
+        "grade": "faq"
+      },
+      "horizon": 3,
+      "selected": "naive",
+      "final_metrics": {
+        "n": 132,
+        "mae_inr_per_quintal": 138.78787878787878,
+        "rmse_inr_per_quintal": 209.9170110190013,
+        "smape_pct": 18.558961383399836,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 18.909991742361683,
+        "directional_accuracy": 0.20454545454545456,
+        "p90_absolute_error_inr_per_quintal": 324.00000000000034,
+        "p90_overprediction_inr_per_quintal": 140.0
+      },
+      "naive_same_timestamps": {
+        "n": 132,
+        "mae_inr_per_quintal": 138.78787878787878,
+        "rmse_inr_per_quintal": 209.9170110190013,
+        "smape_pct": 18.558961383399836,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 18.909991742361683,
+        "directional_accuracy": 0.20454545454545456,
+        "p90_absolute_error_inr_per_quintal": 324.00000000000034,
+        "p90_overprediction_inr_per_quintal": 140.0
+      },
+      "status": "evaluated",
+      "final_n": 132,
+      "source_kind": "official",
+      "original_report": "models/research/research-snapshot-v1-6dd9ea73854cc050/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "variety": "tomato",
+        "grade": "faq"
+      },
+      "horizon": 7,
+      "selected": "naive",
+      "final_metrics": {
+        "n": 128,
+        "mae_inr_per_quintal": 140.3125,
+        "rmse_inr_per_quintal": 235.93894867104922,
+        "smape_pct": 18.130796410827667,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 18.97717666948436,
+        "directional_accuracy": 0.2109375,
+        "p90_absolute_error_inr_per_quintal": 340.0,
+        "p90_overprediction_inr_per_quintal": 132.99999999999997
+      },
+      "naive_same_timestamps": {
+        "n": 128,
+        "mae_inr_per_quintal": 140.3125,
+        "rmse_inr_per_quintal": 235.93894867104922,
+        "smape_pct": 18.130796410827667,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 18.97717666948436,
+        "directional_accuracy": 0.2109375,
+        "p90_absolute_error_inr_per_quintal": 340.0,
+        "p90_overprediction_inr_per_quintal": 132.99999999999997
+      },
+      "status": "evaluated",
+      "final_n": 128,
+      "source_kind": "official",
+      "original_report": "models/research/research-snapshot-v1-6dd9ea73854cc050/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "variety": "tomato",
+        "grade": "local"
+      },
+      "horizon": 1,
+      "selected": "naive",
+      "final_metrics": {
+        "n": 59,
+        "mae_inr_per_quintal": 134.74576271186442,
+        "rmse_inr_per_quintal": 184.2483585466059,
+        "smape_pct": 11.892033746718925,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 11.44378868576364,
+        "directional_accuracy": 0.2711864406779661,
+        "p90_absolute_error_inr_per_quintal": 330.0,
+        "p90_overprediction_inr_per_quintal": 200.0
+      },
+      "naive_same_timestamps": {
+        "n": 59,
+        "mae_inr_per_quintal": 134.74576271186442,
+        "rmse_inr_per_quintal": 184.2483585466059,
+        "smape_pct": 11.892033746718925,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 11.44378868576364,
+        "directional_accuracy": 0.2711864406779661,
+        "p90_absolute_error_inr_per_quintal": 330.0,
+        "p90_overprediction_inr_per_quintal": 200.0
+      },
+      "status": "evaluated",
+      "final_n": 59,
+      "source_kind": "official",
+      "original_report": "models/research/research-snapshot-v1-bf5682f4a2bfbde9/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "variety": "tomato",
+        "grade": "local"
+      },
+      "horizon": 3,
+      "selected": "mean_14",
+      "final_metrics": {
+        "n": 57,
+        "mae_inr_per_quintal": 212.81954887218046,
+        "rmse_inr_per_quintal": 256.5020733663687,
+        "smape_pct": 18.285202745720497,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 18.030193647018855,
+        "directional_accuracy": 0.47368421052631576,
+        "p90_absolute_error_inr_per_quintal": 416.14285714285734,
+        "p90_overprediction_inr_per_quintal": 377.2857142857142
+      },
+      "naive_same_timestamps": {
+        "n": 57,
+        "mae_inr_per_quintal": 174.73684210526315,
+        "rmse_inr_per_quintal": 232.3865503249485,
+        "smape_pct": 15.204196801551678,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 14.803804994054698,
+        "directional_accuracy": 0.22807017543859648,
+        "p90_absolute_error_inr_per_quintal": 334.0,
+        "p90_overprediction_inr_per_quintal": 330.0
+      },
+      "status": "evaluated",
+      "final_n": 57,
+      "source_kind": "official",
+      "original_report": "models/research/research-snapshot-v1-bf5682f4a2bfbde9/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "variety": "tomato",
+        "grade": "local"
+      },
+      "horizon": 7,
+      "selected": "mean_14",
+      "final_metrics": {
+        "n": 53,
+        "mae_inr_per_quintal": 240.3234501347709,
+        "rmse_inr_per_quintal": 287.229808079194,
+        "smape_pct": 20.44566827092882,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 20.208064187121778,
+        "directional_accuracy": 0.5849056603773585,
+        "p90_absolute_error_inr_per_quintal": 449.9999999999999,
+        "p90_overprediction_inr_per_quintal": 378.0000000000001
+      },
+      "naive_same_timestamps": {
+        "n": 53,
+        "mae_inr_per_quintal": 240.56603773584905,
+        "rmse_inr_per_quintal": 296.1800829046983,
+        "smape_pct": 20.778289850549697,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 20.228462636839602,
+        "directional_accuracy": 0.11320754716981132,
+        "p90_absolute_error_inr_per_quintal": 494.0000000000001,
+        "p90_overprediction_inr_per_quintal": 386.0000000000003
+      },
+      "status": "evaluated",
+      "final_n": 53,
+      "source_kind": "official",
+      "original_report": "models/research/research-snapshot-v1-bf5682f4a2bfbde9/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Tiptur APMC",
+        "commodity": "Copra",
+        "variety": "copra",
+        "grade": "unspecified"
+      },
+      "horizon": 1,
+      "selected": "naive",
+      "final_metrics": {
+        "n": 39,
+        "mae_inr_per_quintal": 491.0769230769231,
+        "rmse_inr_per_quintal": 699.0668138714713,
+        "smape_pct": 2.740501588484595,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.851820581889331,
+        "directional_accuracy": 0.02564102564102564,
+        "p90_absolute_error_inr_per_quintal": 1033.2000000000005,
+        "p90_overprediction_inr_per_quintal": 423.60000000000025
+      },
+      "naive_same_timestamps": {
+        "n": 39,
+        "mae_inr_per_quintal": 491.0769230769231,
+        "rmse_inr_per_quintal": 699.0668138714713,
+        "smape_pct": 2.740501588484595,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.851820581889331,
+        "directional_accuracy": 0.02564102564102564,
+        "p90_absolute_error_inr_per_quintal": 1033.2000000000005,
+        "p90_overprediction_inr_per_quintal": 423.60000000000025
+      },
+      "status": "evaluated",
+      "final_n": 39,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-ace0b738d62a1d97/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Tiptur APMC",
+        "commodity": "Copra",
+        "variety": "copra",
+        "grade": "unspecified"
+      },
+      "horizon": 3,
+      "selected": "blend_naive_mean14_25",
+      "final_metrics": {
+        "n": 38,
+        "mae_inr_per_quintal": 696.699718045113,
+        "rmse_inr_per_quintal": 1053.4524648531724,
+        "smape_pct": 3.9127195554663423,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 4.053271187678828,
+        "directional_accuracy": 0.4473684210526316,
+        "p90_absolute_error_inr_per_quintal": 1385.5928571428565,
+        "p90_overprediction_inr_per_quintal": 229.1107142857153
+      },
+      "naive_same_timestamps": {
+        "n": 38,
+        "mae_inr_per_quintal": 618.0263157894736,
+        "rmse_inr_per_quintal": 929.1137967807931,
+        "smape_pct": 3.502041700887022,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 3.595563761738976,
+        "directional_accuracy": 0.02631578947368421,
+        "p90_absolute_error_inr_per_quintal": 1003.600000000001,
+        "p90_overprediction_inr_per_quintal": 534.3000000000005
+      },
+      "status": "evaluated",
+      "final_n": 38,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-ace0b738d62a1d97/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Tiptur APMC",
+        "commodity": "Copra",
+        "variety": "copra",
+        "grade": "unspecified"
+      },
+      "horizon": 7,
+      "selected": "blend_naive_mean14_25",
+      "final_metrics": {
+        "n": 36,
+        "mae_inr_per_quintal": 1042.0992063492067,
+        "rmse_inr_per_quintal": 1504.3450561711247,
+        "smape_pct": 5.70238385442212,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 5.992730469183225,
+        "directional_accuracy": 0.3333333333333333,
+        "p90_absolute_error_inr_per_quintal": 2922.6339285714284,
+        "p90_overprediction_inr_per_quintal": 141.32142857142753
+      },
+      "naive_same_timestamps": {
+        "n": 36,
+        "mae_inr_per_quintal": 900.1111111111111,
+        "rmse_inr_per_quintal": 1335.9184938544051,
+        "smape_pct": 4.926953888747898,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 5.176208990795792,
+        "directional_accuracy": 0.027777777777777776,
+        "p90_absolute_error_inr_per_quintal": 2580.0,
+        "p90_overprediction_inr_per_quintal": 397.0
+      },
+      "status": "evaluated",
+      "final_n": 36,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-ace0b738d62a1d97/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Shivamogga Mandi",
+        "commodity": "Arecanut",
+        "variety": "bette",
+        "grade": "unspecified"
+      },
+      "horizon": 1,
+      "selected": "median_14",
+      "final_metrics": {
+        "n": 163,
+        "mae_inr_per_quintal": 1689.717791411043,
+        "rmse_inr_per_quintal": 2239.1643989491868,
+        "smape_pct": 2.846320917614108,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.8804630427170794,
+        "directional_accuracy": 0.6073619631901841,
+        "p90_absolute_error_inr_per_quintal": 3830.300000000001,
+        "p90_overprediction_inr_per_quintal": 2167.6000000000017
+      },
+      "naive_same_timestamps": {
+        "n": 163,
+        "mae_inr_per_quintal": 1471.2576687116564,
+        "rmse_inr_per_quintal": 2041.0784786059112,
+        "smape_pct": 2.5549432532250975,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.508053926270755,
+        "directional_accuracy": 0.024539877300613498,
+        "p90_absolute_error_inr_per_quintal": 3704.000000000001,
+        "p90_overprediction_inr_per_quintal": 2100.8
+      },
+      "status": "evaluated",
+      "final_n": 163,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-52875c5dff4eac15/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Shivamogga Mandi",
+        "commodity": "Arecanut",
+        "variety": "bette",
+        "grade": "unspecified"
+      },
+      "horizon": 3,
+      "selected": "median_14",
+      "final_metrics": {
+        "n": 161,
+        "mae_inr_per_quintal": 1725.7888198757764,
+        "rmse_inr_per_quintal": 2317.9119894170335,
+        "smape_pct": 2.89806687584525,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.939166928564636,
+        "directional_accuracy": 0.6086956521739131,
+        "p90_absolute_error_inr_per_quintal": 3773.0,
+        "p90_overprediction_inr_per_quintal": 2063.0
+      },
+      "naive_same_timestamps": {
+        "n": 161,
+        "mae_inr_per_quintal": 1731.0062111801242,
+        "rmse_inr_per_quintal": 2236.345110535525,
+        "smape_pct": 3.000806011104972,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.9480525951065153,
+        "directional_accuracy": 0.0,
+        "p90_absolute_error_inr_per_quintal": 3791.0,
+        "p90_overprediction_inr_per_quintal": 2010.0
+      },
+      "status": "evaluated",
+      "final_n": 161,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-52875c5dff4eac15/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Shivamogga Mandi",
+        "commodity": "Arecanut",
+        "variety": "bette",
+        "grade": "unspecified"
+      },
+      "horizon": 7,
+      "selected": "median_14",
+      "final_metrics": {
+        "n": 158,
+        "mae_inr_per_quintal": 1834.503164556962,
+        "rmse_inr_per_quintal": 2475.2785756150224,
+        "smape_pct": 3.0732277911898214,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 3.119567892843693,
+        "directional_accuracy": 0.5759493670886076,
+        "p90_absolute_error_inr_per_quintal": 4036.7500000000005,
+        "p90_overprediction_inr_per_quintal": 1765.9000000000003
+      },
+      "naive_same_timestamps": {
+        "n": 158,
+        "mae_inr_per_quintal": 1728.2974683544303,
+        "rmse_inr_per_quintal": 2227.0459133120717,
+        "smape_pct": 2.957830418625163,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 2.938965380778503,
+        "directional_accuracy": 0.006329113924050633,
+        "p90_absolute_error_inr_per_quintal": 3759.000000000001,
+        "p90_overprediction_inr_per_quintal": 1773.000000000002
+      },
+      "status": "evaluated",
+      "final_n": 158,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-52875c5dff4eac15/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Hubballi APMC",
+        "commodity": "Onion",
+        "variety": "local",
+        "grade": "unspecified"
+      },
+      "horizon": 1,
+      "selected": "blend_naive_mean14_25",
+      "final_metrics": {
+        "n": 68,
+        "mae_inr_per_quintal": 236.58613445378154,
+        "rmse_inr_per_quintal": 322.87581661481227,
+        "smape_pct": 22.633992651451617,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 22.322543558841605,
+        "directional_accuracy": 0.6617647058823529,
+        "p90_absolute_error_inr_per_quintal": 424.0357142857142,
+        "p90_overprediction_inr_per_quintal": 317.8571428571429
+      },
+      "naive_same_timestamps": {
+        "n": 68,
+        "mae_inr_per_quintal": 253.38235294117646,
+        "rmse_inr_per_quintal": 354.61039100929446,
+        "smape_pct": 24.277002005423075,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 23.907312335229637,
+        "directional_accuracy": 0.10294117647058823,
+        "p90_absolute_error_inr_per_quintal": 415.0000000000002,
+        "p90_overprediction_inr_per_quintal": 400.0
+      },
+      "status": "evaluated",
+      "final_n": 68,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-20d2b14759154880/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Hubballi APMC",
+        "commodity": "Onion",
+        "variety": "local",
+        "grade": "unspecified"
+      },
+      "horizon": 3,
+      "selected": "median_14",
+      "final_metrics": {
+        "n": 65,
+        "mae_inr_per_quintal": 259.2307692307692,
+        "rmse_inr_per_quintal": 342.2122598172526,
+        "smape_pct": 24.630840712254063,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 24.237629459148447,
+        "directional_accuracy": 0.5384615384615384,
+        "p90_absolute_error_inr_per_quintal": 600.0,
+        "p90_overprediction_inr_per_quintal": 580.0000000000001
+      },
+      "naive_same_timestamps": {
+        "n": 65,
+        "mae_inr_per_quintal": 225.3846153846154,
+        "rmse_inr_per_quintal": 330.2982335358805,
+        "smape_pct": 21.482006599844283,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 21.073072497123132,
+        "directional_accuracy": 0.15384615384615385,
+        "p90_absolute_error_inr_per_quintal": 500.0,
+        "p90_overprediction_inr_per_quintal": 300.0
+      },
+      "status": "evaluated",
+      "final_n": 65,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-20d2b14759154880/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Hubballi APMC",
+        "commodity": "Onion",
+        "variety": "local",
+        "grade": "unspecified"
+      },
+      "horizon": 7,
+      "selected": "median_14",
+      "final_metrics": {
+        "n": 59,
+        "mae_inr_per_quintal": 265.8474576271187,
+        "rmse_inr_per_quintal": 353.4964579210262,
+        "smape_pct": 24.940465362021328,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 24.75145968123718,
+        "directional_accuracy": 0.5423728813559322,
+        "p90_absolute_error_inr_per_quintal": 630.0000000000001,
+        "p90_overprediction_inr_per_quintal": 565.0000000000002
+      },
+      "naive_same_timestamps": {
+        "n": 59,
+        "mae_inr_per_quintal": 277.1186440677966,
+        "rmse_inr_per_quintal": 427.1763816235036,
+        "smape_pct": 24.240629018944173,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 25.800852138235758,
+        "directional_accuracy": 0.1864406779661017,
+        "p90_absolute_error_inr_per_quintal": 530.0000000000005,
+        "p90_overprediction_inr_per_quintal": 400.0
+      },
+      "status": "evaluated",
+      "final_n": 59,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-20d2b14759154880/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Bengaluru APMC",
+        "commodity": "Potato",
+        "variety": "local",
+        "grade": "unspecified"
+      },
+      "horizon": 1,
+      "selected": "naive",
+      "final_metrics": {
+        "n": 31,
+        "mae_inr_per_quintal": 161.29032258064515,
+        "rmse_inr_per_quintal": 246.26238301925568,
+        "smape_pct": 7.0927943749488565,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 7.473841554559043,
+        "directional_accuracy": 0.41935483870967744,
+        "p90_absolute_error_inr_per_quintal": 500.0,
+        "p90_overprediction_inr_per_quintal": 500.0
+      },
+      "naive_same_timestamps": {
+        "n": 31,
+        "mae_inr_per_quintal": 161.29032258064515,
+        "rmse_inr_per_quintal": 246.26238301925568,
+        "smape_pct": 7.0927943749488565,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 7.473841554559043,
+        "directional_accuracy": 0.41935483870967744,
+        "p90_absolute_error_inr_per_quintal": 500.0,
+        "p90_overprediction_inr_per_quintal": 500.0
+      },
+      "status": "evaluated",
+      "final_n": 31,
+      "source_kind": "secondary",
+      "original_report": "models/research/research-snapshot-v1-8e1e377ccdb250bd/comparison.json",
+      "interpretation": "Original consumed chronological holdout; metrics recomputed for integrity, not a new independent evaluation or tuning opportunity"
+    },
+    {
+      "scope": {
+        "market": "Bengaluru APMC",
+        "commodity": "Potato",
+        "variety": "local",
+        "grade": "unspecified"
+      },
+      "horizon": 3,
+      "selected": "naive",
+      "status": "insufficient_final_samples",
+      "final_n": 29,
+      "source_kind": "secondary",
+      "final_metrics": null,
+      "naive_same_timestamps": null,
+      "original_report": "models/research/research-snapshot-v1-8e1e377ccdb250bd/comparison.json"
+    },
+    {
+      "scope": {
+        "market": "Bengaluru APMC",
+        "commodity": "Potato",
+        "variety": "local",
+        "grade": "unspecified"
+      },
+      "horizon": 7,
+      "selected": "naive",
+      "status": "insufficient_final_samples",
+      "final_n": 26,
+      "source_kind": "secondary",
+      "final_metrics": null,
+      "naive_same_timestamps": null,
+      "original_report": "models/research/research-snapshot-v1-8e1e377ccdb250bd/comparison.json"
+    }
+  ],
+  "refits": [
+    {
+      "version": "a12f3115f0bc1266-champion-1d",
+      "candidate": "naive",
+      "horizon": 1,
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "training_samples": 1529,
+      "training_window": [
+        "2021-01-31",
+        "2025-06-29"
+      ],
+      "dataset_fingerprint": "3a1b43184a7ceb4273f1632927491222eeee56d44a9501c97c9daa5270cd6ef3",
+      "trained_before": "2026-11-04T18:46:25.564119+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 140.0,
+          "0.9": 200.0
+        },
+        "calibration_n": 68,
+        "calibration_blocks": 12,
+        "diagnostic_n": 67,
+        "calibration_end": "2025-04-02",
+        "diagnostic_start": "2025-04-03",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.7761194029850746,
+            "mean_width_inr_per_quintal": 279.4029850746269,
+            "n": 67
+          },
+          "0.9": {
+            "coverage": 0.8208955223880597,
+            "mean_width_inr_per_quintal": 398.5074626865672,
+            "n": 67
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "6d9e0366a16177e6-champion-3d",
+      "candidate": "naive",
+      "horizon": 3,
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "training_samples": 1525,
+      "training_window": [
+        "2021-01-31",
+        "2025-06-27"
+      ],
+      "dataset_fingerprint": "3a1b43184a7ceb4273f1632927491222eeee56d44a9501c97c9daa5270cd6ef3",
+      "trained_before": "2026-11-04T18:46:33.910958+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 200.0,
+          "0.9": 200.0
+        },
+        "calibration_n": 66,
+        "calibration_blocks": 12,
+        "diagnostic_n": 63,
+        "calibration_end": "2025-04-04",
+        "diagnostic_start": "2025-04-06",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.746031746031746,
+            "mean_width_inr_per_quintal": 400.0,
+            "n": 63
+          },
+          "0.9": {
+            "coverage": 0.746031746031746,
+            "mean_width_inr_per_quintal": 400.0,
+            "n": 63
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "55d83adaf57197a7-champion-7d",
+      "candidate": "naive",
+      "horizon": 7,
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "training_samples": 1521,
+      "training_window": [
+        "2021-01-31",
+        "2025-06-23"
+      ],
+      "dataset_fingerprint": "3a1b43184a7ceb4273f1632927491222eeee56d44a9501c97c9daa5270cd6ef3",
+      "trained_before": "2026-11-04T18:46:42.235222+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 200.0,
+          "0.9": 330.0
+        },
+        "calibration_n": 64,
+        "calibration_blocks": 13,
+        "diagnostic_n": 58,
+        "calibration_end": "2025-04-06",
+        "diagnostic_start": "2025-04-07",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.7241379310344828,
+            "mean_width_inr_per_quintal": 398.2758620689655,
+            "n": 58
+          },
+          "0.9": {
+            "coverage": 0.7931034482758621,
+            "mean_width_inr_per_quintal": 656.0344827586207,
+            "n": 58
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "b316e9f5fc2d154f-champion-1d",
+      "candidate": "naive",
+      "horizon": 1,
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "training_samples": 335,
+      "training_window": [
+        "2025-08-14",
+        "2026-10-30"
+      ],
+      "dataset_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248",
+      "trained_before": "2026-11-04T18:46:43.853677+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 330.0,
+          "0.9": 330.0
+        },
+        "calibration_n": 29,
+        "calibration_blocks": 5,
+        "diagnostic_n": 29,
+        "calibration_end": "2026-09-30",
+        "diagnostic_start": "2026-10-01",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.9310344827586207,
+            "mean_width_inr_per_quintal": 660.0,
+            "n": 29
+          },
+          "0.9": {
+            "coverage": 0.9310344827586207,
+            "mean_width_inr_per_quintal": 660.0,
+            "n": 29
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "1f3005b630413c3d-champion-3d",
+      "candidate": "mean_14",
+      "horizon": 3,
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "training_samples": 333,
+      "training_window": [
+        "2025-08-13",
+        "2026-10-28"
+      ],
+      "dataset_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248",
+      "trained_before": "2026-11-04T18:46:45.448668+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 486.4285714285711,
+          "0.9": 486.4285714285711
+        },
+        "calibration_n": 28,
+        "calibration_blocks": 4,
+        "diagnostic_n": 26,
+        "calibration_end": "2026-10-01",
+        "diagnostic_start": "2026-10-02",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.9615384615384616,
+            "mean_width_inr_per_quintal": 972.8571428571421,
+            "n": 26
+          },
+          "0.9": {
+            "coverage": 0.9615384615384616,
+            "mean_width_inr_per_quintal": 972.8571428571421,
+            "n": 26
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "61768c3f00bdacec-champion-7d",
+      "candidate": "mean_14",
+      "horizon": 7,
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "training_samples": 335,
+      "training_window": [
+        "2025-08-13",
+        "2026-10-24"
+      ],
+      "dataset_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248",
+      "trained_before": "2026-11-04T18:46:46.995282+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 595.7142857142858,
+          "0.9": 595.7142857142858
+        },
+        "calibration_n": 26,
+        "calibration_blocks": 4,
+        "diagnostic_n": 20,
+        "calibration_end": "2026-10-03",
+        "diagnostic_start": "2026-10-04",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1191.4285714285718,
+            "n": 20
+          },
+          "0.9": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1191.4285714285718,
+            "n": 20
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "0716f26aab53f06e-champion-1d",
+      "candidate": "naive",
+      "horizon": 1,
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "training_samples": 1078,
+      "training_window": [
+        "2021-02-07",
+        "2025-06-18"
+      ],
+      "dataset_fingerprint": "6f815d48161ef863ca1326359aded6fe92e0040bf43ee3033fa0c12b0f3c0415",
+      "trained_before": "2026-11-04T19:48:47.493537+00:00",
+      "empirical_calibration": {
+        "radii": {},
+        "reason": "Insufficient separated calibration/diagnostic observations"
+      }
+    },
+    {
+      "version": "3190c51f9377c92f-champion-3d",
+      "candidate": "blend_naive_mean14_25",
+      "horizon": 3,
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "training_samples": 1073,
+      "training_window": [
+        "2021-02-07",
+        "2025-06-16"
+      ],
+      "dataset_fingerprint": "6f815d48161ef863ca1326359aded6fe92e0040bf43ee3033fa0c12b0f3c0415",
+      "trained_before": "2026-11-04T19:48:49.669586+00:00",
+      "empirical_calibration": {
+        "radii": {},
+        "reason": "Insufficient separated calibration/diagnostic observations"
+      }
+    },
+    {
+      "version": "83d3a73a28bb26bf-champion-7d",
+      "candidate": "blend_naive_mean14_25",
+      "horizon": 7,
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "training_samples": 1062,
+      "training_window": [
+        "2021-02-08",
+        "2025-06-12"
+      ],
+      "dataset_fingerprint": "6f815d48161ef863ca1326359aded6fe92e0040bf43ee3033fa0c12b0f3c0415",
+      "trained_before": "2026-11-04T19:48:51.948016+00:00",
+      "empirical_calibration": {
+        "radii": {},
+        "reason": "Insufficient separated calibration/diagnostic observations"
+      }
+    },
+    {
+      "version": "9339e02817831d4a-champion-1d",
+      "candidate": "median_14",
+      "horizon": 1,
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "training_samples": 925,
+      "training_window": [
+        "2021-02-16",
+        "2025-10-16"
+      ],
+      "dataset_fingerprint": "5ab90f1ce8c99aa2dd6ba80b36136ba6a7cc9bc6f4640843ba6c4151be0ff7fb",
+      "trained_before": "2026-11-04T19:48:53.901067+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 3950.0,
+          "0.9": 4460.0
+        },
+        "calibration_n": 81,
+        "calibration_blocks": 20,
+        "diagnostic_n": 82,
+        "calibration_end": "2025-05-30",
+        "diagnostic_start": "2025-06-02",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.8902439024390244,
+            "mean_width_inr_per_quintal": 7900.0,
+            "n": 82
+          },
+          "0.9": {
+            "coverage": 0.9146341463414634,
+            "mean_width_inr_per_quintal": 8920.0,
+            "n": 82
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "0b9c4f101e1144f9-champion-3d",
+      "candidate": "median_14",
+      "horizon": 3,
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "training_samples": 923,
+      "training_window": [
+        "2021-02-16",
+        "2025-10-14"
+      ],
+      "dataset_fingerprint": "5ab90f1ce8c99aa2dd6ba80b36136ba6a7cc9bc6f4640843ba6c4151be0ff7fb",
+      "trained_before": "2026-11-04T19:48:55.707964+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 3565.0,
+          "0.9": 4205.0
+        },
+        "calibration_n": 80,
+        "calibration_blocks": 20,
+        "diagnostic_n": 78,
+        "calibration_end": "2025-06-03",
+        "diagnostic_start": "2025-06-06",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.8461538461538461,
+            "mean_width_inr_per_quintal": 7130.0,
+            "n": 78
+          },
+          "0.9": {
+            "coverage": 0.9102564102564102,
+            "mean_width_inr_per_quintal": 8410.0,
+            "n": 78
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "3b626115986b3daa-champion-7d",
+      "candidate": "median_14",
+      "horizon": 7,
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "training_samples": 916,
+      "training_window": [
+        "2021-02-16",
+        "2025-10-10"
+      ],
+      "dataset_fingerprint": "5ab90f1ce8c99aa2dd6ba80b36136ba6a7cc9bc6f4640843ba6c4151be0ff7fb",
+      "trained_before": "2026-11-04T19:48:57.571218+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 4056.0,
+          "0.9": 4205.0
+        },
+        "calibration_n": 79,
+        "calibration_blocks": 19,
+        "diagnostic_n": 74,
+        "calibration_end": "2025-06-05",
+        "diagnostic_start": "2025-06-06",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 0.8648648648648649,
+            "mean_width_inr_per_quintal": 8112.0,
+            "n": 74
+          },
+          "0.9": {
+            "coverage": 0.8783783783783784,
+            "mean_width_inr_per_quintal": 8410.0,
+            "n": 74
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "9f64e29ec282ec1c-champion-1d",
+      "candidate": "blend_naive_mean14_25",
+      "horizon": 1,
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "training_samples": 697,
+      "training_window": [
+        "2021-02-28",
+        "2025-10-24"
+      ],
+      "dataset_fingerprint": "3e6f67389b31eb8a22c76bd5bfea547e948865ae813143031dc681bd9591b5db",
+      "trained_before": "2026-11-04T19:48:59.028036+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 539.2857142857142,
+          "0.9": 1056.25
+        },
+        "calibration_n": 34,
+        "calibration_blocks": 13,
+        "diagnostic_n": 34,
+        "calibration_end": "2025-04-23",
+        "diagnostic_start": "2025-04-24",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1078.5714285714284,
+            "n": 34
+          },
+          "0.9": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1968.9390756302519,
+            "n": 34
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "e1364f7e43a9970e-champion-3d",
+      "candidate": "median_14",
+      "horizon": 3,
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "training_samples": 690,
+      "training_window": [
+        "2021-03-01",
+        "2025-10-22"
+      ],
+      "dataset_fingerprint": "3e6f67389b31eb8a22c76bd5bfea547e948865ae813143031dc681bd9591b5db",
+      "trained_before": "2026-11-04T19:49:00.421725+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 650.0,
+          "0.9": 900.0
+        },
+        "calibration_n": 32,
+        "calibration_blocks": 12,
+        "diagnostic_n": 32,
+        "calibration_end": "2025-04-23",
+        "diagnostic_start": "2025-04-25",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1300.0,
+            "n": 32
+          },
+          "0.9": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1739.6875,
+            "n": 32
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "c17f9ca00c82a01d-champion-7d",
+      "candidate": "median_14",
+      "horizon": 7,
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "training_samples": 677,
+      "training_window": [
+        "2021-03-01",
+        "2025-10-18"
+      ],
+      "dataset_fingerprint": "3e6f67389b31eb8a22c76bd5bfea547e948865ae813143031dc681bd9591b5db",
+      "trained_before": "2026-11-04T19:49:01.784698+00:00",
+      "empirical_calibration": {
+        "radii": {
+          "0.8": 700.0,
+          "0.9": 900.0
+        },
+        "calibration_n": 29,
+        "calibration_blocks": 12,
+        "diagnostic_n": 27,
+        "calibration_end": "2025-04-23",
+        "diagnostic_start": "2025-04-25",
+        "later_subset_coverage": {
+          "0.8": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1400.0,
+            "n": 27
+          },
+          "0.9": {
+            "coverage": 1.0,
+            "mean_width_inr_per_quintal": 1741.111111111111,
+            "n": 27
+          }
+        },
+        "limitations": "Secondary retrospective analysis of previously reported holdout predictions; not a new untouched final test. Frozen stateless baseline rule only. No coverage guarantee or live-vintage validation."
+      }
+    },
+    {
+      "version": "27b001ec4da18397-champion-1d",
+      "candidate": "naive",
+      "horizon": 1,
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "training_samples": 926,
+      "training_window": [
+        "2021-02-10",
+        "2025-02-20"
+      ],
+      "dataset_fingerprint": "e19d4af2378300375fe97521d1735ff6599fe28597a1508dec5f32334362ec15",
+      "trained_before": "2026-11-04T19:49:03.753163+00:00",
+      "empirical_calibration": {
+        "radii": {},
+        "reason": "Insufficient separated calibration/diagnostic observations"
+      }
+    },
+    {
+      "version": "a64877387dd698d2-champion-3d",
+      "candidate": "naive",
+      "horizon": 3,
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "training_samples": 919,
+      "training_window": [
+        "2021-02-12",
+        "2025-02-18"
+      ],
+      "dataset_fingerprint": "e19d4af2378300375fe97521d1735ff6599fe28597a1508dec5f32334362ec15",
+      "trained_before": "2026-11-04T19:49:05.512634+00:00",
+      "empirical_calibration": {
+        "radii": {},
+        "reason": "No calibration transfers to a refitted learned model"
+      }
+    },
+    {
+      "version": "7cca0655ee90deff-champion-7d",
+      "candidate": "naive",
+      "horizon": 7,
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "training_samples": 921,
+      "training_window": [
+        "2021-02-10",
+        "2025-02-14"
+      ],
+      "dataset_fingerprint": "e19d4af2378300375fe97521d1735ff6599fe28597a1508dec5f32334362ec15",
+      "trained_before": "2026-11-04T19:49:07.308971+00:00",
+      "empirical_calibration": {
+        "radii": {},
+        "reason": "No calibration transfers to a refitted learned model"
+      }
+    }
+  ],
+  "data": [
+    {
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "chips",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 20,
+      "first_date": "2021-08-21",
+      "last_date": "2022-12-03"
+    },
+    {
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "medium",
+      "source_kind": "secondary",
+      "n": 150,
+      "first_date": "2025-11-07",
+      "last_date": "2026-05-30"
+    },
+    {
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "local",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 970,
+      "first_date": "2021-01-01",
+      "last_date": "2025-02-21"
+    },
+    {
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "potato",
+      "grade": "medium",
+      "source_kind": "secondary",
+      "n": 150,
+      "first_date": "2025-11-07",
+      "last_date": "2026-05-30"
+    },
+    {
+      "market": "Bengaluru APMC",
+      "commodity": "Potato",
+      "variety": "potato",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 3,
+      "first_date": "2022-07-19",
+      "last_date": "2022-07-22"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "large",
+      "source_kind": "secondary",
+      "n": 5,
+      "first_date": "2025-11-06",
+      "last_date": "2025-11-19"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 52,
+      "first_date": "2025-10-28",
+      "last_date": "2026-01-28"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "local",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 754,
+      "first_date": "2021-01-02",
+      "last_date": "2025-10-25"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "other",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 22,
+      "first_date": "2021-02-11",
+      "last_date": "2023-09-21"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "puna",
+      "grade": "large",
+      "source_kind": "secondary",
+      "n": 4,
+      "first_date": "2025-11-06",
+      "last_date": "2025-11-19"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "puna",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 139,
+      "first_date": "2025-10-27",
+      "last_date": "2026-05-30"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "puna",
+      "grade": "small",
+      "source_kind": "secondary",
+      "n": 1,
+      "first_date": "2026-04-16",
+      "last_date": "2026-04-16"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "puna",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 521,
+      "first_date": "2021-01-01",
+      "last_date": "2025-10-16"
+    },
+    {
+      "market": "Hubballi APMC",
+      "commodity": "Onion",
+      "variety": "telagi",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 2,
+      "first_date": "2023-08-03",
+      "last_date": "2025-06-26"
+    },
+    {
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "hybrid",
+      "grade": "faq",
+      "source_kind": "official",
+      "n": 3,
+      "first_date": "2022-03-12",
+      "last_date": "2024-09-11"
+    },
+    {
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "hybrid",
+      "grade": "local",
+      "source_kind": "official",
+      "n": 2,
+      "first_date": "2026-04-15",
+      "last_date": "2026-04-16"
+    },
+    {
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "faq",
+      "source_kind": "official",
+      "n": 1562,
+      "first_date": "2021-01-01",
+      "last_date": "2025-06-30"
+    },
+    {
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "grade range-1",
+      "source_kind": "official",
+      "n": 5,
+      "first_date": "2025-01-31",
+      "last_date": "2025-02-04"
+    },
+    {
+      "market": "Kolar APMC",
+      "commodity": "Tomato",
+      "variety": "tomato",
+      "grade": "local",
+      "source_kind": "official",
+      "n": 371,
+      "first_date": "2025-07-03",
+      "last_date": "2026-10-31"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 101,
+      "first_date": "2025-10-27",
+      "last_date": "2026-05-29"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "bette",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 965,
+      "first_date": "2021-01-01",
+      "last_date": "2025-10-17"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "gorabalu",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 106,
+      "first_date": "2025-10-27",
+      "last_date": "2026-05-29"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "gorabalu",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 83,
+      "first_date": "2021-03-29",
+      "last_date": "2025-10-23"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "new variety",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 25,
+      "first_date": "2025-10-27",
+      "last_date": "2025-12-01"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "new variety",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 2,
+      "first_date": "2022-11-08",
+      "last_date": "2023-10-26"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "other",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 88,
+      "first_date": "2026-01-21",
+      "last_date": "2026-05-30"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "rashi",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 108,
+      "first_date": "2025-10-27",
+      "last_date": "2026-05-29"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "rashi",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 13,
+      "first_date": "2022-07-06",
+      "last_date": "2024-03-28"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "saraku",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 100,
+      "first_date": "2025-10-27",
+      "last_date": "2026-05-29"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "saraku",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 1,
+      "first_date": "2022-08-26",
+      "last_date": "2022-08-26"
+    },
+    {
+      "market": "Shivamogga Mandi",
+      "commodity": "Arecanut",
+      "variety": "sippegotu",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 69,
+      "first_date": "2026-01-22",
+      "last_date": "2026-05-30"
+    },
+    {
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 25,
+      "first_date": "2026-02-23",
+      "last_date": "2026-05-25"
+    },
+    {
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "copra",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 1118,
+      "first_date": "2021-01-01",
+      "last_date": "2025-06-19"
+    },
+    {
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "other",
+      "grade": "local",
+      "source_kind": "secondary",
+      "n": 96,
+      "first_date": "2025-10-28",
+      "last_date": "2026-05-30"
+    },
+    {
+      "market": "Tiptur APMC",
+      "commodity": "Copra",
+      "variety": "other",
+      "grade": "unspecified",
+      "source_kind": "secondary",
+      "n": 141,
+      "first_date": "2024-11-05",
+      "last_date": "2025-10-25"
+    }
+  ],
+  "recent_collection": {
+    "fetched_at": "2026-11-04T18:43:38.859800+00:00",
+    "filters_sha256": "35ee19d9e5435e894ee2a24217a0e1a5bd1d175659430e1f21568316f89ae1be",
+    "series": [
+      {
+        "market": "Kolar APMC",
+        "commodity": "Tomato",
+        "status": "captured",
+        "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=112&stateId=16&commodityId=65&includeExcel=false",
+        "fetched_at": "2026-11-04T18:43:39.200185+00:00",
+        "sha256": "3de6537e91e29a64a161c9d735250aa3417fa775ef2b8e65fa6300bda9de561f",
+        "modal_observations": 5,
+        "not_reported": 2,
+        "file": "tomato.json"
+      },
+      {
+        "market": "Shimoga APMC",
+        "commodity": "Arecanut(Betelnut/Supari)",
+        "status": "captured",
+        "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=753&stateId=16&commodityId=118&includeExcel=false",
+        "fetched_at": "2026-11-04T18:43:39.561312+00:00",
+        "sha256": "08f23de206e0081a5d512be0bb3d94d09e0319ed2b3c7272977ce13b079aaea8",
+        "modal_observations": 30,
+        "not_reported": 19,
+        "file": "arecanut.json"
+      },
+      {
+        "market": "Tiptur APMC",
+        "commodity": "Copra",
+        "status": "captured",
+        "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=762&stateId=16&commodityId=111&includeExcel=false",
+        "fetched_at": "2026-11-04T18:43:39.811691+00:00",
+        "sha256": "e85a4aa5994a532bb177a3a8c438e844accb3bb4cdce8dfd3e4a4d727035342f",
+        "modal_observations": 8,
+        "not_reported": 6,
+        "file": "copra.json"
+      },
+      {
+        "market": "APMC Hubballi",
+        "commodity": "Onion",
+        "status": "captured",
+        "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=108&stateId=16&commodityId=23&includeExcel=false",
+        "fetched_at": "2026-11-04T18:43:40.143248+00:00",
+        "sha256": "b06b18421972b2672d7822df8c873833415f653498fceebdb6c935dd8faa7fca",
+        "modal_observations": 12,
+        "not_reported": 2,
+        "file": "onion.json"
+      },
+      {
+        "market": "Bengaluru APMC",
+        "commodity": "Potato",
+        "status": "captured",
+        "source_url": "https://api.agmarknet.gov.in/v1/prices-and-arrivals/market-price/lastweek?marketId=99&stateId=16&commodityId=24&includeExcel=false",
+        "fetched_at": "2026-11-04T18:43:40.401086+00:00",
+        "sha256": "441fd68cd778ec5cb2563d68ab674baac080d5ff63f7661fc061499d3d658f53",
+        "modal_observations": 12,
+        "not_reported": 2,
+        "file": "potato.json"
+      }
+    ],
+    "limitations": "Public last-week modal-only captures; no min/max, grade or original publication timestamps inferred. Historical daily training requires verified official CSV exports."
+  },
+  "limitations": [
+    "Four additional crops were trained on separately labeled India Data Portal secondary history. Their dated series are stale for current-day forecasting; no live prediction is invented.",
+    "Original publication/revision vintages are unverified. All serving artifacts remain research only, limited evidence.",
+    "Consumed test metrics are unchanged; current refits are not newly tested models. Do not describe 100 minus WAPE as accuracy.",
+    "Intervals are secondary retrospective block-residual diagnostics for the same stateless baseline rules, not guaranteed coverage.",
+    "Some selected baselines lose to naive on final observations; these results are retained without post-holdout reselection.",
+    "Potato 3d/7d have fewer than 30 final examples; no final metric is claimed. Unspecified grades were not inferred or merged with graded data."
+  ]
+}

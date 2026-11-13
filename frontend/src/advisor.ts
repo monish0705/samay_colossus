@@ -35,7 +35,7 @@ export interface AdvisorValues {
 export const blankAdvisor: AdvisorValues = {
   quantity: '',
   cash: '0',
-  price: '1400',
+  price: '',
   capacity: '0',
   days: '3',
   limit: '3',
@@ -57,7 +57,7 @@ export const blankAdvisor: AdvisorValues = {
   conditions: 'Standard ventilated crate storage',
   realization: '1',
   adverse: '0',
-  acknowledged: true,
+  acknowledged: false,
   example: false,
 };
 
@@ -80,14 +80,14 @@ const amount = z.string().regex(/^\d+(\.\d{1,4})?$/, 'Enter a nonnegative number
 
 export function getEffectiveAdvisorValues(v: AdvisorValues, fallbackPrice?: string, commodity: string = 'Tomato'): AdvisorValues {
   const crop = CROP_SCOPES[commodity] || CROP_SCOPES['Tomato'];
-  const price = (v.price && Number(v.price) > 0) ? v.price : (fallbackPrice || crop.defaultPrice);
+  const price = (v.price && Number(v.price) > 0) ? v.price : (fallbackPrice || '');
   const capacity = Number(v.capacity || '0');
   const days = v.days || crop.defaultDays;
   const rawLimit = Number(v.limit || '0');
   const limit = (rawLimit >= 1 && rawLimit <= crop.maxDays)
     ? String(rawLimit)
     : String(Math.min(crop.maxDays, Math.max(Number(days), Number(crop.defaultDays))));
-  const loss = (v.loss && Number(v.loss) > 0) ? v.loss : crop.dailyLossPercent;
+  const loss = (v.loss !== '' && v.loss !== undefined) ? v.loss : crop.dailyLossPercent;
   const commission = (v.commission !== '' && v.commission !== undefined) ? v.commission : crop.commissionPercent;
   const marketFee = (v.marketFee !== '' && v.marketFee !== undefined) ? v.marketFee : crop.marketFeePercent;
   const transportFixed = (v.transportFixed !== '' && v.transportFixed !== undefined) ? v.transportFixed : crop.transportFixed;
@@ -125,6 +125,7 @@ export function getEffectiveAdvisorValues(v: AdvisorValues, fallbackPrice?: stri
 export function validateAdvisor(v: AdvisorValues, commodity: string = 'Tomato'): Record<string, string> {
   const crop = CROP_SCOPES[commodity] || CROP_SCOPES['Tomato'];
   const effective = getEffectiveAdvisorValues(v, undefined, commodity);
+  if (!effective.price || Number(effective.price) <= 0) return { price: 'Enter a verified buyer quote or review an available observed reference.' };
   const numeric = ['quantity', 'cash', 'price', 'capacity', 'increment', 'minimumLot', 'step', 'transportFixed', 'transportVariable', 'handling', 'fixedTransaction', 'commission', 'marketFee', 'storage', 'storageFixed', 'adverse', 'realization'] as const;
   const errors: Record<string, string> = {};
 
@@ -189,6 +190,8 @@ export function validateAdvisor(v: AdvisorValues, commodity: string = 'Tomato'):
       errors.conditions = 'Describe storage conditions and the source of your loss estimate.';
     }
   }
+
+  if (v.scenarioPrice && (!amount.safeParse(v.scenarioPrice).success || Number(effective.adverse) > Number(v.scenarioPrice))) errors.scenarioPrice = 'Enter a nonnegative scenario price at least as large as the adverse price.';
 
   for (const key of ['quantity', 'capacity', 'increment', 'minimumLot', 'step'] as const) {
     if (effective[key] && !/^\d+(\.\d{1,3})?$/.test(effective[key])) {
@@ -259,223 +262,6 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
     },
     today_sale_costs: costs,
     holding_options: holding,
-  };
-}
-
-/** Multi-factor price projection synthesizing historical lags, YoY benchmark, festival demand, and weather transit */
-export interface FactorRowItem {
-  title: string;
-  evidence: string;
-  adjustment: number;
-}
-
-export interface MultiFactorPrediction {
-  horizonDays: number;
-  basePriceInr: number;
-  commodity: string;
-  market: string;
-  factors: {
-    previousPriceMomentum: number;
-    yoyHistoricalBenchmark: number;
-    festivalSeasonalityIndex: number;
-    weatherPerishabilityFactor: number;
-    macroFreightIndex: number;
-  };
-  rows: FactorRowItem[];
-  projectedPriceInr: number;
-  lowerBandInr: number;
-  upperBandInr: number;
-  summary: string;
-}
-
-export function calculateMultiFactorPrediction(
-  basePrice: number = 1400,
-  horizonDays: number = 3,
-  commodity: string = 'Tomato'
-): MultiFactorPrediction {
-  const crop = CROP_SCOPES[commodity] || CROP_SCOPES['Tomato'];
-  let momentum = 40;
-  let yoy = -20;
-  let festival = 50;
-  let weather = 30;
-  const macro = 0;
-  let rows: FactorRowItem[] = [];
-
-  if (commodity === 'Arecanut') {
-    momentum = horizonDays <= 30 ? 800 : horizonDays <= 90 ? 1500 : 2500;
-    yoy = 1500;
-    festival = 1200;
-    weather = 500;
-    rows = [
-      { title: '1. MAMCOS Auction & Red Areca (Rashi) Momentum', evidence: '7d rolling avg ₹47,200; 14d avg ₹46,500/qtl', adjustment: momentum },
-      { title: '2. Malenadu Harvest Production Deficit (YoY)', evidence: 'Oct 2025 avg was ₹45,100; -8% state crop yield', adjustment: yoy },
-      { title: '3. Kartik, Diwali & Winter Wedding Procurement', evidence: 'Peak processing demand from supari & pan masala manufacturers', adjustment: festival },
-      { title: '4. Malenadu Post-Monsoon Curing & Drying Delays', evidence: 'Cloudy weather slows sun-drying of rashi arecanut', adjustment: weather },
-      { title: '5. Shivamogga Local Tempo Freight Index', evidence: 'Stable transport rates across Malenadu belt', adjustment: macro },
-    ];
-  } else if (commodity === 'Onion') {
-    momentum = horizonDays <= 15 ? 120 : horizonDays <= 45 ? 300 : 550;
-    yoy = 450;
-    festival = 250;
-    weather = 180;
-    rows = [
-      { title: '1. Hubballi Mandi Arrival Velocity', evidence: '7d rolling avg ₹3,080; 14d avg ₹2,950/qtl', adjustment: momentum },
-      { title: '2. North Karnataka Acreage Deficit (YoY)', evidence: 'Oct 2025 was ₹2,150; delayed kharif acreage', adjustment: yoy },
-      { title: '3. Diwali & Wedding Feast Restocking', evidence: 'High household and catering bulk procurement', adjustment: festival },
-      { title: '4. Nashik Highway Rainfall Transit Risk', evidence: 'Unseasonal showers cause transit moisture rots', adjustment: weather },
-      { title: '5. North Karnataka Tempo Freight Index', evidence: 'Stable transport freight from Belagavi/Dharwad', adjustment: macro },
-    ];
-  } else if (commodity === 'Copra') {
-    momentum = horizonDays <= 30 ? 350 : horizonDays <= 90 ? 800 : 1600;
-    yoy = 1200;
-    festival = 900;
-    weather = 150;
-    rows = [
-      { title: '1. Tiptur Ball Copra Quality Auction Momentum', evidence: '7d rolling avg ₹30,150; 14d avg ₹29,800/qtl', adjustment: momentum },
-      { title: '2. Coconut Yield & Copra Deficit (YoY)', evidence: 'Oct 2025 avg was ₹27,600; copra conversion tight', adjustment: yoy },
-      { title: '3. Sabarimala Pilgrimage & Winter Puja Demand', evidence: 'Massive festive retail demand for dry edible whole coconut', adjustment: festival },
-      { title: '4. Coastal Transit Humidity Protection', evidence: 'Dry bag transit maintains prime quality', adjustment: weather },
-      { title: '5. Tumakuru-Bengaluru Highway Freight', evidence: 'Flat diesel transport tariff', adjustment: macro },
-    ];
-  } else if (commodity === 'Potato') {
-    momentum = horizonDays <= 7 ? 60 : horizonDays <= 30 ? 180 : 320;
-    yoy = 140;
-    festival = 120;
-    weather = 80;
-    rows = [
-      { title: '1. Yeshwanthpur Wholesale Dispatch Momentum', evidence: '7d rolling avg ₹2,040; 14d avg ₹1,980/qtl', adjustment: momentum },
-      { title: '2. Hassan Harvest Tail Benchmark (YoY)', evidence: 'Oct 2025 was ₹1,750; Hassan arrivals concluding', adjustment: yoy },
-      { title: '3. Bangalore Urban Hotel & Catering Demand', evidence: 'Weekend city restaurant and caterer consumption surge', adjustment: festival },
-      { title: '4. Inter-District Transit Moisture Risk', evidence: 'Light localized rains around Hassan-Kunigal belt', adjustment: weather },
-      { title: '5. Metro Market Intra-city Tempo Tariff', evidence: 'Standard ₹450 local freight', adjustment: macro },
-    ];
-  } else {
-    momentum = horizonDays === 1 ? 15 : horizonDays === 3 ? 40 : 60;
-    yoy = -20;
-    festival = horizonDays === 1 ? 20 : horizonDays === 3 ? 50 : 70;
-    weather = horizonDays === 1 ? 10 : horizonDays === 3 ? 30 : 40;
-    rows = [
-      { title: '1. Recent Price Momentum (7d/14d)', evidence: '7d rolling avg ₹1,346; 14d avg ₹1,280/qtl', adjustment: momentum },
-      { title: '2. Last Year Same Time Benchmark (YoY)', evidence: 'Oct/Nov 2025 avg was ₹1,303/qtl; +10% acreage in 2026', adjustment: yoy },
-      { title: '3. Festivals & Seasonality (Kartik/Diwali)', evidence: 'Deepavali & Kartik month regional retail procurement demand', adjustment: festival },
-      { title: '4. Weather & Transit Moisture Risk', evidence: 'South Karnataka localized rainfall delays transport arrivals', adjustment: weather },
-      { title: '5. Macro & Freight Index', evidence: 'Kolar APMC tempo diesel freight index stable at ₹450', adjustment: macro },
-    ];
-  }
-
-  const totalAdjustment = momentum + yoy + festival + weather + macro;
-  const projected = Math.round(basePrice + totalAdjustment);
-  const spread = Math.round(projected * 0.08);
-
-  return {
-    horizonDays,
-    basePriceInr: basePrice,
-    commodity: crop.commodity,
-    market: crop.market,
-    factors: {
-      previousPriceMomentum: momentum,
-      yoyHistoricalBenchmark: yoy,
-      festivalSeasonalityIndex: festival,
-      weatherPerishabilityFactor: weather,
-      macroFreightIndex: macro,
-    },
-    rows,
-    projectedPriceInr: projected,
-    lowerBandInr: projected - spread,
-    upperBandInr: projected + spread,
-    summary: `Projected ₹${projected.toLocaleString('en-IN')}/qtl based on momentum (+₹${momentum}), festive demand (+₹${festival}), weather transit (+₹${weather}), and YoY benchmark (${yoy < 0 ? '-' : '+'}₹${Math.abs(yoy)}).`,
-  };
-}
-
-/** Commercial storage facility */
-export interface NearbyStorageFacility {
-  name: string;
-  nameKn?: string;
-  location: string;
-  locationKn?: string;
-  distanceKm: number;
-  dailyRatePerQuintal: number;
-  minDays: number;
-  maxDays: number;
-  facilityType: string;
-}
-
-export const kolarApmcWarehouse: NearbyStorageFacility = CROP_SCOPES['Tomato'].warehouse;
-
-export interface NearbyStorageEvaluation {
-  facility: NearbyStorageFacility;
-  quantityQuintals: number;
-  days: number;
-  todayPrice: number;
-  projectedPrice: number;
-  storageFeeInr: number;
-  spoilageLossQuintals: number;
-  saleableQuantityQuintals: number;
-  todayNetCashInr: number;
-  futureNetCashInr: number;
-  netProfitInr: number;
-  isProfitable: boolean;
-  recommendation: 'store' | 'sell_today';
-  headline: string;
-  details: string;
-}
-
-export function evaluateNearbyStorage(
-  quantity: number,
-  days: number = 3,
-  todayPrice: number = 1400,
-  facility?: NearbyStorageFacility,
-  commodity: string = 'Tomato'
-): NearbyStorageEvaluation {
-  const crop = CROP_SCOPES[commodity] || CROP_SCOPES['Tomato'];
-  const fac = facility || crop.warehouse;
-  const safeQty = Math.max(0.1, quantity);
-  const projection = calculateMultiFactorPrediction(todayPrice, days, commodity);
-  const futurePrice = projection.projectedPriceInr;
-
-  const commRate = Number(crop.commissionPercent) / 100;
-  const feeRate = Number(crop.marketFeePercent) / 100;
-  const tFixed = Number(crop.transportFixed);
-  const tVar = Number(crop.transportVariable);
-  const hVar = Number(crop.handlingRate);
-  const lossDaily = Number(crop.dailyLossPercent) / 100;
-
-  const todayGross = safeQty * todayPrice;
-  const todayCosts = (todayGross * commRate) + (todayGross * feeRate) + (tFixed + tVar * safeQty) + (hVar * safeQty);
-  const todayNetCash = Math.round((todayGross - todayCosts) * 100) / 100;
-
-  const storageFee = Math.round(safeQty * fac.dailyRatePerQuintal * days * 100) / 100;
-  const lossRate = 1 - Math.pow(1 - lossDaily, days);
-  const spoilageLoss = Math.round(safeQty * lossRate * 1000) / 1000;
-  const saleableQty = Math.round((safeQty - spoilageLoss) * 1000) / 1000;
-
-  const futureGross = saleableQty * futurePrice;
-  const futureCosts = (futureGross * commRate) + (futureGross * feeRate) + (tFixed + tVar * saleableQty) + (hVar * saleableQty) + storageFee;
-  const futureNetCash = Math.round((futureGross - futureCosts) * 100) / 100;
-
-  const netProfit = Math.round((futureNetCash - todayNetCash) * 100) / 100;
-  const isProfitable = netProfit > 0;
-
-  return {
-    facility: fac,
-    quantityQuintals: safeQty,
-    days,
-    todayPrice,
-    projectedPrice: futurePrice,
-    storageFeeInr: storageFee,
-    spoilageLossQuintals: spoilageLoss,
-    saleableQuantityQuintals: saleableQty,
-    todayNetCashInr: todayNetCash,
-    futureNetCashInr: futureNetCash,
-    netProfitInr: netProfit,
-    isProfitable,
-    recommendation: isProfitable ? 'store' : 'sell_today',
-    headline: isProfitable
-      ? `Profitable to store: Projected +₹${netProfit.toLocaleString('en-IN')} extra net profit`
-      : `No profit to store: Selling today nets +₹${Math.abs(netProfit).toLocaleString('en-IN')} more`,
-    details: isProfitable
-      ? `Storing at ${fac.name} for ${days} days costs ₹${storageFee} with ${spoilageLoss} qtl loss. At projected price ₹${futurePrice.toLocaleString('en-IN')}/qtl, future net proceeds (₹${futureNetCash.toLocaleString('en-IN')}) exceed selling today (₹${todayNetCash.toLocaleString('en-IN')}).`
-      : `Holding for ${days} days incurs ₹${storageFee} storage fees and ${spoilageLoss} qtl spoilage loss. Future net proceeds (₹${futureNetCash.toLocaleString('en-IN')}) do not beat selling today (₹${todayNetCash.toLocaleString('en-IN')}). Sell today to avoid loss.`,
   };
 }
 

@@ -1,0 +1,20 @@
+{
+  "plan": {
+    "start": "2021-01-01",
+    "train_end": "2023-12-31",
+    "validation_end": "2026-11-04",
+    "holdout_end": "2026-11-05",
+    "variety": "local",
+    "grade": "unspecified",
+    "market": "Bengaluru APMC",
+    "commodity": "Potato",
+    "min_train": 120,
+    "min_validation": 30,
+    "min_train_span_days": 180,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "secondary",
+    "candidate_suite": "relative_v2"
+  },
+  "artifact_sha256": {}
+}

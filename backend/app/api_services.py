@@ -22,7 +22,7 @@ from app.api_schemas import (
 )
 from app.config import ROOT, get_settings
 from app.features import Plan, asof, load_vintages, midnight
-from app.models import ImportBatch, MandiObservation, RecommendationHistory
+from app.models import Commodity, ImportBatch, MandiObservation, Market, RecommendationHistory
 from app.reliability import reliable_forecast
 from app.selling import money, optimize_selling, scenarios_from_reliability
 from app.training import read_plan
@@ -84,8 +84,21 @@ def api_prediction(result, request_id):
     return PredictionResponse(**payload, request_id=request_id)
 
 
-def predict(session, body: PredictRequest, origin, request_id):
-    entry, plan, artifact = resolve((body.market, body.commodity, body.variety, body.grade), body.horizon)
+def predict(session, body: PredictRequest, origin, request_id, decision_at=None):
+    scope = (body.market, body.commodity, body.variety, body.grade)
+    try:
+        entry, plan, artifact = resolve(scope, body.horizon)
+    except ServiceProblem as exc:
+        if exc.code != "missing_model" or not get_settings().enable_research_forecasts:
+            raise
+        from app.research_service import ResearchInputsUnavailable, forecast
+        try:
+            result = forecast(session, scope, origin, body.horizon, decision_at)
+        except ResearchInputsUnavailable as failure:
+            raise ServiceProblem(503,failure.code,"The selected series is stale or has insufficient recent history; inspect the dated historical evaluation instead") from failure
+        except (ValueError, OSError, KeyError, ImportError) as failure:
+            raise ServiceProblem(503, "research_forecast_unavailable", "No usable saved research forecast exists for these historical inputs; no price was invented") from failure
+        return result, api_prediction(result, request_id)
     try:
         result = reliable_forecast(session, plan, origin, body.horizon, entry.evidence, artifact)
     except (ValueError, OSError, KeyError, ImportError) as exc:
@@ -96,11 +109,14 @@ def predict(session, body: PredictRequest, origin, request_id):
     return result, api_prediction(result, request_id)
 
 
-def freshness(session, scope, origin):
-    plan = Plan(date(2000, 1, 1), date(2001, 1, 1), origin, origin + timedelta(days=1), scope[2], scope[3], scope[0], scope[1])
+def freshness(session, scope, origin, decision_at=None):
+    kinds = set(session.scalars(select(MandiObservation.data_kind).join(Market,MandiObservation.market_id==Market.id).join(Commodity,MandiObservation.commodity_id==Commodity.id).where(
+        Market.name==scope[0], Commodity.name==scope[1], MandiObservation.variety==scope[2], MandiObservation.grade==scope[3], MandiObservation.data_kind.in_(("official","secondary"))).distinct()).all())
+    kind = "official" if "official" in kinds or not kinds else "secondary"
+    plan = Plan(date(2000, 1, 1), date(2001, 1, 1), origin, origin + timedelta(days=1), scope[2], scope[3], scope[0], scope[1], source_kind=kind)
     try:
         vintages, _ = load_vintages(session, plan)
-        available = asof(vintages, midnight(origin), before=origin)
+        available = asof(vintages, midnight(origin) if decision_at is None else decision_at, before=origin)
     except (ValueError, OSError, KeyError) as exc:
         raise ServiceProblem(503, "market_source_unavailable", "Historical source evidence is unavailable") from exc
     if available.empty:
@@ -114,7 +130,7 @@ def freshness(session, scope, origin):
 def recommend(session, body: RecommendRequest, request_id):
     origin = body.decision_at.astimezone(ZoneInfo("Asia/Kolkata")).date()
     scope = (body.market, body.commodity, body.variety, body.grade)
-    data = freshness(session, scope, origin)
+    data = freshness(session, scope, origin,body.decision_at)
     forecasts, warnings, holding = [], [], []
     if data.report_date is None:
         warnings.append("no_official_market_observations; today's quote is user supplied")
@@ -123,12 +139,25 @@ def recommend(session, body: RecommendRequest, request_id):
     for option in body.holding_options:
         payload = option.model_dump(exclude={"realization_multiplier", "price_basis_assumption", "adverse_inr_per_quintal", "adverse_assumption", "scenarios", "scenario_price_inr_per_quintal"})
         payload["scenarios"] = None
-        if option.days not in (1, 3, 7):
+        if option.scenario_price_inr_per_quintal is not None:
+            from app.selling import PriceScenarios
+            central = option.scenario_price_inr_per_quintal
+            if option.adverse_inr_per_quintal > central:
+                raise ServiceProblem(422, "scenario_assumptions_invalid", "Adverse price must not exceed the central user scenario")
+            payload["scenarios"] = PriceScenarios(adverse_inr_per_quintal=option.adverse_inr_per_quintal,
+                lower_inr_per_quintal=option.adverse_inr_per_quintal, central_inr_per_quintal=central, upper_inr_per_quintal=central,
+                reliability_status="scenario only", market=body.market, commodity=body.commodity, variety=body.variety, grade=body.grade,
+                target_date=origin+timedelta(days=option.days), issued_at=body.decision_at,
+                model_version="user_scenario_only", source="User-entered assumption; not a forecast",
+                price_basis_assumption=option.price_basis_assumption, adverse_assumption=option.adverse_assumption,
+                flags=("scenario_only_simulation",))
+            warnings.append(f"{option.days}d:scenario_only_simulation")
+        elif option.days not in (1, 3, 7):
             warnings.append(f"unsupported_horizon:{option.days}")
         else:
             query = PredictRequest(market=body.market, commodity=body.commodity, variety=body.variety, grade=body.grade, horizon=option.days, origin_date=origin)
             try:
-                raw, formatted = predict(session, query, origin, request_id)
+                raw, formatted = predict(session, query, origin, request_id, decision_at=body.decision_at)
                 forecasts.append(formatted)
                 try:
                     payload["scenarios"] = scenarios_from_reliability(raw, adverse_inr_per_quintal=option.adverse_inr_per_quintal,
@@ -142,29 +171,6 @@ def recommend(session, body: RecommendRequest, request_id):
                 if exc.status < 500:
                     raise
                 warnings.append(f"{option.days}d:{exc.code}")
-                if option.scenario_price_inr_per_quintal is not None and option.scenario_price_inr_per_quintal > 0:
-                    adverse = option.adverse_inr_per_quintal
-                    central = option.scenario_price_inr_per_quintal
-                    lower = adverse if adverse <= central else central
-                    from app.selling import PriceScenarios
-                    payload["scenarios"] = PriceScenarios(
-                        adverse_inr_per_quintal=adverse,
-                        lower_inr_per_quintal=lower,
-                        central_inr_per_quintal=central,
-                        upper_inr_per_quintal=central,
-                        reliability_status="scenario only",
-                        market=body.market,
-                        commodity=body.commodity,
-                        variety=body.variety,
-                        grade=body.grade,
-                        target_date=origin + timedelta(days=option.days),
-                        issued_at=body.decision_at,
-                        model_version="user_scenario_only",
-                        source="Farmer/judge scenario assumption (not an operational model prediction)",
-                        price_basis_assumption=option.price_basis_assumption,
-                        adverse_assumption=option.adverse_assumption,
-                        flags=("scenario_only_simulation",),
-                    )
         holding.append(payload)
     request_data = body.model_dump(exclude={"holding_options"})
     request_data["holding_options"] = holding
@@ -220,7 +226,17 @@ def model_status():
                 trained_before=trained_before, dataset_fingerprint=fingerprint, reliability_evidence_configured=entry.evidence is not None,
                 validation_metrics=validation_metrics, final_holdout_metrics=final_metrics))
     studies = research_status()
-    return ModelsStatus(status="configured" if items else "no_models_deployed", models=items, research_studies=studies)
+    research_models = []
+    if get_settings().enable_research_forecasts:
+        from app.research_service import bundles
+        try:
+            for _, meta in bundles():
+                research_models.append(ModelStatusItem(**{k:meta[k] for k in ("market","commodity","variety","grade","horizon")},
+                    model_version=meta["version"], status="research_only_limited_evidence", trained_before=meta["trained_before"],
+                    dataset_fingerprint=meta["dataset_fingerprint"], reliability_evidence_configured=False,source_kind=meta["plan"].get("source_kind","official")))
+        except (OSError, ValueError, KeyError) as exc:
+            raise ServiceProblem(503, "research_registry_unavailable", "Research serving registry failed integrity checks") from exc
+    return ModelsStatus(status="configured" if items else "no_models_deployed", models=items, research_studies=studies, research_models=research_models)
 
 
 def research_status():
@@ -249,6 +265,7 @@ def research_status():
                     "final_n": final.get("n", 0), "final_metrics": final.get("metrics"),
                     "naive_metrics": (final.get("baseline_metrics") or {}).get("naive")})
             studies.append(ResearchStudy(**{key: plan[key] for key in ("market", "commodity", "variety", "grade")},
+                source_kind=plan.get("source_kind","official"),
                 version=report["version"], train_start=plan["start"], train_end=plan["train_end"], validation_end=plan["validation_end"],
                 test_end=plan["holdout_end"], limitations=report["limitations"], source_fingerprint=report["source_fingerprint"], horizons=horizons))
         return studies
@@ -260,6 +277,11 @@ def data_status(session, today):
     counts = dict(session.execute(select(MandiObservation.data_kind, func.count()).group_by(MandiObservation.data_kind)).all())
     latest = session.scalar(select(func.max(MandiObservation.observed_on)).where(MandiObservation.data_kind == "official"))
     fetched = session.scalar(select(func.max(ImportBatch.fetched_at)).where(ImportBatch.data_kind == "official"))
-    return DataStatus(historical_demo_date=get_settings().historical_demo_date, status="unavailable" if latest is None else "stale" if (today - latest).days > 7 else "observations_available",
-        official_observations=counts.get("official", 0), fixture_observations=counts.get("fixture", 0), demo_observations=counts.get("demo", 0),
+    secondary = session.scalar(select(func.max(MandiObservation.observed_on)).where(MandiObservation.data_kind == "secondary"))
+    secondary_fetched = session.scalar(select(func.max(ImportBatch.fetched_at)).where(ImportBatch.data_kind == "secondary"))
+    available = max((d for d in (latest,secondary) if d is not None),default=None)
+    return DataStatus(historical_demo_date=get_settings().historical_demo_date, status="unavailable" if available is None else "stale" if (today - available).days > 7 else "observations_available",
+        official_observations=counts.get("official", 0), secondary_observations=counts.get("secondary",0), latest_secondary_report_date=secondary,
+        latest_secondary_fetched_at=secondary_fetched,
+        fixture_observations=counts.get("fixture", 0), demo_observations=counts.get("demo", 0),
         latest_official_report_date=latest, latest_official_fetched_at=fetched)

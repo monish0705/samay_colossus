@@ -1,7 +1,28 @@
 import { localize } from './i18n';
 import { useId } from 'react';
 import { Empty } from './ui';
+import type { Schema } from './api';
 export interface ChartPoint { date: string; value: number }
+export function EvaluationChart({ points }: { points: Schema<'EvaluationPoint'>[] }) {
+  const id = useId();
+  if (!points.length) return null;
+  const ordered = [...points].sort((a,b) => a.target_date.localeCompare(b.target_date));
+  const start = Date.parse(ordered[0].target_date), end = Date.parse(ordered[ordered.length-1].target_date);
+  const values = ordered.flatMap(p => [Number(p.actual_inr_per_quintal),Number(p.prediction_inr_per_quintal)]);
+  const minimum = Math.min(...values), maximum = Math.max(...values);
+  const low = Math.max(0,minimum-(maximum-minimum)*.1), high = maximum+Math.max((maximum-minimum)*.1,1);
+  const x = (day:string) => 64+(Date.parse(day)-start)/Math.max(end-start,1)*646;
+  const y = (value:string) => 215-(Number(value)-low)/(high-low)*175;
+  const path = (key:'actual_inr_per_quintal'|'prediction_inr_per_quintal') => ordered.map((p,i) => `${i===0 || Date.parse(p.target_date)-Date.parse(ordered[i-1].target_date)>86400000 ? 'M':'L'}${x(p.target_date)},${y(p[key])}`).join(' ');
+  return localize(<figure className="chart"><svg viewBox="0 0 760 260" role="img" aria-labelledby={id}>
+    <title id={id}>Historical observed and frozen out-of-sample predicted prices, INR/quintal</title>
+    {[0,1,2,3].map(i => <g key={i}><line x1="64" x2="710" y1={40+i*58} y2={40+i*58} stroke="#e5e9e3"/><text x="52" y={44+i*58} textAnchor="end">{Math.round(high-i*(high-low)/3).toLocaleString('en-IN')}</text></g>)}
+    <path d={path('actual_inr_per_quintal')} fill="none" stroke="#267149" strokeWidth="2.5"/>
+    <path d={path('prediction_inr_per_quintal')} fill="none" stroke="#b46d21" strokeWidth="2" strokeDasharray="5 3"/>
+    {ordered.map(p => <g key={p.target_date}><circle cx={x(p.target_date)} cy={y(p.actual_inr_per_quintal)} r="2" fill="#267149"/><circle cx={x(p.target_date)} cy={y(p.prediction_inr_per_quintal)} r="2" fill="#b46d21"/></g>)}
+    <text x="64" y="245">{ordered[0].target_date}</text><text x="710" y="245" textAnchor="end">{ordered[ordered.length-1].target_date}</text>
+  </svg><figcaption>Green: actual observed price. Amber dashed: frozen prediction. Historical evaluation only; unreported dates remain gaps.</figcaption></figure>);
+}
 export function PriceChart({ points, label = 'Observed modal price', unit = 'INR/quintal' }: { points: ChartPoint[]; label?: string; unit?: string }) {
   const id = useId();
   if (!points.length) return localize(<div className="chart-empty"><Empty title="A clearer picture starts with verified data">No observations for this series yet. A price curve will appear after authentic history is imported.</Empty></div>);

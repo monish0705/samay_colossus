@@ -1,0 +1,13 @@
+migrations: exit=0 (1.11s) � reports\release\migrations.log
+schema-drift: exit=0 (1.03s) � reports\release\schema-drift.log
+backend-lint: exit=0 (0.16s) � reports\release\backend-lint.log
+backend-tests: exit=0 (32.47s) � reports\release\backend-tests.log
+dependency-check: exit=0 (1.05s) � reports\release\dependency-check.log
+frontend-tests: exit=0 (6.2s) � reports\release\frontend-tests.log
+frontend-typecheck: exit=0 (4.22s) � reports\release\frontend-typecheck.log
+frontend-lint: exit=0 (5.34s) � reports\release\frontend-lint.log
+production-build: exit=0 (5.91s) � reports\release\production-build.log
+http-e2e: exit=0 (12.19s) � reports\release\http-e2e.log
+runtime-npm-audit: exit=0 (2.5s) � reports\release\runtime-npm-audit.log
+full-npm-audit: exit=0 (1.69s) � reports\release\full-npm-audit.log
+authentic-demo-readiness: exit=2 (1.55s) � reports\release\authentic-demo-readiness.log

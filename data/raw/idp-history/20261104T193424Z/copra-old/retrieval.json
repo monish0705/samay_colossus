@@ -1,0 +1,48 @@
+{
+  "source_page": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+  "download_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/21ecb9f0-7bf9-42d0-af24-df2e230e4a0a/download/apmc-arrivals-and-prices-old-source.csv",
+  "api_url": "https://ckandev.indiadataportal.com/api/action/datastore_search",
+  "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+  "pages": [
+    {
+      "file": "page-000000.json",
+      "sha256": "d423d015fb0cc679f06b5b87303e17534962f0d5d01f082f34b9e5a2d026e4b0",
+      "request": {
+        "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Copra",
+          "market_center": "Tiptur"
+        },
+        "limit": 1000,
+        "offset": 0,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 1000,
+      "fetched_at": "2026-11-04T19:36:09.580865+00:00"
+    },
+    {
+      "file": "page-001000.json",
+      "sha256": "3ecc145fe389159c707c15c24a9a9c7c533f730d498b7c065f3f0f93a4544fc2",
+      "request": {
+        "resource_id": "21ecb9f0-7bf9-42d0-af24-df2e230e4a0a",
+        "filters": {
+          "state_name": "Karnataka",
+          "commodity_name": "Copra",
+          "market_center": "Tiptur"
+        },
+        "limit": 1000,
+        "offset": 1000,
+        "include_total": false,
+        "sort": "_id asc"
+      },
+      "records": 259,
+      "fetched_at": "2026-11-04T19:36:13.933627+00:00"
+    }
+  ],
+  "records": 1259,
+  "conversion": "Map documented headers only; preserve all observed dates, varieties, grades, prices and units. Grade missing in old source is explicitly unspecified.",
+  "first_date": "2021-01-01",
+  "last_date": "2025-10-25"
+}

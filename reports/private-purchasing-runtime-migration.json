@@ -1,0 +1,7 @@
+{
+  "migration": "e5f6a7b8c9d0",
+  "legacy_tables_checked": 36,
+  "unchanged": true,
+  "changed_tables": [],
+  "backup_created": true
+}

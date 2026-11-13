@@ -3,7 +3,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import model_validator
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -20,6 +20,19 @@ class Settings(BaseSettings):
     research_serving_registry_path: Path | None = ROOT / "research-serving-registry.json"
     historical_demo_date: date | None = None
     bundled_research_mode: bool = False
+    marketplace_enabled: bool = True
+    smtp_host: str | None = None
+    smtp_port: int = Field(default=587, ge=1, le=65535)
+    smtp_from: str | None = None
+    smtp_username: str | None = None
+    smtp_password: SecretStr | None = None
+    twilio_account_sid: str | None = None
+    twilio_auth_token: SecretStr | None = None
+    twilio_sms_from: str | None = None
+    twilio_whatsapp_from: str | None = None
+    twilio_whatsapp_content_sid_en: str | None = None
+    twilio_whatsapp_content_sid_kn: str | None = None
+    public_app_url: str | None = None
 
     @model_validator(mode="after")
     def replay_mode(self):

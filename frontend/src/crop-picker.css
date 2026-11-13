@@ -1,0 +1,10 @@
+.crop-choice-group { border:0; padding:0; margin:0 0 24px; min-width:0; }
+.crop-choice-group legend { font-weight:650; margin-bottom:12px; }
+.crop-choice-row { display:flex; flex-wrap:nowrap; gap:10px; overflow-x:auto; padding:4px 3px 14px; scroll-snap-type:x proximity; }
+.crop-choice-row .crop-choice { flex:1 0 132px; min-width:132px; display:flex; flex-direction:column; align-items:center; gap:8px; border:1px solid #d7e1d1; border-radius:14px; padding:16px 10px; background:white; color:#244630; scroll-snap-align:start; margin:0; }
+.crop-choice[aria-pressed=true] { border:2px solid #286447; background:#edf5e8; padding:15px 9px; }
+.crop-choice .crop-emoji { font-size:38px; line-height:1.2; }
+.crop-choice strong { font-size:15px; }.crop-choice small { font-size:11px; color:#63715e; text-align:center; }
+.mandi-price-box { display:flex; flex-direction:column; gap:7px; background:#edf5e8; border:1px solid #d3e2c9; border-radius:12px; padding:18px; margin:0 0 22px; }
+.mandi-price-box>span { font-size:13px; color:#4c6a45; }.mandi-price-box>strong { font-size:27px; }.mandi-price-box small,.mandi-price-box p { font-size:12px; color:#607257; margin:0; }
+@media(max-width:600px) { .crop-choice-row .crop-choice{flex-basis:112px;min-width:112px}.crop-choice .crop-emoji{font-size:33px}.mandi-price-box>strong{font-size:24px} }

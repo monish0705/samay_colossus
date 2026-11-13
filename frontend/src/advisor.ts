@@ -280,6 +280,7 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
 
   return {
     ...scope,
+    use_mandi_price: false,
     decision_at: historicalDate ? `${historicalDate}T12:00:00+05:30` : new Date().toISOString(),
     total_quantity_quintals: effectiveValues.quantity,
     today_price_inr_per_quintal: effectiveValues.price,

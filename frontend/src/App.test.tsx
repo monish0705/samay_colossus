@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
@@ -13,6 +13,7 @@ import conditionalFixture from './test/fixtures/conditional-hold.json';
 
 const recommendation = recommendationFixture as unknown as Recommendation;
 const conditional = conditionalFixture as unknown as Recommendation;
+let missingReference = false;
 let research = false;
 let historical = false;
 let staleReference = false;
@@ -46,16 +47,39 @@ const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
   }
   if (path === '/api/v1/prices/history') return json({ items: rows, limit: 1000, offset: 0, next_offset: null });
   if (path === '/api/v1/prices/latest' && staleReference) return json({ observation: { ...defaultScope, modal_price_inr_per_quintal: '99999', report_date: '2021-01-01' }, stale: true, age_calendar_days: 2000 });
-  if (path === '/api/v1/prices/latest') return json({ error: { code: 'no_official_observation', message: 'No official observation', request_id: 'TEST_ONLY' } }, 404);
+  if (path === '/api/v1/prices/latest' && missingReference) return json({ error: { code: 'no_official_observation', message: 'No official observation', request_id: 'TEST_ONLY' } }, 404);
+  if (path === '/api/v1/prices/latest') {
+    const name = new URL(rawUrl, 'http://localhost').searchParams.get('commodity') || 'Tomato';
+    return json({ observation: { ...CROP_SCOPES[name], modal_price_inr_per_quintal: '1000', report_date: '2026-11-12', source: 'TEST_ONLY' }, stale: false });
+  }
   if (path === '/api/v1/predict') return model ? json({ ...defaultScope, request_id: 'TEST_ONLY_PREDICTION', horizon_calendar_days: 3, timestamp: '2026-11-04T00:00:00+05:30', target_date: '2026-11-07', latest_report_date: '2026-11-03', reliability_status: 'limited evidence', prediction_inr_per_quintal: '1000.00', model_version: 'TEST_ONLY', intervals: [{ nominal_level: '.9', lower_inr_per_quintal: '900', upper_inr_per_quintal: '1100' }], flags: ['limited_unseen_interval_evidence'], data_source: { source: 'TEST_ONLY' } }) : json({ error: { code: 'missing_model', message: 'No saved model', request_id: 'TEST_ONLY' } }, 503);
   if (path === '/api/v1/recommend') { submitted.push(await request.clone().json()); return json(nextResult, nextResult.optimization.recommended_plan ? 200 : 409); }
   throw new Error(`Unexpected test request ${path}`);
 });
 const show = (path = '/') => render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>);
-beforeEach(() => { setLanguage('en'); research = false; historical = false; staleReference = false; multiCrop = false; dailyHorizons = false; forecastRequests = []; offline = false; rows = []; model = false; submitted = []; nextResult = recommendation; vi.stubGlobal('fetch', mockFetch); mockFetch.mockClear(); });
+// Fill the real three-step form using deterministic TEST_ONLY inputs.
+async function fillPlan() {
+  await screen.findByText('₹1,000.00 / qtl');
+  fireEvent.change(screen.getByLabelText('Harvest quantity'), { target: { value: '20' } });
+  fireEvent.change(screen.getByLabelText('Immediate net cash needed'), { target: { value: '10000' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+  fireEvent.change(screen.getByLabelText('Fixed transport per trip'), { target: { value: '100' } });
+  fireEvent.click(screen.getByText('More options: costs and storage assumptions'));
+  for (const [label, value] of [['Transport per sold quintal', '10'], ['Handling per sold quintal', '0'], ['Market fee', '0']]) fireEvent.change(screen.getByLabelText(label), { target: { value } });
+  fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+  fireEvent.click(screen.getByRole('checkbox', { name: 'I have checked the prices, costs and storage estimates.' }));
+}
+
+beforeEach(() => { missingReference = false; setLanguage('en'); research = false; historical = false; staleReference = false; multiCrop = false; dailyHorizons = false; forecastRequests = []; offline = false; rows = []; model = false; submitted = []; nextResult = recommendation; vi.stubGlobal('fetch', mockFetch); mockFetch.mockClear(); });
 afterEach(() => { vi.unstubAllGlobals(); setLanguage('en'); });
 
 describe('SAMAY farmer dashboard and Kannada journey', () => {
+  it('shows only three steps and removes judge/demo/example controls', () => {
+    show('/advisor');
+    expect(screen.getByRole('navigation', { name: 'Farmer workflow' }).querySelectorAll('li')).toHaveLength(3);
+    expect(screen.queryByRole('button', { name: /judge|90.sec|guided tour|Load labeled example/i })).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Assumed saleable loss per day')).not.toBeInTheDocument();
+  });
   it('shows the conditional hold decision separately from the safe fallback in both languages', async () => {
     const held = conditional.optimization.recommended_plan!;
     nextResult = { ...recommendation, decision_support: {
@@ -65,7 +89,7 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
       context: { status: 'unavailable', market: defaultScope.market, commodity: defaultScope.commodity, decision_at: '2026-11-05T12:00:00Z', weather: [], events: [], news: [], sources: [], warnings: [], numeric_price_adjustment_applied: false, note: 'TEST_ONLY' }, note: 'TEST_ONLY conditional analysis',
     } };
     show('/advisor');
-    fireEvent.click(screen.getByRole('button', { name: 'Load labeled example' }));
+    await fillPlan();
     fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
     expect(await screen.findByRole('heading', { name: 'Sell some now; conditionally hold the rest' })).toBeInTheDocument();
     expect(screen.getAllByText('Conditional analysis, not validated advice')[0]).toBeInTheDocument();
@@ -145,40 +169,36 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getByText(/90% nominal empirical band/)).toBeInTheDocument();
     expect(screen.getByText(/Model TEST_ONLY/)).toBeInTheDocument();
   });
-  it('validates the manual farmer workflow and translates hints without losing values', async () => {
+  it('validates quantity and uses the automatic mandi reference in both languages', async () => {
     show('/advisor');
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByText('₹1,000.00 / qtl');
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(screen.getAllByText('Enter a value greater than zero.').length).toBeGreaterThan(0);
-    fireEvent.change(screen.getByLabelText(/Harvest quantity/), { target: { value: '20' } });
-    fireEvent.change(screen.getByLabelText(/Expected buyer price today/), { target: { value: '1000' } });
+    fireEvent.change(screen.getByLabelText('Harvest quantity'), { target: { value: '20' } });
+    expect(screen.queryByLabelText('Expected buyer price today')).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'ಕನ್ನಡ' }));
     expect(screen.getByLabelText(/ಕೊಯ್ಲು ಮಾಡಿದ ಪ್ರಮಾಣ/)).toHaveValue('20');
-    expect(screen.getByLabelText(/ಇಂದು ಖರೀದಿದಾರರಿಂದ ನಿರೀಕ್ಷಿಸುವ ಬೆಲೆ/)).toHaveValue('1000');
+    expect(screen.getByText(/₹1,000.00/)).toBeInTheDocument();
     expect(submitted).toHaveLength(0);
   });
-  it('requires a manual buyer quote and acknowledgment when no observation is available', async () => {
+  it('sends the automatic-price flag and requires acknowledgment', async () => {
     show('/advisor');
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    fireEvent.change(screen.getByLabelText(/Harvest quantity/), { target: { value: '30' } });
-    fireEvent.change(screen.getByLabelText(/Expected buyer price today/), { target: { value: '1400' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    fireEvent.change(screen.getByLabelText(/Immediate net cash needed/), { target: { value: '10000' } });
+    await screen.findByText('₹1,000.00 / qtl');
+    fireEvent.change(screen.getByLabelText('Harvest quantity'), { target: { value: '30' } });
+    fireEvent.change(screen.getByLabelText('Immediate net cash needed'), { target: { value: '10000' } });
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    fireEvent.click(screen.getByRole('checkbox', { name: /I understand these are my inputs/ }));
-    const calcBtn = screen.getByRole('button', { name: 'Calculate my sale plan' });
-    expect(calcBtn).not.toBeDisabled();
-    fireEvent.click(calcBtn);
+    fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
+    expect(submitted).toHaveLength(0);
+    fireEvent.click(screen.getByRole('checkbox', { name: 'I have checked the prices, costs and storage estimates.' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
     expect(await screen.findByRole('heading', { name: 'Keep today’s cash needs covered.' })).toBeInTheDocument();
-    expect(submitted).toHaveLength(1);
-    const sub = submitted[0] as Record<string, unknown>;
-    expect(sub.total_quantity_quintals).toBe('30');
-    expect(sub.today_price_inr_per_quintal).toBe('1400');
+    expect((submitted[0] as Record<string, unknown>).total_quantity_quintals).toBe('30');
+    expect((submitted[0] as Record<string, unknown>).use_mandi_price).toBe(true);
   });
   it('calculates through the API, switches languages without recalculation and exposes exact numbers', async () => {
     show('/advisor');
-    fireEvent.click(screen.getByRole('button', { name: 'Load labeled example' }));
+    await fillPlan();
     fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
     expect(await screen.findByRole('heading', { name: 'Keep today’s cash needs covered.' })).toBeInTheDocument();
     expect(submitted).toHaveLength(1);
@@ -193,14 +213,14 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
   });
   it('keeps backend infeasibility as an explained outcome rather than an HTTP success plan', async () => {
     nextResult = infeasibleFixture as Recommendation; show('/advisor');
-    fireEvent.click(screen.getByRole('button', { name: 'Load labeled example' }));
+    await fillPlan();
     fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
     expect(await screen.findByRole('heading', { name: 'These constraints need another look.' })).toBeInTheDocument();
     expect(screen.getByText('Infeasible')).toBeInTheDocument();
   });
   it('updates conservative, central and adverse previews using backend amounts only', async () => {
     nextResult = conditional; show('/advisor');
-    fireEvent.click(screen.getByRole('button', { name: 'Load labeled example' }));
+    await fillPlan();
     fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
     await screen.findByRole('heading', { name: 'A balanced view of selling and holding.' });
     const initialCount = submitted.length;
@@ -227,34 +247,30 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getAllByText('₹10.00')).toHaveLength(2);
   });
   it('handles unknown routes', () => { show('/missing'); expect(screen.getByRole('heading', { name: 'Page not found' })).toBeInTheDocument(); });
-  it('selects the actual Arecanut scope, requires a manual quote when disconnected and retains long planning dates', async () => {
+  it('identifies Arecanut with a horizontal crop card and retains long planning dates', async () => {
     show('/advisor');
-    const arecaBtn = screen.getByRole('button', { name: /Arecanut/i });
-    expect(arecaBtn).toBeInTheDocument();
-    fireEvent.click(arecaBtn);
-    expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
-    expect(screen.queryByText(/48,000/i)).not.toBeInTheDocument();
-    expect(screen.getAllByText(/rashi.*local/i).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: /Arecanut.*Shivamogga/ }));
+    await screen.findByText('₹1,000.00 / qtl');
+    fireEvent.change(screen.getByLabelText('Harvest quantity'), { target: { value: '20' } });
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
-    fireEvent.change(screen.getByLabelText(/Expected buyer price today/), { target: { value: '48000' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    expect(screen.getByText(/No verified storage facility or tariff is configured/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Yes (Can hold)' }));
-    expect(screen.getByRole('option', { name: /730 calendar days/ })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole('radio', { name: 'Yes, I have storage' })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('radio', { name: 'Yes, I have storage' }));
+    expect(screen.getByRole('option', { name: /730 days/ })).toBeInTheDocument();
   });
 });
 
-describe('stale historical quotes', () => {
-  it('shows the dated reference but requires a current manually entered buyer quote', async () => {
+describe('automatic mandi price availability', () => {
+  it('blocks stale prices without asking the farmer to invent a replacement', async () => {
     staleReference = true; show('/advisor');
-    expect(await screen.findByText(/Historical price only/)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
-    fireEvent.change(screen.getByLabelText(/Harvest quantity/), { target: { value: '20' } });
-    expect(screen.getByLabelText(/Expected buyer price today/)).toHaveValue('');
+    expect(await screen.findByText('Mandi price is too old. Refresh market data before calculating.')).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Harvest quantity'), { target: { value: '20' } });
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(submitted).toHaveLength(0);
+    expect(screen.queryByLabelText('Expected buyer price today')).not.toBeInTheDocument();
+  });
+  it('keeps missing prices unavailable', async () => {
+    missingReference = true; show('/advisor');
+    expect(await screen.findByText('Mandi price is unavailable. Try again after market data is loaded.')).toBeInTheDocument();
   });
 });
 

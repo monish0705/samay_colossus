@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "scope": "Prompt 2 only; isolated TEST_ONLY accounts, no external payment/verification claims",
+  "steps": [
+    "PRIVATE_BUYER: real UI draft/publish, exact-offer request, business counteroffer, farmer API confirmation, revision preserves agreement, mobile Kannada same quantities",
+    "PRIVATE_MANDI: real UI draft/publish, exact-offer request, business counteroffer, farmer API confirmation, revision preserves agreement, mobile Kannada same quantities"
+  ],
+  "page_errors": [],
+  "farmer_discovery_ui_implemented": false,
+  "appointments_or_actual_sales_claimed": false
+}

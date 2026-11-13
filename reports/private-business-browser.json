@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "scope": "Prompt 1 foundation only, isolated TEST_ONLY accounts and documents",
+  "steps": [
+    "private mandi application stays pending, administrator verifies, authorized workspace persists after reload",
+    "one account has farmer and both private roles; buyer workspace restores and forged scope is denied",
+    "administrator suspension immediately denies backend buyer powers and refresh falls back to farming"
+  ],
+  "browser_page_errors": [],
+  "purchase_offers_implemented": false,
+  "external_identity_verification_claimed": false
+}

@@ -68,6 +68,14 @@ function parseSpokenNumber(text: string): string | null {
   return null;
 }
 
+interface Recognition {
+  lang: string; continuous: boolean; interimResults: boolean;
+  onstart: (() => void) | null; onend: (() => void) | null; onerror: (() => void) | null;
+  onresult: ((event: { results: { [index: number]: { [index: number]: { transcript: string } } } }) => void) | null;
+  start: () => void; stop: () => void;
+}
+type RecognitionWindow = Window & { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition };
+
 export function VoiceInputButton({
   onValue,
   label,
@@ -78,10 +86,10 @@ export function VoiceInputButton({
   const language = useLanguage();
   const [listening, setListening] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<Recognition | null>(null);
 
   const SpeechRecognition = typeof window !== 'undefined' &&
-    ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+    ((window as RecognitionWindow).SpeechRecognition || (window as RecognitionWindow).webkitSpeechRecognition);
 
   const startListening = () => {
     if (!SpeechRecognition) {
@@ -101,7 +109,7 @@ export function VoiceInputButton({
         setFeedback(language === 'kn' ? 'ಆಲಿಸಲಾಗುತ್ತಿದೆ...' : 'Listening...');
       };
 
-      recognition.onresult = (event: any) => {
+      recognition.onresult = event => {
         const transcript = event.results[0]?.[0]?.transcript || '';
         const parsed = parseSpokenNumber(transcript);
         if (parsed) {
@@ -157,7 +165,7 @@ export function VoiceInputButton({
           padding: 0,
           transition: 'all 0.2s ease',
         }}
-        aria-label="Voice input"
+        aria-label={label || 'Voice input (experimental; manual input available)'}
       >
         {listening ? <MicOff size={15} /> : <Mic size={15} />}
       </button>

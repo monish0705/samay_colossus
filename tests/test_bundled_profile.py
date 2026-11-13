@@ -2,6 +2,7 @@
 import hashlib
 import importlib.util
 import json
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -13,8 +14,10 @@ from app.prepared_data import bundled_environment
 def bundle(root):
     folder=root/'data/prepared'
     folder.mkdir(parents=True)
-    content=b'TEST_ONLY_BUNDLE_BYTES'
-    (folder/'samay.db').write_bytes(content)
+    with sqlite3.connect(folder/'samay.db') as connection:
+        connection.execute('CREATE TABLE test_only (label TEXT)')
+        connection.execute("INSERT INTO test_only VALUES ('TEST_ONLY_BUNDLE')")
+    content=(folder/'samay.db').read_bytes()
     (folder/'manifest.json').write_text(json.dumps({'database_sha256':hashlib.sha256(content).hexdigest()}))
     return folder
 
@@ -28,7 +31,7 @@ def test_bundled_profile_is_isolated_and_preserves_local_database_and_env(tmp_pa
     environment={'SAMAY_DATABASE_URL':'sqlite:///old-empty.db','SAMAY_ENABLE_RESEARCH_FORECASTS':'false'}
     env,target,message=bundled_environment(tmp_path,environment)
     assert target.parent==tmp_path/'.local-data'
-    assert target.read_bytes()==b'TEST_ONLY_BUNDLE_BYTES'
+    assert target.read_bytes()==(tmp_path/'data/prepared/samay.db').read_bytes()
     assert env['SAMAY_DATABASE_URL']==f'sqlite:///{target.as_posix()}'
     assert env['SAMAY_ENABLE_RESEARCH_FORECASTS']=='true'
     assert env['SAMAY_RESEARCH_SERVING_REGISTRY_PATH']==str(tmp_path/'research-serving-registry.json')
@@ -45,10 +48,11 @@ def test_bundled_profile_is_isolated_and_preserves_local_database_and_env(tmp_pa
 def test_bundled_profile_rejects_corrupt_source_even_if_profile_exists(tmp_path):
     folder=bundle(tmp_path)
     _,target,_=bundled_environment(tmp_path,{})
+    expected=target.read_bytes()
     (folder/'samay.db').write_bytes(b'TEST_ONLY_CORRUPTION')
     with pytest.raises(ValueError,match='hash mismatch'):
         bundled_environment(tmp_path,{})
-    assert target.read_bytes()==b'TEST_ONLY_BUNDLE_BYTES'
+    assert target.read_bytes()==expected
 
 
 def test_bundled_profile_overrides_old_replay_date_but_is_not_production_mode():

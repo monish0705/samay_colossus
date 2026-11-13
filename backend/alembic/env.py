@@ -1,5 +1,10 @@
 from alembic import context
-from app import models  # noqa: F401
+from app import (
+    purchase_models,  # noqa: F401
+    business_models,  # noqa: F401
+    models,  # noqa: F401
+    sale_models,  # noqa: F401
+)
 from app.config import get_settings
 from app.db import Base, make_engine
 

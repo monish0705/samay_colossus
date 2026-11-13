@@ -20,7 +20,12 @@ runtime = TemporaryDirectory(prefix="samay-vercel-")
 database = Path(runtime.name) / "samay.db"
 bundle = ROOT / "data" / "prepared"
 restore(bundle / "samay.db", bundle / "manifest.json", database)
-os.environ["SAMAY_DATABASE_URL"] = f"sqlite:///{database.as_posix()}"
+if os.getenv('SAMAY_PERSISTENT_DATABASE_URL'):
+    os.environ['SAMAY_DATABASE_URL'] = os.environ['SAMAY_PERSISTENT_DATABASE_URL']
+else:
+    os.environ["SAMAY_DATABASE_URL"] = f"sqlite:///{database.as_posix()}"
+    # A per-instance temporary database cannot preserve bookings or user accounts.
+    os.environ['SAMAY_MARKETPLACE_ENABLED'] = 'false'
 os.environ["SAMAY_ENVIRONMENT"] = "production"
 
 # Upgrade the writable runtime copy before importing services that use new fields.

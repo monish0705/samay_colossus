@@ -65,7 +65,9 @@ class FarmerPurchaseRequest(Record, Base):
     __table_args__ = (
         UniqueConstraint("farmer_id", "submission_key"),
         CheckConstraint("quantity_milli > 0 AND expected_price > 0"),
-        CheckConstraint("status IN ('SUBMITTED','ACCEPTED','COUNTEROFFERED','CONFIRMED','REJECTED','CANCELLED','EXPIRED')"),
+        CheckConstraint(
+            "status IN ('SUBMITTED','PENDING_BUSINESS_RESPONSE','VIEWED','ACCEPTED','ACCEPTED_BY_BUSINESS','COUNTEROFFERED','CONFIRMED','CONFIRMED_BY_FARMER','BOOKING_CONFIRMED','ARRIVED','COMPLETED','REJECTED','CANCELLED','EXPIRED')"
+        ),
     )
     public_id: Mapped[str] = mapped_column(String(80), unique=True)
     offer_id: Mapped[int] = mapped_column(ForeignKey("purchase_offers.id"), index=True)

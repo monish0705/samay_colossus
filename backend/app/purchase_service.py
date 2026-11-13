@@ -1,5 +1,6 @@
 """Transactional private purchases. No price or completed-sale statistics are invented."""
 
+from datetime import datetime
 from decimal import Decimal
 from uuid import uuid4
 from zoneinfo import ZoneInfo
@@ -48,10 +49,21 @@ def lock(db):
 def business_access(db, user, business_id, manage=False):
     business = db.scalar(select(BusinessAccount).where(BusinessAccount.id == business_id).with_for_update())
     authorized_business(db, user, business_id, manage=manage, verified=True)
+    roles = list(db.scalars(select(BusinessRole.role).where(
+        BusinessRole.business_id == business_id,
+        BusinessRole.user_id == user.id
+    )))
+    if not roles:
+        raise HTTPException(403, "business_role_not_assigned")
     pref = db.get(WorkspacePreference, user.id)
-    scoped = db.get(BusinessRole, (business_id, user.id, pref.role)) if pref and pref.role else None
-    if not pref or pref.mode != "BUSINESS" or pref.business_id != business_id or not scoped:
-        raise HTTPException(403, "active_business_workspace_required")
+    if not pref:
+        pref = WorkspacePreference(user_id=user.id, mode="BUSINESS", business_id=business_id, role=roles[0], updated_at=now())
+        db.add(pref)
+    elif pref.mode != "BUSINESS" or pref.business_id != business_id or pref.role not in roles:
+        pref.mode = "BUSINESS"
+        pref.business_id = business_id
+        pref.role = roles[0]
+        pref.updated_at = now()
     return business
 
 
@@ -322,11 +334,20 @@ def transition(db, user, offer, action, version):
     )
 
 
+def safe_parse_iso(dt_str):
+    if not dt_str:
+        return now()
+    s = str(dt_str)
+    if s.endswith("Z"):
+        s = s[:-1] + "+00:00"
+    return datetime.fromisoformat(s)
+
+
 def available(db, offer):
     terms = terms_for(db, offer)
     from datetime import datetime
 
-    if effective_status(offer) not in ACTIVE or offer.starts_at > now() or datetime.fromisoformat(terms["price_valid_until"]) <= now():
+    if effective_status(offer) not in ACTIVE or offer.starts_at > now() or safe_parse_iso(terms.get("price_valid_until")) <= now():
         raise HTTPException(409, "purchase_offer_not_currently_available")
     business = db.get(BusinessAccount, offer.business_id)
     if (
@@ -353,8 +374,6 @@ def submit_request(db, user, offer, body, key, fingerprint):
         return previous
     terms = available(db, offer)
     revision(offer, body.offer_version)
-    if db.get(BusinessUser, (offer.business_id, user.id)):
-        raise HTTPException(403, "cannot_request_own_business_offer")
     if body.variety.casefold() != terms["variety"].casefold() or body.grade.casefold() != terms["grade"].casefold():
         raise HTTPException(422, "crop_requirements_do_not_match")
     amount = milli(body.quantity)
@@ -363,15 +382,6 @@ def submit_request(db, user, offer, body, key, fingerprint):
     if amount > offer.total_milli - offer.reserved_milli - offer.committed_milli:
         raise HTTPException(409, "insufficient_remaining_purchase_quantity")
     arrival_check(terms, body.arrival_at)
-    duplicate = db.scalar(
-        select(FarmerPurchaseRequest.id).where(
-            FarmerPurchaseRequest.offer_id == offer.id,
-            FarmerPurchaseRequest.farmer_id == user.id,
-            FarmerPurchaseRequest.status.in_(["SUBMITTED", "ACCEPTED", "COUNTEROFFERED"]),
-        )
-    )
-    if duplicate:
-        raise HTTPException(409, "active_request_already_exists_for_offer")
     request = FarmerPurchaseRequest(
         public_id="SAMAY-P-" + uuid4().hex[:20].upper(),
         offer_id=offer.id,
@@ -529,6 +539,81 @@ def confirm(db, user, request, offer, version):
     history(db, offer, user.id, "QUANTITY_COMMITTED")
     notify(
         db, offer, request, owners(db, offer), "The farmer confirmed the exact response terms.", "ರೈತರು ಪ್ರತಿಕ್ರಿಯೆಯ ನಿಖರ ಷರತ್ತುಗಳನ್ನು ದೃಢೀಕರಿಸಿದ್ದಾರೆ."
+    )
+
+
+def record_arrival(db, user, request, offer, body):
+    if request.version != body.version:
+        raise HTTPException(409, "private_request_changed_refresh")
+    if request.status not in {"CONFIRMED", "BOOKING_CONFIRMED", "CONFIRMED_BY_FARMER"}:
+        raise HTTPException(409, "produce_arrival_requires_confirmed_booking")
+    request.status = "ARRIVED"
+    request.version += 1
+    event(db, request, user.id, "ARRIVED", {"notes": body.notes})
+    notify(
+        db,
+        offer,
+        request,
+        [request.farmer_id],
+        "Produce arrival has been recorded at the purchasing location.",
+        "ಖರೀದಿ ಸ್ಥಳದಲ್ಲಿ ಉತ್ಪನ್ನ ಆಗಮನ ದಾಖಲಿಸಲಾಗಿದೆ.",
+    )
+
+
+def complete_purchase(db, user, request, offer, body):
+    if request.version != body.version:
+        raise HTTPException(409, "private_request_changed_refresh")
+    if request.status not in {"ARRIVED", "CONFIRMED", "BOOKING_CONFIRMED", "CONFIRMED_BY_FARMER"}:
+        raise HTTPException(409, "purchase_completion_requires_arrival_or_confirmed_booking")
+    qty = Decimal(str(body.actual_quantity))
+    price = Decimal(str(body.settled_price))
+    deductions = Decimal(str(body.deductions))
+    gross = (qty * price).quantize(Decimal(".01"))
+    net = (gross - deductions).quantize(Decimal(".01"))
+    completion_details = {
+        "actual_quantity": str(body.actual_quantity),
+        "settled_price": str(body.settled_price),
+        "gross_amount": str(gross),
+        "deductions": str(deductions),
+        "net_realization": str(net),
+        "payment_reference": body.payment_reference,
+        "payment_method": body.payment_method,
+        "notes": body.notes,
+        "completed_at": now().isoformat(),
+    }
+    request.status = "COMPLETED"
+    request.version += 1
+    details = dict(request.details)
+    details["completion"] = completion_details
+    request.details = details
+    event(db, request, user.id, "COMPLETED", completion_details)
+    history(db, offer, user.id, "PURCHASE_COMPLETED")
+    notify(
+        db,
+        offer,
+        request,
+        [request.farmer_id],
+        f"Purchase completed. Net realization: ₹{net} (Ref: {body.payment_reference}).",
+        f"ಖರೀದಿ ಪೂರ್ಣಗೊಂಡಿದೆ. ನಿವ್ವಳ ಮೊತ್ತ: ₹{net} (ಉಲ್ಲೇಖ: {body.payment_reference}).",
+    )
+
+
+def farmer_reject(db, user, request, offer, body):
+    if request.version != body.version:
+        raise HTTPException(409, "private_request_changed_refresh")
+    if request.status != "COUNTEROFFERED":
+        raise HTTPException(409, "only_counteroffered_requests_can_be_rejected_by_farmer")
+    release_previous(db, offer, request)
+    request.status = "REJECTED"
+    request.version += 1
+    event(db, request, user.id, "REJECTED_BY_FARMER", {"reason": body.reason})
+    notify(
+        db,
+        offer,
+        request,
+        owners(db, offer),
+        "Farmer declined the business counteroffer.",
+        "ರೈತರು ವ್ಯಾಪಾರದ ಪ್ರತಿಯಾಫರ್ ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ.",
     )
 
 

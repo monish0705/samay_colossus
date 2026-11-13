@@ -25,18 +25,19 @@ beforeEach(() => {
     throw new SaleAPIError(401, 'authentication_required');
   });
 });
-function show(path = '/') { return render(<MemoryRouter initialEntries={[path]}><BusinessWorkspaceProvider><RoleSwitcher /><Routes><Route path="/business/register" element={<BusinessPage />} /><Route path="/business/admin" element={<BusinessPage />} /><Route path="/business/mandi/1" element={<h1>TEST_ONLY private mandi workspace</h1>} /><Route path="/business/buyer/2" element={<h1>TEST_ONLY private buyer workspace</h1>} /><Route path="*" element={<h1>Farmer workspace</h1>} /></Routes></BusinessWorkspaceProvider></MemoryRouter>); }
+function show(path = '/') { return render(<MemoryRouter initialEntries={[path]}><BusinessWorkspaceProvider><RoleSwitcher /><Routes><Route path="/business" element={<BusinessPage />} /><Route path="/business/register" element={<BusinessPage />} /><Route path="/business/admin" element={<BusinessPage />} /><Route path="/business/mandi/1" element={<h1>TEST_ONLY private mandi workspace</h1>} /><Route path="/business/buyer/2" element={<h1>TEST_ONLY private buyer workspace</h1>} /><Route path="*" element={<h1>Farmer workspace</h1>} /></Routes></BusinessWorkspaceProvider></MemoryRouter>); }
 function authorize() {
   access.roles = ['FARMER', 'PRIVATE_MANDI_OWNER', 'PRIVATE_BUYER'];
   access.workspaces = [{ business_id: 1, business_type: 'PRIVATE_MANDI', name: 'TEST_ONLY private mandi', role: 'PRIVATE_MANDI_OWNER' }, { business_id: 2, business_type: 'PRIVATE_BUYER', name: 'TEST_ONLY private buyer', role: 'PRIVATE_BUYER' }];
 }
 
 describe('authorized private workspaces — TEST_ONLY fixtures', () => {
-  it('keeps Business Mode disabled for a farmer-only account', async () => {
+  it('navigates to business registration/status when a farmer clicks Business Mode', async () => {
     show();
-    expect(await screen.findByRole('button', { name: 'Business Mode' })).toBeDisabled();
-    fireEvent.click(screen.getByRole('button', { name: 'Business Mode' }));
-    expect(screen.getByRole('heading', { name: 'Farmer workspace' })).toBeInTheDocument();
+    const btn = await screen.findByRole('button', { name: 'Business Mode' });
+    expect(btn).not.toBeDisabled();
+    fireEvent.click(btn);
+    expect(await screen.findByRole('heading', { name: 'Private business registration' })).toBeInTheDocument();
     expect(vi.mocked(saleAPI).mock.calls.some(([path]) => path === '/business/active-role')).toBe(false);
   });
   it('switches between two authorized private business types and back to farming', async () => {

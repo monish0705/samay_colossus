@@ -99,8 +99,22 @@ async def database_error(request, exc):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request, exc):
-    fields = [{"location": list(e["loc"]), "type": e["type"]} for e in exc.errors()]
-    return error(request, 422, "invalid_request", "Request validation failed", {"fields": fields})
+    fields = []
+    messages = []
+    for e in exc.errors():
+        field_parts = [str(x) for x in e["loc"] if x != "body"]
+        field_name = ".".join(field_parts)
+        msg = e.get("msg", "Invalid value")
+        # Strip "Value error, " prefix if added by Pydantic
+        if msg.startswith("Value error, "):
+            msg = msg[len("Value error, "):]
+        if field_name:
+            messages.append(f"{field_name}: {msg}")
+        else:
+            messages.append(msg)
+        fields.append({"field": field_name, "message": msg, "location": list(e["loc"]), "type": e["type"]})
+    user_message = "; ".join(messages) if messages else "Request validation failed"
+    return error(request, 422, "invalid_request", user_message, {"fields": fields})
 
 
 @app.exception_handler(StarletteHTTPException)

@@ -1,7 +1,7 @@
 import { config } from './config';
 import type { components } from './generated/api-schema';
 
-export interface SaleUser { id: number; name: string; email: string; role: 'FARMER' | 'MANDI_OWNER' | 'MANDI_STAFF' | 'SYSTEM_ADMIN'; email_verified: boolean; phone_verified: boolean }
+export interface SaleUser { id: number; name: string; email: string; role: 'FARMER' | 'MANDI_OWNER' | 'MANDI_STAFF' | 'SYSTEM_ADMIN'; roles?: string[]; email_verified: boolean; phone_verified: boolean }
 export interface SaleMandi { id: number; name: string; online_requests_available: boolean; commodity_ids: number[]; can_save_request?: boolean; reason: string | null }
 export type Offer = components['schemas']['OfferResponse'];
 export type Sale = components['schemas']['SaleResponse'];
@@ -12,7 +12,7 @@ export interface Preferences { email: boolean; sms: boolean; whatsapp: boolean; 
 export interface StaffMember { user_id: number; market_id: number; name: string; role: string; can_transact: boolean }
 
 export class SaleAPIError extends Error {
-  constructor(public status: number, public code: string) { super(code); }
+  constructor(public status: number, public code: string, public details?: Record<string, unknown>) { super(code); }
 }
 export async function saleAPI<T>(path: string, body?: unknown, key?: string, method?: 'POST' | 'PUT'): Promise<T> {
   const response = await fetch(`${config.apiBaseUrl}/api/v1${path}`, {
@@ -22,7 +22,16 @@ export async function saleAPI<T>(path: string, body?: unknown, key?: string, met
     signal: AbortSignal.timeout(20000),
   });
   const data = await response.json();
-  if (!response.ok) throw new SaleAPIError(response.status, data.error?.message || data.detail || 'Request failed');
+  if (!response.ok) {
+    let msg = data.error?.message || data.detail || 'Request failed';
+    if (data.error?.details?.fields && Array.isArray(data.error.details.fields) && data.error.details.fields.length > 0) {
+      const fieldMsgs = data.error.details.fields.map((f: { message?: string; type?: string }) => f.message || f.type).filter(Boolean);
+      if (fieldMsgs.length > 0) {
+        msg = fieldMsgs.join('. ');
+      }
+    }
+    throw new SaleAPIError(response.status, msg, data.error?.details);
+  }
   if (/^\/auth\/(login|register|logout)$/.test(path)) window.dispatchEvent(new Event('samay-auth-changed'));
   return data as T;
 }

@@ -123,6 +123,19 @@ class RejectInput(VersionInput):
     reason: str = Field(default="", max_length=1000)
 
 
+class ArrivalInput(VersionInput):
+    notes: str = Field(default="", max_length=1000)
+
+
+class CompletionInput(VersionInput):
+    actual_quantity: Quantity
+    settled_price: Price
+    deductions: Decimal = Field(default=Decimal("0.00"), ge=0, decimal_places=2)
+    payment_reference: str = Field(min_length=2, max_length=200)
+    payment_method: str = Field(default="BANK_TRANSFER", max_length=100)
+    notes: str = Field(default="", max_length=1000)
+
+
 class PurchaseOfferView(Input):
     id: int
     commodity_name: str

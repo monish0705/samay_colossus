@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router
 import { api, CROP_SCOPES, getDecisionPlan } from './api';
 import { getLanguage, setLanguage, t, useLanguage } from './i18n';
 import { saleAPI, SaleAPIError, type Preferences, type Sale, type SaleEvent, type SaleInput, type SaleMandi, type SaleNote, type SaleUser, type StaffMember } from './sale-api';
+import { useBusinessWorkspace } from './business-context';
 import { useApp } from './state';
 import { inr, qty, useResource } from './ui';
 import './sales.css';
@@ -53,7 +54,9 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
-  const root = owner ? '/mandi' : '/sale-requests';
+  const bWorkspace = useBusinessWorkspace();
+  const root = owner ? (location.pathname.startsWith('/business/apmc') ? location.pathname.split('/').slice(0, 4).join('/') : '/mandi') : '/sale-requests';
+  const reqId = params.requestId || (params['*']?.startsWith('requests/') ? params['*'].replace('requests/', '') : undefined);
   useEffect(() => { saleAPI<SaleUser>('/auth/me').then(setUser).catch(e => { if (!(e instanceof SaleAPIError && e.status === 401)) setError(e.message); }).finally(() => setLoading(false)); }, []);
   useEffect(() => {
     if (!user) return;
@@ -72,34 +75,52 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
   }, [user, refresh]);
   if (loading) return <p role="status">{t('Loading account')}</p>;
   if (!user) return <><ErrorMessage error={error} /><Auth owner={owner} onUser={setUser} /></>;
-  const allowed = owner ? ['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(user.role) : user.role === 'FARMER';
+  const allowed = owner
+    ? (['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(user.role) || (user.roles && user.roles.some(r => ['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(r))) || location.pathname.startsWith('/business/apmc'))
+    : user.role === 'FARMER';
   const action = async (run: () => Promise<unknown>) => {
     setError('');
     try { await run(); setRefresh(n => n + 1); } catch (e) { setError(e instanceof Error ? e.message : 'Request failed'); }
   };
   return <div className={`sale-workspace ${owner ? 'mandi-workspace' : ''}`}>
-    <header className="sale-header"><div><Link to="/">SAMAY</Link><h1>{t(owner ? 'Mandi Owner Portal' : 'My Sale Requests')}</h1><p>{user.name} · {t(user.role.replaceAll('_', ' '))}</p></div>
+    {owner && bWorkspace && bWorkspace.access && bWorkspace.access.workspaces.length > 0 && (
+      <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '1.25rem', background: '#f0fdf4', padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #bbf7d0', alignItems: 'center', flexWrap: 'wrap' }}>
+        <strong style={{ fontSize: '0.85rem', color: '#166534' }}>{t('Switch Persona:')}</strong>
+        {bWorkspace.access.workspaces.map(w => (
+          <button
+            key={`${w.business_id}:${w.role}`}
+            type="button"
+            className={`button ${bWorkspace.access?.active_workspace.business_id === w.business_id && bWorkspace.access?.active_workspace.role === w.role ? 'button-primary' : ''}`}
+            style={{ fontSize: '0.85rem', padding: '0.35rem 0.75rem' }}
+            onClick={() => void bWorkspace.switchTo(w)}
+          >
+            {w.business_type === 'APMC_MANDI' ? '🏛️ APMC Mandi' : w.business_type === 'PRIVATE_MANDI' ? '🏬 Private Mandi' : '💼 Private Buyer'} · {w.name}
+          </button>
+        ))}
+      </div>
+    )}
+    <header className="sale-header"><div><Link to="/">SAMAY</Link><h1>{t(owner ? (location.pathname.startsWith('/business/apmc') ? 'APMC Mandi Dashboard' : 'Mandi Owner Portal') : 'My Sale Requests')}</h1><p>{user.name} · {t(user.role.replaceAll('_', ' '))}</p></div>
       <div><button className="button" onClick={() => setLanguage(language === 'en' ? 'kn' : 'en')}>{language === 'en' ? 'ಕನ್ನಡ' : 'English'}</button><button className="button" onClick={() => void action(async () => { await saleAPI('/auth/logout', {}); setUser(null); })}>{t('Sign out')}</button></div>
     </header>
     <p className="sale-notice">{t('SAMAY connects farmers and registered mandi operators. Physical sales and payments take place outside SAMAY.')}</p>
     {allowed && <nav className="sale-nav" aria-label={t('Sale navigation')}>
       {(owner ? [['', 'Dashboard'], ['/incoming', 'Incoming Requests'], ['/counteroffers', 'Counteroffers'], ['/arrivals', 'Arrival Schedule'], ['/arrived', 'Arrived Produce'], ['/completed', 'Completed Sales'], ['/notifications', 'Notifications'], ['/settings', 'Mandi Settings'], ['/staff', 'Staff Management']] : [['', 'My Sale Requests'], ['/new', 'Send Sale Request'], ['/notifications', 'Notifications'], ['/settings', 'Notification settings']]).map(([path, label]) => <NavLink key={path} end to={root + path}>{t(label)}{path === '/notifications' && <span aria-live="polite"> ({count})</span>}</NavLink>)}
     </nav>}
-    {!allowed ? <section className="sale-card"><h2>{t('Use a mandi operator account')}</h2><p>{t('You are signed in as a farmer. Your farmer account cannot manage mandi requests.')}</p><Link className="button button-primary" to="/sale-requests">{t('Go to my sale requests')}</Link><button className="button" onClick={() => void action(async () => { await saleAPI('/auth/logout', {}); setUser(null); })}>{t('Sign in with an operator account')}</button><p>{t('Mandi accounts require administrator approval. No owner accounts are created automatically.')}</p></section> : <>
+    {!allowed ? <section className="sale-card"><h2>{t('Use a mandi operator account')}</h2><p>{t('You are signed in as a farmer. Your farmer account cannot manage mandi requests.')}</p><div className="sale-row" style={{ gap: '0.5rem', flexWrap: 'wrap' }}><Link className="button button-primary" to="/sale-requests">{t('Go to my sale requests')}</Link><Link className="button" to="/business">{t('Go to Business Mode')}</Link><button className="button" onClick={() => void action(async () => { await saleAPI('/auth/logout', {}); setUser(null); })}>{t('Sign in with an operator account')}</button></div><p>{t('APMC Mandi accounts require administrator approval. Private mandis and private buyers operate in Business Mode.')}</p></section> : <>
       <ErrorMessage error={error} />
       {pollError && <p role="status">{t('Notification connection lost. Retrying automatically.')} <button onClick={() => setRefresh(n => n + 1)}>{t('Retry now')}</button></p>}
       {notes.some(n => !n.read_at) && !location.pathname.endsWith('/notifications') && <aside className="sale-notice" aria-live="polite"><strong>{t('Unread notifications')}: {count}</strong> <Link to={root + '/notifications'}>{t('Open inbox')}</Link></aside>}
       {location.pathname.endsWith('/notifications') ? <section><h2>{t('Notifications')}</h2>{notes.length === 0 && <p>{t('No notifications yet')}</p>}{notes.map(n => <article key={n.id} className="sale-card"><p>{n.message[language]}</p><p>{saleTime(n.created_at)} · {t(n.read_at ? 'Read' : 'Unread')}</p><button className="button" onClick={() => void action(async () => { await saleAPI(`/notifications/${n.id}/read`, {}); navigate(`${root}/${owner ? 'requests/' : ''}${n.request_id}`); })}>{t('Open request')}</button>{n.deliveries.map(d => <p key={d.channel}>{t(d.channel)}: {t(d.status)} {d.error_reason && t(d.error_reason)}</p>)}</article>)}</section>
         : location.pathname.endsWith('/settings') ? <Settings user={user} />
         : location.pathname.endsWith('/staff') ? <Staff />
-        : params.requestId && params.requestId !== 'new' ? <SaleDetails key={params.requestId} requestId={params.requestId} owner={owner} changed={() => setRefresh(n => n + 1)} />
+        : reqId && reqId !== 'new' ? <SaleDetails key={reqId} requestId={reqId} owner={owner} changed={() => setRefresh(n => n + 1)} />
         : !owner && location.pathname.endsWith('/new') ? <SaleCreateForm />
-        : <SaleList owner={owner} refresh={refresh + (notes[0]?.id || 0)} />}
+        : <SaleList owner={owner} root={root} refresh={refresh + (notes[0]?.id || 0)} />}
     </>}
   </div>;
 }
 
-function SaleList({ owner, refresh }: { owner: boolean; refresh: number }) {
+function SaleList({ owner, root = owner ? '/mandi' : '/sale-requests', refresh }: { owner: boolean; root?: string; refresh: number }) {
   const [rows, setRows] = useState<Sale[]>([]);
   const [counts, setCounts] = useState<{ counts: Record<string, number>; total: number } | null>(null);
   const [error, setError] = useState('');
@@ -118,7 +139,7 @@ function SaleList({ owner, refresh }: { owner: boolean; refresh: number }) {
   return <section>
     {counts && <div className="sale-stats"><div className="sale-card"><strong>{counts.total}</strong><p>{t('Total requests')}</p></div>{Object.entries(counts.counts).map(([key, value]) => <div className="sale-card" key={key}><strong>{value}</strong><p>{statusText(key)}</p></div>)}</div>}
     <label>{t('Filter by status')} <select value={filter} onChange={e => { setFilter(e.target.value); setPage(0); }}><option value="">{t('All')}</option>{['SUBMITTED', 'NOTIFIED', 'VIEWED', 'MANDI_ACCEPTED', 'COUNTER_OFFERED', 'ARRIVAL_SCHEDULED', 'ARRIVED', 'WEIGHED', 'COMPLETED', 'REJECTED', 'CANCELLED', 'EXPIRED'].map(s => <option key={s} value={s}>{statusText(s)}</option>)}</select></label>
-    <ErrorMessage error={error} />{loading ? <p role="status">{t('Loading requests')}</p> : rows.length === 0 ? <p>{t('No sale requests in this view')}</p> : rows.map(row => <article className="sale-card" key={row.public_request_id}><div className="sale-row"><h2><Link to={`${owner ? '/mandi/requests' : '/sale-requests'}/${row.public_request_id}`}>{row.public_request_id}</Link></h2><span className="sale-status">{statusText(row.delivery_status === 'WAITING_FOR_MANDI_ACTIVATION' ? 'WAITING FOR MANDI ACTIVATION' : row.status)}</span></div><p>{row.mandi_name} · {t(row.crop_name)} · {row.variety} / {row.grade}</p><p>{qty(row.requested_quantity)} · {t('Farmer expected price')}: {inr(row.expected_price_per_quintal)}/{t('quintal')}</p><p>{t('Observed reference price')}: {row.reference_modal_price ? inr(row.reference_modal_price) : t('Unavailable')} · {row.reference_price_date || ''}</p><p>{t('Preferred arrival')}: {saleTime(row.preferred_arrival_at)}</p><p>{t('Last updated')}: {saleTime(row.updated_at)}</p>{row.offers.at(-1) && <p>{t('Latest owner offer')}: {inr(row.offers.at(-1)!.price)} · {qty(row.offers.at(-1)!.quantity)}</p>}</article>)}
+    <ErrorMessage error={error} />{loading ? <p role="status">{t('Loading requests')}</p> : rows.length === 0 ? <p>{t('No sale requests in this view')}</p> : rows.map(row => <article className="sale-card" key={row.public_request_id}><div className="sale-row"><h2><Link to={`${owner ? (location.pathname.startsWith('/business/apmc') ? `${root}/requests` : '/mandi/requests') : '/sale-requests'}/${row.public_request_id}`}>{row.public_request_id}</Link></h2><span className="sale-status">{statusText(row.delivery_status === 'WAITING_FOR_MANDI_ACTIVATION' ? 'WAITING FOR MANDI ACTIVATION' : row.status)}</span></div><p>{row.mandi_name} · {t(row.crop_name)} · {row.variety} / {row.grade}</p><p>{qty(row.requested_quantity)} · {t('Farmer expected price')}: {inr(row.expected_price_per_quintal)}/{t('quintal')}</p><p>{t('Observed reference price')}: {row.reference_modal_price ? inr(row.reference_modal_price) : t('Unavailable')} · {row.reference_price_date || ''}</p><p>{t('Preferred arrival')}: {saleTime(row.preferred_arrival_at)}</p><p>{t('Last updated')}: {saleTime(row.updated_at)}</p>{row.offers.at(-1) && <p>{t('Latest owner offer')}: {inr(row.offers.at(-1)!.price)} · {qty(row.offers.at(-1)!.quantity)}</p>}</article>)}
     <div className="sale-row"><button disabled={page === 0 || loading} onClick={() => setPage(p => p - 1)}>{t('Previous')}</button><span>{page + 1}</span><button disabled={rows.length < 20 || loading} onClick={() => setPage(p => p + 1)}>{t('Next')}</button></div>
   </section>;
 }

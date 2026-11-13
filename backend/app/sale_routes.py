@@ -226,7 +226,7 @@ def create_sale(body: SaleCreate, db: DB, user: User, idempotency_key: str = Hea
     reg = db.get(MandiRegistration, body.mandi_id)
     recipients = owners(db, body.mandi_id)
     validate_sale_market(db, body, reg)
-    online = bool(reg and reg.active and any(u.role == 'MANDI_OWNER' for u in recipients))
+    online = bool(reg and reg.active and len(recipients) > 0)
     if body.preferred_arrival_at <= now():
         raise HTTPException(422, 'arrival_must_be_in_future')
     obs = db.scalar(select(MandiObservation).where(MandiObservation.market_id == body.mandi_id,
@@ -297,7 +297,6 @@ def list_sales(request: Request, db: DB, user: User, status: str | None = None, 
     if '/mandi/' in request.url.path:
         require_role(user, 'MANDI_OWNER', 'MANDI_STAFF')
         query = query.join(MandiAssignment, MandiAssignment.market_id == SaleRequest.mandi_id).where(MandiAssignment.user_id == user.id)
-        query = query.where(SaleRequest.status != 'SUBMITTED')
     else:
         require_role(user, 'FARMER')
         query = query.where(SaleRequest.farmer_id == user.id)

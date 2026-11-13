@@ -8,6 +8,7 @@ import { Results } from './Results';
 import { ErrorState } from './ui';
 import { localize, setLanguage, t } from './i18n';
 import { Demo } from './Demo';
+import { SaleWorkspace } from './SalePages';
 
 interface NavItem {
   to: string;
@@ -22,6 +23,8 @@ const allNavigation: NavItem[] = [
   { to: '/advisor', title: 'Selling Advisor', farmerTitle: 'Plan My Sale', farmer: true, icon: Sprout },
   { to: '/results', title: 'Recommendation Results', farmerTitle: 'Sale Results', farmer: true, icon: ClipboardCheck },
   { to: '/insights', title: 'Market Insights', farmer: true, icon: BarChart3 },
+  { to: '/sale-requests', title: 'My Sale Requests', farmer: true, icon: ClipboardCheck },
+  { to: '/mandi', title: 'Mandi Owner Portal', farmer: true, icon: LayoutDashboard },
   { to: '/forecast', title: 'Price Forecast', farmer: false, icon: TrendingUp },
   { to: '/explorer', title: 'Scenario Explorer', farmer: false, icon: SlidersHorizontal },
   { to: '/transparency', title: 'Data & Model Transparency', farmer: false, icon: ShieldCheck },
@@ -207,6 +210,8 @@ function Shell() {
               <Route path="/results" element={<Results />} />
               <Route path="/explorer" element={<AdvisorPage explorer />} />
               <Route path="/transparency" element={<Transparency />} />
+              <Route path="/sale-requests/*" element={<SaleWorkspace />} />
+              <Route path="/sale-requests/:requestId" element={<SaleWorkspace />} />
               <Route path="*" element={<><h1>{t('Page not found')}</h1><Link to="/">{t('Return to dashboard')}</Link></>} />
             </Routes>
           </Boundary>
@@ -225,7 +230,11 @@ function Shell() {
 export function App() {
   return (
     <AppProvider>
-      <Shell />
+      <Routes>
+        <Route path="/mandi/*" element={<SaleWorkspace owner />} />
+        <Route path="/mandi/requests/:requestId" element={<SaleWorkspace owner />} />
+        <Route path="*" element={<Shell />} />
+      </Routes>
     </AppProvider>
   );
 }

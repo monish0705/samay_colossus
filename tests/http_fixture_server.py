@@ -35,6 +35,14 @@ def main():
     from sqlalchemy.orm import Session
 
     command.upgrade(Config("backend/alembic.ini"), "head")
+    # Optional browser-workflow fixture account, confined to this disposable TEST_ONLY DB.
+    if os.getenv('SAMAY_SALE_E2E_ADMIN_PASSWORD'):
+        from app.sale_auth import password_hash
+        from app.sale_models import SaleUser
+        with Session(engine) as session:
+            session.add(SaleUser(email='admin@example.test', name='TEST_ONLY administrator', role='SYSTEM_ADMIN',
+                password_hash=password_hash(os.environ['SAMAY_SALE_E2E_ADMIN_PASSWORD'])))
+            session.commit()
     start, last = date(2025, 1, 1), date(2025, 11, 2)
     cursor = start
     with Session(engine) as session, session.begin():

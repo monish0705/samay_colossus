@@ -118,6 +118,8 @@ export function Results() {
       </PageHeading>
 
       <DecisionPanel result={result}/>
+      <Link className="button button-primary" to="/sale-requests/new">{t('Sell to This Mandi')}</Link>
+      <p>{t('Online requests require an activated mandi and your confirmation. A recommendation is not a buyer offer.')}</p>
       {result.decision_support && <h2>{t('Full calculation audit for the displayed plan')}</h2>}
 
       {/* Main Status Banner */}

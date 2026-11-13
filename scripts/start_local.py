@@ -42,6 +42,7 @@ def main():
         from app.prepared_data import bundled_environment
         env, profile_database, message = bundled_environment(ROOT, env)
         print(f'{message}\nBundled research profile; previous samay.db and .env are preserved. Forecasts remain limited-evidence research.',flush=True)
+        print(f'Runtime database: {profile_database}', flush=True)
     if args.enable_research:
         env.update(SAMAY_ENABLE_RESEARCH_FORECASTS="true",SAMAY_RESEARCH_REGISTRY_PATH=str(ROOT/"research-registry.json"),SAMAY_RESEARCH_SERVING_REGISTRY_PATH=str(ROOT/"research-serving-registry.json"))
     subprocess.run([str(python), "scripts/restore_prepared_data.py"], cwd=ROOT, env=env, check=True)
@@ -59,6 +60,7 @@ def main():
             owned.append(subprocess.Popen([str(python), "scripts/refresh_market_context.py", "--watch-minutes", "60"], cwd=ROOT, env=env, creationflags=flags))
         if not ready(backend + "/api/health") and not args.check:
             owned.append(subprocess.Popen([str(python), "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(args.backend_port)], cwd=ROOT, env=env, creationflags=flags))
+            owned.append(subprocess.Popen([str(python), "scripts/sale_notification_worker.py"], cwd=ROOT, env=env, creationflags=flags))
         if not ready(frontend) and not args.check:
             node = shutil.which("node")
             if not node:

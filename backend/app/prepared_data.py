@@ -1,7 +1,21 @@
 """Verified local bundle restoration; existing databases are never replaced."""
 import hashlib
 import json
+import sqlite3
 from pathlib import Path
+
+
+def assert_public_market_snapshot(connection):
+    """A market bundle must never publish accounts, contact tokens or sale histories."""
+    tables = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    private = {'mandi_users', 'mandi_user_market_assignments', 'mandi_registrations',
+               'notifications', 'notification_preferences', 'notification_deliveries', 'notification_outbox'}
+    private |= {name for name in tables if name.startswith('sale_')}
+    for name in sorted(tables & private):
+        # Names originate from our schema, not request input.
+        quoted = name.replace('"', '""')
+        if connection.execute(f'SELECT EXISTS(SELECT 1 FROM "{quoted}")').fetchone()[0]:
+            raise ValueError('Source contains private marketplace data. Build public bundles from a clean market-only database.')
 
 
 def restore(source: Path, manifest: Path, target: Path):
@@ -11,6 +25,11 @@ def restore(source: Path, manifest: Path, target: Path):
     expected = json.loads(manifest.read_text(encoding="utf-8"))["database_sha256"]
     if hashlib.sha256(content).hexdigest() != expected:
         raise ValueError("Prepared database hash mismatch; refusing restoration")
+    try:
+        with sqlite3.connect(source.resolve().as_uri() + '?mode=ro', uri=True) as connection:
+            assert_public_market_snapshot(connection)
+    except sqlite3.DatabaseError as exc:
+        raise ValueError('Prepared bundle is not a readable SQLite database') from exc
     target.parent.mkdir(parents=True, exist_ok=True)
     try:
         with target.open("xb") as handle:

@@ -1,4 +1,34 @@
-# SAMAY status — 5 November 2026
+# SAMAY status — 13 November 2026
+
+## Farmer-to-mandi workflow update
+
+Implemented and tested locally on branch `sub1`: authenticated farmer accounts,
+administrator-approved mandi invitations/assignments, the separate `/mandi` portal,
+sale request previews and idempotent submission, immutable request/offer histories,
+counteroffers, farmer confirmation, arrival bookings, arrival/weighment/completion,
+manual payment records, discrepancy reporting, scoped in-app notifications and outbox.
+Core workflow labels are available in English and Kannada. Existing market/forecast/
+optimizer functionality is preserved.
+
+Final verification: **178 backend tests and 32 frontend tests pass**. Production build,
+frontend lint/typecheck and lint for changed feature Python files pass. Actual Chromium
+through production React, HTTP API and disposable SQLite passed the complete lifecycle,
+including mobile English/Kannada numerical consistency. Screenshots and exact results
+are in reports/ and [SALE-VERIFICATION.md](SALE-VERIFICATION.md).
+
+Operational requirements remain: approve real mandi operators, verify contacts, configure
+and test external providers, and deploy on durable storage. No real operator accounts or
+marketplace transactions were seeded. The five authentic local mandi entries correctly
+show online requests unavailable until activated and assigned. SMTP/Twilio adapters have
+failure-path tests, but **no real external delivery has been tested**. Native Kannada
+review and production load/security review remain. Repository-wide backend lint reports
+25 existing issues in untouched files; the feature-specific lint check passes.
+
+The temporary-database Vercel deployment fails closed for marketplace routes. It needs a
+shared durable database and worker scheduling. This feature has not been deployed.
+See [onboarding, APIs and configuration](SALE-WORKFLOW.md).
+
+## Earlier platform status — 5 November 2026
 
 ## Working
 

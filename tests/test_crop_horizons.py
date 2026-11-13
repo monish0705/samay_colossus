@@ -16,7 +16,7 @@ from app.crop_horizons import causal_origins, chronological_folds, horizon_frame
 from app.features import FEATURES, features_at
 from app.forecasting import examples
 from app.research_service import bundles
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 from test_forecasting import case
 
@@ -87,6 +87,8 @@ def test_daily_training_artifacts_match_real_predictions_and_reject_missing_hori
             if key not in selected or meta['horizon']>selected[key][1]['horizon']:
                 selected[key]=(folder,meta)
         with Session(engine) as session:
+            last_report = datetime.fromisoformat(session.execute(text("SELECT MAX(observed_on) FROM mandi_observations WHERE data_kind='official'")).scalar_one()).date()
+            stale_origin = last_report + timedelta(days=10)
             for _,meta in selected.values():
                 query=PredictRequest(**{k:meta[k] for k in ('market','commodity','variety','grade','horizon')})
                 raw,result=predict(session,query,origin,'TEST_ONLY_DAILY',when)
@@ -94,7 +96,7 @@ def test_daily_training_artifacts_match_real_predictions_and_reject_missing_hori
                 assert raw.reliability_status=='limited evidence'
                 assert 'extended_horizon_no_new_final_test' in raw.flags
                 with pytest.raises(ServiceProblem) as stale:
-                    predict(session,query,origin+timedelta(days=10),'TEST_ONLY',when+timedelta(days=10))
+                    predict(session,query,stale_origin,'TEST_ONLY',when+timedelta(days=(stale_origin-origin).days))
                 assert stale.value.code=='stale_market_data'
             query=PredictRequest(market='Tiptur APMC',commodity='Copra',variety='other',grade='local',horizon=365)
             with pytest.raises(ServiceProblem) as absent:

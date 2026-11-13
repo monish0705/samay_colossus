@@ -1,5 +1,11 @@
 # SAMAY · Team Resonance · COLOSSUS 3.0
 
+Farmer-to-mandi requests: see [sale workflow and onboarding](docs/SALE-WORKFLOW.md).
+Farmers use `/sale-requests`; approved operators use the separate `/mandi` portal.
+Online requests stay unavailable until a real operator is approved and assigned.
+In-app notifications work without external messaging credentials. This feature requires
+a durable database; it is disabled in the Vercel temporary-database deployment.
+
 Cash-aware market decision support for five Karnataka crop/market series.
 FastAPI + SQLite/Alembic, causal forecasting and empirical uncertainty, Decimal
 sale optimization, and a responsive English/Kannada React dashboard.

@@ -1,5 +1,6 @@
 import { cloneElement, isValidElement, useSyncExternalStore, type ReactElement, type ReactNode } from 'react';
 import { kannada } from './locales/kn';
+import { saleKannada } from './locales/sale-kn';
 export type Language = 'en' | 'kn';
 let language: Language = 'kn';
 try {
@@ -8,7 +9,7 @@ try {
   else if (saved === 'kn') language = 'kn';
 } catch { /* Storage is optional. */ }
 const listeners = new Set<() => void>();
-const dictionary = new Map(Object.entries(kannada).map(([key, value]) => [key.toLowerCase(), value]));
+const dictionary = new Map(Object.entries({ ...kannada, ...saleKannada }).map(([key, value]) => [key.toLowerCase(), value]));
 export function setLanguage(value: Language) { language = value; try { localStorage.setItem('samay-language', value); } catch { /* No financial data is stored. */ } listeners.forEach(listener => listener()); }
 export const getLanguage = () => language;
 export function useLanguage() { return useSyncExternalStore(callback => { listeners.add(callback); return () => { listeners.delete(callback); }; }, getLanguage, () => 'kn' as Language); }

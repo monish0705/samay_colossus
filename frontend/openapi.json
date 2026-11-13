@@ -1,0 +1,2626 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SAMAY API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Health",
+        "description": "Process liveness; database migrations are an explicit deployment step.",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/markets": {
+      "get": {
+        "tags": [
+          "market data"
+        ],
+        "summary": "Markets",
+        "operationId": "markets_api_v1_markets_get",
+        "parameters": [
+          {
+            "name": "data_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "official",
+                "fixture",
+                "demo"
+              ],
+              "type": "string",
+              "default": "official",
+              "title": "Data Kind"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MarketResponse"
+                  },
+                  "title": "Response Markets Api V1 Markets Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/prices/history": {
+      "get": {
+        "tags": [
+          "market data"
+        ],
+        "summary": "History",
+        "operationId": "history_api_v1_prices_history_get",
+        "parameters": [
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Kolar APMC",
+              "title": "Market"
+            }
+          },
+          {
+            "name": "commodity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Tomato",
+              "title": "Commodity"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "End Date"
+            }
+          },
+          {
+            "name": "variety",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Variety"
+            }
+          },
+          {
+            "name": "grade",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Grade"
+            }
+          },
+          {
+            "name": "data_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "official",
+                "fixture",
+                "demo"
+              ],
+              "type": "string",
+              "default": "official",
+              "title": "Data Kind"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/commodities": {
+      "get": {
+        "tags": [
+          "market data"
+        ],
+        "summary": "Commodities",
+        "operationId": "commodities_api_v1_commodities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CommodityResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Commodities Api V1 Commodities Get"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/prices/latest": {
+      "get": {
+        "tags": [
+          "market data"
+        ],
+        "summary": "Latest",
+        "operationId": "latest_api_v1_prices_latest_get",
+        "parameters": [
+          {
+            "name": "variety",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Variety"
+            }
+          },
+          {
+            "name": "grade",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Grade"
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Kolar APMC",
+              "title": "Market"
+            }
+          },
+          {
+            "name": "commodity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Tomato",
+              "title": "Commodity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/predict": {
+      "post": {
+        "tags": [
+          "forecasting"
+        ],
+        "summary": "Predict",
+        "operationId": "predict_api_v1_predict_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PredictRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recommend": {
+      "post": {
+        "tags": [
+          "selling"
+        ],
+        "summary": "Recommend",
+        "operationId": "recommend_api_v1_recommend_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecommendRequest"
+              },
+              "examples": {
+                "cash_only_example": {
+                  "summary": "EXAMPLE ONLY: 20 quintals and INR 10,000 cash, no storage or live-price claim",
+                  "value": {
+                    "commodity": "Tomato",
+                    "market": "Kolar APMC",
+                    "variety": "local",
+                    "grade": "faq",
+                    "decision_at": "2026-11-04T08:00:00+05:30",
+                    "total_quantity_quintals": "20",
+                    "today_price_inr_per_quintal": "1000",
+                    "today_price_assumption": "EXAMPLE_ONLY farmer quote, not live data",
+                    "required_net_cash_inr": "10000",
+                    "storage_capacity_quintals": "0",
+                    "decision_increment_quintals": "1",
+                    "market_quantity_step_quintals": ".01",
+                    "minimum_sale_lot_quintals": "1",
+                    "maximum_horizon_days": 3,
+                    "risk_tolerance": "conservative",
+                    "crop_storage_profile": {
+                      "commodity": "Tomato",
+                      "maximum_holding_days": 0,
+                      "storage_conditions": "EXAMPLE_ONLY no storage",
+                      "assumption_source": "EXAMPLE_ONLY"
+                    },
+                    "today_sale_costs": {
+                      "fixed_transport_inr": "100",
+                      "transport_inr_per_quintal": "10",
+                      "commission_rate": ".05",
+                      "assumptions": "EXAMPLE_ONLY quotation"
+                    },
+                    "holding_options": []
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/lot/storage plan; full explanation retained",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/models/status": {
+      "get": {
+        "tags": [
+          "operations"
+        ],
+        "summary": "Models Status",
+        "operationId": "models_status_api_v1_models_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelsStatus"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/status": {
+      "get": {
+        "tags": [
+          "operations"
+        ],
+        "summary": "Data Status",
+        "operationId": "data_status_api_v1_data_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataStatus"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiError": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "details": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "ApiError"
+      },
+      "ApiInterval": {
+        "properties": {
+          "nominal_level": {
+            "type": "string",
+            "title": "Nominal Level"
+          },
+          "lower_inr_per_quintal": {
+            "type": "string",
+            "title": "Lower Inr Per Quintal"
+          },
+          "upper_inr_per_quintal": {
+            "type": "string",
+            "title": "Upper Inr Per Quintal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nominal_level",
+          "lower_inr_per_quintal",
+          "upper_inr_per_quintal"
+        ],
+        "title": "ApiInterval"
+      },
+      "CommodityResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "data_source": {
+            "type": "string",
+            "title": "Data Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "data_source"
+        ],
+        "title": "CommodityResponse"
+      },
+      "CropStorageProfile": {
+        "properties": {
+          "commodity": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Commodity"
+          },
+          "maximum_holding_days": {
+            "type": "integer",
+            "maximum": 365.0,
+            "minimum": 0.0,
+            "title": "Maximum Holding Days"
+          },
+          "storage_conditions": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Storage Conditions"
+          },
+          "assumption_source": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Assumption Source"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "commodity",
+          "maximum_holding_days",
+          "storage_conditions",
+          "assumption_source"
+        ],
+        "title": "CropStorageProfile"
+      },
+      "DataStatus": {
+        "properties": {
+          "historical_demo_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Historical Demo Date"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "official_observations": {
+            "type": "integer",
+            "title": "Official Observations"
+          },
+          "fixture_observations": {
+            "type": "integer",
+            "title": "Fixture Observations"
+          },
+          "demo_observations": {
+            "type": "integer",
+            "title": "Demo Observations"
+          },
+          "latest_official_report_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Official Report Date"
+          },
+          "latest_official_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Official Fetched At"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "official_observations",
+          "fixture_observations",
+          "demo_observations",
+          "latest_official_report_date",
+          "latest_official_fetched_at"
+        ],
+        "title": "DataStatus"
+      },
+      "ErrorEnvelope": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorEnvelope"
+      },
+      "Freshness": {
+        "properties": {
+          "report_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Date"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "file_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Sha256"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale",
+            "default": true
+          },
+          "data_kind": {
+            "type": "string",
+            "title": "Data Kind",
+            "default": "official"
+          }
+        },
+        "type": "object",
+        "title": "Freshness"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "service": {
+            "type": "string",
+            "title": "Service"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "service",
+          "version"
+        ],
+        "title": "HealthResponse"
+      },
+      "HistoryResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PriceResponse"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": "Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed."
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "limit",
+          "offset",
+          "next_offset"
+        ],
+        "title": "HistoryResponse"
+      },
+      "LatestResponse": {
+        "properties": {
+          "observation": {
+            "$ref": "#/components/schemas/PriceResponse"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale"
+          },
+          "age_calendar_days": {
+            "type": "integer",
+            "title": "Age Calendar Days"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": "Latest stored official wholesale observation, not a live buyer quote or guaranteed farmer realization."
+          }
+        },
+        "type": "object",
+        "required": [
+          "observation",
+          "stale",
+          "age_calendar_days"
+        ],
+        "title": "LatestResponse"
+      },
+      "MarketResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "district": {
+            "type": "string",
+            "title": "District"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "district",
+          "state"
+        ],
+        "title": "MarketResponse"
+      },
+      "ModelStatusItem": {
+        "properties": {
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "variety": {
+            "type": "string",
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "title": "Grade"
+          },
+          "horizon": {
+            "type": "integer",
+            "title": "Horizon"
+          },
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "trained_before": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trained Before"
+          },
+          "dataset_fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dataset Fingerprint"
+          },
+          "reliability_evidence_configured": {
+            "type": "boolean",
+            "title": "Reliability Evidence Configured",
+            "default": false
+          },
+          "validation_metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Validation Metrics"
+          },
+          "final_holdout_metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Holdout Metrics"
+          }
+        },
+        "type": "object",
+        "required": [
+          "market",
+          "commodity",
+          "variety",
+          "grade",
+          "horizon",
+          "model_version",
+          "status"
+        ],
+        "title": "ModelStatusItem"
+      },
+      "ModelsStatus": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "models": {
+            "items": {
+              "$ref": "#/components/schemas/ModelStatusItem"
+            },
+            "type": "array",
+            "title": "Models"
+          },
+          "research_studies": {
+            "items": {
+              "$ref": "#/components/schemas/ResearchStudy"
+            },
+            "type": "array",
+            "title": "Research Studies",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "models"
+        ],
+        "title": "ModelsStatus"
+      },
+      "OptimizationResponse": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "recommendation_basis": {
+            "type": "string",
+            "title": "Recommendation Basis"
+          },
+          "has_unreliable_or_missing_scenarios": {
+            "type": "boolean",
+            "title": "Has Unreliable Or Missing Scenarios"
+          },
+          "decision_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Decision At"
+          },
+          "scope": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Scope"
+          },
+          "units": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Units"
+          },
+          "sell_all_now": {
+            "$ref": "#/components/schemas/SellAllComparison"
+          },
+          "maximum_today_net_cash_upper_bound_inr": {
+            "type": "string",
+            "title": "Maximum Today Net Cash Upper Bound Inr"
+          },
+          "cash_requirement_achievable_on_grid": {
+            "type": "boolean",
+            "title": "Cash Requirement Achievable On Grid"
+          },
+          "recommended_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SellingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "best_scenario_only_or_validated_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SellingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "feasible_plans": {
+            "items": {
+              "$ref": "#/components/schemas/SellingPlan"
+            },
+            "type": "array",
+            "title": "Feasible Plans"
+          },
+          "rejected_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Rejected Counts"
+          },
+          "risk_tolerance": {
+            "type": "string",
+            "title": "Risk Tolerance"
+          },
+          "request_and_assumptions": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Request And Assumptions"
+          },
+          "explanations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Explanations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schema_version",
+          "status",
+          "recommendation_basis",
+          "has_unreliable_or_missing_scenarios",
+          "decision_at",
+          "scope",
+          "units",
+          "sell_all_now",
+          "maximum_today_net_cash_upper_bound_inr",
+          "cash_requirement_achievable_on_grid",
+          "recommended_plan",
+          "best_scenario_only_or_validated_plan",
+          "feasible_plans",
+          "rejected_counts",
+          "risk_tolerance",
+          "request_and_assumptions",
+          "explanations"
+        ],
+        "title": "OptimizationResponse"
+      },
+      "PredictRequest": {
+        "properties": {
+          "market": {
+            "type": "string",
+            "title": "Market",
+            "default": "Kolar APMC"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity",
+            "default": "Tomato"
+          },
+          "variety": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Grade"
+          },
+          "horizon": {
+            "type": "integer",
+            "enum": [
+              1,
+              3,
+              7
+            ],
+            "title": "Horizon"
+          },
+          "origin_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin Date"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "variety",
+          "grade",
+          "horizon"
+        ],
+        "title": "PredictRequest",
+        "description": "EXAMPLE ONLY request schema; no model or live price availability is implied.",
+        "examples": [
+          {
+            "commodity": "Tomato",
+            "grade": "faq",
+            "horizon": 3,
+            "market": "Kolar APMC",
+            "variety": "local"
+          }
+        ]
+      },
+      "PredictionResponse": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "samay-reliability-v1"
+          },
+          "prediction_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prediction Inr Per Quintal"
+          },
+          "intervals": {
+            "items": {
+              "$ref": "#/components/schemas/ApiInterval"
+            },
+            "type": "array",
+            "title": "Intervals"
+          },
+          "horizon_calendar_days": {
+            "type": "integer",
+            "title": "Horizon Calendar Days"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version"
+          },
+          "reliability_status": {
+            "type": "string",
+            "enum": [
+              "validated",
+              "limited evidence",
+              "stale data",
+              "unavailable"
+            ],
+            "title": "Reliability Status",
+            "default": "unavailable"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Flags",
+            "default": []
+          },
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "variety": {
+            "type": "string",
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "title": "Grade"
+          },
+          "latest_report_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Report Date"
+          },
+          "observation_age_calendar_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Age Calendar Days"
+          },
+          "data_source": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Data Source"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce."
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "price_unit": {
+            "type": "string",
+            "title": "Price Unit",
+            "default": "INR/quintal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "horizon_calendar_days",
+          "timestamp",
+          "market",
+          "commodity",
+          "variety",
+          "grade",
+          "data_source",
+          "request_id"
+        ],
+        "title": "PredictionResponse"
+      },
+      "PriceResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "market_id": {
+            "type": "integer",
+            "title": "Market Id"
+          },
+          "commodity_id": {
+            "type": "integer",
+            "title": "Commodity Id"
+          },
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "report_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Report Date"
+          },
+          "variety": {
+            "type": "string",
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "title": "Grade"
+          },
+          "min_price_inr_per_quintal": {
+            "type": "string",
+            "title": "Min Price Inr Per Quintal"
+          },
+          "modal_price_inr_per_quintal": {
+            "type": "string",
+            "title": "Modal Price Inr Per Quintal"
+          },
+          "max_price_inr_per_quintal": {
+            "type": "string",
+            "title": "Max Price Inr Per Quintal"
+          },
+          "arrivals_quintals": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrivals Quintals"
+          },
+          "price_unit": {
+            "type": "string",
+            "title": "Price Unit"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          },
+          "data_kind": {
+            "type": "string",
+            "title": "Data Kind"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "market_id",
+          "commodity_id",
+          "market",
+          "commodity",
+          "report_date",
+          "variety",
+          "grade",
+          "min_price_inr_per_quintal",
+          "modal_price_inr_per_quintal",
+          "max_price_inr_per_quintal",
+          "arrivals_quintals",
+          "price_unit",
+          "source",
+          "source_url",
+          "fetched_at",
+          "data_kind"
+        ],
+        "title": "PriceResponse"
+      },
+      "RecommendRequest": {
+        "properties": {
+          "commodity": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Commodity"
+          },
+          "market": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Market"
+          },
+          "variety": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Grade",
+            "default": "unspecified"
+          },
+          "decision_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Decision At"
+          },
+          "total_quantity_quintals": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Total Quantity Quintals"
+          },
+          "today_price_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Today Price Inr Per Quintal"
+          },
+          "today_price_assumption": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Today Price Assumption"
+          },
+          "required_net_cash_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Required Net Cash Inr"
+          },
+          "storage_capacity_quintals": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Storage Capacity Quintals"
+          },
+          "decision_increment_quintals": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Decision Increment Quintals"
+          },
+          "market_quantity_step_quintals": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Market Quantity Step Quintals"
+          },
+          "minimum_sale_lot_quintals": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Minimum Sale Lot Quintals"
+          },
+          "maximum_horizon_days": {
+            "type": "integer",
+            "maximum": 365.0,
+            "minimum": 0.0,
+            "title": "Maximum Horizon Days"
+          },
+          "crop_storage_profile": {
+            "$ref": "#/components/schemas/CropStorageProfile"
+          },
+          "today_sale_costs": {
+            "$ref": "#/components/schemas/SaleCosts"
+          },
+          "holding_options": {
+            "items": {
+              "$ref": "#/components/schemas/RecommendationHolding"
+            },
+            "type": "array",
+            "title": "Holding Options",
+            "default": []
+          },
+          "risk_tolerance": {
+            "type": "string",
+            "enum": [
+              "conservative",
+              "balanced",
+              "aggressive"
+            ],
+            "title": "Risk Tolerance",
+            "default": "conservative"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "commodity",
+          "market",
+          "variety",
+          "decision_at",
+          "total_quantity_quintals",
+          "today_price_inr_per_quintal",
+          "today_price_assumption",
+          "required_net_cash_inr",
+          "storage_capacity_quintals",
+          "decision_increment_quintals",
+          "market_quantity_step_quintals",
+          "minimum_sale_lot_quintals",
+          "maximum_horizon_days",
+          "crop_storage_profile",
+          "today_sale_costs"
+        ],
+        "title": "RecommendRequest"
+      },
+      "RecommendationHolding": {
+        "properties": {
+          "days": {
+            "type": "integer",
+            "maximum": 365.0,
+            "minimum": 1.0,
+            "title": "Days"
+          },
+          "daily_loss_fractions": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "maximum": 1.0,
+                  "minimum": 0.0
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Daily Loss Fractions"
+          },
+          "daily_storage_inr_per_quintal": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "maximum": 1000000000.0,
+                  "minimum": 0.0
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Daily Storage Inr Per Quintal"
+          },
+          "fixed_storage_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Fixed Storage Inr",
+            "default": "0"
+          },
+          "storage_payment": {
+            "type": "string",
+            "enum": [
+              "today",
+              "later"
+            ],
+            "title": "Storage Payment"
+          },
+          "future_sale_costs": {
+            "$ref": "#/components/schemas/SaleCosts"
+          },
+          "assumptions": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Assumptions"
+          },
+          "scenarios": {
+            "type": "null",
+            "title": "Scenarios"
+          },
+          "realization_multiplier": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 2.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Realization Multiplier"
+          },
+          "price_basis_assumption": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Price Basis Assumption"
+          },
+          "adverse_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Adverse Inr Per Quintal"
+          },
+          "adverse_assumption": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Adverse Assumption"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "days",
+          "daily_loss_fractions",
+          "daily_storage_inr_per_quintal",
+          "storage_payment",
+          "future_sale_costs",
+          "assumptions",
+          "realization_multiplier",
+          "price_basis_assumption",
+          "adverse_inr_per_quintal",
+          "adverse_assumption"
+        ],
+        "title": "RecommendationHolding"
+      },
+      "RecommendationResponse": {
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "history_id": {
+            "type": "integer",
+            "title": "History Id"
+          },
+          "market_data": {
+            "$ref": "#/components/schemas/Freshness"
+          },
+          "predictions": {
+            "items": {
+              "$ref": "#/components/schemas/PredictionResponse"
+            },
+            "type": "array",
+            "title": "Predictions"
+          },
+          "reliability_warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reliability Warnings"
+          },
+          "optimization": {
+            "$ref": "#/components/schemas/OptimizationResponse"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_id",
+          "history_id",
+          "market_data",
+          "predictions",
+          "reliability_warnings",
+          "optimization"
+        ],
+        "title": "RecommendationResponse"
+      },
+      "ResearchHorizon": {
+        "properties": {
+          "horizon": {
+            "type": "integer",
+            "title": "Horizon"
+          },
+          "selected_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Model"
+          },
+          "train_n": {
+            "type": "integer",
+            "title": "Train N"
+          },
+          "validation_n": {
+            "type": "integer",
+            "title": "Validation N"
+          },
+          "final_n": {
+            "type": "integer",
+            "title": "Final N"
+          },
+          "final_metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Metrics"
+          },
+          "naive_metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Naive Metrics"
+          }
+        },
+        "type": "object",
+        "required": [
+          "horizon",
+          "selected_model",
+          "train_n",
+          "validation_n",
+          "final_n"
+        ],
+        "title": "ResearchHorizon"
+      },
+      "ResearchStudy": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "research_only": {
+            "type": "boolean",
+            "title": "Research Only",
+            "default": true
+          },
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "variety": {
+            "type": "string",
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "title": "Grade"
+          },
+          "train_start": {
+            "type": "string",
+            "format": "date",
+            "title": "Train Start"
+          },
+          "train_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Train End"
+          },
+          "validation_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Validation End"
+          },
+          "test_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Test End"
+          },
+          "limitations": {
+            "type": "string",
+            "title": "Limitations"
+          },
+          "source_fingerprint": {
+            "type": "string",
+            "title": "Source Fingerprint"
+          },
+          "horizons": {
+            "items": {
+              "$ref": "#/components/schemas/ResearchHorizon"
+            },
+            "type": "array",
+            "title": "Horizons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "market",
+          "commodity",
+          "variety",
+          "grade",
+          "train_start",
+          "train_end",
+          "validation_end",
+          "test_end",
+          "limitations",
+          "source_fingerprint",
+          "horizons"
+        ],
+        "title": "ResearchStudy"
+      },
+      "SaleCosts": {
+        "properties": {
+          "fixed_transport_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Fixed Transport Inr",
+            "default": "0"
+          },
+          "fixed_transaction_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Fixed Transaction Inr",
+            "default": "0"
+          },
+          "transport_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Transport Inr Per Quintal",
+            "default": "0"
+          },
+          "handling_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Handling Inr Per Quintal",
+            "default": "0"
+          },
+          "market_fee_rate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Market Fee Rate",
+            "default": "0"
+          },
+          "commission_rate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Commission Rate",
+            "default": "0"
+          },
+          "assumptions": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Assumptions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assumptions"
+        ],
+        "title": "SaleCosts"
+      },
+      "SaleLedger": {
+        "properties": {
+          "gross_inr": {
+            "type": "string",
+            "title": "Gross Inr"
+          },
+          "commission_inr": {
+            "type": "string",
+            "title": "Commission Inr"
+          },
+          "market_fee_inr": {
+            "type": "string",
+            "title": "Market Fee Inr"
+          },
+          "transport_inr": {
+            "type": "string",
+            "title": "Transport Inr"
+          },
+          "handling_inr": {
+            "type": "string",
+            "title": "Handling Inr"
+          },
+          "fixed_transaction_inr": {
+            "type": "string",
+            "title": "Fixed Transaction Inr"
+          },
+          "net_inr": {
+            "type": "string",
+            "title": "Net Inr"
+          }
+        },
+        "type": "object",
+        "required": [
+          "gross_inr",
+          "commission_inr",
+          "market_fee_inr",
+          "transport_inr",
+          "handling_inr",
+          "fixed_transaction_inr",
+          "net_inr"
+        ],
+        "title": "SaleLedger"
+      },
+      "SellAllComparison": {
+        "properties": {
+          "sale": {
+            "$ref": "#/components/schemas/SaleLedger"
+          },
+          "meets_minimum_lot": {
+            "type": "boolean",
+            "title": "Meets Minimum Lot"
+          },
+          "meets_cash_requirement": {
+            "type": "boolean",
+            "title": "Meets Cash Requirement"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sale",
+          "meets_minimum_lot",
+          "meets_cash_requirement"
+        ],
+        "title": "SellAllComparison"
+      },
+      "SellingPlan": {
+        "properties": {
+          "sell_today_quintals": {
+            "type": "string",
+            "title": "Sell Today Quintals"
+          },
+          "hold_initial_quintals": {
+            "type": "string",
+            "title": "Hold Initial Quintals"
+          },
+          "holding_days": {
+            "type": "integer",
+            "title": "Holding Days"
+          },
+          "later_saleable_quintals": {
+            "type": "string",
+            "title": "Later Saleable Quintals"
+          },
+          "deterioration_loss_quintals": {
+            "type": "string",
+            "title": "Deterioration Loss Quintals"
+          },
+          "rounding_discard_quintals": {
+            "type": "string",
+            "title": "Rounding Discard Quintals"
+          },
+          "storage_cost_inr": {
+            "type": "string",
+            "title": "Storage Cost Inr"
+          },
+          "storage_paid_today_inr": {
+            "type": "string",
+            "title": "Storage Paid Today Inr"
+          },
+          "storage_paid_later_inr": {
+            "type": "string",
+            "title": "Storage Paid Later Inr"
+          },
+          "today_sale": {
+            "$ref": "#/components/schemas/SaleLedger"
+          },
+          "cash_today_inr": {
+            "type": "string",
+            "title": "Cash Today Inr"
+          },
+          "cash_surplus_inr": {
+            "type": "string",
+            "title": "Cash Surplus Inr"
+          },
+          "later_sales": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SaleLedger"
+            },
+            "type": "object",
+            "title": "Later Sales"
+          },
+          "central_later_net_after_storage_inr": {
+            "type": "string",
+            "title": "Central Later Net After Storage Inr"
+          },
+          "total_net_inr": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Total Net Inr"
+          },
+          "downside_total_net_inr": {
+            "type": "string",
+            "title": "Downside Total Net Inr"
+          },
+          "difference_vs_sell_all_now_inr": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Difference Vs Sell All Now Inr"
+          },
+          "risk_adjusted_objective_inr": {
+            "type": "string",
+            "title": "Risk Adjusted Objective Inr"
+          },
+          "recommendation_eligible": {
+            "type": "boolean",
+            "title": "Recommendation Eligible"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "break_even_future_price_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Break Even Future Price Inr Per Quintal"
+          },
+          "assumptions": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Assumptions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sell_today_quintals",
+          "hold_initial_quintals",
+          "holding_days",
+          "later_saleable_quintals",
+          "deterioration_loss_quintals",
+          "rounding_discard_quintals",
+          "storage_cost_inr",
+          "storage_paid_today_inr",
+          "storage_paid_later_inr",
+          "today_sale",
+          "cash_today_inr",
+          "cash_surplus_inr",
+          "later_sales",
+          "central_later_net_after_storage_inr",
+          "total_net_inr",
+          "downside_total_net_inr",
+          "difference_vs_sell_all_now_inr",
+          "risk_adjusted_objective_inr",
+          "recommendation_eligible",
+          "warnings",
+          "break_even_future_price_inr_per_quintal",
+          "assumptions"
+        ],
+        "title": "SellingPlan"
+      }
+    }
+  }
+}

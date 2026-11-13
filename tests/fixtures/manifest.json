@@ -1,0 +1,9 @@
+{
+  "source_label": "TEST_FIXTURE_NOT_GOVERNMENT_DATA",
+  "source_url": "fixture://mandi_fixture.csv",
+  "data_kind": "fixture",
+  "fetched_at": "2025-01-10T12:00:00+05:30",
+  "price_unit": "INR/quintal",
+  "unit_evidence": "Synthetic test fixture explicitly specifies units in Price_Unit column",
+  "date_format": "%d/%m/%Y"
+}

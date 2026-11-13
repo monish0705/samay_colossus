@@ -1,0 +1,7 @@
+[
+  {
+    "feature_run": "reports/ACTUAL_FEATURE_RUN",
+    "champions": "models/forecasts/ACTUAL_SELECTED_RUN",
+    "evidence": "reports/backtests/ACTUAL_CALIBRATED_RUN"
+  }
+]

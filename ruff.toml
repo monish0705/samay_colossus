@@ -1,0 +1,15 @@
+target-version = "py311"
+line-length = 140
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I", "B"]
+
+[lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "Depends"]
+
+# Thread limits must be set before NumPy/scikit-learn initialize their runtimes.
+[lint.per-file-ignores]
+"backend/app/forecasting.py" = ["E402"]
+"scripts/backtest_forecasts.py" = ["E402"]
+"scripts/predict_price.py" = ["E402"]
+"scripts/train_forecasts.py" = ["E402"]

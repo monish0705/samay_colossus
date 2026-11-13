@@ -1,0 +1,13 @@
+State,District,Market,Commodity,Variety,Grade,Arrival_Date,Min_Price,Max_Price,Modal_Price,Price_Unit
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,01/01/2025,1000,2000,1500,INR/quintal
+karnataka,KOLAR, Kolar APMC , tomato , local ,faq,01/01/2025,1000,2000,1500,INR/quintal
+Karnataka,Kolar,Kolar (APMC),Tomato,Local,FAQ,03/01/2025,10,20,15,INR/kg
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,04/01/2025,-10,2000,1500,INR/quintal
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,31/02/2025,1000,2000,1500,INR/quintal
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,05/01/2025,1000,2000,2500,INR/quintal
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,06/01/2025,1000,2000,1500,USD/quintal
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,07/01/2025,0,2000,0,INR/quintal
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,08/01/2025,1000,200001,1500,INR/quintal
+Karnataka,Bengaluru,Bengaluru,Tomato,Local,FAQ,01/01/2025,1000,2000,1500,INR/quintal
+Karnataka,Kolar,Kolar,Tomato,Hybrid,FAQ,01/01/2025,1200,2200,1600,INR/quintal
+Karnataka,Kolar,Kolar,Tomato,Local,FAQ,09/01/2025,NaN,2000,1500,INR/quintal

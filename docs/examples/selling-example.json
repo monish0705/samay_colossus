@@ -1,0 +1,35 @@
+{
+  "commodity": "Tomato", "market": "Kolar APMC", "variety": "local", "grade": "faq",
+  "decision_at": "2026-11-04T08:00:00+05:30",
+  "total_quantity_quintals": "20", "today_price_inr_per_quintal": "1000",
+  "today_price_assumption": "EXAMPLE_ONLY farmer-entered gross selling price; not live mandi data",
+  "required_net_cash_inr": "10000", "storage_capacity_quintals": "10",
+  "decision_increment_quintals": "1", "market_quantity_step_quintals": "0.01", "minimum_sale_lot_quintals": "1",
+  "maximum_horizon_days": 7, "risk_tolerance": "balanced",
+  "crop_storage_profile": {
+    "commodity": "Tomato", "maximum_holding_days": 3,
+    "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+    "assumption_source": "Illustrative user assumption, not a verified tomato holding recommendation"
+  },
+  "today_sale_costs": {
+    "fixed_transport_inr": "100", "transport_inr_per_quintal": "10", "commission_rate": "0.05",
+    "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+  },
+  "holding_options": [{
+    "days": 3, "daily_loss_fractions": ["0.01", "0.01", "0.01"],
+    "daily_storage_inr_per_quintal": ["2", "2", "2"], "storage_payment": "later",
+    "future_sale_costs": {
+      "fixed_transport_inr": "100", "transport_inr_per_quintal": "10", "commission_rate": "0.05",
+      "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+    },
+    "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+    "scenarios": {
+      "adverse_inr_per_quintal": "1200", "lower_inr_per_quintal": "1300", "central_inr_per_quintal": "1500", "upper_inr_per_quintal": "1700",
+      "reliability_status": "scenario only", "market": "Kolar APMC", "commodity": "Tomato", "variety": "local", "grade": "faq",
+      "target_date": "2026-11-07", "issued_at": "2026-11-04T00:00:00+05:30",
+      "model_version": "EXAMPLE_ONLY_NO_TRAINED_MODEL", "source": "Illustrative scenario inputs, not authenticated forecast observations",
+      "price_basis_assumption": "Illustrative farmer gross transaction prices; not guaranteed mandi realization",
+      "adverse_assumption": "Illustrative user-defined stress price, not an estimated quantile"
+    }
+  }]
+}

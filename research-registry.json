@@ -1,0 +1,10 @@
+[
+  {
+    "directory": "models/research/research-snapshot-v1-6dd9ea73854cc050",
+    "comparison_sha256": "d213ca56321e219c73a295fdca6571354db9ecfb290356bc8ee0aaf7c5d4e709"
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-bf5682f4a2bfbde9",
+    "comparison_sha256": "7e84e584ce192b3f549a8ae0cf4833ed5de23efff3d86f3ae3aa81379b2bc477"
+  }
+]

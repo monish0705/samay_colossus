@@ -1,0 +1,102 @@
+{
+  "request_id": "TEST_ONLY_REQUEST",
+  "history_id": 1,
+  "market_data": {
+    "report_date": null,
+    "fetched_at": null,
+    "source": null,
+    "source_url": null,
+    "file_sha256": null,
+    "stale": true,
+    "data_kind": "official"
+  },
+  "predictions": [],
+  "reliability_warnings": [
+    "no_official_market_observations"
+  ],
+  "optimization": {
+    "schema_version": "samay-selling-v1",
+    "status": "no_feasible_cash_solution",
+    "recommendation_basis": "no_validated_recommendation",
+    "has_unreliable_or_missing_scenarios": false,
+    "decision_at": "2026-11-04T08:00:00+05:30",
+    "scope": {
+      "commodity": "Tomato",
+      "market": "Kolar APMC",
+      "variety": "tomato",
+      "grade": "local"
+    },
+    "units": {
+      "money": "INR",
+      "price": "INR/quintal",
+      "quantity": "quintals"
+    },
+    "sell_all_now": {
+      "sale": {
+        "gross_inr": "20000.00",
+        "commission_inr": "1000.00",
+        "market_fee_inr": "0.00",
+        "transport_inr": "300.00",
+        "handling_inr": "0.00",
+        "fixed_transaction_inr": "0.00",
+        "net_inr": "18700.00"
+      },
+      "meets_minimum_lot": true,
+      "meets_cash_requirement": false
+    },
+    "maximum_today_net_cash_upper_bound_inr": "18700.00",
+    "cash_requirement_achievable_on_grid": false,
+    "recommended_plan": null,
+    "best_scenario_only_or_validated_plan": null,
+    "feasible_plans": [],
+    "rejected_counts": {
+      "sell_all_below_minimum_lot_or_cash_requirement": 1
+    },
+    "risk_tolerance": "balanced",
+    "request_and_assumptions": {
+      "commodity": "Tomato",
+      "market": "Kolar APMC",
+      "variety": "tomato",
+      "grade": "local",
+      "decision_at": "2026-11-04T08:00:00+05:30",
+      "total_quantity_quintals": "20",
+      "today_price_inr_per_quintal": "1000",
+      "today_price_assumption": "TEST_ONLY example quotation",
+      "required_net_cash_inr": "50000",
+      "storage_capacity_quintals": "0",
+      "decision_increment_quintals": "1",
+      "market_quantity_step_quintals": "0.01",
+      "minimum_sale_lot_quintals": "1",
+      "maximum_horizon_days": 7,
+      "crop_storage_profile": {
+        "commodity": "Tomato",
+        "maximum_holding_days": 3,
+        "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+        "assumption_source": "Illustrative user assumption, not a verified tomato holding recommendation"
+      },
+      "today_sale_costs": {
+        "fixed_transport_inr": "100",
+        "fixed_transaction_inr": "0",
+        "transport_inr_per_quintal": "10",
+        "handling_inr_per_quintal": "0",
+        "market_fee_rate": "0",
+        "commission_rate": "0.05",
+        "assumptions": "TEST_ONLY example costs"
+      },
+      "holding_options": [],
+      "risk_tolerance": "balanced"
+    },
+    "explanations": [
+      "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+      "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+      "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+      "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+      "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+      "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+      "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+      "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+      "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+      "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+    ]
+  }
+}

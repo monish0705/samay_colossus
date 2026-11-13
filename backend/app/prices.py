@@ -4,7 +4,7 @@ from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import exists, select
+from sqlalchemy import exists, func, select
 from sqlalchemy.orm import Session
 
 from app.api_schemas import ErrorEnvelope
@@ -54,7 +54,7 @@ class HistoryResponse(BaseModel):
     limit: int
     offset: int
     next_offset: int | None
-    note: str = "Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed."
+    note: str = "Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed. Verified queries show the latest fetched version per date/variety/grade; individual source classes remain queryable."
 
 
 @router.get("/markets", response_model=list[MarketResponse])
@@ -82,6 +82,13 @@ def history(market: str = "Kolar APMC", commodity: str = "Tomato", start_date: d
     kinds = ("official", "secondary") if data_kind == "verified" else (data_kind,)
     stmt = select(MandiObservation, Market, Commodity, ImportBatch).join(Market, MandiObservation.market_id == Market.id).join(Commodity, MandiObservation.commodity_id == Commodity.id).outerjoin(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(
         Market.name == market, Market.state == "Karnataka", Commodity.name == commodity, MandiObservation.data_kind.in_(kinds))
+    if data_kind == "verified":
+        ranked = select(MandiObservation.id.label("observation_id"), func.row_number().over(
+            partition_by=(MandiObservation.market_id, MandiObservation.commodity_id, MandiObservation.observed_on, MandiObservation.variety, MandiObservation.grade),
+            order_by=(func.coalesce(ImportBatch.fetched_at, MandiObservation.created_at).desc(),
+                (MandiObservation.data_kind == "official").desc(), MandiObservation.id.desc())).label("position")).outerjoin(
+                    ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(MandiObservation.data_kind.in_(kinds)).subquery()
+        stmt = stmt.where(MandiObservation.id.in_(select(ranked.c.observation_id).where(ranked.c.position == 1)))
     if start_date:
         stmt = stmt.where(MandiObservation.observed_on >= start_date)
     if end_date:

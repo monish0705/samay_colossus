@@ -1,11 +1,12 @@
 import { localize, t, warningText } from './i18n';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, CalendarDays, Coins, History, Leaf, ShieldCheck, Sprout, TrendingDown, TrendingUp } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CalendarDays, Coins, Leaf, ShieldCheck, Sprout, TrendingUp } from 'lucide-react';
 import { api, ApiError, CROP_SCOPES, type Prediction, type Scope } from './api';
 import { useApp } from './state';
 import { ActionLink, Badge, Card, Empty, ErrorState, Loading, Notice, PageHeading, Stat, dateLabel, inr, useResource } from './ui';
 import { PriceChart, EvaluationChart } from './Charts';
+import { MarketContextPanel } from './DecisionPanel';
 
 export function Dashboard() {
   const { scope, setScope, catalog } = useApp();
@@ -197,22 +198,6 @@ export function Insights() {
   const values = items.map(p => Number(p.modal_price_inr_per_quintal));
   const mean = values.length ? values.reduce((a, b) => a + b, 0) / values.length : null;
 
-  const comm = scope.commodity || 'Tomato';
-  const isAreca = comm === 'Arecanut';
-  const isOnion = comm === 'Onion';
-  const isCopra = comm === 'Copra';
-  const isPotato = comm === 'Potato';
-
-  const yoyStats = isAreca
-    ? { oct26: '₹48,250 / qtl', oct25: '₹46,100 / qtl', change: '+4.7%', note: 'Firm pan-Indian gutkha/supari procurement bids' }
-    : isOnion
-    ? { oct26: '₹3,180 / qtl', oct25: '₹3,450 / qtl', change: '-7.8%', note: 'Healthy kharif arrivals along NH48 corridor' }
-    : isCopra
-    ? { oct26: '₹30,600 / qtl', oct25: '₹28,800 / qtl', change: '+6.25%', note: 'Strong festive coconut oil and pooja demand' }
-    : isPotato
-    ? { oct26: '₹2,120 / qtl', oct25: '₹2,250 / qtl', change: '-5.8%', note: 'Steady Yeshwanthpur arrivals from Hassan & Kolar' }
-    : { oct26: '₹1,192 / qtl', oct25: '₹1,303 / qtl', change: '-8.5%', note: 'Softer seasonal price in 2026 post-monsoon flush' };
-
   return localize(
     <>
       <PageHeading
@@ -284,80 +269,8 @@ export function Insights() {
         />
       </div>
 
-      {/* Year-over-Year (YoY) & Seasonal Context */}
-      <Card className="yoy-context-card">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{t('HISTORICAL REPLAY BENCHMARK')}</p>
-            <h2>{t(`Same-period comparison & seasonal patterns (${scope.commodity})`)}</h2>
-          </div>
-          <Badge tone="neutral">{t('Authentic AGMARKNET records')}</Badge>
-        </div>
-        <p className="muted small">
-          {t(`Comparing October 2026 harvest season against October 2025 at ${scope.market}. Calendar gaps reflect actual unrecorded market days.`)}
-        </p>
-
-        <div className="stats-grid three" style={{ margin: '18px 0' }}>
-          <Stat
-            label={t('October 2026 Average')}
-            value={yoyStats.oct26}
-            note={t('Recent trading month observations')}
-            icon={<TrendingUp size={16} />}
-          />
-          <Stat
-            label={t('October 2025 Average')}
-            value={yoyStats.oct25}
-            note={t('Prior year historical baseline')}
-            icon={<History size={16} />}
-          />
-          <Stat
-            label={t('Year-over-Year Change')}
-            value={yoyStats.change}
-            note={t(yoyStats.note)}
-            icon={yoyStats.change.startsWith('+') ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-          />
-        </div>
-
-        <div className="seasonal-patterns-box">
-          <h4>{t(`${scope.market} Seasonal Characteristics:`)}</h4>
-          {isAreca ? (
-            <ul>
-              <li><strong>{t('Peak Chali & Supari Arrivals (Jan–May):')}</strong> {t('MAMCOS tender auctions draw strong pan-Indian buyers; prices average ₹45,000–₹51,000/qtl.')}</li>
-              <li><strong>{t('Monsoon Lull (Jun–Aug):')}</strong> {t('Malnad heavy rains curtail drying operations; mandis trade existing godown stock with modest arrivals.')}</li>
-              <li><strong>{t('Festive & Wedding Demand (Oct–Dec):')}</strong> {t('Spurt in industrial retail and festive consumption supports firm wholesale premiums.')}</li>
-            </ul>
-          ) : isOnion ? (
-            <ul>
-              <li><strong>{t('Kharif Arrival Peak (Sep–Nov):')}</strong> {t('Heavy arrivals from Dharwad and Belagavi; prices fluctuate based on Nashik transport flows.')}</li>
-              <li><strong>{t('Late Kharif & Rabi Flush (Dec–Mar):')}</strong> {t('Amargol market active in grading red onions for interstate southern distribution.')}</li>
-              <li><strong>{t('Pre-Monsoon Storage Chawl Outflows (Apr–Jul):')}</strong> {t('Prices firm up as stored chawl stock diminishes before early kharif.')}</li>
-            </ul>
-          ) : isCopra ? (
-            <ul>
-              <li><strong>{t('Peak Festive Demand (Aug–Nov):')}</strong> {t('Ganesha, Navratri and Deepavali lift Tiptur Ball Copra rates above ₹30,000/qtl.')}</li>
-              <li><strong>{t('Winter Dry Season Arrivals (Dec–Apr):')}</strong> {t('Steady sun-dried supplies arrive from Tumakuru and Hassan districts.')}</li>
-              <li><strong>{t('Summer Tender Coconut Diversion (May–Jul):')}</strong> {t('Higher tender coconut sales reduce copra drying volume, tightening wholesale supplies.')}</li>
-            </ul>
-          ) : isPotato ? (
-            <ul>
-              <li><strong>{t('Hassan / Kolar Harvest Flush (Aug–Oct):')}</strong> {t('High local supplies arrive at Yeshwanthpur, modal prices ₹1,800–₹2,200/qtl.')}</li>
-              <li><strong>{t('Agra & Cold Storage Inflows (Nov–Jan):')}</strong> {t('Steady inter-state supplies from UP/Punjab balance market rates during festival demand.')}</li>
-              <li><strong>{t('Pre-Summer Cold Storage Releases (Feb–May):')}</strong> {t('Cold storage releases dictate market realization before early southern summer crops.')}</li>
-            </ul>
-          ) : (
-            <ul>
-              <li><strong>{t('Summer Squeeze (May–June):')}</strong> {t('High prices (average ₹1,860–₹1,884/qtl) due to heat stress and lower regional yields.')}</li>
-              <li><strong>{t('Post-Monsoon Flush (Sep–Oct):')}</strong> {t('Moderate prices (average ₹1,150–₹1,195/qtl) with strong daily arrivals from Kolar and Chikkaballapur.')}</li>
-              <li><strong>{t('Spring Harvest Glut (Feb–Mar):')}</strong> {t('Lowest seasonal prices (average ₹634–₹646/qtl) with heavy market supply.')}</li>
-            </ul>
-          )}
-        </div>
-
-        <Notice tone="neutral">
-          <strong>{t('Candidate External Drivers Policy:')}</strong>{' '}
-          {t('Weather, diesel fuel, and transport indices are treated as candidate features only with verified point-in-time publication timestamps. Unvalidated news or LLM adjustments are never used.')}
-        </Notice>
-      </Card>
+      {/* Actual dated external evidence; no invented seasonal price claims. */}
+      <MarketContextPanel scope={scope} days={7}/>
 
       <Card>
         <div className="section-heading">
@@ -430,7 +343,7 @@ export function Insights() {
   );
 }
 
-export function HistoricalEvaluationCard({ scope, horizon }: { scope: Scope; horizon: 1 | 3 | 7 }) {
+export function HistoricalEvaluationCard({ scope, horizon }: { scope: Scope; horizon: number }) {
   const evaluation = useResource(signal => api.evaluation(scope,horizon,signal), JSON.stringify({scope,horizon}));
   const data = evaluation.data;
   return <Card>
@@ -438,7 +351,7 @@ export function HistoricalEvaluationCard({ scope, horizon }: { scope: Scope; hor
     <Notice>{t('These are frozen historical test predictions, not a current forecast or guaranteed selling prices.')}</Notice>
     {evaluation.loading ? <Loading/> : evaluation.error ? <Notice>{t('No historical evaluation is available for this exact series.')}</Notice> : data ? <>
       <p>{data.scope.market} · {data.scope.commodity} · {data.scope.variety} / {data.scope.grade}</p>
-      <Badge tone="amber">{t(data.source_kind === 'secondary' ? 'Secondary mirror: India Data Portal' : 'Official government export')}</Badge>
+      <Badge tone="amber">{t(data.source_kind === 'verified' ? 'Official OGD history with verified secondary backfill' : data.source_kind === 'secondary' ? 'Secondary mirror: India Data Portal' : 'Official government export')}</Badge>
       <p>{t('Final test')}: {dateLabel(data.test_start)} – {dateLabel(data.test_end)} · {data.final_n} {t('observed targets')} · {data.selected_model}</p>
       {data.metrics ? <div className="stats-grid three">
         <Stat label={t('MAE / quintal')} value={inr(data.metrics.mae_inr_per_quintal)} note={t('Frozen final test; lower error is better')}/>
@@ -457,16 +370,19 @@ export function HistoricalEvaluationCard({ scope, horizon }: { scope: Scope; hor
 
 export function Forecast() {
   const { scope, setScope, catalog, predictionHistory, rememberPrediction } = useApp();
-  const [horizon, setHorizon] = useState<1 | 3 | 7>(3);
+  const [horizon, setHorizon] = useState<number>(3);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<Prediction | null>(null);
   const [error, setError] = useState<unknown>(null);
+  const coverage = useResource(signal => api.horizons(scope,horizon,signal),JSON.stringify({scope,horizon}));
+  const crop = CROP_SCOPES[scope.commodity] || CROP_SCOPES.Tomato;
 
   const supported = catalog.data?.models.models
     .filter(m => m.market === scope.market && m.commodity === scope.commodity && m.variety === scope.variety && m.grade === scope.grade && m.model_version)
     .map(m => m.horizon) || [];
   const researchSupported = (catalog.data?.models.research_models || []).filter(m => m.market === scope.market && m.commodity === scope.commodity && m.variety === scope.variety && m.grade === scope.grade).map(m => m.horizon).filter(h => !supported.includes(h));
   for (const h of researchSupported) if (!supported.includes(h)) supported.push(h);
+  for (const h of coverage.data?.saved_horizons || []) if (!supported.includes(h)) supported.push(h);
 
   const request = async () => {
     setBusy(true);
@@ -483,7 +399,9 @@ export function Forecast() {
     }
   };
 
-  const relevant = result && result.market === scope.market && result.commodity === scope.commodity && result.variety === scope.variety && result.grade === scope.grade ? result : null;
+  const relevant = result && result.market === scope.market && result.commodity === scope.commodity && result.variety === scope.variety && result.grade === scope.grade && result.horizon_calendar_days === horizon ? result : null;
+  const evidence = catalog.data?.models.research_models?.find(m=>m.market===scope.market && m.commodity===scope.commodity && m.variety===scope.variety && m.grade===scope.grade && m.horizon===relevant?.horizon_calendar_days);
+  const evidenceMetrics = evidence?.validation_metrics || evidence?.retrospective_benchmark_metrics;
 
   return localize(
     <>
@@ -502,6 +420,7 @@ export function Forecast() {
               setScope({ market: c.market, commodity: c.commodity, variety: c.variety, grade: c.grade });
               setResult(null);
               setError(null);
+              setHorizon(3);
             }}
           >
             <span>{c.icon}</span>
@@ -516,8 +435,10 @@ export function Forecast() {
             <h2>{t('Choose a forecast horizon')}</h2>
             <Badge>{t('Future prediction')}</Badge>
           </div>
+          <p className="small muted">{t('Forecast series')}: {t(scope.market)} · {t('Variety')}: {scope.variety} · {t('Grade')}: {scope.grade}</p>
+          {scope.variety === 'other' && <Notice tone="amber">{t('The source reports this variety as Other. Confirm that it matches your produce before using the forecast.')}</Notice>}
           <div className="horizon-options">
-            {([1, 3, 7] as const).map(day => (
+            {[...new Set([1,3,7,14,30,60,90,180,365,730,...crop.holdingOptions.map(Number)])].filter(day => day<=crop.maxDays).sort((a,b)=>a-b).map(day => (
               <button
                 key={day}
                 className={`horizon ${horizon === day ? 'selected' : ''}`}
@@ -529,6 +450,10 @@ export function Forecast() {
               </button>
             ))}
           </div>
+          <div className="field"><label htmlFor="forecast-horizon">{t('Exact forecast horizon (calendar days)')}</label><input id="forecast-horizon" aria-describedby="forecast-horizon-hint" type="number" min="1" max={crop.maxDays} step="1" value={horizon} onChange={e=>{ const value=Number(e.target.value); if(Number.isInteger(value) && value>=1 && value<=crop.maxDays){setHorizon(value);setResult(null);setError(null);} }}/><small id="forecast-horizon-hint">{t('Each date needs its own saved evidence. Longer dates are not interpolated from a short forecast.')}</small></div>
+          <p className="small">{t('Saved horizons')}: {supported.length} · {t('Maximum saved horizon')}: {supported.length ? Math.max(...supported) : '—'} {t('days')}</p>
+          {!supported.includes(horizon) && coverage.data && <Notice tone="amber">{t('Insufficient evidence for this date. No future price will be invented.')}{coverage.data.reasons.length ? ` ${coverage.data.reasons.map(reason=>warningText(reason)).join(' · ')}` : ''}</Notice>}
+          <Notice>{t('Extended horizons have development-only evidence or a predeclared persistence baseline. These are not newly validated final-test forecasts.')}</Notice>
 
           {!supported.length && (
             <Notice>
@@ -570,6 +495,7 @@ export function Forecast() {
               <p className="small muted">
                 {t('Model')} {relevant.model_version} · {t('request')} {relevant.request_id}
               </p>
+              {evidence?.evidence_status && <Notice><strong>{t(evidence.evidence_status==='baseline_only' ? 'Predeclared last-price baseline; not trained ML' : 'Development-selected model; no new final test')}</strong><p>{t('Model')}: {evidence.model_name}</p>{evidenceMetrics && <p>{t(evidence.validation_metrics ? 'Selection validation MAE' : 'Retrospective baseline MAE')}: {inr(evidenceMetrics.mae_inr_per_quintal)} / {t('quintal')} · n={evidenceMetrics.n} · {t('Not final-test accuracy')}</p>}</Notice>}
               {relevant.flags.length > 0 && (
                 <Notice>{relevant.flags.map(w => warningText(w)).join(' · ')}</Notice>
               )}

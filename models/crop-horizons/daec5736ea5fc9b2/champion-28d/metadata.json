@@ -1,0 +1,142 @@
+{
+  "version": "daec5736ea5fc9b2-champion-28d",
+  "algorithm_version": "samay-forecast-v1",
+  "candidate": "naive",
+  "horizon": 28,
+  "market": "Tiptur APMC",
+  "commodity": "Copra",
+  "variety": "other",
+  "grade": "local",
+  "feature_schema": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "training_window": [
+    "2026-03-12",
+    "2026-10-06"
+  ],
+  "trained_before": "2026-11-05T12:03:16.395594+00:00",
+  "seed": 42,
+  "dataset_fingerprint": "52108bc9853d3638be892777490619ae02cc2557a71d48463d6acc38e88ad79c",
+  "model_sha256": "6c09635decb8153d3c12e3782a69fd2eb097426f912547d351a8647b27d5580a",
+  "comparison": {
+    "horizon": 28,
+    "sample_policy": {
+      "effective_train_samples": 96,
+      "effective_validation_samples": 13,
+      "available_development_pairs": 133,
+      "nonoverlapping_benchmark_cases": 6,
+      "train_span_calendar_days": 157,
+      "status": "baseline_only_limited_evidence"
+    },
+    "status": "baseline_only",
+    "champion": "naive",
+    "comparisons": [],
+    "learned_model_eligible": false,
+    "final_evaluation": "not_performed; existing final period excluded",
+    "reason": [
+      "insufficient_separated_train_validation_folds_for_model_selection"
+    ],
+    "selection_train_end": "2026-07-31",
+    "selection_reason": "Predeclared last-observed-price rule; not selected/tuned on these errors",
+    "retrospective_benchmark": {
+      "n": 133,
+      "mae_inr_per_quintal": 1683.4586466165413,
+      "rmse_inr_per_quintal": 2846.195191421202,
+      "smape_pct": 8.537487113495867,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 8.967119227842526,
+      "directional_accuracy": 0.15037593984962405,
+      "p90_absolute_error_inr_per_quintal": 3000.0,
+      "p90_overprediction_inr_per_quintal": 2000.0
+    },
+    "nonoverlapping_benchmark": {
+      "n": 6,
+      "mae_inr_per_quintal": 1733.3333333333333,
+      "rmse_inr_per_quintal": 1973.9976359323905,
+      "smape_pct": 9.024289227768358,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 9.09886264216973,
+      "directional_accuracy": 0.0,
+      "p90_absolute_error_inr_per_quintal": 2750.0,
+      "p90_overprediction_inr_per_quintal": 2750.0
+    }
+  },
+  "created_at": "2026-11-05T12:03:13.440885+00:00",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-31",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "other",
+    "grade": "local",
+    "market": "Tiptur APMC",
+    "commodity": "Copra",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "training_samples": 174,
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": "4.7.0"
+  },
+  "input_transform": "Original causal feature schema",
+  "research_only": true,
+  "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts. This extension has NO new final test. Selection validation scores are not final accuracy.",
+  "selection_report": "models/crop-horizons/daec5736ea5fc9b2/comparison.json",
+  "source": [
+    {
+      "source": "India Data Portal AGMARKNET mirror (secondary)",
+      "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+      "sha256": "098d3a2b89b22d22bcf3c65b58652d1f4385e806077a1ce4ffebb1c441c1227a",
+      "fetched_at": "2026-11-04T19:36:56.251654+00:00",
+      "source_kind": "secondary",
+      "upstream_source_url": "https://agmarknet.gov.in/",
+      "license": "Open Data Commons Attribution License"
+    },
+    {
+      "source": "Official OGD / AGMARKNET historical APMC observations",
+      "url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+      "sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+      "fetched_at": "2026-11-05T08:39:40.860344+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": "Government Open Data License - India"
+    }
+  ],
+  "empirical_calibration": {
+    "radii": {},
+    "reason": "No independent long-horizon residual calibration; sensitivity scenarios are not prediction intervals"
+  },
+  "horizon_evidence_status": "baseline_only",
+  "refit_policy": "Frozen development-selected configuration. No new final holdout evaluation.",
+  "selection_report_sha256": "42e38526a855687f0644494024e0ea0d10549d4d4afd665d318377b9353fcd0c",
+  "training_source_fingerprint": "3b859c918b22c9a46129afd513f2d39cdc1a04b175c5cdae7651e3d79837bcef"
+}

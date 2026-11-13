@@ -22,10 +22,10 @@ def test_prepared_bundle_never_exposes_generated_prices_as_official(tmp_path):
     shutil.copyfile(ROOT / "data/prepared/samay.db", target)
     result = repair(target)
     assert result["corrected_observations"] == 0  # Already repaired; repeat is harmless.
-    with sqlite3.connect(target) as connection:
-        assert connection.execute("SELECT count(*) FROM mandi_observations WHERE data_kind='official'").fetchone()[0] == 1943
-        assert connection.execute("SELECT count(*) FROM mandi_observations WHERE data_kind='official' AND latest_batch_id IN (SELECT id FROM import_batches WHERE filename='karnataka_mandis_multi_crop_2026.csv')").fetchone()[0] == 0
     manifest = json.loads((ROOT / "data/prepared/manifest.json").read_text())
+    with sqlite3.connect(target) as connection:
+        assert connection.execute("SELECT count(*) FROM mandi_observations WHERE data_kind='official'").fetchone()[0] == manifest["observation_counts"]["official"]
+        assert connection.execute("SELECT count(*) FROM mandi_observations WHERE data_kind='official' AND latest_batch_id IN (SELECT id FROM import_batches WHERE filename='karnataka_mandis_multi_crop_2026.csv')").fetchone()[0] == 0
     assert hashlib.sha256(target.read_bytes()).hexdigest() == manifest["database_sha256"]
 
 
@@ -43,6 +43,7 @@ def test_repair_reclassifies_legacy_batch_without_deleting_authentic_rows(tmp_pa
     target = tmp_path / "legacy.db"
     shutil.copyfile(ROOT / "data/prepared/samay.db", target)
     with sqlite3.connect(target) as connection:
+        authentic_before = connection.execute("SELECT id,market_id,commodity_id,observed_on,variety,grade,min_price_inr_per_quintal,modal_price_inr_per_quintal,max_price_inr_per_quintal,latest_batch_id FROM mandi_observations WHERE data_kind='official' ORDER BY id").fetchall()
         batch_id, manifest = connection.execute("SELECT id,manifest FROM import_batches WHERE filename='karnataka_mandis_multi_crop_2026.csv'").fetchone()
         original = json.loads(manifest)["original_claims_for_audit_only"]
         connection.execute("UPDATE import_batches SET data_kind='official',manifest=? WHERE id=?",(json.dumps(original),batch_id))
@@ -52,7 +53,8 @@ def test_repair_reclassifies_legacy_batch_without_deleting_authentic_rows(tmp_pa
     assert repair(target)["corrected_observations"] == 0
     with sqlite3.connect(target) as connection:
         assert connection.execute("SELECT count(*) FROM mandi_observations").fetchone()[0] == before
-        assert connection.execute("SELECT count(*) FROM mandi_observations WHERE data_kind='official'").fetchone()[0] == 1943
+        authentic_after = connection.execute("SELECT id,market_id,commodity_id,observed_on,variety,grade,min_price_inr_per_quintal,modal_price_inr_per_quintal,max_price_inr_per_quintal,latest_batch_id FROM mandi_observations WHERE data_kind='official' ORDER BY id").fetchall()
+        assert authentic_after == authentic_before
 
 
 def test_long_duration_explicit_scenario_obeys_cash_without_promoting_to_advice(api):
@@ -96,6 +98,7 @@ def test_real_archived_tomato_saved_research_artifact_and_recommendation_share_s
         assert float(band["lower_inr_per_quintal"]) <= float(value["prediction_inr_per_quintal"]) <= float(band["upper_inr_per_quintal"])
     status = client.get("/api/v1/models/status").json()
     assert status["models"] == [] and len(status["research_models"]) == len(json.loads((ROOT/"research-serving-registry.json").read_text()))
+    assert status['status']=='research_only_configured'
     body = recommendation()
     body.update(variety="tomato",grade="local",decision_at=now.isoformat())
     response = client.post("/api/v1/recommend",json=body)

@@ -47,9 +47,9 @@ class Plan:
     candidate_suite: str = "v1"
 
     def validate(self):
-        if self.source_kind not in {"official", "secondary"}:
+        if self.source_kind not in {"official", "secondary", "verified"}:
             raise ValueError("Only explicitly scoped official or verified secondary series are eligible")
-        if self.candidate_suite not in {"v1", "relative_v2"}:
+        if self.candidate_suite not in {"v1", "relative_v2", "recent_v3"}:
             raise ValueError("Unknown predeclared candidate suite")
         if not self.start < self.train_end < self.validation_end < self.holdout_end:
             raise ValueError("Require start < train_end < validation_end < holdout_end")
@@ -82,7 +82,7 @@ def load_vintages(session: Session, plan: Plan, *, final_evaluation: bool = Fals
     """
     end = plan.holdout_end if final_evaluation else plan.validation_end
     stmt = select(ImportRow, ImportBatch).join(ImportBatch, ImportRow.batch_id == ImportBatch.id).where(
-        ImportBatch.data_kind == plan.source_kind,
+        ImportBatch.data_kind.in_(["official", "secondary"] if plan.source_kind == "verified" else [plan.source_kind]),
         ImportBatch.fetched_at < midnight(end + timedelta(days=1)).to_pydatetime(),
         ImportRow.normalized["report_date"].as_string() <= end.isoformat(),
         ImportRow.normalized["market"].as_string() == plan.market,
@@ -103,13 +103,13 @@ def load_vintages(session: Session, plan: Plan, *, final_evaluation: bool = Fals
             if manifest.source_label != batch.source_label or (manifest.sha256 and manifest.sha256.lower() != batch.file_sha256) or any(marker in batch.source_label.casefold() for marker in ("fixture", "demo_data")):
                 raise ValueError(f"Source label/hash mismatch or fixture marker in official batch {batch.id}")
             parsed = urlsplit(batch.source_url)
-            hosts = {"data.gov.in", "www.data.gov.in", "agmarknet.gov.in", "www.agmarknet.gov.in"} if plan.source_kind == "official" else {"ckandev.indiadataportal.com"}
-            if manifest.data_kind != plan.source_kind or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at or not manifest.unit_evidence.strip() or parsed.scheme != "https" or parsed.hostname not in hosts or parsed.query or parsed.username or parsed.fragment:
+            hosts = {"data.gov.in", "www.data.gov.in", "agmarknet.gov.in", "www.agmarknet.gov.in"} if batch.data_kind == "official" else {"ckandev.indiadataportal.com"}
+            if manifest.data_kind != batch.data_kind or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at or not manifest.unit_evidence.strip() or parsed.scheme != "https" or parsed.hostname not in hosts or parsed.query or parsed.username or parsed.fragment:
                 raise ValueError(f"Invalid official source attestation for batch {batch.id}")
             archive = Path(batch.archive_path)
             if not archive.is_file() or hashlib.sha256(archive.read_bytes()).hexdigest() != batch.file_sha256:
                 raise ValueError(f"Missing/tampered raw archive for batch {batch.id}")
-            batches[batch.id] = {"batch_id": batch.id, "sha256": batch.file_sha256, "source_url": batch.source_url, "source_label": batch.source_label, "fetched_at": batch.fetched_at.isoformat(), "unit_evidence": manifest.unit_evidence}
+            batches[batch.id] = {"batch_id": batch.id, "sha256": batch.file_sha256, "source_url": batch.source_url, "source_label": batch.source_label, "fetched_at": batch.fetched_at.isoformat(), "unit_evidence": manifest.unit_evidence, "source_kind": batch.data_kind}
         n = row.normalized
         from app.ingestion import district_name, market_district
         if n["state"] != "Karnataka" or district_name(n["district"]) != market_district(plan.market) or n["price_unit"] != "INR/quintal":
@@ -141,8 +141,8 @@ def asof(vintages: pd.DataFrame, cutoff: pd.Timestamp, before: date | None = Non
 
 
 def features_at(vintages: pd.DataFrame, origin: date, horizon: int, *, decision_at=None) -> tuple[dict, dict]:
-    if horizon not in (1, 3, 7):
-        raise ValueError("Supported horizons: 1, 3, 7 calendar days")
+    if type(horizon) is not int or not 1 <= horizon <= 730:
+        raise ValueError("Horizon must be an integer from 1 to 730 calendar days")
     cutoff = midnight(origin) if decision_at is None else pd.Timestamp(decision_at)
     if cutoff.tzinfo is None or not midnight(origin) <= cutoff < midnight(origin+timedelta(days=1)):
         raise ValueError("Decision timestamp must be timezone-aware and inside the selected origin date")

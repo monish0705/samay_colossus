@@ -1,0 +1,20 @@
+[
+  {
+    "line_number": 205,
+    "status": "quarantined",
+    "reason": "Suspicious zero modal or price above review threshold",
+    "raw": {
+      "State": "Karnataka",
+      "District": "Shimoga",
+      "Market": "Shimoga APMC",
+      "Commodity": "Arecanut(Betelnut/Supari)",
+      "Variety": "Saraku",
+      "Grade": "Local",
+      "Arrival_Date": "18/02/2026",
+      "Min_Price": "52700",
+      "Max_Price": "100340",
+      "Modal_Price": "93510",
+      "Price_Unit": "INR/quintal"
+    }
+  }
+]

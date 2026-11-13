@@ -1,0 +1,13 @@
+{
+  "staged_files": 2228,
+  "hash_sensitive_files_verified": 2043,
+  "active_serving_artifacts_verified": 322,
+  "frozen_selection_reports_verified": 15,
+  "authentic_database_source_archives_verified": 18,
+  "prepared_recommendation_history_rows": 0,
+  "credential_pattern_findings": 0,
+  "public_publisher_analytics_identifiers_in_verbatim_archives": 8,
+  "oversized_files": 0,
+  "forbidden_files": 0,
+  "total_staged_megabytes": 54.29
+}

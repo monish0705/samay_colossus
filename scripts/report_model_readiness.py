@@ -41,11 +41,11 @@ def main():
     captures=sorted(Path("data/raw/official-multi-recent").glob("*/manifest.json"))
     if captures:
         result["recent_collection"] = json.loads(captures[-1].read_text())
-    result["limitations"] = ["Four additional crops were trained on separately labeled India Data Portal secondary history. Their dated series are stale for current-day forecasting; no live prediction is invented.",
+    result["limitations"] = ["Original secondary-only studies remain archived and stale. Four new current-grade studies explicitly combine verified identical-grade secondary backfill and fresh official OGD observations; per-series freshness remains enforced.",
         "Original publication/revision vintages are unverified. All serving artifacts remain research only, limited evidence.",
         "Consumed test metrics are unchanged; current refits are not newly tested models. Do not describe 100 minus WAPE as accuracy.",
         "Intervals are secondary retrospective block-residual diagnostics for the same stateless baseline rules, not guaranteed coverage.",
-        "Some selected baselines lose to naive on final observations; these results are retained without post-holdout reselection.", "Potato 3d/7d have fewer than 30 final examples; no final metric is claimed. Unspecified grades were not inferred or merged with graded data."]
+        "Some selected baselines lose to naive on final observations; these results are retained without post-holdout reselection.", "Sparse final sets (including original Potato 3d/7d, current Arecanut and current Onion 7d) have fewer than 30 final examples and no reliable final metric. Unspecified grades were not inferred or merged with graded data."]
     target=Path("reports/corrected-model-readiness.json")
     target.write_text(json.dumps(result,indent=2,allow_nan=False),encoding="utf-8")
     lines=["# SAMAY corrected data and model report", "", "All forecasts are retrospective research / limited evidence. This report reproduces original frozen results; it does not reopen final model selection.", "",

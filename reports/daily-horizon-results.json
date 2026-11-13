@@ -1,0 +1,1004 @@
+{
+  "generated_at": "2026-11-05T12:13:18.698661+00:00",
+  "new_final_test_performed": false,
+  "research_only": true,
+  "all_saved_models": 322,
+  "crops": [
+    {
+      "commodity": "Arecanut",
+      "market": "Shivamogga Mandi",
+      "variety": "rashi",
+      "grade": "local",
+      "saved_calendar_days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73
+      ],
+      "new_artifacts": 70,
+      "evidence_counts": {
+        "baseline_only": 69,
+        "selected_validation_only": 1
+      },
+      "algorithms": {
+        "naive": 69,
+        "median_14": 1
+      },
+      "source_fingerprint": "d31a3d79508dbc7edf92b3227193207ea680c4d0a1f78b6a44e97285c5163323",
+      "development_end": "2026-09-15",
+      "no_new_final_test": true,
+      "report": "models/crop-horizons/b3aab5538405cf28/comparison.json",
+      "examples": [
+        {
+          "horizon": 14,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 140,
+            "mae_inr_per_quintal": 1532.1714285714286,
+            "rmse_inr_per_quintal": 1992.4640236938496,
+            "smape_pct": 2.91157632139404,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 2.9131297811105594,
+            "directional_accuracy": 0.02857142857142857,
+            "p90_absolute_error_inr_per_quintal": 3312.0,
+            "p90_overprediction_inr_per_quintal": 3041.9
+          },
+          "sample_counts": {
+            "effective_train_samples": 111,
+            "effective_validation_samples": 19,
+            "available_development_pairs": 140,
+            "nonoverlapping_benchmark_cases": 14,
+            "train_span_calendar_days": 208,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 30,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 130,
+            "mae_inr_per_quintal": 1922.1,
+            "rmse_inr_per_quintal": 2390.784208323543,
+            "smape_pct": 3.6396241416053026,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 3.668170157481182,
+            "directional_accuracy": 0.0,
+            "p90_absolute_error_inr_per_quintal": 3308.000000000001,
+            "p90_overprediction_inr_per_quintal": 3011.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 101,
+            "effective_validation_samples": 10,
+            "available_development_pairs": 130,
+            "nonoverlapping_benchmark_cases": 7,
+            "train_span_calendar_days": 194,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 60,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 111,
+            "mae_inr_per_quintal": 1592.990990990991,
+            "rmse_inr_per_quintal": 2036.405431411211,
+            "smape_pct": 3.012166002579133,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 3.046223445766569,
+            "directional_accuracy": 0.009009009009009009,
+            "p90_absolute_error_inr_per_quintal": 3640.0,
+            "p90_overprediction_inr_per_quintal": 3640.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 82,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 111,
+            "nonoverlapping_benchmark_cases": 3,
+            "train_span_calendar_days": 165,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 90,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 63,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 92,
+            "nonoverlapping_benchmark_cases": 2,
+            "train_span_calendar_days": 135,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 120,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 43,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 72,
+            "nonoverlapping_benchmark_cases": 1,
+            "train_span_calendar_days": 103,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 180,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 2,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 31,
+            "nonoverlapping_benchmark_cases": 1,
+            "train_span_calendar_days": 45,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_60_exact_dated_development_pairs",
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 365,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 0,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 0,
+            "nonoverlapping_benchmark_cases": 0,
+            "train_span_calendar_days": 0,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_60_exact_dated_development_pairs",
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 730,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 0,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 0,
+            "nonoverlapping_benchmark_cases": 0,
+            "train_span_calendar_days": 0,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_60_exact_dated_development_pairs",
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        }
+      ]
+    },
+    {
+      "commodity": "Copra",
+      "market": "Tiptur APMC",
+      "variety": "other",
+      "grade": "local",
+      "saved_calendar_days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ],
+      "new_artifacts": 57,
+      "evidence_counts": {
+        "baseline_only": 55,
+        "selected_validation_only": 2
+      },
+      "algorithms": {
+        "naive": 55,
+        "median_14": 2
+      },
+      "source_fingerprint": "52108bc9853d3638be892777490619ae02cc2557a71d48463d6acc38e88ad79c",
+      "development_end": "2026-09-15",
+      "no_new_final_test": true,
+      "report": "models/crop-horizons/daec5736ea5fc9b2/comparison.json",
+      "examples": [
+        {
+          "horizon": 14,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 145,
+            "mae_inr_per_quintal": 1434.4827586206898,
+            "rmse_inr_per_quintal": 2480.405973445365,
+            "smape_pct": 7.297469110873549,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 7.634708559682866,
+            "directional_accuracy": 0.2,
+            "p90_absolute_error_inr_per_quintal": 3000.0,
+            "p90_overprediction_inr_per_quintal": 2000.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 108,
+            "effective_validation_samples": 25,
+            "available_development_pairs": 145,
+            "nonoverlapping_benchmark_cases": 12,
+            "train_span_calendar_days": 171,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 30,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 131,
+            "mae_inr_per_quintal": 1337.4045801526718,
+            "rmse_inr_per_quintal": 2100.49067331952,
+            "smape_pct": 6.932896787296476,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 7.128036128402295,
+            "directional_accuracy": 0.16793893129770993,
+            "p90_absolute_error_inr_per_quintal": 3000.0,
+            "p90_overprediction_inr_per_quintal": 2000.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 94,
+            "effective_validation_samples": 12,
+            "available_development_pairs": 131,
+            "nonoverlapping_benchmark_cases": 5,
+            "train_span_calendar_days": 155,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 60,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 107,
+            "mae_inr_per_quintal": 1492.5233644859813,
+            "rmse_inr_per_quintal": 2399.240534041328,
+            "smape_pct": 7.701813296047779,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 8.03886036444176,
+            "directional_accuracy": 0.16822429906542055,
+            "p90_absolute_error_inr_per_quintal": 3000.0,
+            "p90_overprediction_inr_per_quintal": 2240.0000000000005
+          },
+          "sample_counts": {
+            "effective_train_samples": 70,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 107,
+            "nonoverlapping_benchmark_cases": 3,
+            "train_span_calendar_days": 125,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 90,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 44,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 81,
+            "nonoverlapping_benchmark_cases": 2,
+            "train_span_calendar_days": 95,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 120,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 18,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 55,
+            "nonoverlapping_benchmark_cases": 1,
+            "train_span_calendar_days": 65,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_60_exact_dated_development_pairs",
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 180,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 0,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 5,
+            "nonoverlapping_benchmark_cases": 1,
+            "train_span_calendar_days": 5,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_60_exact_dated_development_pairs",
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 365,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 0,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 0,
+            "nonoverlapping_benchmark_cases": 0,
+            "train_span_calendar_days": 0,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_60_exact_dated_development_pairs",
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        }
+      ]
+    },
+    {
+      "commodity": "Onion",
+      "market": "Hubballi APMC",
+      "variety": "puna",
+      "grade": "local",
+      "saved_calendar_days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "new_artifacts": 80,
+      "evidence_counts": {
+        "selected_validation_only": 9,
+        "baseline_only": 71
+      },
+      "algorithms": {
+        "naive": 79,
+        "ridge_return_10": 1
+      },
+      "source_fingerprint": "b2f0ba492d9486c8393c4cf0c2bd9239dc95b9668083d70d4d9efcc2a2c44fb6",
+      "development_end": "2026-09-15",
+      "no_new_final_test": true,
+      "report": "models/crop-horizons/15aa3146d8297137/comparison.json",
+      "examples": [
+        {
+          "horizon": 14,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 175,
+            "mae_inr_per_quintal": 268.57142857142856,
+            "rmse_inr_per_quintal": 403.69719911268714,
+            "smape_pct": 12.92917873231668,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 13.819464863275508,
+            "directional_accuracy": 0.16,
+            "p90_absolute_error_inr_per_quintal": 659.9999999999994,
+            "p90_overprediction_inr_per_quintal": 300.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 131,
+            "effective_validation_samples": 31,
+            "available_development_pairs": 175,
+            "nonoverlapping_benchmark_cases": 16,
+            "train_span_calendar_days": 240,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 30,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 164,
+            "mae_inr_per_quintal": 325.609756097561,
+            "rmse_inr_per_quintal": 494.1116690217047,
+            "smape_pct": 15.494530324357411,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 16.512059369202227,
+            "directional_accuracy": 0.1524390243902439,
+            "p90_absolute_error_inr_per_quintal": 970.0000000000017,
+            "p90_overprediction_inr_per_quintal": 200.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 120,
+            "effective_validation_samples": 20,
+            "available_development_pairs": 164,
+            "nonoverlapping_benchmark_cases": 8,
+            "train_span_calendar_days": 224,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 60,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 139,
+            "mae_inr_per_quintal": 447.48201438848923,
+            "rmse_inr_per_quintal": 683.200256094842,
+            "smape_pct": 20.90885685958733,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 21.901408450704224,
+            "directional_accuracy": 0.11510791366906475,
+            "p90_absolute_error_inr_per_quintal": 1300.0,
+            "p90_overprediction_inr_per_quintal": 100.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 95,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 139,
+            "nonoverlapping_benchmark_cases": 4,
+            "train_span_calendar_days": 193,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 90,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 75,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 118,
+            "nonoverlapping_benchmark_cases": 2,
+            "train_span_calendar_days": 164,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 120,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 56,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 99,
+            "nonoverlapping_benchmark_cases": 2,
+            "train_span_calendar_days": 127,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        }
+      ]
+    },
+    {
+      "commodity": "Potato",
+      "market": "Bengaluru APMC",
+      "variety": "local",
+      "grade": "medium",
+      "saved_calendar_days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84
+      ],
+      "new_artifacts": 81,
+      "evidence_counts": {
+        "selected_validation_only": 3,
+        "baseline_only": 78
+      },
+      "algorithms": {
+        "naive": 80,
+        "median_14": 1
+      },
+      "source_fingerprint": "0a805f98526a31ecbeafde25a77ace3a4d0653834142325c22bb17436fa7de9a",
+      "development_end": "2026-09-15",
+      "no_new_final_test": true,
+      "report": "models/crop-horizons/0990452219d57b9a/comparison.json",
+      "examples": [
+        {
+          "horizon": 14,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 195,
+            "mae_inr_per_quintal": 214.87179487179486,
+            "rmse_inr_per_quintal": 280.0183144193544,
+            "smape_pct": 15.1554965191195,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 14.174560216508796,
+            "directional_accuracy": 0.2,
+            "p90_absolute_error_inr_per_quintal": 400.0,
+            "p90_overprediction_inr_per_quintal": 400.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 148,
+            "effective_validation_samples": 35,
+            "available_development_pairs": 195,
+            "nonoverlapping_benchmark_cases": 16,
+            "train_span_calendar_days": 241,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 30,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 184,
+            "mae_inr_per_quintal": 316.30434782608694,
+            "rmse_inr_per_quintal": 384.9054090462272,
+            "smape_pct": 21.842586673429963,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 21.381337252020572,
+            "directional_accuracy": 0.11413043478260869,
+            "p90_absolute_error_inr_per_quintal": 600.0,
+            "p90_overprediction_inr_per_quintal": 500.0
+          },
+          "sample_counts": {
+            "effective_train_samples": 137,
+            "effective_validation_samples": 22,
+            "available_development_pairs": 184,
+            "nonoverlapping_benchmark_cases": 8,
+            "train_span_calendar_days": 225,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 60,
+          "kind": "fixed-rule retrospective benchmark",
+          "model": "naive",
+          "metrics": {
+            "n": 159,
+            "mae_inr_per_quintal": 506.9182389937107,
+            "rmse_inr_per_quintal": 593.1474516265489,
+            "smape_pct": 34.49446803537324,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 34.7863616745792,
+            "directional_accuracy": 0.07547169811320754,
+            "p90_absolute_error_inr_per_quintal": 1000.0,
+            "p90_overprediction_inr_per_quintal": 820.0000000000017
+          },
+          "sample_counts": {
+            "effective_train_samples": 112,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 159,
+            "nonoverlapping_benchmark_cases": 4,
+            "train_span_calendar_days": 194,
+            "status": "baseline_only_limited_evidence"
+          },
+          "reasons": [
+            "insufficient_separated_train_validation_folds_for_model_selection"
+          ]
+        },
+        {
+          "horizon": 90,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 89,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 136,
+            "nonoverlapping_benchmark_cases": 2,
+            "train_span_calendar_days": 165,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 120,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 64,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 111,
+            "nonoverlapping_benchmark_cases": 2,
+            "train_span_calendar_days": 135,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        },
+        {
+          "horizon": 180,
+          "kind": "INSUFFICIENT",
+          "model": null,
+          "metrics": null,
+          "sample_counts": {
+            "effective_train_samples": 14,
+            "effective_validation_samples": 0,
+            "available_development_pairs": 61,
+            "nonoverlapping_benchmark_cases": 1,
+            "train_span_calendar_days": 75,
+            "status": "insufficient_data"
+          },
+          "reasons": [
+            "less_than_90_calendar_days_of_origins",
+            "fewer_than_3_nonoverlapping_forecast_cases"
+          ]
+        }
+      ]
+    },
+    {
+      "commodity": "Tomato",
+      "market": "Kolar APMC",
+      "variety": "tomato",
+      "grade": "local",
+      "saved_calendar_days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "new_artifacts": 4,
+      "evidence_counts": {
+        "selected_validation_only": 3,
+        "baseline_only": 1
+      },
+      "algorithms": {
+        "mean_14": 3,
+        "naive": 1
+      },
+      "source_fingerprint": "9d2afa14c2f30c4cdcf81de880d0bbda29429464403a95e45d0045270a04dc0d",
+      "development_end": "2026-09-15",
+      "no_new_final_test": true,
+      "report": "models/crop-horizons/766da7da6897e631/comparison.json",
+      "examples": []
+    }
+  ]
+}

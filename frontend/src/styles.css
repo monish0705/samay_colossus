@@ -633,3 +633,19 @@ html[lang=kn] { font-family: 'Nirmala UI', 'Tunga', 'Segoe UI', sans-serif; line
   color: #ffffff;
   font-weight: 600;
 }
+
+/* Dated decision evidence remains usable on narrow phones. */
+.table-scroll { overflow-x: auto; max-width: 100%; margin-block: 1rem; }
+.table-scroll table { width: 100%; border-collapse: collapse; }
+.table-scroll caption { text-align: left; font-weight: 600; padding-bottom: .75rem; }
+.table-scroll th, .table-scroll td { padding: .65rem; text-align: left; border-bottom: 1px solid #e5e9e3; white-space: nowrap; }
+.decision-panel { border-top: 4px solid #267149; }
+.decision-panel > .stats-grid { margin-block: 1rem; }
+.result-banner.is-conditional { background: #fff8e7; border-color: #d5a343; color: #72551f; }
+
+/* Keep both language buttons reachable on narrow farmer screens. */
+@media (max-width: 720px) {
+  .topbar { height: auto; min-height: 66px; padding-block: 8px; align-items: flex-start; }
+  .topbar-location { padding-top: 4px; }
+  .topbar-actions { min-width: 0; flex: 1; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+}

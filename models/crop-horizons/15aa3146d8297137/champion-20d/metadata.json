@@ -1,0 +1,295 @@
+{
+  "version": "15aa3146d8297137-champion-20d",
+  "algorithm_version": "samay-forecast-v1",
+  "candidate": "naive",
+  "horizon": 20,
+  "market": "Hubballi APMC",
+  "commodity": "Onion",
+  "variety": "puna",
+  "grade": "local",
+  "feature_schema": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "training_window": [
+    "2025-12-31",
+    "2026-10-15"
+  ],
+  "trained_before": "2026-11-05T12:03:29.686642+00:00",
+  "seed": 42,
+  "dataset_fingerprint": "b2f0ba492d9486c8393c4cf0c2bd9239dc95b9668083d70d4d9efcc2a2c44fb6",
+  "model_sha256": "6c09635decb8153d3c12e3782a69fd2eb097426f912547d351a8647b27d5580a",
+  "comparison": {
+    "horizon": 20,
+    "sample_policy": {
+      "effective_train_samples": 127,
+      "effective_validation_samples": 26,
+      "available_development_pairs": 171,
+      "nonoverlapping_benchmark_cases": 11,
+      "train_span_calendar_days": 234,
+      "status": "development_selection_only"
+    },
+    "status": "selected_validation_only",
+    "champion": "naive",
+    "comparisons": [
+      {
+        "candidate": "naive",
+        "cv": [
+          {
+            "n": 18,
+            "mae_inr_per_quintal": 122.22222222222223,
+            "rmse_inr_per_quintal": 169.96731711975949,
+            "smape_pct": 7.569334348271732,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 7.829181494661921,
+            "directional_accuracy": 0.3333333333333333,
+            "p90_absolute_error_inr_per_quintal": 300.0,
+            "p90_overprediction_inr_per_quintal": 300.0
+          },
+          {
+            "n": 18,
+            "mae_inr_per_quintal": 216.66666666666666,
+            "rmse_inr_per_quintal": 243.81231397212989,
+            "smape_pct": 13.18001328912145,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 12.460063897763579,
+            "directional_accuracy": 0.05555555555555555,
+            "p90_absolute_error_inr_per_quintal": 400.0,
+            "p90_overprediction_inr_per_quintal": 0.0
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 242.10526315789474,
+            "rmse_inr_per_quintal": 304.35436410107286,
+            "smape_pct": 12.489237846714987,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 12.29946524064171,
+            "directional_accuracy": 0.0,
+            "p90_absolute_error_inr_per_quintal": 539.9999999999999,
+            "p90_overprediction_inr_per_quintal": 19.99999999999993
+          }
+        ],
+        "cv_mean_mae": 193.6647173489279,
+        "cv_std_mae": 51.57391543734682,
+        "validation": {
+          "n": 26,
+          "mae_inr_per_quintal": 815.3846153846154,
+          "rmse_inr_per_quintal": 942.5823775466729,
+          "smape_pct": 28.16407206332084,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 25.5729794933655,
+          "directional_accuracy": 0.038461538461538464,
+          "p90_absolute_error_inr_per_quintal": 1350.0,
+          "p90_overprediction_inr_per_quintal": 300.0
+        }
+      },
+      {
+        "candidate": "mean_14",
+        "cv": [
+          {
+            "n": 18,
+            "mae_inr_per_quintal": 121.42857142857143,
+            "rmse_inr_per_quintal": 144.59263286370452,
+            "smape_pct": 7.693323768669401,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 7.778342653787494,
+            "directional_accuracy": 0.5,
+            "p90_absolute_error_inr_per_quintal": 259.2857142857142,
+            "p90_overprediction_inr_per_quintal": 259.2857142857142
+          },
+          {
+            "n": 18,
+            "mae_inr_per_quintal": 178.17460317460316,
+            "rmse_inr_per_quintal": 207.94180897156627,
+            "smape_pct": 10.576807727872376,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 10.246462802373344,
+            "directional_accuracy": 0.6666666666666666,
+            "p90_absolute_error_inr_per_quintal": 328.57142857142867,
+            "p90_overprediction_inr_per_quintal": 4.285714285714277
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 277.0676691729323,
+            "rmse_inr_per_quintal": 346.73945433771246,
+            "smape_pct": 14.488541256749542,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 14.075630252100838,
+            "directional_accuracy": 0.42105263157894735,
+            "p90_absolute_error_inr_per_quintal": 625.7142857142857,
+            "p90_overprediction_inr_per_quintal": 0.0
+          }
+        ],
+        "cv_mean_mae": 192.22361459203566,
+        "cv_std_mae": 64.31129101500524,
+        "validation": {
+          "n": 26,
+          "mae_inr_per_quintal": 976.0989010989013,
+          "rmse_inr_per_quintal": 1091.830480916376,
+          "smape_pct": 34.684545598687684,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 30.613475788385323,
+          "directional_accuracy": 0.4230769230769231,
+          "p90_absolute_error_inr_per_quintal": 1367.857142857143,
+          "p90_overprediction_inr_per_quintal": 0.0
+        }
+      },
+      {
+        "candidate": "median_14",
+        "cv": [
+          {
+            "n": 18,
+            "mae_inr_per_quintal": 97.22222222222223,
+            "rmse_inr_per_quintal": 125.27746981977424,
+            "smape_pct": 6.210784929014481,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 6.227758007117438,
+            "directional_accuracy": 0.5555555555555556,
+            "p90_absolute_error_inr_per_quintal": 215.00000000000003,
+            "p90_overprediction_inr_per_quintal": 215.00000000000003
+          },
+          {
+            "n": 18,
+            "mae_inr_per_quintal": 188.88888888888889,
+            "rmse_inr_per_quintal": 221.10831935702666,
+            "smape_pct": 11.267803791438816,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 10.86261980830671,
+            "directional_accuracy": 0.4444444444444444,
+            "p90_absolute_error_inr_per_quintal": 350.0,
+            "p90_overprediction_inr_per_quintal": 0.0
+          },
+          {
+            "n": 19,
+            "mae_inr_per_quintal": 278.94736842105266,
+            "rmse_inr_per_quintal": 344.5057481760149,
+            "smape_pct": 14.6008381887216,
+            "smape_excluded_tiny_denominator": 0,
+            "wape_pct": 14.171122994652407,
+            "directional_accuracy": 0.15789473684210525,
+            "p90_absolute_error_inr_per_quintal": 619.9999999999999,
+            "p90_overprediction_inr_per_quintal": 0.0
+          }
+        ],
+        "cv_mean_mae": 188.35282651072126,
+        "cv_std_mae": 74.18994861121256,
+        "validation": {
+          "n": 26,
+          "mae_inr_per_quintal": 1065.3846153846155,
+          "rmse_inr_per_quintal": 1164.457615571103,
+          "smape_pct": 38.71313996412924,
+          "smape_excluded_tiny_denominator": 0,
+          "wape_pct": 33.41375150784077,
+          "directional_accuracy": 0.2692307692307692,
+          "p90_absolute_error_inr_per_quintal": 1450.0,
+          "p90_overprediction_inr_per_quintal": 0.0
+        }
+      }
+    ],
+    "learned_model_eligible": false,
+    "final_evaluation": "not_performed; existing final period excluded",
+    "reason": [],
+    "selection_train_end": "2026-07-15",
+    "selection_reason": "Validation MAE with CV stability and downside tie-breaks; ML must beat all baselines in >=2/3 folds and the best validation baseline",
+    "folds": [
+      {
+        "train_n": 64,
+        "validation_n": 18,
+        "latest_training_target": "2026-04-15",
+        "first_validation_origin": "2026-04-17",
+        "last_validation_target": "2026-05-28"
+      },
+      {
+        "train_n": 73,
+        "validation_n": 18,
+        "latest_training_target": "2026-05-07",
+        "first_validation_origin": "2026-05-09",
+        "last_validation_target": "2026-06-19"
+      },
+      {
+        "train_n": 91,
+        "validation_n": 19,
+        "latest_training_target": "2026-05-29",
+        "first_validation_origin": "2026-05-31",
+        "last_validation_target": "2026-07-13"
+      }
+    ]
+  },
+  "created_at": "2026-11-05T12:03:27.457469+00:00",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-15",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "puna",
+    "grade": "local",
+    "market": "Hubballi APMC",
+    "commodity": "Onion",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "training_samples": 207,
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": "4.7.0"
+  },
+  "input_transform": "Original causal feature schema",
+  "research_only": true,
+  "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts. This extension has NO new final test. Selection validation scores are not final accuracy.",
+  "selection_report": "models/crop-horizons/15aa3146d8297137/comparison.json",
+  "source": [
+    {
+      "source": "India Data Portal AGMARKNET mirror (secondary)",
+      "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+      "sha256": "9591b22bde2438e0376c49228aee8c79132fa293a6cf302fa5e30a0da35bf17b",
+      "fetched_at": "2026-11-04T19:36:58.468313+00:00",
+      "source_kind": "secondary",
+      "upstream_source_url": "https://agmarknet.gov.in/",
+      "license": "Open Data Commons Attribution License"
+    },
+    {
+      "source": "Official OGD / AGMARKNET historical APMC observations",
+      "url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+      "sha256": "fd9e56f514f1f09422a664c77c9432f8586898b776d4c5920af04c6b70a01846",
+      "fetched_at": "2026-11-05T08:39:53.310684+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": "Government Open Data License - India"
+    }
+  ],
+  "empirical_calibration": {
+    "radii": {},
+    "reason": "No independent long-horizon residual calibration; sensitivity scenarios are not prediction intervals"
+  },
+  "horizon_evidence_status": "selected_validation_only",
+  "refit_policy": "Frozen development-selected configuration. No new final holdout evaluation.",
+  "selection_report_sha256": "41be550e9bc72fa4ed6983f1e154a6b9cb89ebab54f4b91901011b6314b6c5a6",
+  "training_source_fingerprint": "1621b04dd257137c8f26befee5405998ea59314b39ee49e9cc5bb69e4689f5ac"
+}

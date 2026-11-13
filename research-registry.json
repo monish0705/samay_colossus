@@ -50,5 +50,36 @@
     "prediction_sha256": {
       "final-predictions-1d.csv": "1427d17bff27b839c0413afbf49e349a030b90574e8d6d0ae32ac96bbcf72e6b"
     }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-a0b204e8241fd7c0",
+    "comparison_sha256": "99079d7249a9ebaae0c7cceae96fd0f8758207e36505b041ec20eeadffcc7131",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "1e233438882c1adba854b1f75c57f35004ed5ff7474d63b05ac56da21eca25f7",
+      "final-predictions-3d.csv": "1417c6353651e1fb9bbb03bce2718dd01ab372b8545647cbe831ac4c467d6bbd",
+      "final-predictions-7d.csv": "682876b795ec38a06f998d79e0cd09d54bc860f9e0e42463189586281321a6ef"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-a18c6b2407216a5a",
+    "comparison_sha256": "37165840c25933b643dc08c1d78c2348fae3b3a5483c46e04113a5c3ea061b75",
+    "prediction_sha256": {}
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-dfc4c731994b0419",
+    "comparison_sha256": "539852c4b785960787bea8822c6472d82a996e35cb0d5ac6d5eb3fd53a87a283",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "a6e56145a3eb5c10fd8520d560205afa0b9aa8c5cc8a60397f44ea32fb200e68",
+      "final-predictions-3d.csv": "78487e0887f04ba2c9f6e0f88702237c13f784c5d2ccabd26e9270cd52f969e5"
+    }
+  },
+  {
+    "directory": "models/research/research-snapshot-v1-35245f4e3dabb00e",
+    "comparison_sha256": "4dbc70c6472dc365e711a36bec1245bc8e549a06cb04f403b9ff463fd96d91ef",
+    "prediction_sha256": {
+      "final-predictions-1d.csv": "215ce863411c6ef25e2637b47a3d37a6b0446fff0d06645112fb4cb0ed869be4",
+      "final-predictions-3d.csv": "5a47f4aff99d0bb2a7c2a8a234ab792252921c6b5d3e5892bbf6623a20d1c634",
+      "final-predictions-7d.csv": "1ed33b3d017dc4595531a9a402ec8646c36da495c1924edfcd17575e8b35701a"
+    }
   }
 ]

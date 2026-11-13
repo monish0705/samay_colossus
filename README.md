@@ -1,19 +1,32 @@
 # SAMAY · Team Resonance · COLOSSUS 3.0
 
-Cash-aware market decision support for Karnataka / Kolar / Kolar APMC / Tomato.
+Cash-aware market decision support for five Karnataka crop/market series.
 FastAPI + SQLite/Alembic, causal forecasting and empirical uncertainty, Decimal
 sale optimization, and a responsive English/Kannada React dashboard.
 
-**Current state, 5 November 2026:** 7,777 usable observations are stored:
-1,943 direct government records plus 5,834 separately labeled India Data Portal
-AGMARKNET mirror records. Four additional crops now have chronological research
-studies; there are six frozen studies and 18 saved research artifacts. The 7,304
-legacy generated observations remain demo data and are excluded from training.
+**Current state, 5 November 2026:** fresh official OGD histories were obtained for
+Copra, Arecanut, Onion and Potato, with reports through 3–4 November 2026. All four
+now return saved research forecasts at 1/3/7 calendar days through the browser UI.
+The database stores 3,938 official and 5,834 separately labeled secondary rows;
+source overlaps are deduplicated for training/history, and demo data is excluded.
+There are ten frozen short-horizon studies and 322 registered research serving
+artifacts, including 292 new daily-horizon artifacts. Current series cover every
+calendar day through Tomato 7, Copra 60, Arecanut 73, Onion 83 and Potato 84 days.
+Most additions are explicitly predeclared last-price baselines; longer unsupported
+dates stay unavailable. The new extension has no new untouched final test.
 
-The UI includes historical actual-versus-predicted charts and honest naive comparisons.
-Some selections lose to naive; Potato/3d and /7d have insufficient final examples.
-Additional histories are stale for current forecasting, and all models remain
-research-only. No perfect accuracy, live validation or guaranteed selling price is claimed.
+See [daily horizons and measured errors](docs/DAILY-HORIZONS.md) and
+[cash-aware decisions with dated weather/news context](docs/SELL-HOLD-ADVISOR.md).
+The advisor compares conditional hold plans with an immediate-sale fallback,
+preserving cash, costs, storage loss and downside. Weather/news are reviewable
+context, not unvalidated numeric price adjustments.
+
+See [current crop training and measured errors](docs/CURRENT-CROP-MODELS.md) and
+[the computed report](reports/current-crop-models.md). All champions remain
+baselines in those frozen short-horizon final studies; advanced ML did not
+consistently beat them. Sparse final sets have no
+claimed reliable final score, calibrated intervals are unavailable for the new
+series, and all models remain research-only with no guaranteed selling price.
 
 See [additional data/model handoff](docs/SECONDARY-MODELS.md),
 [actual errors and sample sizes](reports/corrected-model-readiness.md),
@@ -28,7 +41,7 @@ repository root; no activation or execution-policy change is required.
 
 ```powershell
 python scripts/setup_local.py
-.\.venv\Scripts\python.exe scripts/start_local.py
+.\.venv\Scripts\python.exe scripts/start_local.py --enable-research
 ```
 
 Setup installs pinned Python packages and `npm ci`; it needs internet and preserves
@@ -39,6 +52,16 @@ backend `http://127.0.0.1:8010` and frontend `http://127.0.0.1:5173`, and checks
 the API contract. Ctrl+C stops only children it launched. Swagger: backend `/docs`.
 Health is process liveness, not forecast readiness. Restart existing listeners
 after code/configuration changes.
+
+For fresh ports and optional hourly internet context refresh:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/start_local.py --backend-port 8011 --frontend-port 5174 --enable-research --refresh-context
+```
+
+Omit `--refresh-context` for offline operation with prepared authentic history
+and saved models. Cached context expires visibly; this flag does not update mandi
+price observations. No live market-price feed is implied.
 
 The launcher uses a same-origin `/backend` Vite proxy. Independent terminals:
 

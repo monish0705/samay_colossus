@@ -1,0 +1,73 @@
+{
+  "state": "consumed",
+  "run": "research-snapshot-v1-dfc4c731994b0419",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-15",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "puna",
+    "grade": "local",
+    "market": "Hubballi APMC",
+    "commodity": "Onion",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "result": {
+    "horizon": 3,
+    "champion": "naive",
+    "n": 32,
+    "status": "evaluated",
+    "metrics": {
+      "n": 32,
+      "mae_inr_per_quintal": 559.375,
+      "rmse_inr_per_quintal": 740.143567154373,
+      "smape_pct": 13.550257665996833,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 13.113553113553113,
+      "directional_accuracy": 0.0625,
+      "p90_absolute_error_inr_per_quintal": 1180.0000000000005,
+      "p90_overprediction_inr_per_quintal": 1000.0
+    },
+    "baseline_metrics": {
+      "naive": {
+        "n": 32,
+        "mae_inr_per_quintal": 559.375,
+        "rmse_inr_per_quintal": 740.143567154373,
+        "smape_pct": 13.550257665996833,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 13.113553113553113,
+        "directional_accuracy": 0.0625,
+        "p90_absolute_error_inr_per_quintal": 1180.0000000000005,
+        "p90_overprediction_inr_per_quintal": 1000.0
+      },
+      "mean_14": {
+        "n": 32,
+        "mae_inr_per_quintal": 466.96428571428567,
+        "rmse_inr_per_quintal": 577.2885910417239,
+        "smape_pct": 11.232953119284403,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 10.947148090005232,
+        "directional_accuracy": 0.59375,
+        "p90_absolute_error_inr_per_quintal": 920.7142857142859,
+        "p90_overprediction_inr_per_quintal": 303.57142857142844
+      },
+      "median_14": {
+        "n": 32,
+        "mae_inr_per_quintal": 501.5625,
+        "rmse_inr_per_quintal": 613.7105384462614,
+        "smape_pct": 12.100235314817729,
+        "smape_excluded_tiny_denominator": 0,
+        "wape_pct": 11.758241758241759,
+        "directional_accuracy": 0.53125,
+        "p90_absolute_error_inr_per_quintal": 1070.0000000000007,
+        "p90_overprediction_inr_per_quintal": 290.0000000000002
+      }
+    }
+  }
+}

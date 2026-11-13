@@ -70,5 +70,1221 @@
   {
     "directory": "models/research-serving/7cca0655ee90deff/champion-7d",
     "metadata_sha256": "00474ebb885b6343f5262833d78d7139c85a412d4225f4d32c8f0a520e6aa0d6"
+  },
+  {
+    "directory": "models/research-serving/adac6b1940e3995e/champion-1d",
+    "metadata_sha256": "4eda658d25730c88db9119db571dd5614a4d408466360067117f71bc5b1336ad"
+  },
+  {
+    "directory": "models/research-serving/5cc69d598886a81f/champion-3d",
+    "metadata_sha256": "6340941dab89053f7d724e9a2b5acb4df267604b54eccf158446f650ac15c9c9"
+  },
+  {
+    "directory": "models/research-serving/929dcc4d93a1b2e6/champion-7d",
+    "metadata_sha256": "77d3cc579979c0dd7e64064f387dc1e7b585bd5a93dbe8e06103b642d2469f48"
+  },
+  {
+    "directory": "models/research-serving/e4b44d2b708617e7/champion-1d",
+    "metadata_sha256": "29f4438b5fcadda787d32fdf8fbb5ef13883fb720c52747216a09f8523104065"
+  },
+  {
+    "directory": "models/research-serving/41317315acf51111/champion-3d",
+    "metadata_sha256": "158c9d1da3d0d416c04be18664c85b1ca0508779591f0a376d677b57c1ffaaa5"
+  },
+  {
+    "directory": "models/research-serving/9f1fe6137c573338/champion-7d",
+    "metadata_sha256": "923f3b72cc4c3cb75cc96edd85380f10b4b0a17ca9a1973f0e4f35f14512b36b"
+  },
+  {
+    "directory": "models/research-serving/f53a132c924ed1df/champion-1d",
+    "metadata_sha256": "3a7cf5019fa6b5a519fa3125b5a2e50b6079928e002ce72f9d0751a9ee225a63"
+  },
+  {
+    "directory": "models/research-serving/58b38c31458c73e0/champion-3d",
+    "metadata_sha256": "15603327384b4641bc856473205724c63835476e70eb2eb196c5ab9a9050721e"
+  },
+  {
+    "directory": "models/research-serving/69a866806f78814f/champion-7d",
+    "metadata_sha256": "c6829c99b1a6dbf102ae1b1a6f4b79407f61e847d6ec4bca43f09e5e12a66d7c"
+  },
+  {
+    "directory": "models/research-serving/8a13bb943e3d71c2/champion-1d",
+    "metadata_sha256": "cb5e4008d41285379082e8d294038bfd0334c5d0709f858cfb85cef4958dc610"
+  },
+  {
+    "directory": "models/research-serving/1115c3d1b37ff78a/champion-3d",
+    "metadata_sha256": "e297910e0d26db46644189cbc14f53bedbbd01757c8dd7a5fb13324022d53451"
+  },
+  {
+    "directory": "models/research-serving/704f54e65aa5bdf9/champion-7d",
+    "metadata_sha256": "ed35ade8c921c7d53c85f74d9eb5221da8572ad43327c39ec889607234eeba25"
+  },
+  {
+    "directory": "models/crop-horizons/766da7da6897e631/champion-2d",
+    "metadata_sha256": "42b0638da39abf963dd2767a3270e2956d7b81bfc1bef8c855d80526d5d91671"
+  },
+  {
+    "directory": "models/crop-horizons/766da7da6897e631/champion-4d",
+    "metadata_sha256": "69182bd842a70438516921bfd5623beeeb56899bdf6a31f4f688319ee09bb38c"
+  },
+  {
+    "directory": "models/crop-horizons/766da7da6897e631/champion-5d",
+    "metadata_sha256": "4aa0bfbd0576230782b631a0e79685036551577b27a34ebe4622e75d1ccccafc"
+  },
+  {
+    "directory": "models/crop-horizons/766da7da6897e631/champion-6d",
+    "metadata_sha256": "e924fbebec3ca1d17bc8464b5f894b92b47fd48fbbe7e461da8ddab0a2496ba3"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-2d",
+    "metadata_sha256": "15984b1a34afc1e6958f7e7de5fb947a968dcb43beb637e761c88fa3a884e3ed"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-4d",
+    "metadata_sha256": "a4613d17c5e5869a0577dbe508900af4158be73fcd2b1b6135793504cc0c2223"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-5d",
+    "metadata_sha256": "0469044a31f680261afd645f6f851948b84a17a79d1de6e627ec0cc379072478"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-6d",
+    "metadata_sha256": "8f0ef61e3bd2c989e13062752189b231c7bd4b6dccc22bfd91120dc3e6144425"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-8d",
+    "metadata_sha256": "16934ce43966f5e2ca715ae201a34e34b69412cc009a1fef358e6808ac3f8817"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-9d",
+    "metadata_sha256": "841d241a79c08c1003a198731903a5199f7c9cadc5b8c543adeabf9142d5f392"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-10d",
+    "metadata_sha256": "88bd9b0c157a8e411937706a1e0b97cc4f4685b0e12b96c0fdac960302caff18"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-11d",
+    "metadata_sha256": "415773becc6aed59bc30d9ddb28c3c70a3a9666075aa8686efc971081f14cd11"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-12d",
+    "metadata_sha256": "feea69eea74b7b1dce0103af617a135c8a284217446ccc0abfdfb789d4e0250c"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-13d",
+    "metadata_sha256": "5c0095bd5945a2f74af3c7a1464d30282d1ae6b638267cd13ae89666d0d0b730"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-14d",
+    "metadata_sha256": "91bbcb126173ff34adbcd8c91f102bca90984debd779fae384fc3c25ce05fbd6"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-15d",
+    "metadata_sha256": "b0465291e121a7fd1ff0fd07ffdf81fff09f0718aec180471fc3e30bf18bad68"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-16d",
+    "metadata_sha256": "3e94469e06940a23315213a6dc0ce5149f8aa92f1c7211bff6d09f7ef3083d1e"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-17d",
+    "metadata_sha256": "ce3349a1b9b45a060cdbd54ef2857195813546bd1ba1b5117db8cf3f1290f541"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-18d",
+    "metadata_sha256": "c02d51c10129cca0cfa7f35ca2e6fe41b7e2d4b703cfb295868f7a8b52bda298"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-19d",
+    "metadata_sha256": "2a5801ac3ea3b9b04349a03f29c4a67fd05a81f0f06c2b0bc818168cee26f365"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-20d",
+    "metadata_sha256": "cf0f92af17e804ee1e30ac78de3d35249651346b17190a79c6477985a6e175c8"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-21d",
+    "metadata_sha256": "e14c31560385a07dc96a9d3ac9456da5aaa3e3e870c8ddb257db7b24f2b52055"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-22d",
+    "metadata_sha256": "e2497d6138db5b18e8cc95dc150b25e1f967ea5985e3a6429ad18a1c0fcb90a9"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-23d",
+    "metadata_sha256": "193159defc524e5a10c2d77b396a6867d0e3fa94d932ec675a611115a74cef87"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-24d",
+    "metadata_sha256": "aba9c2acb48d3a24693421a30a6ea3a37e78183ea1fcaf58bb0edda0adfac321"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-25d",
+    "metadata_sha256": "61e99ec8fde7ddb0929630ac90ba349aba1ac67e43fa33e3cd1a835d7403598e"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-26d",
+    "metadata_sha256": "7d3794f6a7e5e5473a72d36d2a2d843c2560b1a8d1553c0925892de408ba6395"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-27d",
+    "metadata_sha256": "75bb8eb513ea823f1aab466e46215ebe82768caa8456d70414d65afd65048a11"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-28d",
+    "metadata_sha256": "a42d3a811d5bd097a2166638a8af1870bf7e7a6bec3045050c4583704fdbdfde"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-29d",
+    "metadata_sha256": "027f5637d2f0b10bd645f0c0660733d80b07885d41a5d89171a5aea5a638895c"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-30d",
+    "metadata_sha256": "d748cea8cd7b037b14cf45582b4cfb62817db25b13d235b2417037573aae68a8"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-31d",
+    "metadata_sha256": "010969e7ebcba1996981ab5e72d8dafbb34f923a7798b36a25e746476b94826d"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-32d",
+    "metadata_sha256": "924b6fc439dcf00cdb66b6824c605dce0d8e570f9a570af6d92b7803f5505b18"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-33d",
+    "metadata_sha256": "3b42f770e57d4a3c206945e547e3449341f5649c5daab0f9c3ef208c24f4bedb"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-34d",
+    "metadata_sha256": "7c976b163a06d6b4475dc79dc166eb9293540f0425f73c0557b5911e2ae55780"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-35d",
+    "metadata_sha256": "13f1f1b74696dde8c3ff3a00001390023ed134d73f5fd8e7f79f9cf0c7a3ec16"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-36d",
+    "metadata_sha256": "d7b0562505465631d43867c24de24b070dc2191b5bda0fd336940af1ff874b0d"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-37d",
+    "metadata_sha256": "e2f4ab02c4f596c2a6dfbae107dc6327c75746a168e52ab0f4774f549462680d"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-38d",
+    "metadata_sha256": "508825c5ca1949ee6427190ccb2bbc803fe5242daaf1efa0cde3671f00d51ad7"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-39d",
+    "metadata_sha256": "c56f6de95511f4fb0b66e90c5073d544af5f357c731e4f1581c54d89eb501863"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-40d",
+    "metadata_sha256": "6c7a5c8a18c012e326bd09ec3215984c109df9c8ec4358b70ecc109e3dc5037f"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-41d",
+    "metadata_sha256": "c331056be01a67a9236245a44262ef78939ef3998e98f103faa40bb7d51de09b"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-42d",
+    "metadata_sha256": "3ff785a55867ac8e601ea54e04c2fd56836131cab0c5755619d8a6b0f29205e5"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-43d",
+    "metadata_sha256": "a4c6fc48cd6397f957a9517c97e1289aaa4ca764646bae3097b4c3cca7d43382"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-44d",
+    "metadata_sha256": "7742410dff4c2437a1c1f214e8cbad8cca26a4660f78e57fde5b07676f72226a"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-45d",
+    "metadata_sha256": "800c07cb9cdbc1edcca9348d3ed9f02331d98e19debd41486cf87985f5f58fca"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-46d",
+    "metadata_sha256": "449f6a93a4dfb8ec03307796b94c92ed12dce46fdf3adb59eb88c6e6a40288dc"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-47d",
+    "metadata_sha256": "159b6d238d7505118f8e687b792889b3cfa4fcb9bc9670e57192013da469c3a9"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-48d",
+    "metadata_sha256": "27eb9ea5fa3b448f25375d7f590ed8209f927dceb27b9be1610045a50ba3ff40"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-49d",
+    "metadata_sha256": "abdba54ee7bad78664996228e98dc47aaf7469b4290182232c6fbd8e8330583b"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-50d",
+    "metadata_sha256": "4fea5d744b7c89bc528f2fe5e9add7174211a10ab259dd6b2db768dde0d99921"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-51d",
+    "metadata_sha256": "bf147460c2ab4d9ce739d460026f7691c92f1b6ce5a5383012e9f60e871cac66"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-52d",
+    "metadata_sha256": "464414cfa8f288d4b3f6f1f4a4373c7de511b127215d36c3b2c86db5ffeb4a08"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-53d",
+    "metadata_sha256": "7162a5df33dfcc1676002fc49c9662d0e22cf0f8056fef56c534bacad79297fd"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-54d",
+    "metadata_sha256": "faad9d16cc1256fe7a0ec3dea395458fda99cde69c84b15e4a5821e7ba8b811b"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-55d",
+    "metadata_sha256": "ec8672917513ca582ab9cacdeb040c9d7725b74869eb1e6d16304a635d56e52c"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-56d",
+    "metadata_sha256": "b8189a3aed945bf315185a649df2df559f33f89098df857a04a834fdbc9394ed"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-57d",
+    "metadata_sha256": "296d3c192cb6407be04290a9f74c99726b6294839d19867185f6cf60153d9801"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-58d",
+    "metadata_sha256": "5107831bd687ec5e418c8d4ca6b26d249e254ee6d5734fd5b8738faed5ea30c8"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-59d",
+    "metadata_sha256": "7c6b3ac4230acdc4c2a040d49ea1bafeab78188535e226d712e16350e856a631"
+  },
+  {
+    "directory": "models/crop-horizons/daec5736ea5fc9b2/champion-60d",
+    "metadata_sha256": "c7ae4b5e560a46358550e0065d96eaecce43a13a2b683593cf92f2e9164975ee"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-2d",
+    "metadata_sha256": "f8d9852d4c06a5fd280fcc579396bbb057b33ddf4a5ac6f5ee0ce1bf552796a3"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-4d",
+    "metadata_sha256": "e18bcf5dc249f42bfba159846aa33aac569801961c9d3d7bff50c8fd78b2d828"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-5d",
+    "metadata_sha256": "3fa4979dffd0bc0ff8da58e6ac5f4baff7994a65afca5786b772e0fb459dfeb7"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-6d",
+    "metadata_sha256": "19165a4053e251ff6df3bb3e3a92a8c1ed4c5e0029e441fa3276481b7305b38e"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-8d",
+    "metadata_sha256": "4a92b36b979d87ff98cd54ee81b00cc492f00d695b7f48becc84e82b89df9b45"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-9d",
+    "metadata_sha256": "3e7d7889b4c7209a0f166413163c4e9cb561229f0a905e71a6cfce4e9e3c93f2"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-10d",
+    "metadata_sha256": "46e5b31be119970725c4a1905cde8c3c5a822d1ff1de581154668f7f43efbc54"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-11d",
+    "metadata_sha256": "d22604771fb695db537f19b4f046100ca1efe19cdc0b1e435d037311a1f7c149"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-12d",
+    "metadata_sha256": "bab403cdaf5d7dc0ef7cbad7933d8c67aeb39f6e11d0c94a98da0c6a1653c903"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-13d",
+    "metadata_sha256": "58b8959d71ce90a2b5c6941b2d680bd59ae47d09100435e72e27c0094e0425ed"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-14d",
+    "metadata_sha256": "e18f273fecb4566cd96130cc18e317d4ec8b6d0dafae7099deb9397ceddf201f"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-15d",
+    "metadata_sha256": "edf05142d498f23d701237f52725d67795c44a83c5e863b98f6a853e35eb8fe6"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-16d",
+    "metadata_sha256": "e9e81af869debde6926f37055a40228169bd840e5ac5d86656a80a62fbf5a68c"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-17d",
+    "metadata_sha256": "36523a64c92cc57dbd4a49900a00c7b208a339043166a61c9763bbd67f303edf"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-18d",
+    "metadata_sha256": "659304d8b1d9231f3639b624bfaabb7d4ab6a6d2b88195489e39e9c481bc087c"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-19d",
+    "metadata_sha256": "40e81cbbe98e339616285c3ea878ea2c7f6c5a59d670ca18db9c62ccc33b88c3"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-20d",
+    "metadata_sha256": "1fc682ec782060e546b18a2fc94389e642bb819dd721888efd26e92264c09e8a"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-21d",
+    "metadata_sha256": "7539dd01b72cdf28a6adf19944a403a2f541fb8f2f9c65f9a19a5d0062ce9fa3"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-22d",
+    "metadata_sha256": "611fd22cd0a237b5625e3a0889ccc27fb4dabd00d1094025f5e084f2ef2acb85"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-23d",
+    "metadata_sha256": "805272de63b93b7f22789f5bdfa74562b936043c84d348cadc649c60dea84914"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-24d",
+    "metadata_sha256": "0b7ae60f179263e5b8be0a13131a04d692918f447a221c27de92117de24091a0"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-25d",
+    "metadata_sha256": "c9edddff07d90e50b11f7ec802f82d61fe60ae20a233bcca3ea26ee546c2df58"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-26d",
+    "metadata_sha256": "2f562f39fc7f7184ad5284fe7e30cfb2f90d6fb339c5f2229da0050ee9dc374d"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-27d",
+    "metadata_sha256": "4e7ab7a5a0b5e69a861ec3078e5f065eb87fd87f903a1f1349bf1943b5fe2f0a"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-28d",
+    "metadata_sha256": "84f1bb921176e19c06649223d41d5ff98f48008867d4ae2849673ca26dd14acc"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-29d",
+    "metadata_sha256": "6854e325e510df0a203faeaf81e37a684a69c66fb83bba99c018c15d68154127"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-30d",
+    "metadata_sha256": "de81cb8e71dfac8a7766bf3206a0c1197872c633e58928b12b1cd9862eef19f2"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-31d",
+    "metadata_sha256": "a9f76976edcaf284231a8983f8f8fb36b20cf221ef5ec9a9e284cb940bac06bc"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-32d",
+    "metadata_sha256": "db9c138a9009589e785403b12eb8925829684d3e60c8f04cdf766951cdd504f7"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-33d",
+    "metadata_sha256": "499332b686719e3f54f0bb82dd346b80e3f7e42f8eb6986a52983da945e5b29b"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-34d",
+    "metadata_sha256": "5ee8b66cf4ecce74adbd5a0ef18d5287d1303b16074cad486695a64eed3af410"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-35d",
+    "metadata_sha256": "c2aa80a5941eef98501a88dabb662b099e8b57461fc04d34a456a841a425f484"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-36d",
+    "metadata_sha256": "d10b9e26490ffb9d088b5c568a66371ba8a4a5888b495c8eedb7ae18ef744c37"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-37d",
+    "metadata_sha256": "5444b4dada415f0129d597a4ad194130241e88564510753b959d4fc5a505bb2b"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-38d",
+    "metadata_sha256": "b5975cac2505ea3873a778bf5f6e35b1a6808dc2bc1720ce8c10f27e6a92d21c"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-39d",
+    "metadata_sha256": "91ab851c7c5621b1ed3b88d80e2577951b903d475022ae20cde246d1c2df9e6c"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-40d",
+    "metadata_sha256": "71cc590085d876df50291a5f219178e429abd9cf6235254236610cafba7dc02a"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-41d",
+    "metadata_sha256": "933c2f4767a6aed7e39cd61e7cf6dceb2f02a43f8fdec95e2984ee3c40b6e428"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-42d",
+    "metadata_sha256": "45160bbd30ee85ef10cc2af94f11a271ac304cecd93df748906a821604b04d2b"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-43d",
+    "metadata_sha256": "9a6994c4d6b34765e5fdc531da63e19965d463da9ffb34724c591a3d1712ea25"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-44d",
+    "metadata_sha256": "46466f9d423d1e7c4c494b46efec98a1b3684fe9e5ab0ea4d6cca3e555cdb366"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-45d",
+    "metadata_sha256": "407dbaafe449695cc6ceeecd87fd26b8abe32f88346966e39119620dc8c061cb"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-46d",
+    "metadata_sha256": "542d4be390471f4342bf31ac23d363cf31370c3623b79f8c3a57f247e8bba5ef"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-47d",
+    "metadata_sha256": "2e6ddcb88ad036c80e93fcb0717184a93508eabbdab03cb99c8e3a2c895a1262"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-48d",
+    "metadata_sha256": "963273bbcab3bc175475b20958750a9c1152068885f4229a088ebc503866baa2"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-49d",
+    "metadata_sha256": "7ba4f153dce9578dcaaf9afa2590f8b7dfe6885baee1d6bf7836dd2c7b9cd862"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-50d",
+    "metadata_sha256": "46f006934e704c9da5073b1387c85ebe736d9ed82592bfe384b8e98a119e1b3f"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-51d",
+    "metadata_sha256": "415249933d9fa48b03797ddd581ae68b8ecda39a7c8a585f4c664c5beccbccce"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-52d",
+    "metadata_sha256": "c9c3da33fd8dc918058d15f55f3b0c8c5d99ef0af0fe611962cd9641e6bd4cf2"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-53d",
+    "metadata_sha256": "dab1deb8e8f80f59fbefd0788e04496fa563d52e7498b5c7e0a12dd3605902b7"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-54d",
+    "metadata_sha256": "7ae35c00754e8b98f12506d805d494cf4b7ef87415948a13b43f44a2f5cd4c8b"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-55d",
+    "metadata_sha256": "8e29e6403d919c2723738dacec689a47683177e9eb0f3aabbe45be3b60e497d6"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-56d",
+    "metadata_sha256": "1fcb4e26fdcc90f0e28d45d5c0f9c858a7077b0c754d21c56cd8752da92af385"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-57d",
+    "metadata_sha256": "8b8876c6f10c98a2164edb1bc0aef05d918f362b6864f51a67b4d2daa57b1428"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-58d",
+    "metadata_sha256": "a73b3560ea4e81e0db9cb207511c1cea31255b15cfa8a6799c51d0c4e7d583a6"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-59d",
+    "metadata_sha256": "1ee1bf524ec90f2afcf258d8b97ef84cd664fb9ff9e045eaa5985704cd6f82ce"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-60d",
+    "metadata_sha256": "efa97616f1a9d469eef88c67246cc12bc95cd86cede30909d6d50f372f76170c"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-61d",
+    "metadata_sha256": "1c31fbee396e091ec400b9d17245f9c610d053760f56a21f81c88cd996593fb3"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-62d",
+    "metadata_sha256": "9551efbae87a8ddfb5be80abbcb0a16da8174685b7ab1c934c4b89b6004f60e0"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-63d",
+    "metadata_sha256": "6a6aff44b3e8f747774b0def5876bd1293ea22378449f1bd17ba789a894610a4"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-64d",
+    "metadata_sha256": "55d3a3d6d1b4abd07b1cb883aacd4504aba8218e5f31703cb781682cf1f85c29"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-65d",
+    "metadata_sha256": "9dfb37593c1b3c8842af5a374808d4c2f48e31d93efb01724d92c6b620e0b405"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-66d",
+    "metadata_sha256": "c8d6a3b6981b729a383127fc783bf472179ec0061d4263b5b61e7e7b49e40614"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-67d",
+    "metadata_sha256": "4233039d7efbce6d662a1b4736a641216df11d588a83e524f383614d84ff3c42"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-68d",
+    "metadata_sha256": "8d6a20b33d33f20fcf6863f540658bac4f536eca2171e43a07302c15d4884107"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-69d",
+    "metadata_sha256": "6e0883357ddff769f7312ef9fcadf678ca4fbe903854912d216d885c9270a94a"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-70d",
+    "metadata_sha256": "684505ee59a3a0223a81c19bbe0a5f39d3e22500690eac3fc9aaf7706909a68a"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-71d",
+    "metadata_sha256": "c94687cea45271f8edf9fbdd195d06c991cc9d74e2280298ef1519e20826d930"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-72d",
+    "metadata_sha256": "5eea12fd396d7566713f50e7315900d9e923e639889e2ea044a5e030eb66b004"
+  },
+  {
+    "directory": "models/crop-horizons/b3aab5538405cf28/champion-73d",
+    "metadata_sha256": "c9b84d233d1564b196f0f20a9feaa9d1e667921c8b20eabfe1b6fb8d405c3f9d"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-2d",
+    "metadata_sha256": "78809bc3fbd9a0f0ca75c64f46d9a56433fb1c8555f0c032037810ac481bc7d3"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-4d",
+    "metadata_sha256": "02d1e65d932b4ad3b361cc46af4f410e8dc17f94f5f7e7d1a6ca0b6988a19d99"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-5d",
+    "metadata_sha256": "98bffc143fa69c8c3b493c212212c2997755bc0f79976d47679a45848a7248be"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-6d",
+    "metadata_sha256": "5379bb68cfda2162f363127370d5a42962683a528560f797bb428676455b715d"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-8d",
+    "metadata_sha256": "1055d78de0760bec84a6252e97662ff8ac014c3771a8515b46be04ead5531a4e"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-9d",
+    "metadata_sha256": "ffa5efea3311a71ab5a95c2edae28156706b147acbe14d5c72a6e1a58c971985"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-10d",
+    "metadata_sha256": "38143f258ed351cec00eb4f004607b71303bfe49154396e8b0c0fa459faed203"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-11d",
+    "metadata_sha256": "439e65102f86536303220f162ec1afef8762990cca3b8663e82303cb760a62cb"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-12d",
+    "metadata_sha256": "2f495d661847fd7b6610d91242fb31032e6fb9c46c9e5813aed235707dfcd38e"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-13d",
+    "metadata_sha256": "03e1d12a8a81737e10bb868a780e1f442d9da0f57b3ecc1b1c3a87aa67be3f70"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-14d",
+    "metadata_sha256": "14fcbb260e0cbc5676d1f597309fead5f1e5d34f9f5a3d418b8ab9a3a909f3ae"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-15d",
+    "metadata_sha256": "b4d9ab4dc18fe08fe05b8835137668c1e1253b09b76d1cb1614ffa58e22fe485"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-16d",
+    "metadata_sha256": "d2ca439263e54a0cff351f1f3d067f6c0d65e6cd022da2562f2c7c549df2c3f9"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-17d",
+    "metadata_sha256": "742393c8f13b0317a924e7df7517934d8150f7606f683f87dab10bf2814ac73f"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-18d",
+    "metadata_sha256": "666c473429734690b38008e55acd1c1cf7ffd215a4d85319c25b2617aa83ba26"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-19d",
+    "metadata_sha256": "cf680adac4c64732594c3b0d337ca6430e541434ffcfb607f5a9bc893a42aaf7"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-20d",
+    "metadata_sha256": "212e981cd1658c1c78dce6833a066e7eb742e23588adca1a1308988af24617b7"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-21d",
+    "metadata_sha256": "afd1945505e415afe9706857e56812295af46afc0a41fa561d369250c7b02977"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-22d",
+    "metadata_sha256": "9c41e6375c5568e23653c4a40b244f933613bf2504fcd92855dc92f4a333f91c"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-23d",
+    "metadata_sha256": "34b581a6427df17a837b6f7feb0d4c471bda2ed6d337a12f4c1b0c7eafdf3c73"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-24d",
+    "metadata_sha256": "0055a68542fc6a45f869222effcb7bc6175ae1ed2feeff7a7b8fe9fecbbc8be2"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-25d",
+    "metadata_sha256": "72dfffd98eaa56693c1ac644a97e789a2f5100ad358947e7ab0c800702b40c7c"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-26d",
+    "metadata_sha256": "20d599de9e1184282d14964557875bf0b055396639104e67c55e4b89d08cffe1"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-27d",
+    "metadata_sha256": "2a87013bea88c0db083001d88cb92ff0fdd8137a800412a3051de3b122b2a896"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-28d",
+    "metadata_sha256": "28282840abf7a23e8703ce8048a926bd2b728b5b3959ff0c4b4773c9b8bc3849"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-29d",
+    "metadata_sha256": "c1b4ddd3fdf7d3aa169158a88768c749fd498d7684732380ce1b34a3253d03a3"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-30d",
+    "metadata_sha256": "79c18fdc4b8c54630e795e90116f3c208e0a36ffcce3cde4d6fcdd654ea6bbe8"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-31d",
+    "metadata_sha256": "1a77eee5637b4fe295a643a1c0c32ee7a9c7a891e9e16e9469948f6f7ba40d6a"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-32d",
+    "metadata_sha256": "8f13f33fe0a951cdfd5286f2e29a5025dfa3a9b354735b4530d84be3c92eb961"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-33d",
+    "metadata_sha256": "c99e1c70b5677a2d243b6839f6dcb7d6aea6c8a04afcb51385686207be9399f3"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-34d",
+    "metadata_sha256": "1f64a52a37e5792089299534aba01276f89965a0218bda5705620d9eeef4b98d"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-35d",
+    "metadata_sha256": "cfeefb48272df242d69302ac66298c29d824ed86e820251dfacb159783395b92"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-36d",
+    "metadata_sha256": "017ce69a42a21c70a717b68fe069396beadf817c9c8c4e76f0ff888577d0588f"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-37d",
+    "metadata_sha256": "9f1a87ad71c4452ea3f7998c3e010c375420af47c7615ba2d0d11f354fdba29a"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-38d",
+    "metadata_sha256": "9103ec9d1a987477371dc5d502ed9756d4a522f6cf21d674d762002d6ae94299"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-39d",
+    "metadata_sha256": "d0e50ba270fafaf5971ce335c86f0fecf1da7e317bbb7e301699340c212de601"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-40d",
+    "metadata_sha256": "b7a2801eb2b35d29a9f9997ad1a1331312502f10d6abaf8bab530f38bdd95f17"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-41d",
+    "metadata_sha256": "352fee22748b30734509440a29ec11319cdd39ae1fb761f5ab7bd87d6a2cd344"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-42d",
+    "metadata_sha256": "979eb4cb6b6e9ccde781fecefdd9637df29ef9d97ed4e0b8b5e332dc47114e52"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-43d",
+    "metadata_sha256": "8007dd1326cd28a3aa61be6844d38df9023505ae0e3d534f32b3456d1322ddce"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-44d",
+    "metadata_sha256": "97ffa86ff7b4d2cde73e545eda411b21686da312d8afc6286a111ab7d97ed12a"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-45d",
+    "metadata_sha256": "794f2d08b50c1211e673e475fa55dbe1510855b9f4f4cdcda77ca468e8b7f6c8"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-46d",
+    "metadata_sha256": "3df46bfefe3d419a130df0b7d55268074dd1d1669cbb40086cc2fc3ec84b362c"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-47d",
+    "metadata_sha256": "86666dab7133a2a3f1224ce2649aa5683acafcd58f9e9a3ea039cab7e7c4b43e"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-48d",
+    "metadata_sha256": "4064b2c93b603743429d81a7fa648117e357865327c024e65bcd9813ae862b20"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-49d",
+    "metadata_sha256": "260d3ead3171c88ee6f98bf83c7af7baac279a742a8c7f76e315da07348804b0"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-50d",
+    "metadata_sha256": "8e4a85664624f592f41e3252c44dc82c53941eae9f3465f2c85e305be448d493"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-51d",
+    "metadata_sha256": "e8e2a3b7a70d931ce040a8be1bcc0db479b6aa32cafa606e4bfa3689d832c6d5"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-52d",
+    "metadata_sha256": "e7a7314f5a01cd707846b066ae09a6e83db69d4882aa08778b18e1ad7c0e5bac"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-53d",
+    "metadata_sha256": "7f7c429bf425474d02e08699f8d19ed5709d1364bd2a250f570b2ffa8203b997"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-54d",
+    "metadata_sha256": "abe977b5976451f4d018756176cd99aa30bcd078d71c793991beb4e6bc7e6d89"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-55d",
+    "metadata_sha256": "efd8535a238414e6bf33e13354d26f6482379717f7f36beccfafa6217c0ad73b"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-56d",
+    "metadata_sha256": "e526a30a81e971641c7b1e527d2e97fa7cb1f00450ef8bd973230311ac521cd9"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-57d",
+    "metadata_sha256": "74d33005945e857adafc32a708d974570882948c2cc386510ec7dff0d1934fea"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-58d",
+    "metadata_sha256": "acc9d5545e8eba7bf8ced3533ab730e57d81aa73ac9004c35b87edc983a0ef64"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-59d",
+    "metadata_sha256": "6e6a291cfeeaadd9230d3c308474eb93dee022821ec30be5a16d9cc88ff9ead2"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-60d",
+    "metadata_sha256": "c5c326ad9d0c656bd62f09b07f3223901bc30ccc81254af920205cfc76a428ab"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-61d",
+    "metadata_sha256": "f3d8961b2f8d6c768befd86285c4c37f7df0029ee7a8a04655d34834a03eedb7"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-62d",
+    "metadata_sha256": "1589ad9955a17d7efe6058628a6b62d57df3bee02dac90c85c0d90bb4a07efd6"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-63d",
+    "metadata_sha256": "c295207bcf99e11e83a7c2e8eeda34e6b11bb49b11ec798fc61d88c8b26a6ec2"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-64d",
+    "metadata_sha256": "851366d7ab94fcdd9ff90d6e1f0e8d0dad65b8c9a0d316ab44cd3c879e76b031"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-65d",
+    "metadata_sha256": "fa46c45e36682af516e3c323bc08118472372213f3238466fdda91bb13750aa6"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-66d",
+    "metadata_sha256": "85744af1b097296c91fceb5df9e1e76055dc41e3b581aa0cd3ab79060209ae46"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-67d",
+    "metadata_sha256": "c9513fe135b50a22f84cb44ef1d25850a744af03e740af94566d771eb42364ee"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-68d",
+    "metadata_sha256": "69586b36f80dc14cc010f45d961ffe8dc7e1586191386e0d88c34afa96b1eb0b"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-69d",
+    "metadata_sha256": "25d89c711fb6a69f8440bcc55d95c2de5ba358d402f4886cf44139f1e364ae1d"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-70d",
+    "metadata_sha256": "0fd3952597246361d4d74661f476a92af23317a10624bfb79fba9f3225e6d4f8"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-71d",
+    "metadata_sha256": "10b331ac68ef25c98cb4f650efe4700cc7e3c69a909884f2614ae0d9885fb91a"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-72d",
+    "metadata_sha256": "48584f9b4cc468836954edd3d8d45e5336d5782c2235c39d089dd63d04e3ca60"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-73d",
+    "metadata_sha256": "56e865b8963b3a444b6545c0113bb26baf3cfbaa39429334af607bf09ae408a1"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-74d",
+    "metadata_sha256": "5bd031b90a6bc4866da9daa0b43d00f5dd6a8c0b53791aefa3a94b529945e68e"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-75d",
+    "metadata_sha256": "104f8849939619e2a93074312a2a639d90876e7e752b7ccba1c8268c2bd6d69f"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-76d",
+    "metadata_sha256": "162221d62c25abc475057be55e6f9c7547cdb6a9ab4d31ee4754736b7680c8d2"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-77d",
+    "metadata_sha256": "b871f4a9848b8340a0b30765106491b7eb9d4deb150dc2fbd8d754ae9ad61dad"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-78d",
+    "metadata_sha256": "3c791f4c049153ff15172c3130d0a9d63236b3aecd9b00af5561edde076d0d18"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-79d",
+    "metadata_sha256": "b9c6673ca7f0878eefb822324543bb06b4ef9e0e2b4b61e0697989c6fb67ea1f"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-80d",
+    "metadata_sha256": "40cb24d83b013874052f960da5a0e3f41c91167c30367baf2caca67a7ac5b8d2"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-81d",
+    "metadata_sha256": "8e5740092dab36b74cb592203883b791cce014a8baf735f51bddddfe415613ea"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-82d",
+    "metadata_sha256": "a69e7e5b56a342722279042c55ebb46daf629b47d1cee100c6247918cd0b2558"
+  },
+  {
+    "directory": "models/crop-horizons/15aa3146d8297137/champion-83d",
+    "metadata_sha256": "0ba3f9833e05e28d86243f7df75b1f0d704b8dcb5c7b16dbe7777ec66fa48812"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-2d",
+    "metadata_sha256": "8c1efa47ddc9759533d44cade40eee442fb719f90d33650db0258f215504e13f"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-4d",
+    "metadata_sha256": "c48a91ac6535e31e05263110738957d77248a5585d54fb5db8bbc861893f77ae"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-5d",
+    "metadata_sha256": "ec90eb588505e0e59571f4fad126f51aae5c4218cd53fd5ae0c78a8f0a84e495"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-6d",
+    "metadata_sha256": "c5bf223eae4a923ea80ba3be45d0e2ba5f414d72e7af1d4dc0bf6b13277581ac"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-8d",
+    "metadata_sha256": "9f4f8fc231c45ba66311c9b6a52b4c77d36a9e6b0c2b200e14578bac5d7cbf8c"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-9d",
+    "metadata_sha256": "30635a05010e515a664b508ff4036603e3f99f0001dafdf63453d08af10ea3f7"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-10d",
+    "metadata_sha256": "88b04746efbe859896f8ec8a2567635183da3d93f8760e391d059544e3d61476"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-11d",
+    "metadata_sha256": "18cbd52912837be456613b6464d226b5c1b88247b545acf66b1d991883b0e334"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-12d",
+    "metadata_sha256": "5ab50384452883749ef811eb064b8121e8c5c5fdbfa7402def8385bfb35310bf"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-13d",
+    "metadata_sha256": "20def4bee06508c38522761e4baf02b712b540c3131da59128f80609d0fdbd33"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-14d",
+    "metadata_sha256": "be342dbe1b37dbab80f506371e579479252d92c6a44a643559e816f450ee1920"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-15d",
+    "metadata_sha256": "2e0c091defbbbe8e17666ca4e2f1cbcab848033e205add9dd2006e92b573fe5a"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-16d",
+    "metadata_sha256": "afecfcc125bb046baa5d9e0452fa09ebb204370c795f59a33a6c9be2b4dd7ef1"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-17d",
+    "metadata_sha256": "282351af6cfcc2b8ed5dc22b1325d3931c1d7589bf230949c37c535a638699d9"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-18d",
+    "metadata_sha256": "52f8bf978f0e72231b8d07eb192a97e71247c2c2ffba68550d59e75a12c72fa4"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-19d",
+    "metadata_sha256": "486507e7a62b0b0f67ad38657f27d31ff972f657892806278b74b58f387ec75a"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-20d",
+    "metadata_sha256": "23f4f07edb5e50d411c58cebaa16fcc877c728a78d04ede7cfe3663bc30b05ec"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-21d",
+    "metadata_sha256": "1f197ef22e2bd728cb4c935156c45de2b5785b95a898cc46000d5d31590f7682"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-22d",
+    "metadata_sha256": "149416df99a84b401b2163b3a85d7702b0ee88e4633d80824dcb37162ccff2ef"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-23d",
+    "metadata_sha256": "14f65a9492c049cf9644fa132dc646dbc0d05ee448c82999ba332b338d746f06"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-24d",
+    "metadata_sha256": "3bddc808899afbf992cdf1ad45deb6f198ce18efed81892dcfad63b67bd64f0b"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-25d",
+    "metadata_sha256": "f3ad3f614ce84e42e21d24fe7c8b78ec77e48b17e1f28786f09689e1d3ac72f2"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-26d",
+    "metadata_sha256": "69f60191bcd64abc6e1ef6d0299ef24cbbb649417fd54b0b0896eac0a411ca38"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-27d",
+    "metadata_sha256": "98fe1c585ad34bd3ebf34f278e4c51c44897d550cf0f350e3827e3c322c74728"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-28d",
+    "metadata_sha256": "d9f12b723a4255fe5646da1fee7720d3e99cff19288e8370c85373fbf3a951ea"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-29d",
+    "metadata_sha256": "49e643301afb6b14b91474138f665d884197d9b4aaf2c250f2ccc43ac8519799"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-30d",
+    "metadata_sha256": "1b960b2a78dd02f20b4e64a139ef99e6a2c194279aeee3d0357c9a71f64a2613"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-31d",
+    "metadata_sha256": "e9a3e71830ca432e8a7b47eb077292e6c25fa308b84a1b9cff2a9d3e539df8f2"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-32d",
+    "metadata_sha256": "021eeb06384d11c101456b038db665030d07b84b52e699bbd259151dc774e1b9"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-33d",
+    "metadata_sha256": "4d1d924f678231c5289e7272e07dfe70e162e50075ac258f9e996697c1956fb9"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-34d",
+    "metadata_sha256": "724df74dc5841b8b03bdd659bfa73d340240fd6b1c6050fbcdcd48e96b8d2866"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-35d",
+    "metadata_sha256": "091bc9d1cf66344b46e7b0ab7cedeeebfe64aacd86e68ca833f0a3273874d614"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-36d",
+    "metadata_sha256": "e119960b96215e4242517c19195dd588ab58b53298072a162d7633ed9245c8d7"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-37d",
+    "metadata_sha256": "e96910318b764c3354b9e0c846be19e02385d87b01be0c1c58e5fa2e86eae8ca"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-38d",
+    "metadata_sha256": "1da8980f4a35d07204d809fc126d8f9e21e0eef8c6a9cb78eaf2166bf851d8de"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-39d",
+    "metadata_sha256": "d20f3bd792389e9167a6311f28e5ba92525d47d2458c4b0d6265adeb2cf08447"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-40d",
+    "metadata_sha256": "3e1a0d4effa9c84bf5b510910d6890b6a357e316a38ee8fc8f9f4c7f4ad0d381"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-41d",
+    "metadata_sha256": "98dc553ebacc88d44b05ec59abd7e25f76331844f08a200561315b18b1210858"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-42d",
+    "metadata_sha256": "a3b94d385ff74691ccc58a1121879da8b6d0c7906aac4e837aa24d4df2722c47"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-43d",
+    "metadata_sha256": "b13a281dbad9f2090555a363fd7af879d5b8e343db068fe0d6c312b88b46224d"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-44d",
+    "metadata_sha256": "777fc994d640116d764297f9f35c71253a55e0ee8ef449e39c22ff112c043205"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-45d",
+    "metadata_sha256": "1dd5fdd24374942ba7b3ec5159c078ebc579f76717c16cfbe208b2730338c15b"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-46d",
+    "metadata_sha256": "908824ec3c02b20f045083fe978d4a4895d57ecb99c92c8d6c99ea65d51372e0"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-47d",
+    "metadata_sha256": "6145b92e0628a59904d9357078240ab6498dd55acb75982106749c3ccfbef5ff"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-48d",
+    "metadata_sha256": "b4057168befe4ab8de4fb4733e4301297c1938bdd8553894f41b6ad188a80186"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-49d",
+    "metadata_sha256": "d2c66cc86cb2c1360f38ee946d79220adeb4af5f78ce9e66608c5c7568c503fe"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-50d",
+    "metadata_sha256": "669d9d1f84f93bb11f50058b660148a99cbfa342fc58a1cd256a6b99b0874e7b"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-51d",
+    "metadata_sha256": "7abd2214c4a59812c2636871efa835c84acea481783274566982372b1f77201b"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-52d",
+    "metadata_sha256": "255ab6894c161539a078894a6c1e6d47116fa527469d7892dee5c1264a557c47"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-53d",
+    "metadata_sha256": "1584e4922d73b027fdb359d26f42ed5a8d631df6594ce61624aecebf7bac1428"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-54d",
+    "metadata_sha256": "7c75d06bfb39620b79fd18c5631ea98378f89b7b411d5b18c0a491274a9104d1"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-55d",
+    "metadata_sha256": "a94ff5ca188287f8812c2bc2537a53db5826dfd6a2c4742458a0eaaf71af0703"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-56d",
+    "metadata_sha256": "037dae975a1a86e847030f193b29bf760616a83e9b92c959c2e098099f0fe7bd"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-57d",
+    "metadata_sha256": "930e466edc60b6a9f8478c87f4208d0bd51d5e71bee73759b620160ba71ddcf7"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-58d",
+    "metadata_sha256": "4fd2d676f085e1728823028fe6cf5c9b464dffbb78b2d86f7ae947ac864ef36d"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-59d",
+    "metadata_sha256": "130616dcad65040b21214f1d9f169eb0f8bbe3f352864280bc3a8936b04e5f2f"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-60d",
+    "metadata_sha256": "cbeaf333bccadd4411f180c1f86210d276cb8e6868e32b568e97cec3f93f1d5e"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-61d",
+    "metadata_sha256": "7db166b417b3451e5e8723f1c642e733bfc5f3ea44e3d905250107a5e3e12dd1"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-62d",
+    "metadata_sha256": "8955a3f15d360880167928079cca0e4fef99935bdb279fa1b74dfd687de85b15"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-63d",
+    "metadata_sha256": "815f3e453e2d5ddc001212916af892f5a345753fe1b3dfa1a8b855dbb33cde7a"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-64d",
+    "metadata_sha256": "db0fb275535535365afe3b0597c4f290bad4a427873f27f334cf099d139a1deb"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-65d",
+    "metadata_sha256": "017fcc4c1fd3dd68c075bbc1de01c6d8d3fa2e607d9c65f9ae5748fb00a479a6"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-66d",
+    "metadata_sha256": "3ae86328295d236d9a2f14fcbb9ad6ad911ae49a12ce57d6c17db54795800d2b"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-67d",
+    "metadata_sha256": "47a3502096ac3574f10ca32b9c8bf73259cd82aa018f89da7278dbcd160f7ff7"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-68d",
+    "metadata_sha256": "80b49afdd80e50dbc04dd4da3b3c9f4fc1d86ef7ec9d65fc70e27f0d12c1f30f"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-69d",
+    "metadata_sha256": "3ef6b30688c2216684cebc2108e12641862c534156b4eced3651c9dbcbf444fb"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-70d",
+    "metadata_sha256": "26a811674061262e49f8665d22d64b8c6e3a5ccc78dc2a00e769b8553ab0d2c7"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-71d",
+    "metadata_sha256": "eed125884a3943d0ddeb2b3a97e1bf48d26af5a1af7881ddedf32ca0be76aba9"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-72d",
+    "metadata_sha256": "c6d0cf9ca9c7c9af25dbddda5738bf7cbffd3253af79227e94f879e4407ae0e1"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-73d",
+    "metadata_sha256": "501dc289e4e49665c57658ca5dac91953aec8c23e23461a864ff4a219d24a6a3"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-74d",
+    "metadata_sha256": "306e1b52eb52f442c5b32f88d99e7f8abcb7b53bbe6d7036e10b1552b28166af"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-75d",
+    "metadata_sha256": "92b1c570ec0a916d4e1582cdd110641786fa16e635da5f8d160056720c6a15fc"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-76d",
+    "metadata_sha256": "f5256b3e39781ddae1efe728e2cd707c506e45588109aaf24cd2cc6e702b7007"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-77d",
+    "metadata_sha256": "ba84cc9a6e580c826f9bcd12cf80a6d36f97afd306b2b1112cb02dc25b4fba80"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-78d",
+    "metadata_sha256": "a39b037fca74242785e42d383f98c87dfc4349d3fcc012b74d2a1e2b4f570750"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-79d",
+    "metadata_sha256": "e0e218cdd8c0acc9bf9ea8e280e039393e34b3576aa7b2593b463569ce290399"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-80d",
+    "metadata_sha256": "c2e14b332c36dd3cec3f0ff190ebbbf04344537ad912371e785287d6f0b0115e"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-81d",
+    "metadata_sha256": "9d853f1269cca7d8bca08cfca69e1f09c59b3a84100714e949e7273c3e0a89ac"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-82d",
+    "metadata_sha256": "4403f8c0675671c081176a6f0a1886d945ae5361d04603e805ea954961601e9b"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-83d",
+    "metadata_sha256": "263267ae2f45170fbbe5b2790d510b4e0f3cc04ad14039f61981f869c2e0c971"
+  },
+  {
+    "directory": "models/crop-horizons/0990452219d57b9a/champion-84d",
+    "metadata_sha256": "0a8d32af9c5ac54f856be16f95d8d249d4bc097bc0167838e4ba5e9f1b108cf3"
   }
 ]

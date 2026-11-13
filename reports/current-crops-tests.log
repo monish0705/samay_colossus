@@ -1,0 +1,15 @@
+......                                                                   [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\\Users\\Suhan\\OneDrive\\\u6587\u4ef6\\ChatGPT\\agritech\\samay-sub2\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 6 durations =============================
+9.82s call     tests/test_current_crops.py::test_recent_cv_uses_only_past_training_labels_and_disjoint_validation_targets
+1.86s call     tests/test_current_crops.py::test_recent_short_span_allows_baselines_and_blocks_learned_models
+1.31s call     tests/test_current_crops.py::test_all_four_current_crops_have_hash_pinned_real_forecasts_and_stale_fallbacks
+0.11s setup    tests/test_current_crops.py::test_verified_history_deduplicates_sources_before_pagination
+0.04s call     tests/test_current_crops.py::test_verified_history_deduplicates_sources_before_pagination
+
+(1 durations < 0.005s hidden.  Use -vv to show these durations.)
+6 passed, 1 warning in 14.77s

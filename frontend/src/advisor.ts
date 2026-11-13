@@ -30,6 +30,15 @@ export interface AdvisorValues {
   acknowledged: boolean;
   example: boolean;
   scenarioPrice?: string;
+  conditionalAnalysis: boolean;
+  compareDates: boolean;
+  downsidePercent: string;
+  adversePercent: string;
+  upsidePercent: string;
+  longReference: 'require_user_price' | 'flat_reference' | 'saved_forecast';
+  storageExposure: 'protected' | 'outdoor' | 'unknown';
+  rainStop: boolean;
+  rainThreshold: string;
 }
 
 export const blankAdvisor: AdvisorValues = {
@@ -59,6 +68,15 @@ export const blankAdvisor: AdvisorValues = {
   adverse: '0',
   acknowledged: false,
   example: false,
+  conditionalAnalysis: true,
+  compareDates: true,
+  downsidePercent: '10',
+  adversePercent: '20',
+  upsidePercent: '10',
+  longReference: 'saved_forecast',
+  storageExposure: 'unknown',
+  rainStop: false,
+  rainThreshold: '20',
 };
 
 export const exampleAdvisor: AdvisorValues = {
@@ -192,6 +210,14 @@ export function validateAdvisor(v: AdvisorValues, commodity: string = 'Tomato'):
   }
 
   if (v.scenarioPrice && (!amount.safeParse(v.scenarioPrice).success || Number(effective.adverse) > Number(v.scenarioPrice))) errors.scenarioPrice = 'Enter a nonnegative scenario price at least as large as the adverse price.';
+  if (v.conditionalAnalysis) {
+    for (const key of ['downsidePercent', 'adversePercent', 'upsidePercent'] as const) {
+      if (!amount.safeParse(v[key]).success || Number(v[key]) > 100) errors[key] = 'Use a scenario sensitivity from 0 to 100%.';
+    }
+    if (Number(v.adversePercent) < Number(v.downsidePercent)) errors.adversePercent = 'The adverse drop must be at least the lower-scenario drop.';
+    if (Number(effective.capacity) > 0 && Number(effective.days) > 7 && !v.scenarioPrice && v.longReference === 'require_user_price') errors.scenarioPrice = 'Enter a future buyer quote or choose a flat-reference scenario for this longer date.';
+    if (v.rainStop && (v.storageExposure !== 'outdoor' || !amount.safeParse(v.rainThreshold).success || Number(v.rainThreshold) <= 0 || Number(v.rainThreshold) > 1000)) errors.rainThreshold = 'For outdoor rain blocking, enter a rainfall threshold above 0 and at most 1000 mm.';
+  }
 
   for (const key of ['quantity', 'capacity', 'increment', 'minimumLot', 'step'] as const) {
     if (effective[key] && !/^\d+(\.\d{1,3})?$/.test(effective[key])) {
@@ -207,6 +233,12 @@ export function validateAdvisor(v: AdvisorValues, commodity: string = 'Tomato'):
     }
   }
   return errors;
+}
+
+export function holdingDates(v: AdvisorValues, commodity: string): number[] {
+  const crop = CROP_SCOPES[commodity] || CROP_SCOPES.Tomato;
+  const chosen = Number(v.days || crop.defaultDays);
+  return v.conditionalAnalysis && v.compareDates ? [...new Set([1,3,7,chosen])].filter(d => d <= Math.min(Number(v.limit),crop.maxDays)) : [chosen];
 }
 
 export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDate?: string | null): RecommendInput {
@@ -226,10 +258,12 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
     assumptions: notes,
   };
   const capacity = Number(effectiveValues.capacity || '0');
-  const holding = capacity > 0 ? [{
-    days: Number(effectiveValues.days || crop.defaultDays),
-    daily_loss_fractions: Array(Number(effectiveValues.days || crop.defaultDays)).fill(percent(effectiveValues.loss || crop.dailyLossPercent)),
-    daily_storage_inr_per_quintal: Array(Number(effectiveValues.days || crop.defaultDays)).fill(effectiveValues.storage || crop.dailyStorageRate),
+  const selectedDays = Number(effectiveValues.days || crop.defaultDays);
+  const dates = holdingDates(effectiveValues,scope.commodity);
+  const holding = capacity > 0 ? dates.map(days => ({
+    days,
+    daily_loss_fractions: Array(days).fill(percent(effectiveValues.loss || crop.dailyLossPercent)),
+    daily_storage_inr_per_quintal: Array(days).fill(effectiveValues.storage || crop.dailyStorageRate),
     fixed_storage_inr: effectiveValues.storageFixed || '0',
     storage_payment: effectiveValues.payment,
     future_sale_costs: costs,
@@ -238,8 +272,8 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
     price_basis_assumption: notes,
     adverse_inr_per_quintal: effectiveValues.adverse || '0',
     adverse_assumption: 'Farmer-entered stress price, not a predicted quantile',
-    ...(effectiveValues.scenarioPrice ? { scenario_price_inr_per_quintal: effectiveValues.scenarioPrice } : {})
-  }] : [];
+    ...(effectiveValues.scenarioPrice && days === selectedDays ? { scenario_price_inr_per_quintal: effectiveValues.scenarioPrice } : {})
+  })) : [];
 
   return {
     ...scope,
@@ -262,6 +296,12 @@ export function buildRecommendation(v: AdvisorValues, scope: Scope, historicalDa
     },
     today_sale_costs: costs,
     holding_options: holding,
+    ...(effectiveValues.conditionalAnalysis ? { decision_policy: {
+      downside_fraction: percent(effectiveValues.downsidePercent), adverse_fraction: percent(effectiveValues.adversePercent), upside_fraction: percent(effectiveValues.upsidePercent),
+      assumption_source: 'Farmer-reviewed lower/adverse/upper sensitivity percentages; not prediction intervals or learned weather/news effects',
+      long_horizon_mode: effectiveValues.longReference, storage_exposure: effectiveValues.storageExposure,
+      block_holding_on_rain_risk: effectiveValues.rainStop && effectiveValues.storageExposure === 'outdoor', rainfall_stop_threshold_mm: effectiveValues.rainThreshold,
+    } } : {}),
   };
 }
 

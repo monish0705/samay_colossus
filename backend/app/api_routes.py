@@ -3,7 +3,7 @@ from typing import Annotated
 from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, Body, Depends, Query, Request, Response
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, ValidationError
 from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
@@ -12,6 +12,7 @@ from app.api_schemas import (
     DataStatus,
     ErrorEnvelope,
     HistoricalEvaluation,
+    HorizonAvailability,
     ModelsStatus,
     PredictionResponse,
     PredictRequest,
@@ -19,6 +20,7 @@ from app.api_schemas import (
     RecommendRequest,
 )
 from app.config import get_settings
+from app.market_context import MarketContext, read_context
 from app.models import Commodity, ImportBatch, MandiObservation, Market
 from app.prices import PriceResponse, get_session
 
@@ -39,6 +41,16 @@ def get_clock():
     if replay is not None:
         return datetime(replay.year, replay.month, replay.day, 12, tzinfo=ZoneInfo("Asia/Kolkata"))
     return datetime.now(UTC)
+
+
+@router.get("/context",response_model=MarketContext,tags=["decision context"])
+def market_context(market:str,commodity:str,days:int=Query(7,ge=1,le=730),now:datetime=Depends(get_clock)):
+    from app.ingestion import commodity_name, market_name
+    try:
+        canonical_market,canonical_crop=market_name(market),commodity_name(commodity)
+    except ValueError as exc:
+        raise services.ServiceProblem(422,"unsupported_series","Unsupported market or crop") from exc
+    return read_context(canonical_market,canonical_crop,now,days)
 
 
 class CommodityResponse(BaseModel):
@@ -70,7 +82,7 @@ def latest(variety: str, grade: str, market: str = "Kolar APMC", commodity: str 
     today = now.astimezone(ZoneInfo("Asia/Kolkata")).date()
     row = session.execute(select(MandiObservation, Market, Commodity, ImportBatch).join(Market, MandiObservation.market_id == Market.id).join(Commodity, MandiObservation.commodity_id == Commodity.id).join(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(
         MandiObservation.data_kind.in_(("official", "secondary")), ImportBatch.data_kind == MandiObservation.data_kind, Market.name == query.market, Market.state == "Karnataka", Commodity.name == query.commodity,
-        MandiObservation.variety == query.variety, MandiObservation.grade == query.grade, MandiObservation.observed_on <= today, ImportBatch.fetched_at <= now).order_by(MandiObservation.observed_on.desc(), MandiObservation.id.desc()).limit(1)).first()
+        MandiObservation.variety == query.variety, MandiObservation.grade == query.grade, MandiObservation.observed_on <= today, ImportBatch.fetched_at <= now).order_by(MandiObservation.observed_on.desc(), ImportBatch.fetched_at.desc(), MandiObservation.id.desc()).limit(1)).first()
     if row is None:
         raise services.ServiceProblem(404, "no_official_observation", "No official price observation exists for this series")
     o, m, c, b = row
@@ -109,8 +121,51 @@ def models_status():
     return services.model_status()
 
 
+@router.get('/models/horizons',response_model=HorizonAvailability,tags=['operations'])
+def model_horizons(market:str,commodity:str,variety:str,grade:str,horizon:int|None=Query(None,ge=1,le=730)):
+    import hashlib
+    import json
+
+    from app.config import ROOT
+    from app.decision_support import CROP_PLANNING_CEILINGS
+    from app.research_service import bundles
+    try:
+        scope_request=PredictRequest(market=market,commodity=commodity,variety=variety,grade=grade,horizon=1)
+        scope=tuple(getattr(scope_request,k) for k in ('market','commodity','variety','grade'))
+        saved={meta['horizon']:meta for _,meta in bundles() if tuple(meta[k] for k in ('market','commodity','variety','grade'))==scope}
+        for entry,plan in services.deployments():
+            if tuple(getattr(plan,k) for k in ('market','commodity','variety','grade'))==scope:
+                for path in entry.champions.glob('champion-*d/metadata.json'):
+                    meta=json.loads(path.read_text(encoding='utf-8'))
+                    saved[meta['horizon']]=meta
+        status='saved_artifact' if horizon in saved else 'insufficient_evidence' if horizon else None
+        reasons=[]
+        sample={}
+        path=ROOT/'reports'/f'daily-{scope_request.commodity.lower()}-entry.json'
+        if horizon and path.is_file():
+            entry=json.loads(path.read_text(encoding='utf-8'))
+            report_path=ROOT/entry['directory']/'comparison.json'
+            content=report_path.read_bytes()
+            if hashlib.sha256(content).hexdigest()!=entry['comparison_sha256']:
+                raise ValueError('Horizon evidence integrity failure')
+            report=json.loads(content)
+            if tuple(report['plan'][k] for k in ('market','commodity','variety','grade'))==scope:
+                row=next((r for r in report['horizons'] if r['horizon']==horizon),None)
+                if row:
+                    reasons=row['reason']
+                    sample=row['sample_policy']
+                    status=row['status']
+        return HorizonAvailability(**dict(zip(('market','commodity','variety','grade'),scope,strict=True)),
+            planning_ceiling_calendar_days=CROP_PLANNING_CEILINGS[scope_request.commodity],saved_horizons=sorted(saved),
+            requested_horizon=horizon,requested_status=status,reasons=reasons,sample_counts=sample)
+    except ValidationError as exc:
+        raise services.ServiceProblem(422,'unsupported_series','Invalid market, crop, variety or grade') from exc
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        raise services.ServiceProblem(503,'horizon_registry_unavailable','Horizon availability or evidence failed validation') from exc
+
+
 @router.get("/models/evaluation", response_model=HistoricalEvaluation, tags=["operations"])
-def model_evaluation(variety: str, grade: str, market: str="Kolar APMC",commodity: str="Tomato",horizon: int=Query(3,ge=1,le=7,description="Calendar horizon: 1, 3 or 7")):
+def model_evaluation(variety: str, grade: str, market: str="Kolar APMC",commodity: str="Tomato",horizon: int=Query(3,ge=1,le=730,description="Exact calendar horizon. New horizons may have development-only evidence, not a final evaluation.")):
     from app.evaluation_service import historical_evaluation
     try:
         scope=PredictRequest(market=market,commodity=commodity,variety=variety,grade=grade,horizon=horizon)

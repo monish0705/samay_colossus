@@ -1,0 +1,142 @@
+{
+  "version": "9ffc1c763f10a6e4-champion-52d",
+  "algorithm_version": "samay-forecast-v1",
+  "candidate": "naive",
+  "horizon": 52,
+  "market": "Shivamogga Mandi",
+  "commodity": "Arecanut",
+  "variety": "rashi",
+  "grade": "local",
+  "feature_schema": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "training_window": [
+    "2026-01-30",
+    "2026-09-12"
+  ],
+  "trained_before": "2026-11-05T11:53:05.834888+00:00",
+  "seed": 42,
+  "dataset_fingerprint": "d31a3d79508dbc7edf92b3227193207ea680c4d0a1f78b6a44e97285c5163323",
+  "model_sha256": "6c09635decb8153d3c12e3782a69fd2eb097426f912547d351a8647b27d5580a",
+  "comparison": {
+    "horizon": 52,
+    "sample_policy": {
+      "effective_train_samples": 87,
+      "effective_validation_samples": 0,
+      "available_development_pairs": 116,
+      "nonoverlapping_benchmark_cases": 4,
+      "train_span_calendar_days": 173,
+      "status": "baseline_only_limited_evidence"
+    },
+    "status": "baseline_only",
+    "champion": "naive",
+    "comparisons": [],
+    "learned_model_eligible": false,
+    "final_evaluation": "not_performed; existing final period excluded",
+    "reason": [
+      "insufficient_separated_train_validation_folds_for_model_selection"
+    ],
+    "selection_train_end": "2026-07-31",
+    "selection_reason": "Predeclared last-observed-price rule; not selected/tuned on these errors",
+    "retrospective_benchmark": {
+      "n": 116,
+      "mae_inr_per_quintal": 1675.3879310344828,
+      "rmse_inr_per_quintal": 2090.7891865068063,
+      "smape_pct": 3.1736778281304585,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 3.205845659839725,
+      "directional_accuracy": 0.0,
+      "p90_absolute_error_inr_per_quintal": 3260.0,
+      "p90_overprediction_inr_per_quintal": 3055.0
+    },
+    "nonoverlapping_benchmark": {
+      "n": 4,
+      "mae_inr_per_quintal": 1315.0,
+      "rmse_inr_per_quintal": 1622.7908059882518,
+      "smape_pct": 2.470018740055642,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 2.5176378239185166,
+      "directional_accuracy": 0.0,
+      "p90_absolute_error_inr_per_quintal": 2379.0,
+      "p90_overprediction_inr_per_quintal": 2379.0
+    }
+  },
+  "created_at": "2026-11-05T11:53:00.568115+00:00",
+  "plan": {
+    "start": "2025-10-27",
+    "train_end": "2026-07-31",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "rashi",
+    "grade": "local",
+    "market": "Shivamogga Mandi",
+    "commodity": "Arecanut",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "training_samples": 146,
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": "4.7.0"
+  },
+  "input_transform": "Original causal feature schema",
+  "research_only": true,
+  "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts. This extension has NO new final test. Selection validation scores are not final accuracy.",
+  "selection_report": "models/crop-horizons/9ffc1c763f10a6e4/comparison.json",
+  "source": [
+    {
+      "source": "India Data Portal AGMARKNET mirror (secondary)",
+      "url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+      "sha256": "70e4b87e255c8d805a983d88cdfee917334b59330fd54b482ed9a6fac63b7b83",
+      "fetched_at": "2026-11-04T19:36:57.354594+00:00",
+      "source_kind": "secondary",
+      "upstream_source_url": "https://agmarknet.gov.in/",
+      "license": "Open Data Commons Attribution License"
+    },
+    {
+      "source": "Official OGD / AGMARKNET historical APMC observations",
+      "url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+      "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+      "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": "Government Open Data License - India"
+    }
+  ],
+  "empirical_calibration": {
+    "radii": {},
+    "reason": "No independent long-horizon residual calibration; sensitivity scenarios are not prediction intervals"
+  },
+  "horizon_evidence_status": "baseline_only",
+  "refit_policy": "Frozen development-selected configuration. No new final holdout evaluation.",
+  "selection_report_sha256": "1ba7976915828c3ae4b1cd30b8bf0b94de57fc3e13e648b707d6f5bb3767c95b",
+  "training_source_fingerprint": "c9ef72fe779d8c7f1c6ac142b1a632652dc7886d0721f22d8858baf464f2d239"
+}

@@ -149,7 +149,7 @@ def test_imported_dataset_saved_model_reliability_and_real_optimizer_flow(api, t
 
 def test_validation_cors_swagger_and_safe_errors(api, monkeypatch, caplog):
     client, engine = api
-    for horizon in (0, 2, True, "3"):
+    for horizon in (0, 8, True, "3"):
         response = client.post("/api/v1/predict", json={"variety": "local", "grade": "faq", "horizon": horizon})
         assert response.status_code == 422
         assert "input" not in response.json()["error"]["details"]

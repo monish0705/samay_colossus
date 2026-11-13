@@ -1,0 +1,55 @@
+{
+  "verified_at": "2026-11-05T09:43:05.651947+00:00",
+  "checks": [
+    {
+      "check": "backend-tests",
+      "passed": true,
+      "log": "reports/current-all-backend-tests.log"
+    },
+    {
+      "check": "frontend-tests",
+      "passed": true,
+      "log": "reports/current-frontend-tests.log"
+    },
+    {
+      "check": "http-e2e",
+      "passed": true,
+      "log": "reports/current-http-e2e.log"
+    },
+    {
+      "check": "backend-lint",
+      "passed": true,
+      "log": "reports/current-backend-lint.log"
+    },
+    {
+      "check": "production-build",
+      "passed": true,
+      "log": "reports/current-frontend-build.log"
+    }
+  ],
+  "additional_exit_zero_checks": [
+    "frontend typecheck",
+    "frontend lint",
+    "start_local --check",
+    "frozen-study reuse"
+  ],
+  "real_proxy_forecasts_passed": 12,
+  "real_example_recommendations_passed": 4,
+  "packaging": {
+    "checked_hash_sensitive_files": 688,
+    "mismatches": [],
+    "index": "temporary isolated index; user index unchanged",
+    "policy": "gitattributes disables newline conversion for data/models/reports/registries"
+  },
+  "operational_validation": "not established; research-only limited evidence",
+  "metric_report": "reports/current-crop-models.json",
+  "remaining_limits": [
+    "No perfect accuracy or guaranteed farmer realization",
+    "Current Arecanut and Onion 7d have fewer than 30 final samples",
+    "New series have no defensible calibrated empirical interval",
+    "Some frozen selections lose to naive in final testing",
+    "Original publication/revision times unverified",
+    "Existing upstream deprecation and bundle-size advisories retained"
+  ],
+  "delivery": "local sub2 changes, not pushed"
+}

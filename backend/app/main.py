@@ -37,7 +37,7 @@ async def lifespan(application):
         from app.readiness import check
         result = check()
         application.state.readiness = result
-        logging.getLogger("samay.api").warning(json.dumps({"event": "startup_readiness", "database": result["database"], "forecast_demo_ready": result["ready_for_authentic_forecast_demo"], "issues": result["issues"]}))
+        logging.getLogger("samay.api").warning(json.dumps({"event": "startup_readiness", "database": result["database"], "forecast_demo_ready": result["ready_for_authentic_forecast_demo"], "research_artifacts_configured":result.get('research_artifacts_configured',0), "issues": result["issues"]}))
     else:
         application.state.readiness = {"database": "test", "ready_for_authentic_forecast_demo": False, "issues": []}
     yield

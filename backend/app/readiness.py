@@ -25,8 +25,9 @@ def check():
             if not result["data"]["official_observations"]:
                 result["issues"].append("No authentic official observations are prepared; fixture prices are excluded")
         result["models"] = model_status().model_dump(mode="json")
+        result['research_artifacts_configured']=len(result['models'].get('research_models',[]))
         if not any(m["model_version"] for m in result["models"]["models"]):
-            result["issues"].append("No saved model/baseline is deployed")
+            result["issues"].append("Research artifacts are configured separately; no validated production model is deployed" if result['research_artifacts_configured'] else "No saved model/baseline is deployed")
         elif not any(m["reliability_evidence_configured"] for m in result["models"]["models"]):
             result["issues"].append("No empirical reliability evidence is configured")
     except ServiceProblem as exc:

@@ -1,4 +1,15 @@
-> Updated data/model status: see [SECONDARY-MODELS](SECONDARY-MODELS.md). The initial missing-history statements and earlier verification counts below are historical.
+> Latest flow: [DAILY-HORIZONS](DAILY-HORIZONS.md) and [SELL-HOLD-ADVISOR](SELL-HOLD-ADVISOR.md). Earlier limits below describe the original short-horizon demo.
+
+## Updated 90-second farmer flow
+
+1. Start with `scripts/start_local.py --backend-port 8011 --frontend-port 5174 --enable-research` using the repository virtualenv Python. Prepared history and models work offline; external context may be stale.
+2. Open Forecast, select Copra, enter exactly **30 days**, and request the saved forecast. Read the target date, latest observation, baseline label and absence of a calibrated interval. Never describe the number as a guaranteed buyer price.
+3. In Advisor select Copra; enter **EXAMPLE_ONLY** 20 quintals, INR 15,000/quintal buyer-price assumption, INR 10,000 cash need, 10 quintals protected storage, 30 days, 0.03% daily loss and INR 1.50/quintal/day storage. Review and explicitly enter every transaction cost. Choose the saved forecast price basis and balanced risk. These are illustrative assumptions, not source observations.
+4. Calculate. Read the backend's actual sell/hold amounts, net cash, adverse result and break-even price. Expand the calculation audit and source/context panel. Switch Kannada and verify identical amounts.
+5. Set storage to zero and recalculate: holding disappears. Enter an adverse future buyer-price assumption of INR 10,000/quintal and recalculate with storage restored: compare the actual result against sell-all-now.
+6. Request a 365-day Copra forecast: show the explicit unavailable state. A long crop storage ceiling does not imply a trained long-horizon model.
+
+The repeatable API demonstration is `.\.venv\Scripts\python.exe scripts/verify_sell_hold.py`; it records all inputs and outputs, including unsupported-year fallback. The browser screen and this script use the same real service.
 
 # Current research demo — 5 November 2026
 

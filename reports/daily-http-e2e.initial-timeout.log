@@ -1,0 +1,60 @@
+
+> samay-frontend@0.1.0 test:e2e
+> vitest run --config vitest.e2e.config.ts
+
+
+ RUN  v5.1.0 C:/Users/Suhan/OneDrive/文件/ChatGPT/agritech/samay-sub2/frontend
+
+ ❯ e2e/http.test.tsx (3 tests | 1 failed) 68352ms
+   ❯ real HTTP end-to-end service integration — synthetic TEST_ONLY temporary database (3)
+     × loads imported history and source through the actual API 66465ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  e2e/http.test.tsx > real HTTP end-to-end service integration — synthetic TEST_ONLY temporary database > loads imported history and source through the actual API
+Error: Test timed out in 20000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ e2e/http.test.tsx:11:3
+      9|
+     10| describe('real HTTP end-to-end service integration — synthetic TEST_ON…
+     11|   it('loads imported history and source through the actual API', async…
+       |   ^
+     12|     show('/insights');
+     13|     expect(await screen.findByText(/HISTORICAL REPLAY — not live marke…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  17:37:15
+   Duration  72.06s (tests 95%, environment 2%, transform 1%, import 1%, setup 1%)
+
+
+Fixture server diagnostic log:
+{"event": "http_request", "request_id": "27fba537-dde4-4e91-aea3-c4ed9cec74c8", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "8d707c03-30a6-45e8-b28b-1af732ff184e", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 47.0}
+{"event": "http_request", "request_id": "781b2d63-9fc1-4ffb-b662-a6d1f931d4c8", "method": "GET", "route": "/api/v1/commodities", "status": 200, "duration_ms": 47.0}
+{"event": "http_request", "request_id": "da8c577b-b1cc-414e-970c-d5b972a4e2cd", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 47.0}
+{"event": "http_request", "request_id": "46c9e990-5c47-4db5-8260-abf0861f53f7", "method": "GET", "route": "/api/v1/context", "status": 200, "duration_ms": 140.0}
+{"event": "http_request", "request_id": "7cfced7c-d8e1-4fd4-a21d-3eeb27392f5c", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 62.0}
+{"event": "http_request", "request_id": "1e8ee321-8aaf-429b-8ae2-ece79ae826eb", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 62.0}
+{"event": "http_request", "request_id": "7163ce28-f444-4ab0-9c5b-6711890e74ab", "method": "GET", "route": "/api/v1/prices/history", "status": 200, "duration_ms": 109.0}
+{"event": "http_request", "request_id": "541a38cf-e7b3-44d9-849b-898f30a1a1cf", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "1163beb2-9a59-4ecd-a839-9c48eef43e23", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "2304649b-8b6d-42b3-89b5-67e7b75fb187", "method": "GET", "route": "/api/v1/commodities", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "b6d7f12d-b817-4fee-a642-ac8e776c5221", "method": "GET", "route": "/api/v1/models/evaluation", "status": 404, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "20869d22-db03-4f73-8e82-8fde3596ed67", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "a742c52b-a56f-4f17-ac62-d5cff65b8f56", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "499c6533-719c-43fc-a48f-71927d5ebc6b", "method": "GET", "route": "/api/v1/models/horizons", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "1351ed13-f04c-4729-9c3d-f8c4284dd551", "method": "POST", "route": "/api/v1/predict", "status": 200, "duration_ms": 109.0}
+{"event": "http_request", "request_id": "41f9586c-672c-4ae3-8955-dca6388ff9c7", "method": "GET", "route": "/api/health", "status": 200, "duration_ms": 0.0}
+{"event": "http_request", "request_id": "ebd827d8-caa9-46c2-87b1-5325d7d50988", "method": "GET", "route": "/api/v1/markets", "status": 200, "duration_ms": 0.0}
+{"event": "http_request", "request_id": "424422e7-97f7-4e45-afdc-9141e239b455", "method": "GET", "route": "/api/v1/commodities", "status": 200, "duration_ms": 16.0}
+{"event": "http_request", "request_id": "932a7112-2652-47b5-86e0-c1b5dad67aba", "method": "GET", "route": "/api/v1/context", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "51123612-1241-449d-a74a-c01a86a404f5", "method": "GET", "route": "/api/v1/prices/latest", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "2eb558f0-aa0a-4460-aa0c-e2bdf966d8ba", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "f99f42d8-7896-4f07-b27a-899dea5f711d", "method": "GET", "route": "/api/v1/models/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "53141b92-d765-4e4a-aed2-defa7ecd206a", "method": "GET", "route": "/api/v1/data/status", "status": 200, "duration_ms": 32.0}
+{"event": "http_request", "request_id": "d483016d-3bea-4cdc-b394-38aa86074939", "method": "POST", "route": "/api/v1/recommend", "status": 200, "duration_ms": 63.0}
+

@@ -1,3 +1,5 @@
+> **Current-grade update, 5 November 2026:** fresh official OGD history now enables 12 additional saved research forecasts for four crops. See [CURRENT-CROP-MODELS](CURRENT-CROP-MODELS.md). Earlier stale-series counts below describe the original secondary-only studies and remain preserved.
+
 # Additional data and model handoff — 5 November 2026
 
 The missing multi-year historical acquisition and research training have now been

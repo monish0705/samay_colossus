@@ -280,6 +280,109 @@
         }
       }
     },
+    "/api/v1/context": {
+      "get": {
+        "tags": [
+          "decision context"
+        ],
+        "summary": "Market Context",
+        "operationId": "market_context_api_v1_context_get",
+        "parameters": [
+          {
+            "name": "market",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Market"
+            }
+          },
+          {
+            "name": "commodity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Commodity"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 730,
+              "minimum": 1,
+              "default": 7,
+              "title": "Days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketContext"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/commodities": {
       "get": {
         "tags": [
@@ -734,6 +837,133 @@
         }
       }
     },
+    "/api/v1/models/horizons": {
+      "get": {
+        "tags": [
+          "operations"
+        ],
+        "summary": "Model Horizons",
+        "operationId": "model_horizons_api_v1_models_horizons_get",
+        "parameters": [
+          {
+            "name": "market",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Market"
+            }
+          },
+          {
+            "name": "commodity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Commodity"
+            }
+          },
+          {
+            "name": "variety",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Variety"
+            }
+          },
+          {
+            "name": "grade",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Grade"
+            }
+          },
+          {
+            "name": "horizon",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 730,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Horizon"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorizonAvailability"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No official observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No feasible cash/physical plan; recommendation endpoint returns its full comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid scope, horizon, future decision or economic assumptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Missing model/data, stale forecast or unavailable source/service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/models/evaluation": {
       "get": {
         "tags": [
@@ -786,13 +1016,13 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "maximum": 7,
+              "maximum": 730,
               "minimum": 1,
-              "description": "Calendar horizon: 1, 3 or 7",
+              "description": "Exact calendar horizon. New horizons may have development-only evidence, not a final evaluation.",
               "default": 3,
               "title": "Horizon"
             },
-            "description": "Calendar horizon: 1, 3 or 7"
+            "description": "Exact calendar horizon. New horizons may have development-only evidence, not a final evaluation."
           }
         ],
         "responses": {
@@ -1185,6 +1415,35 @@
         ],
         "title": "ApiInterval"
       },
+      "CalendarEvent": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": "Published calendar event; not a confirmed mandi closure or an estimated price increase."
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "date",
+          "source_url"
+        ],
+        "title": "CalendarEvent"
+      },
       "CommodityResponse": {
         "properties": {
           "id": {
@@ -1207,6 +1466,45 @@
           "data_source"
         ],
         "title": "CommodityResponse"
+      },
+      "ContextSource": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          },
+          "sha256": {
+            "type": "string",
+            "title": "Sha256"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "url",
+          "fetched_at",
+          "sha256",
+          "status"
+        ],
+        "title": "ContextSource"
       },
       "CropStorageProfile": {
         "properties": {
@@ -1345,6 +1643,180 @@
         ],
         "title": "DataStatus"
       },
+      "DecisionPolicy": {
+        "properties": {
+          "downside_fraction": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Downside Fraction",
+            "default": "0.10"
+          },
+          "adverse_fraction": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Adverse Fraction",
+            "default": "0.20"
+          },
+          "upside_fraction": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Upside Fraction",
+            "default": "0.10"
+          },
+          "assumption_source": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Assumption Source"
+          },
+          "long_horizon_mode": {
+            "type": "string",
+            "enum": [
+              "require_user_price",
+              "flat_reference",
+              "saved_forecast"
+            ],
+            "title": "Long Horizon Mode",
+            "default": "require_user_price"
+          },
+          "storage_exposure": {
+            "type": "string",
+            "enum": [
+              "protected",
+              "outdoor",
+              "unknown"
+            ],
+            "title": "Storage Exposure",
+            "default": "unknown"
+          },
+          "block_holding_on_rain_risk": {
+            "type": "boolean",
+            "title": "Block Holding On Rain Risk",
+            "default": false
+          },
+          "rainfall_stop_threshold_mm": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Rainfall Stop Threshold Mm",
+            "default": "20"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assumption_source"
+        ],
+        "title": "DecisionPolicy"
+      },
+      "DecisionSupport": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "hold",
+              "partial_sell_and_hold",
+              "sell_now",
+              "infeasible",
+              "insufficient_evidence"
+            ],
+            "title": "Action"
+          },
+          "basis": {
+            "type": "string",
+            "title": "Basis"
+          },
+          "conditional": {
+            "type": "boolean",
+            "title": "Conditional"
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SellingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "safe_fallback_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SellingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "horizon_comparisons": {
+            "items": {
+              "$ref": "#/components/schemas/SellingPlan"
+            },
+            "type": "array",
+            "title": "Horizon Comparisons"
+          },
+          "context": {
+            "$ref": "#/components/schemas/MarketContext"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action",
+          "basis",
+          "conditional",
+          "plan",
+          "safe_fallback_plan",
+          "reasons",
+          "horizon_comparisons",
+          "context",
+          "note"
+        ],
+        "title": "DecisionSupport"
+      },
       "ErrorEnvelope": {
         "properties": {
           "error": {
@@ -1460,6 +1932,17 @@
             "type": "string",
             "title": "Data Kind",
             "default": "official"
+          },
+          "reference_modal_price_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Modal Price Inr Per Quintal"
           }
         },
         "type": "object",
@@ -1676,7 +2159,7 @@
           "note": {
             "type": "string",
             "title": "Note",
-            "default": "Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed."
+            "default": "Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed. Verified queries show the latest fetched version per date/variety/grade; individual source classes remain queryable."
           }
         },
         "type": "object",
@@ -1687,6 +2170,88 @@
           "next_offset"
         ],
         "title": "HistoryResponse"
+      },
+      "HorizonAvailability": {
+        "properties": {
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "variety": {
+            "type": "string",
+            "title": "Variety"
+          },
+          "grade": {
+            "type": "string",
+            "title": "Grade"
+          },
+          "planning_ceiling_calendar_days": {
+            "type": "integer",
+            "title": "Planning Ceiling Calendar Days"
+          },
+          "saved_horizons": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Saved Horizons"
+          },
+          "requested_horizon": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requested Horizon"
+          },
+          "requested_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requested Status"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons",
+            "default": []
+          },
+          "sample_counts": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Sample Counts",
+            "default": {}
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": "Saved research baselines are not validated advice. Missing dates are not interpolated; planning ceilings are not shelf-life guarantees."
+          }
+        },
+        "type": "object",
+        "required": [
+          "market",
+          "commodity",
+          "variety",
+          "grade",
+          "planning_ceiling_calendar_days",
+          "saved_horizons"
+        ],
+        "title": "HorizonAvailability"
       },
       "LatestResponse": {
         "properties": {
@@ -1714,6 +2279,96 @@
           "age_calendar_days"
         ],
         "title": "LatestResponse"
+      },
+      "MarketContext": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "partial",
+              "unavailable"
+            ],
+            "title": "Status",
+            "default": "unavailable"
+          },
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "decision_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Decision At"
+          },
+          "location_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location Label"
+          },
+          "weather": {
+            "items": {
+              "$ref": "#/components/schemas/WeatherDay"
+            },
+            "type": "array",
+            "title": "Weather"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/CalendarEvent"
+            },
+            "type": "array",
+            "title": "Events"
+          },
+          "news": {
+            "items": {
+              "$ref": "#/components/schemas/NewsItem"
+            },
+            "type": "array",
+            "title": "News"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/ContextSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "numeric_price_adjustment_applied": {
+            "type": "boolean",
+            "title": "Numeric Price Adjustment Applied",
+            "default": false
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": "Weather is for the market city, not the farm. News and calendar events are context, not learned causal price adjustments. Future dates beyond the weather/calendar source coverage are unknown."
+          }
+        },
+        "type": "object",
+        "required": [
+          "market",
+          "commodity",
+          "decision_at"
+        ],
+        "title": "MarketContext"
       },
       "MarketResponse": {
         "properties": {
@@ -1860,6 +2515,52 @@
               }
             ],
             "title": "Final Holdout Metrics"
+          },
+          "evidence_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Status"
+          },
+          "model_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Name"
+          },
+          "retrospective_benchmark_metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retrospective Benchmark Metrics"
           }
         },
         "type": "object",
@@ -1910,6 +2611,42 @@
           "models"
         ],
         "title": "ModelsStatus"
+      },
+      "NewsItem": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Published At"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "topics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Topics"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "url",
+          "published_at",
+          "source"
+        ],
+        "title": "NewsItem"
       },
       "OptimizationResponse": {
         "properties": {
@@ -2058,12 +2795,10 @@
           },
           "horizon": {
             "type": "integer",
-            "enum": [
-              1,
-              3,
-              7
-            ],
-            "title": "Horizon"
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Horizon",
+            "description": "Exact calendar-day horizon; requires a saved artifact for the selected crop/variety/grade"
           },
           "origin_date": {
             "anyOf": [
@@ -2520,6 +3255,16 @@
             ],
             "title": "Risk Tolerance",
             "default": "conservative"
+          },
+          "decision_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecisionPolicy"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -2718,6 +3463,16 @@
           },
           "optimization": {
             "$ref": "#/components/schemas/OptimizationResponse"
+          },
+          "decision_support": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecisionSupport"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -3205,6 +3960,58 @@
           "assumptions"
         ],
         "title": "SellingPlan"
+      },
+      "WeatherDay": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "max_temperature_c": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 70.0,
+                "minimum": -100.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Temperature C"
+          },
+          "precipitation_mm": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precipitation Mm"
+          },
+          "precipitation_probability_percent": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precipitation Probability Percent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date"
+        ],
+        "title": "WeatherDay"
       }
     }
   }

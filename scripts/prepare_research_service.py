@@ -49,6 +49,25 @@ def calibration(folder, horizon, candidate):
 def main():
     registry = json.loads(Path("research-registry.json").read_text(encoding="utf-8-sig"))
     serving = []
+    serving_registry=Path('research-serving-registry.json')
+    if serving_registry.is_file():
+        # Preserve separately frozen daily extensions when refitting old studies.
+        # Every retained entry must still pass the service's integrity checks.
+        from app.config import get_settings
+        from app.research_service import bundles
+        settings=get_settings()
+        if settings.enable_research_forecasts and settings.research_serving_registry_path:
+            extensions={folder.resolve() for folder,meta in bundles() if meta.get('horizon_evidence_status')}
+            serving=[entry for entry in json.loads(serving_registry.read_text(encoding='utf-8-sig')) if Path(entry['directory']).resolve() in extensions]
+        else:
+            # A disabled service must not silently erase independently saved models.
+            for entry in json.loads(serving_registry.read_text(encoding='utf-8-sig')):
+                folder=Path(entry['directory'])
+                raw=(folder/'metadata.json').read_bytes()
+                if hashlib.sha256(raw).hexdigest()!=entry['metadata_sha256']:
+                    raise ValueError('Existing serving metadata integrity failure')
+                if json.loads(raw).get('horizon_evidence_status'):
+                    serving.append(entry)
     for entry in registry:
         selected = Path(entry["directory"])
         report_bytes = (selected/"comparison.json").read_bytes()

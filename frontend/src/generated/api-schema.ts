@@ -58,6 +58,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/context": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Market Context */
+        get: operations["market_context_api_v1_context_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/commodities": {
         parameters: {
             query?: never;
@@ -135,6 +152,23 @@ export interface paths {
         };
         /** Models Status */
         get: operations["models_status_api_v1_models_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/models/horizons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Model Horizons */
+        get: operations["model_horizons_api_v1_models_horizons_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -243,6 +277,23 @@ export interface components {
             /** Upper Inr Per Quintal */
             upper_inr_per_quintal: string;
         };
+        /** CalendarEvent */
+        CalendarEvent: {
+            /** Name */
+            name: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Source Url */
+            source_url: string;
+            /**
+             * Note
+             * @default Published calendar event; not a confirmed mandi closure or an estimated price increase.
+             */
+            note: string;
+        };
         /** CommodityResponse */
         CommodityResponse: {
             /** Id */
@@ -251,6 +302,27 @@ export interface components {
             name: string;
             /** Data Source */
             data_source: string;
+        };
+        /** ContextSource */
+        ContextSource: {
+            /** Name */
+            name: string;
+            /** Url */
+            url: string;
+            /**
+             * Fetched At
+             * Format: date-time
+             */
+            fetched_at: string;
+            /** Sha256 */
+            sha256: string;
+            /** Status */
+            status: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** CropStorageProfile */
         CropStorageProfile: {
@@ -292,6 +364,69 @@ export interface components {
              * Note
              * @default Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations.
              */
+            note: string;
+        };
+        /** DecisionPolicy */
+        DecisionPolicy: {
+            /**
+             * Downside Fraction
+             * @default 0.10
+             */
+            downside_fraction: number | string;
+            /**
+             * Adverse Fraction
+             * @default 0.20
+             */
+            adverse_fraction: number | string;
+            /**
+             * Upside Fraction
+             * @default 0.10
+             */
+            upside_fraction: number | string;
+            /** Assumption Source */
+            assumption_source: string;
+            /**
+             * Long Horizon Mode
+             * @default require_user_price
+             * @enum {string}
+             */
+            long_horizon_mode: "require_user_price" | "flat_reference" | "saved_forecast";
+            /**
+             * Storage Exposure
+             * @default unknown
+             * @enum {string}
+             */
+            storage_exposure: "protected" | "outdoor" | "unknown";
+            /**
+             * Block Holding On Rain Risk
+             * @default false
+             */
+            block_holding_on_rain_risk: boolean;
+            /**
+             * Rainfall Stop Threshold Mm
+             * @default 20
+             */
+            rainfall_stop_threshold_mm: number | string;
+        };
+        /** DecisionSupport */
+        DecisionSupport: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "hold" | "partial_sell_and_hold" | "sell_now" | "infeasible" | "insufficient_evidence";
+            /** Basis */
+            basis: string;
+            /** Conditional */
+            conditional: boolean;
+            plan: components["schemas"]["SellingPlan"] | null;
+            safe_fallback_plan: components["schemas"]["SellingPlan"] | null;
+            /** Reasons */
+            reasons: string[];
+            /** Horizon Comparisons */
+            horizon_comparisons: components["schemas"]["SellingPlan"][];
+            context: components["schemas"]["MarketContext"];
+            /** Note */
             note: string;
         };
         /** ErrorEnvelope */
@@ -339,6 +474,8 @@ export interface components {
              * @default official
              */
             data_kind: string;
+            /** Reference Modal Price Inr Per Quintal */
+            reference_modal_price_inr_per_quintal?: string | null;
         };
         /** HealthResponse */
         HealthResponse: {
@@ -422,7 +559,43 @@ export interface components {
             next_offset: number | null;
             /**
              * Note
-             * @default Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed.
+             * @default Wholesale observations, not guaranteed farmer realization prices. Observed min/max are not prediction intervals. Unreported dates are not imputed. Verified queries show the latest fetched version per date/variety/grade; individual source classes remain queryable.
+             */
+            note: string;
+        };
+        /** HorizonAvailability */
+        HorizonAvailability: {
+            /** Market */
+            market: string;
+            /** Commodity */
+            commodity: string;
+            /** Variety */
+            variety: string;
+            /** Grade */
+            grade: string;
+            /** Planning Ceiling Calendar Days */
+            planning_ceiling_calendar_days: number;
+            /** Saved Horizons */
+            saved_horizons: number[];
+            /** Requested Horizon */
+            requested_horizon?: number | null;
+            /** Requested Status */
+            requested_status?: string | null;
+            /**
+             * Reasons
+             * @default []
+             */
+            reasons: string[];
+            /**
+             * Sample Counts
+             * @default {}
+             */
+            sample_counts: {
+                [key: string]: unknown;
+            };
+            /**
+             * Note
+             * @default Saved research baselines are not validated advice. Missing dates are not interpolated; planning ceilings are not shelf-life guarantees.
              */
             note: string;
         };
@@ -436,6 +609,46 @@ export interface components {
             /**
              * Note
              * @default Latest stored official wholesale observation, not a live buyer quote or guaranteed farmer realization.
+             */
+            note: string;
+        };
+        /** MarketContext */
+        MarketContext: {
+            /**
+             * Status
+             * @default unavailable
+             * @enum {string}
+             */
+            status: "available" | "partial" | "unavailable";
+            /** Market */
+            market: string;
+            /** Commodity */
+            commodity: string;
+            /**
+             * Decision At
+             * Format: date-time
+             */
+            decision_at: string;
+            /** Location Label */
+            location_label?: string | null;
+            /** Weather */
+            weather?: components["schemas"]["WeatherDay"][];
+            /** Events */
+            events?: components["schemas"]["CalendarEvent"][];
+            /** News */
+            news?: components["schemas"]["NewsItem"][];
+            /** Sources */
+            sources?: components["schemas"]["ContextSource"][];
+            /** Warnings */
+            warnings?: string[];
+            /**
+             * Numeric Price Adjustment Applied
+             * @default false
+             */
+            numeric_price_adjustment_applied: boolean;
+            /**
+             * Note
+             * @default Weather is for the market city, not the farm. News and calendar events are context, not learned causal price adjustments. Future dates beyond the weather/calendar source coverage are unknown.
              */
             note: string;
         };
@@ -488,6 +701,14 @@ export interface components {
             final_holdout_metrics?: {
                 [key: string]: number | null;
             } | null;
+            /** Evidence Status */
+            evidence_status?: string | null;
+            /** Model Name */
+            model_name?: string | null;
+            /** Retrospective Benchmark Metrics */
+            retrospective_benchmark_metrics?: {
+                [key: string]: number | null;
+            } | null;
         };
         /** ModelsStatus */
         ModelsStatus: {
@@ -505,6 +726,22 @@ export interface components {
              * @default []
              */
             research_models: components["schemas"]["ModelStatusItem"][];
+        };
+        /** NewsItem */
+        NewsItem: {
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+            /**
+             * Published At
+             * Format: date-time
+             */
+            published_at: string;
+            /** Source */
+            source: string;
+            /** Topics */
+            topics?: string[];
         };
         /** OptimizationResponse */
         OptimizationResponse: {
@@ -579,9 +816,9 @@ export interface components {
             grade: string;
             /**
              * Horizon
-             * @enum {integer}
+             * @description Exact calendar-day horizon; requires a saved artifact for the selected crop/variety/grade
              */
-            horizon: 1 | 3 | 7;
+            horizon: number;
             /** Origin Date */
             origin_date?: string | null;
         };
@@ -733,6 +970,7 @@ export interface components {
              * @enum {string}
              */
             risk_tolerance: "conservative" | "balanced" | "aggressive";
+            decision_policy?: components["schemas"]["DecisionPolicy"] | null;
         };
         /** RecommendationHolding */
         RecommendationHolding: {
@@ -780,6 +1018,7 @@ export interface components {
             /** Reliability Warnings */
             reliability_warnings: string[];
             optimization: components["schemas"]["OptimizationResponse"];
+            decision_support?: components["schemas"]["DecisionSupport"] | null;
         };
         /** ResearchHorizon */
         ResearchHorizon: {
@@ -965,6 +1204,20 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** WeatherDay */
+        WeatherDay: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Max Temperature C */
+            max_temperature_c?: number | null;
+            /** Precipitation Mm */
+            precipitation_mm?: number | null;
+            /** Precipitation Probability Percent */
+            precipitation_probability_percent?: number | null;
+        };
     };
     responses: never;
     parameters: never;
@@ -1090,6 +1343,75 @@ export interface operations {
                 };
             };
             /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    market_context_api_v1_context_get: {
+        parameters: {
+            query: {
+                market: string;
+                commodity: string;
+                days?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketContext"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1438,6 +1760,77 @@ export interface operations {
             };
         };
     };
+    model_horizons_api_v1_models_horizons_get: {
+        parameters: {
+            query: {
+                market: string;
+                commodity: string;
+                variety: string;
+                grade: string;
+                horizon?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HorizonAvailability"];
+                };
+            };
+            /** @description No official observation */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description No feasible cash/physical plan; recommendation endpoint returns its full comparison */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Invalid scope, horizon, future decision or economic assumptions */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+            /** @description Missing model/data, stale forecast or unavailable source/service */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
     model_evaluation_api_v1_models_evaluation_get: {
         parameters: {
             query: {
@@ -1445,7 +1838,7 @@ export interface operations {
                 grade: string;
                 market?: string;
                 commodity?: string;
-                /** @description Calendar horizon: 1, 3 or 7 */
+                /** @description Exact calendar horizon. New horizons may have development-only evidence, not a final evaluation. */
                 horizon?: number;
             };
             header?: never;

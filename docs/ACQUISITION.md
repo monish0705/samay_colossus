@@ -1,3 +1,5 @@
+> **Current-grade update, 5 November 2026:** fresh official OGD history now enables 12 additional saved research forecasts for four crops. See [CURRENT-CROP-MODELS](CURRENT-CROP-MODELS.md). Earlier stale-series counts below describe the original secondary-only studies and remain preserved.
+
 # Secondary acquisition update — 5 November 2026
 
 An additional 5,834 usable variety-specific historical observations were imported from the India Data Portal / ISB AGMARKNET mirror. They are labeled **secondary**, separate from direct government downloads. All 5,837 retrieved source records and pagination responses are archived; 3 rows are quarantined. See [SECONDARY-MODELS](SECONDARY-MODELS.md) for exact publisher links, license attribution, dates, varieties, commands and limitations. The original 1,943 direct government observations below remain unchanged.

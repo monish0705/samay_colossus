@@ -1,0 +1,6 @@
+{
+  "checked_hash_sensitive_files": 688,
+  "mismatches": [],
+  "index": "temporary isolated index; user index unchanged",
+  "policy": "gitattributes disables newline conversion for data/models/reports/registries"
+}

@@ -93,6 +93,31 @@ def examples(vintages, start, end, horizon, freeze):
 
 
 def rolling_folds(vintages, plan, horizon):
+    if plan.candidate_suite == "recent_v3":
+        # Fixed sample-count policy for shorter, irregularly reported series.
+        # Boundaries use only development origins/availability, never price errors.
+        frame = examples(vintages, plan.start, plan.train_end, horizon, plan.train_end + timedelta(days=1))
+        initial = 60
+        while initial < len(frame):
+            first = date.fromisoformat(frame.iloc[initial].origin_date)
+            if len(examples(vintages, plan.start, first-timedelta(days=1), horizon, first)) >= 60:
+                break
+            initial += 1
+        if len(frame) < initial + 3 * 14:
+            return []
+        indices = np.linspace(initial, len(frame), 4, dtype=int)
+        folds = []
+        for lo, hi in zip(indices, indices[1:], strict=False):
+            first = date.fromisoformat(frame.iloc[lo].origin_date)
+            train = examples(vintages, plan.start, first - timedelta(days=1), horizon, first)
+            # Each row's features are already constructed at its own decision
+            # cutoff. Validation origins and targets never repeat across folds;
+            # all validation targets settle inside the training partition.
+            valid = frame.iloc[lo:hi].copy()
+            if len(train) < 60 or len(valid) < 14:
+                return []
+            folds.append((train, valid))
+        return folds
     days = (plan.train_end - plan.start).days + 1
     boundaries = [plan.start + timedelta(days=int(days * part)) for part in (.5, .67, .84)] + [plan.train_end + timedelta(days=1)]
     folds = []
@@ -197,14 +222,22 @@ def select_horizon(vintages, plan: Plan, horizon):
         return result, None, None
     train = examples(vintages, plan.start, plan.train_end, horizon, plan.train_end + timedelta(days=1))
     validation = examples(vintages, plan.train_end + timedelta(days=1), plan.validation_end, horizon, plan.validation_end + timedelta(days=1))
-    candidates = list(BASELINES) + ["ridge_1", "ridge_10", "ridge_100", "hist_gradient_boosting"]
-    if plan.candidate_suite == "relative_v2":
-        candidates += ["blend_naive_mean14_25","blend_naive_mean14_50","ridge_return_10","ridge_return_100","hist_gradient_boosting_return"]
+    learned_eligible = plan.candidate_suite != "recent_v3" or (len(train) >= 120 and len(validation) >= 30 and reliability["train_span_calendar_days"] >= 180)
+    candidates = list(BASELINES)
+    if learned_eligible:
+        candidates += ["ridge_1", "ridge_10", "ridge_100", "hist_gradient_boosting"]
+    if plan.candidate_suite in {"relative_v2", "recent_v3"}:
+        candidates += ["blend_naive_mean14_25","blend_naive_mean14_50"]
+        if learned_eligible:
+            candidates += ["ridge_return_10","ridge_return_100","hist_gradient_boosting_return"]
+    result["learned_model_eligible"] = learned_eligible
     seasonal_supported = all(len(t) >= 56 and v.seasonal_price.notna().mean() >= .9 for t, v in folds)
     if seasonal_supported:
         # Initial coverage qualifies a seasonal candidate; CV skill gates promotion below.
         candidates.append("seasonal_naive")
     skips = {"seasonal_naive": "Insufficient training-fold weekly coverage"} if not seasonal_supported else {}
+    if not learned_eligible:
+        skips["learned_models"] = "Recent-series baseline-only mode: learned models require >=120 training / >=30 validation examples and >=180 eligible calendar days"
     if min(len(t) for t, _ in folds) >= 500:
         try:
             import lightgbm  # noqa: F401
@@ -213,7 +246,7 @@ def select_horizon(vintages, plan: Plan, horizon):
             skips["lightgbm"] = "Optional LightGBM dependency not installed"
     else:
         skips["lightgbm"] = "Requires >=500 reliable training samples in every CV fold"
-    if plan.candidate_suite == "relative_v2":
+    if plan.candidate_suite in {"relative_v2", "recent_v3"}:
         if min(len(t) for t,_ in folds) >= 250:
             try:
                 import lightgbm  # noqa: F401

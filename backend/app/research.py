@@ -28,7 +28,7 @@ def snapshot(session, plan: Plan, *, final=False):
     """SQL excludes holdout rows unless final evaluation was explicitly reserved."""
     end = plan.holdout_end if final else plan.validation_end
     stmt = select(ImportRow, ImportBatch).join(ImportBatch, ImportRow.batch_id == ImportBatch.id).where(
-        ImportBatch.data_kind == plan.source_kind, ImportRow.status.in_(["inserted", "revised", "duplicates"]),
+        ImportBatch.data_kind.in_(["official", "secondary"] if plan.source_kind == "verified" else [plan.source_kind]), ImportRow.status.in_(["inserted", "revised", "duplicates"]),
         ImportRow.normalized["report_date"].as_string() >= plan.start.isoformat(),
         ImportRow.normalized["report_date"].as_string() <= end.isoformat(),
         ImportRow.normalized["market"].as_string() == plan.market,
@@ -40,9 +40,9 @@ def snapshot(session, plan: Plan, *, final=False):
         if batch.id not in sources:
             manifest = SourceManifest.model_validate(batch.manifest)
             path = Path(batch.archive_path)
-            if manifest.data_kind != plan.source_kind or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at:
+            if manifest.data_kind != batch.data_kind or manifest.source_url != batch.source_url or manifest.fetched_at != batch.fetched_at:
                 raise ValueError("Snapshot source manifest mismatch")
-            allowed = ("https://agmarknet.gov.in/", "https://www.agmarknet.gov.in/", "https://data.gov.in/", "https://www.data.gov.in/") if plan.source_kind == "official" else ("https://ckandev.indiadataportal.com/",)
+            allowed = ("https://agmarknet.gov.in/", "https://www.agmarknet.gov.in/", "https://data.gov.in/", "https://www.data.gov.in/") if batch.data_kind == "official" else ("https://ckandev.indiadataportal.com/",)
             if not manifest.source_url.startswith(allowed):
                 raise ValueError("Unsupported government provenance")
             if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != batch.file_sha256 or manifest.sha256 != batch.file_sha256:
@@ -50,7 +50,7 @@ def snapshot(session, plan: Plan, *, final=False):
             if any(marker in batch.source_label.casefold() for marker in ("fixture", "test_only", "demo")):
                 raise ValueError("Test data cannot enter real research results")
             sources[batch.id] = {"source": batch.source_label, "url": batch.source_url, "sha256": batch.file_sha256,
-                "fetched_at": batch.fetched_at.isoformat(), "source_kind":plan.source_kind,
+                "fetched_at": batch.fetched_at.isoformat(), "source_kind":batch.data_kind,
                 "upstream_source_url":manifest.upstream_source_url, "license":manifest.license}
         n = row.normalized
         prices = [float(n[key]) for key in ("min", "modal", "max")]

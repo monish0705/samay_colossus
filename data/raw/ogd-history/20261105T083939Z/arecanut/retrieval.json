@@ -1,0 +1,40 @@
+{
+  "endpoint": "https://api.data.gov.in/resource/35985678-0d79-46b4-9ed6-6f13308a1d24",
+  "publisher_page": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+  "total": 1393,
+  "pages": [
+    {
+      "file": "page-000000.json",
+      "sha256": "2d7813ffc1756a3acce2f02b6e0f066b368b7e02a37af00976669b318781035e",
+      "fetched_at": "2026-11-05T08:39:44.811929+00:00",
+      "query": {
+        "format": "json",
+        "offset": 0,
+        "limit": 1000,
+        "filters[State]": "Karnataka",
+        "filters[Market]": "Shimoga APMC",
+        "filters[Commodity]": "Arecanut(Betelnut/Supari)",
+        "sort[Arrival_Date]": "asc",
+        "sort[Variety]": "asc",
+        "sort[Grade]": "asc"
+      }
+    },
+    {
+      "file": "page-001000.json",
+      "sha256": "38fb223c3b3c829dc6f7966d3bdadcc91df61b0cf3cbceada0f3ca50592510d3",
+      "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+      "query": {
+        "format": "json",
+        "offset": 1000,
+        "limit": 1000,
+        "filters[State]": "Karnataka",
+        "filters[Market]": "Shimoga APMC",
+        "filters[Commodity]": "Arecanut(Betelnut/Supari)",
+        "sort[Arrival_Date]": "asc",
+        "sort[Variety]": "asc",
+        "sort[Grade]": "asc"
+      }
+    }
+  ],
+  "transformation": "Exact published field values projected to CSV; no prices, dates, varieties or grades changed. Unit from independently archived official report."
+}

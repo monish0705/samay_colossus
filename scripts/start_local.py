@@ -23,6 +23,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend-port", type=int, default=8010)
     parser.add_argument("--frontend-port", type=int, default=5173)
+    parser.add_argument("--refresh-context", action="store_true", help="Collect public market-city weather/news/calendar now and hourly; unavailable sources never become fabricated data")
+    parser.add_argument("--enable-research", action="store_true", help="Explicitly use bundled saved research forecasts with limited-evidence labels; never marks models validated")
     parser.add_argument("--check", action="store_true", help="Migrate and verify existing listeners, then exit; do not launch or stop services")
     args = parser.parse_args()
     if not all(1024 <= p <= 65535 for p in (args.backend_port, args.frontend_port)) or args.backend_port == args.frontend_port:
@@ -32,6 +34,8 @@ def main():
         raise SystemExit("Dependencies are missing. Run python scripts/setup_local.py while online first.")
     env = os.environ.copy()
     env.update(PYTHONUTF8="1", VITE_API_BASE_URL="/backend", SAMAY_BACKEND_URL=f"http://127.0.0.1:{args.backend_port}")
+    if args.enable_research:
+        env.update(SAMAY_ENABLE_RESEARCH_FORECASTS="true",SAMAY_RESEARCH_REGISTRY_PATH=str(ROOT/"research-registry.json"),SAMAY_RESEARCH_SERVING_REGISTRY_PATH=str(ROOT/"research-serving-registry.json"))
     subprocess.run([str(python), "scripts/restore_prepared_data.py"], cwd=ROOT, env=env, check=True)
     subprocess.run([str(python), "-m", "alembic", "-c", "backend/alembic.ini", "upgrade", "head"], cwd=ROOT, env=env, check=True)
     subprocess.run([str(python), "scripts/repair_data_provenance.py"], cwd=ROOT, env=env, check=True)
@@ -40,6 +44,8 @@ def main():
     owned = []
     flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
     try:
+        if args.refresh_context and not args.check:
+            owned.append(subprocess.Popen([str(python), "scripts/refresh_market_context.py", "--watch-minutes", "60"], cwd=ROOT, env=env, creationflags=flags))
         if not ready(backend + "/api/health") and not args.check:
             owned.append(subprocess.Popen([str(python), "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(args.backend_port)], cwd=ROOT, env=env, creationflags=flags))
         if not ready(frontend) and not args.check:

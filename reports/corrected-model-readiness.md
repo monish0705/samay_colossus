@@ -22,6 +22,18 @@ All forecasts are retrospective research / limited evidence. This report reprodu
 | Potato / local / unspecified | secondary | 1d | naive | 31 | 161.29 | 161.29 | 246.26 | 7.47 |
 | Potato / local / unspecified | secondary | 3d | naive | 29 | insufficient final samples | unavailable | unavailable | unavailable |
 | Potato / local / unspecified | secondary | 7d | naive | 26 | insufficient final samples | unavailable | unavailable | unavailable |
+| Copra / other / local | verified | 1d | median_14 | 39 | 689.74 | 974.36 | 964.17 | 3.83 |
+| Copra / other / local | verified | 3d | median_14 | 37 | 720.27 | 994.59 | 1007.30 | 4.00 |
+| Copra / other / local | verified | 7d | median_14 | 34 | 717.65 | 1052.94 | 1028.71 | 3.99 |
+| Arecanut / rashi / local | verified | 1d | naive | 28 | insufficient final samples | unavailable | unavailable | unavailable |
+| Arecanut / rashi / local | verified | 3d | naive | 26 | insufficient final samples | unavailable | unavailable | unavailable |
+| Arecanut / rashi / local | verified | 7d | mean_14 | 24 | insufficient final samples | unavailable | unavailable | unavailable |
+| Onion / puna / local | verified | 1d | blend_naive_mean14_25 | 34 | 377.94 | 400.00 | 479.01 | 8.93 |
+| Onion / puna / local | verified | 3d | naive | 32 | 559.38 | 559.38 | 740.14 | 13.11 |
+| Onion / puna / local | verified | 7d | blend_naive_mean14_50 | 29 | insufficient final samples | unavailable | unavailable | unavailable |
+| Potato / local / medium | verified | 1d | naive | 39 | 143.59 | 143.59 | 504.34 | 6.33 |
+| Potato / local / medium | verified | 3d | naive | 37 | 302.70 | 302.70 | 732.27 | 13.27 |
+| Potato / local / medium | verified | 7d | median_14 | 34 | 532.35 | 482.35 | 1006.01 | 23.09 |
 
 ## Current refits
 
@@ -45,12 +57,24 @@ Configurations were fixed by the original studies; no new tuning against consume
 - Potato / local / unspecified 1d: naive; 926 usable refit samples; version 27b001ec4da18397-champion-1d.
 - Potato / local / unspecified 3d: naive; 919 usable refit samples; version a64877387dd698d2-champion-3d.
 - Potato / local / unspecified 7d: naive; 921 usable refit samples; version 7cca0655ee90deff-champion-7d.
+- Copra / other / local 1d: median_14; 196 usable refit samples; version adac6b1940e3995e-champion-1d.
+- Copra / other / local 3d: median_14; 194 usable refit samples; version 5cc69d598886a81f-champion-3d.
+- Copra / other / local 7d: median_14; 191 usable refit samples; version 929dcc4d93a1b2e6-champion-7d.
+- Arecanut / rashi / local 1d: naive; 179 usable refit samples; version e4b44d2b708617e7-champion-1d.
+- Arecanut / rashi / local 3d: naive; 179 usable refit samples; version 41317315acf51111-champion-3d.
+- Arecanut / rashi / local 7d: mean_14; 175 usable refit samples; version 9f1fe6137c573338-champion-7d.
+- Onion / puna / local 1d: blend_naive_mean14_25; 221 usable refit samples; version f53a132c924ed1df-champion-1d.
+- Onion / puna / local 3d: naive; 220 usable refit samples; version 58b38c31458c73e0-champion-3d.
+- Onion / puna / local 7d: blend_naive_mean14_50; 216 usable refit samples; version 69a866806f78814f-champion-7d.
+- Potato / local / medium 1d: naive; 245 usable refit samples; version 8a13bb943e3d71c2-champion-1d.
+- Potato / local / medium 3d: naive; 243 usable refit samples; version 1115c3d1b37ff78a-champion-3d.
+- Potato / local / medium 7d: median_14; 240 usable refit samples; version 704f54e65aa5bdf9-champion-7d.
 
 ## Limitations
 
-- Four additional crops were trained on separately labeled India Data Portal secondary history. Their dated series are stale for current-day forecasting; no live prediction is invented.
+- Original secondary-only studies remain archived and stale. Four new current-grade studies explicitly combine verified identical-grade secondary backfill and fresh official OGD observations; per-series freshness remains enforced.
 - Original publication/revision vintages are unverified. All serving artifacts remain research only, limited evidence.
 - Consumed test metrics are unchanged; current refits are not newly tested models. Do not describe 100 minus WAPE as accuracy.
 - Intervals are secondary retrospective block-residual diagnostics for the same stateless baseline rules, not guaranteed coverage.
 - Some selected baselines lose to naive on final observations; these results are retained without post-holdout reselection.
-- Potato 3d/7d have fewer than 30 final examples; no final metric is claimed. Unspecified grades were not inferred or merged with graded data.
+- Sparse final sets (including original Potato 3d/7d, current Arecanut and current Onion 7d) have fewer than 30 final examples and no reliable final metric. Unspecified grades were not inferred or merged with graded data.

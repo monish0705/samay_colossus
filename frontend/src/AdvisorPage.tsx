@@ -8,13 +8,15 @@ import {
   buildRecommendation,
   exampleAdvisor,
   getEffectiveAdvisorValues,
+  holdingDates,
   validateAdvisor,
   type AdvisorValues,
 } from './advisor';
 import { Badge, Card, ErrorState, Notice, PageHeading, useResource } from './ui';
 import { ResultSummary } from './Results';
+import { MarketContextPanel } from './DecisionPanel';
 
-type NumericField = Exclude<keyof AdvisorValues, 'risk' | 'days' | 'payment' | 'notes' | 'conditions' | 'acknowledged' | 'example' | 'scenarioPrice'>;
+type NumericField = Exclude<keyof AdvisorValues, 'risk' | 'days' | 'payment' | 'notes' | 'conditions' | 'acknowledged' | 'example' | 'scenarioPrice' | 'conditionalAnalysis' | 'compareDates' | 'longReference' | 'storageExposure' | 'rainStop'>;
 
 export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
   const { mode, scope, setScope, draft, setDraft, setResult, result, catalog } = useApp();
@@ -112,7 +114,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
 
   const change = <K extends keyof AdvisorValues>(key: K, value: AdvisorValues[K]) => {
     if (key === 'price' && value) setOverrideQuote(true);
-    setDraft({ ...draft, [key]: value, example: false });
+    setDraft({ ...draft, [key]: value, ...(key === 'storageExposure' ? { rainStop: false } : {}), example: false });
     setDirty(true);
     setErrors(old => ({ ...old, [key]: '' }));
   };
@@ -202,8 +204,10 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
   };
 
   const deployed = catalog.data?.models.models.some(
-    m => m.market === scope.market && m.variety === scope.variety && m.grade === scope.grade && m.model_version
+    m => m.market === scope.market && m.commodity === scope.commodity && m.variety === scope.variety && m.grade === scope.grade && m.model_version
   );
+  const researchAvailable = catalog.data?.models.research_models?.some(m => m.market === scope.market && m.commodity === scope.commodity && m.variety === scope.variety && m.grade === scope.grade && m.model_version);
+  const availableHorizons = [...(catalog.data?.models.models || []),...(catalog.data?.models.research_models || [])].filter(m=>m.market===scope.market && m.commodity===scope.commodity && m.variety===scope.variety && m.grade===scope.grade && m.model_version).map(m=>m.horizon);
 
   return localize(
     <>
@@ -285,8 +289,8 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                       <strong className="crop-card-name">{t(c.commodity)}</strong>
                       <span className="crop-card-market">{t(c.market)}</span>
                       <div className="crop-card-footer">
-                        <span>{t('Ref. modal:')}</span>
-                        <strong>₹{Number(c.defaultPrice).toLocaleString('en-IN')}/{t('qtl')}</strong>
+                        <span>{t('Variety')} / {t('Grade')}</span>
+                        <strong>{c.variety} / {c.grade}</strong>
                       </div>
                     </button>
                   );
@@ -471,8 +475,8 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                       value={draft.days}
                       onChange={e => change('days', e.target.value as AdvisorValues['days'])}
                     >
-                      {activeCrop.holdingOptions.map(d => (
-                        <option value={d} key={d}>{d} {t('calendar days · planning date')}</option>
+                      {[...new Set([...activeCrop.holdingOptions,...availableHorizons.map(String)])].sort((a,b)=>Number(a)-Number(b)).map(d => (
+                        <option value={d} key={d}>{d} {t('calendar days · planning date')} · {t(availableHorizons.includes(Number(d)) ? 'Saved forecast' : 'Scenario only')}</option>
                       ))}
                     </select>
                     <small className="field-error">{errors.days ? t(errors.days) : ''}</small>
@@ -507,7 +511,9 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
 
                 {!deployed && (
                   <Notice>
-                    {t('No operational forecast is deployed for this series. Entering storage assumptions cannot enable a confident hold recommendation.')}
+                    {t(researchAvailable ? 'Saved forecasts are limited-evidence research. Review the selected horizon and assumptions; holding is conditional.' : 'No operational forecast is deployed for this series. Entering storage assumptions cannot enable a confident hold recommendation.')}
+                    <p>{t('Saved horizons')}: {availableHorizons.length} · {t('Maximum saved horizon')}: {availableHorizons.length ? Math.max(...availableHorizons) : '—'} {t('days')}</p>
+                    {Number(draft.capacity)>0 && !availableHorizons.includes(Number(draft.days)) && <p>{t('Insufficient evidence for this date. No future price will be invented.')}</p>}
                   </Notice>
                 )}
               </>
@@ -515,13 +521,24 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
 
             {hasStorage && (
               <div className="form-grid">
+                <label className="checkbox-field"><input type="checkbox" checked={draft.conditionalAnalysis} onChange={e => change('conditionalAnalysis',e.target.checked)}/><span>{t('Compare conditional sell-or-hold scenarios even when calibrated intervals are unavailable')}</span></label>
+                <label className="checkbox-field"><input type="checkbox" checked={draft.compareDates} onChange={e => change('compareDates',e.target.checked)}/><span>{t('Compare 1, 3 and 7 days plus my selected date, within my holding limit')}</span></label>
                 <label className="field" htmlFor="advisor-scenario-price">
                   <span>{t('Optional future buyer price assumption')}</span>
                   <input id="advisor-scenario-price" inputMode="decimal" value={draft.scenarioPrice || ''} onChange={e => change('scenarioPrice', e.target.value)} />
-                  <small>{t('Leave blank to request the saved forecast. Entering a price creates scenario-only analysis.')}</small>
+                  <small>{t(Number(draft.days) > 7 ? 'For longer dates, provide your future buyer quote or explicitly choose a flat-reference scenario.' : 'Leave blank to request the saved forecast. Entering a price creates scenario-only analysis.')}</small>
                   {errors.scenarioPrice && <small role="alert">{t(errors.scenarioPrice)}</small>}
                 </label>
-                {field('adverse', 'Adverse gross future price', 'INR / qtl', 'User-entered downside assumption')}
+                {draft.conditionalAnalysis ? <>
+                  <Notice tone="amber">{t('These percentages are your sensitivity assumptions, not model confidence bands. Review them using the evidence below.')}</Notice>
+                  {field('downsidePercent','Lower-scenario price drop','%')}
+                  {field('adversePercent','Adverse-scenario price drop','%')}
+                  {field('upsidePercent','Upper-scenario price rise','%')}
+                  {field('realization','Future buyer price / mandi forecast','×','Use your historical buyer realization. A factor of 1 assumes no discount to the mandi forecast.')}
+                  {Number(draft.days) > 7 && <label className="field"><span>{t('Longer holding-date price basis')}</span><select value={draft.longReference} onChange={e => change('longReference',e.target.value as AdvisorValues['longReference'])}><option value="saved_forecast">{t('Use the saved forecast for this exact date; fail safely if unavailable')}</option><option value="require_user_price">{t('Require my future buyer quote')}</option><option value="flat_reference">{t('Use a flat dated price reference, not a trained forecast')}</option></select><small>{t('Extended forecasts are research only. Beyond saved evidence, enter your own scenario. Weather coverage is limited to its source dates.')}</small></label>}
+                  <label className="field"><span>{t('Storage exposure to rain')}</span><select value={draft.storageExposure} onChange={e => change('storageExposure',e.target.value as AdvisorValues['storageExposure'])}><option value="unknown">{t('Not verified')}</option><option value="protected">{t('Protected storage')}</option><option value="outdoor">{t('Outdoor or exposed storage')}</option></select></label>
+                  {draft.storageExposure === 'outdoor' && <><label className="checkbox-field"><input type="checkbox" checked={draft.rainStop} onChange={e => change('rainStop',e.target.checked)}/><span>{t('Block holding if the rain threshold is reached or weather coverage is missing')}</span></label>{draft.rainStop && field('rainThreshold','Maximum allowed daily rain','mm','Your storage constraint; not an automatic crop-loss estimate')}</>}
+                </> : field('adverse', 'Adverse gross future price', 'INR / qtl', 'User-entered downside assumption')}
               </div>
             )}
 
@@ -544,17 +561,9 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                 {field('step', 'Market sale rounding step', 'qtl')}
               </div>
 
-              {mode === 'judge' && (
-                <div className="judge-advanced-assumptions">
-                  <h4>{t('Farmer realization mapping & adverse stress assumption')}</h4>
-                  <div className="form-grid">
-                    {field('realization', 'Gross realization / mandi-price factor', '×', 'Explicit assumption from 0 to 2; not a calibrated model')}
-                  </div>
-                </div>
-              )}
             </details>
 
-            {mode === 'judge' && (
+            {(
               <div style={{ marginTop: '18px' }}>
                 <p className="eyebrow">{t('RISK TOLERANCE')}</p>
                 <fieldset className="risk-options">
@@ -620,6 +629,8 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
             </button>
           </Card>
 
+          {(explorer || step === 3 || step === 4) && <MarketContextPanel scope={scope} days={Math.max(7,Number(draft.days) || 7)} collapsed/>}
+
           {/* STEP 4: Review & Calculate */}
           {!explorer && (
             <Card className="journey-review" hidden={step !== 4}>
@@ -632,7 +643,7 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                   <dd>{draft.quantity || '0'} {t('qtl')}</dd>
                 </div>
                 <div>
-                  <dt>{t('Applied wholesale price')}</dt>
+                  <dt>{t('Applied buyer price assumption')}</dt>
                   <dd>₹{appliedPrice} / {t('qtl')}</dd>
                 </div>
                 <div>
@@ -644,6 +655,8 @@ export function AdvisorPage({ explorer = false }: { explorer?: boolean }) {
                   <dd>{Number(draft.capacity) > 0 ? `${draft.capacity} ${t('qtl')} (${draft.days} ${t('days')})` : t('No holding capacity')}</dd>
                 </div>
               </dl>
+
+              {Number(draft.capacity)>0 && <Notice>{t('Compared holding dates')}: {holdingDates(effectiveDraft,scope.commodity).join(', ')} {t('days')} · {t('Risk tolerance')}: {t(draft.risk)} · {t('Lower / adverse drop / upper rise')}: {draft.downsidePercent}% / {draft.adversePercent}% / {draft.upsidePercent}% · {t('Future buyer price / mandi forecast')}: {draft.realization}×</Notice>}
 
               <div className="review-cost-summary">
                 <h4>{t('User assumptions: verify costs and storage conditions')}</h4>

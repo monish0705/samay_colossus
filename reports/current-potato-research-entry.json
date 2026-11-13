@@ -1,0 +1,9 @@
+{
+  "directory": "models/research/research-snapshot-v1-35245f4e3dabb00e",
+  "comparison_sha256": "4dbc70c6472dc365e711a36bec1245bc8e549a06cb04f403b9ff463fd96d91ef",
+  "prediction_sha256": {
+    "final-predictions-1d.csv": "215ce863411c6ef25e2637b47a3d37a6b0446fff0d06645112fb4cb0ed869be4",
+    "final-predictions-3d.csv": "5a47f4aff99d0bb2a7c2a8a234ab792252921c6b5d3e5892bbf6623a20d1c634",
+    "final-predictions-7d.csv": "1ed33b3d017dc4595531a9a402ec8646c36da495c1924edfcd17575e8b35701a"
+  }
+}

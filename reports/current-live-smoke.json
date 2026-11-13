@@ -1,0 +1,2835 @@
+{
+  "captured_at": "2026-11-05T09:31:55.996401+00:00",
+  "health": [
+    200,
+    {
+      "status": "ok",
+      "service": "samay",
+      "version": "0.1.0"
+    }
+  ],
+  "data_status": [
+    200,
+    {
+      "historical_demo_date": null,
+      "status": "observations_available",
+      "official_observations": 3938,
+      "secondary_observations": 5834,
+      "latest_secondary_report_date": "2026-05-30",
+      "latest_secondary_fetched_at": "2026-11-04T19:36:59.824210Z",
+      "fixture_observations": 3,
+      "demo_observations": 7305,
+      "latest_official_report_date": "2026-11-04",
+      "latest_official_fetched_at": "2026-11-05T08:39:55.871780Z",
+      "note": "Official means operator-attested government provenance, not independent publisher authentication. Fixtures/demos are never substituted as live observations."
+    }
+  ],
+  "series": [
+    {
+      "scope": {
+        "market": "Tiptur APMC",
+        "commodity": "Copra",
+        "variety": "other",
+        "grade": "local"
+      },
+      "forecasts": [
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "18000.00",
+            "intervals": [],
+            "horizon_calendar_days": 1,
+            "timestamp": "2026-11-05T09:31:56.088960+00:00",
+            "target_date": "2026-11-06",
+            "model_version": "adac6b1940e3995e-champion-1d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable",
+              "short_history_baseline_only"
+            ],
+            "market": "Tiptur APMC",
+            "commodity": "Copra",
+            "variety": "other",
+            "grade": "local",
+            "latest_report_date": "2026-11-03",
+            "observation_age_calendar_days": 2,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 12,
+                  "sha256": "098d3a2b89b22d22bcf3c65b58652d1f4385e806077a1ce4ffebb1c441c1227a",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:56.251654+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 18,
+                  "sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:40.860344+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-a0b204e8241fd7c0/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:56.088960+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "7e6baf74-a7ac-434e-8759-d04bf6d59406",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "18000.00",
+            "intervals": [],
+            "horizon_calendar_days": 3,
+            "timestamp": "2026-11-05T09:31:56.218645+00:00",
+            "target_date": "2026-11-08",
+            "model_version": "5cc69d598886a81f-champion-3d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable",
+              "short_history_baseline_only"
+            ],
+            "market": "Tiptur APMC",
+            "commodity": "Copra",
+            "variety": "other",
+            "grade": "local",
+            "latest_report_date": "2026-11-03",
+            "observation_age_calendar_days": 2,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 12,
+                  "sha256": "098d3a2b89b22d22bcf3c65b58652d1f4385e806077a1ce4ffebb1c441c1227a",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:56.251654+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 18,
+                  "sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:40.860344+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-a0b204e8241fd7c0/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:56.218645+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "34f07894-e1a8-4920-97c1-1904aa48b835",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "18000.00",
+            "intervals": [],
+            "horizon_calendar_days": 7,
+            "timestamp": "2026-11-05T09:31:56.298026+00:00",
+            "target_date": "2026-11-12",
+            "model_version": "929dcc4d93a1b2e6-champion-7d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable",
+              "short_history_baseline_only"
+            ],
+            "market": "Tiptur APMC",
+            "commodity": "Copra",
+            "variety": "other",
+            "grade": "local",
+            "latest_report_date": "2026-11-03",
+            "observation_age_calendar_days": 2,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 12,
+                  "sha256": "098d3a2b89b22d22bcf3c65b58652d1f4385e806077a1ce4ffebb1c441c1227a",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:56.251654+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 18,
+                  "sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:40.860344+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-a0b204e8241fd7c0/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:56.298026+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "5f1a7623-944f-406d-ae80-390630c9cbfb",
+            "price_unit": "INR/quintal"
+          }
+        }
+      ],
+      "history_n": 227,
+      "latest": {
+        "observation": {
+          "id": 18936,
+          "market_id": 5,
+          "commodity_id": 5,
+          "market": "Tiptur APMC",
+          "commodity": "Copra",
+          "report_date": "2026-11-03",
+          "variety": "other",
+          "grade": "local",
+          "min_price_inr_per_quintal": "11500.00",
+          "modal_price_inr_per_quintal": "18500.00",
+          "max_price_inr_per_quintal": "20000.00",
+          "arrivals_quintals": null,
+          "price_unit": "INR/quintal",
+          "source": "Official OGD / AGMARKNET historical APMC observations",
+          "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+          "fetched_at": "2026-11-05T08:39:40.860344Z",
+          "data_kind": "official"
+        },
+        "stale": false,
+        "age_calendar_days": 2,
+        "note": "Latest stored official wholesale observation, not a live buyer quote or guaranteed farmer realization."
+      },
+      "recommendation": {
+        "status": 200,
+        "request": {
+          "commodity": "Copra",
+          "market": "Tiptur APMC",
+          "variety": "other",
+          "grade": "local",
+          "decision_at": "2026-11-05T09:31:56.452458+00:00",
+          "total_quantity_quintals": "20",
+          "today_price_inr_per_quintal": "18500.00",
+          "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+          "required_net_cash_inr": "10000",
+          "storage_capacity_quintals": "10",
+          "decision_increment_quintals": "1",
+          "market_quantity_step_quintals": "0.01",
+          "minimum_sale_lot_quintals": "1",
+          "maximum_horizon_days": 7,
+          "risk_tolerance": "balanced",
+          "crop_storage_profile": {
+            "commodity": "Copra",
+            "maximum_holding_days": 3,
+            "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+            "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+          },
+          "today_sale_costs": {
+            "fixed_transport_inr": "100",
+            "transport_inr_per_quintal": "10",
+            "commission_rate": "0.05",
+            "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+          },
+          "holding_options": [
+            {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "transport_inr_per_quintal": "10",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "realization_multiplier": "1",
+              "price_basis_assumption": "EXAMPLE_ONLY gross farmer price equals mandi forecast; verify actual buyer terms",
+              "adverse_inr_per_quintal": "0",
+              "adverse_assumption": "EXAMPLE_ONLY zero-price adverse stress, not a statistical quantile"
+            }
+          ]
+        },
+        "response": {
+          "request_id": "86fc7e84-ae12-4ede-b63e-49b6b5c36b75",
+          "history_id": 10,
+          "market_data": {
+            "report_date": "2026-11-03",
+            "fetched_at": "2026-11-05T08:39:40.860344Z",
+            "source": "Official OGD / AGMARKNET historical APMC observations",
+            "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+            "file_sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+            "stale": false,
+            "data_kind": "official"
+          },
+          "predictions": [
+            {
+              "schema_version": "samay-reliability-v1",
+              "prediction_inr_per_quintal": "18000.00",
+              "intervals": [],
+              "horizon_calendar_days": 3,
+              "timestamp": "2026-11-05T09:31:56.452458+00:00",
+              "target_date": "2026-11-08",
+              "model_version": "5cc69d598886a81f-champion-3d",
+              "reliability_status": "limited evidence",
+              "flags": [
+                "retrospective_research_only",
+                "historical_publication_unverified",
+                "interval_coverage_not_guaranteed",
+                "empirical_interval_unavailable",
+                "short_history_baseline_only"
+              ],
+              "market": "Tiptur APMC",
+              "commodity": "Copra",
+              "variety": "other",
+              "grade": "local",
+              "latest_report_date": "2026-11-03",
+              "observation_age_calendar_days": 2,
+              "data_source": {
+                "mode": "research_only",
+                "sources": [
+                  {
+                    "batch_id": 12,
+                    "sha256": "098d3a2b89b22d22bcf3c65b58652d1f4385e806077a1ce4ffebb1c441c1227a",
+                    "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                    "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                    "fetched_at": "2026-11-04T19:36:56.251654+00:00",
+                    "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                    "source_kind": "secondary"
+                  },
+                  {
+                    "batch_id": 18,
+                    "sha256": "8971babb13fea9cae0bf12ea48f51687b2a354955a25f7ea612eeff3d1724094",
+                    "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                    "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                    "fetched_at": "2026-11-05T08:39:40.860344+00:00",
+                    "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                    "source_kind": "official"
+                  }
+                ],
+                "selection_report": "models/research/research-snapshot-v1-a0b204e8241fd7c0/comparison.json",
+                "input_decision_at": "2026-11-05T09:31:56.452458+00:00",
+                "calibration": {
+                  "radii": {},
+                  "reason": "Insufficient separated calibration/diagnostic observations"
+                },
+                "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+              },
+              "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+              "request_id": "86fc7e84-ae12-4ede-b63e-49b6b5c36b75",
+              "price_unit": "INR/quintal"
+            }
+          ],
+          "reliability_warnings": [
+            "3d:empirical_interval_unavailable",
+            "3d:historical_publication_unverified",
+            "3d:interval_coverage_not_guaranteed",
+            "3d:limited evidence",
+            "3d:retrospective_research_only",
+            "3d:short_history_baseline_only"
+          ],
+          "optimization": {
+            "schema_version": "samay-selling-v1",
+            "status": "sell_all_now",
+            "recommendation_basis": "today_only_safe_fallback",
+            "has_unreliable_or_missing_scenarios": true,
+            "decision_at": "2026-11-05T09:31:56.452458Z",
+            "scope": {
+              "commodity": "Copra",
+              "market": "Tiptur APMC",
+              "variety": "other",
+              "grade": "local"
+            },
+            "units": {
+              "money": "INR",
+              "price": "INR/quintal",
+              "quantity": "quintals"
+            },
+            "sell_all_now": {
+              "sale": {
+                "gross_inr": "370000.00",
+                "commission_inr": "18500.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "351200.00"
+              },
+              "meets_minimum_lot": true,
+              "meets_cash_requirement": true
+            },
+            "maximum_today_net_cash_upper_bound_inr": "351200.00",
+            "cash_requirement_achievable_on_grid": true,
+            "recommended_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "370000.00",
+                "commission_inr": "18500.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "351200.00"
+              },
+              "cash_today_inr": "351200.00",
+              "cash_surplus_inr": "341200.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "351200.00",
+                "lower": "351200.00",
+                "central": "351200.00",
+                "upper": "351200.00"
+              },
+              "downside_total_net_inr": "351200.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "351200.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "best_scenario_only_or_validated_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "370000.00",
+                "commission_inr": "18500.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "351200.00"
+              },
+              "cash_today_inr": "351200.00",
+              "cash_surplus_inr": "341200.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "351200.00",
+                "lower": "351200.00",
+                "central": "351200.00",
+                "upper": "351200.00"
+              },
+              "downside_total_net_inr": "351200.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "351200.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "feasible_plans": [
+              {
+                "sell_today_quintals": "20",
+                "hold_initial_quintals": "0",
+                "holding_days": 0,
+                "later_saleable_quintals": "0",
+                "deterioration_loss_quintals": "0",
+                "rounding_discard_quintals": "0",
+                "storage_cost_inr": "0",
+                "storage_paid_today_inr": "0",
+                "storage_paid_later_inr": "0",
+                "today_sale": {
+                  "gross_inr": "370000.00",
+                  "commission_inr": "18500.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "300.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "351200.00"
+                },
+                "cash_today_inr": "351200.00",
+                "cash_surplus_inr": "341200.00",
+                "later_sales": {
+                  "adverse": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "lower": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "central": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "upper": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  }
+                },
+                "central_later_net_after_storage_inr": "0.00",
+                "total_net_inr": {
+                  "adverse": "351200.00",
+                  "lower": "351200.00",
+                  "central": "351200.00",
+                  "upper": "351200.00"
+                },
+                "downside_total_net_inr": "351200.00",
+                "difference_vs_sell_all_now_inr": {
+                  "adverse": "0.00",
+                  "lower": "0.00",
+                  "central": "0.00",
+                  "upper": "0.00"
+                },
+                "risk_adjusted_objective_inr": "351200.00",
+                "recommendation_eligible": true,
+                "warnings": [],
+                "break_even_future_price_inr_per_quintal": null,
+                "assumptions": {
+                  "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+                }
+              }
+            ],
+            "rejected_counts": {
+              "missing_price_scenarios": 1
+            },
+            "risk_tolerance": "balanced",
+            "request_and_assumptions": {
+              "commodity": "Copra",
+              "market": "Tiptur APMC",
+              "variety": "other",
+              "grade": "local",
+              "decision_at": "2026-11-05T09:31:56.452458Z",
+              "total_quantity_quintals": "20",
+              "today_price_inr_per_quintal": "18500.00",
+              "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+              "required_net_cash_inr": "10000",
+              "storage_capacity_quintals": "10",
+              "decision_increment_quintals": "1",
+              "market_quantity_step_quintals": "0.01",
+              "minimum_sale_lot_quintals": "1",
+              "maximum_horizon_days": 7,
+              "crop_storage_profile": {
+                "commodity": "Copra",
+                "maximum_holding_days": 3,
+                "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+                "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+              },
+              "today_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+              },
+              "holding_options": [
+                {
+                  "days": 3,
+                  "daily_loss_fractions": [
+                    "0.01",
+                    "0.01",
+                    "0.01"
+                  ],
+                  "daily_storage_inr_per_quintal": [
+                    "2",
+                    "2",
+                    "2"
+                  ],
+                  "fixed_storage_inr": "0",
+                  "storage_payment": "later",
+                  "future_sale_costs": {
+                    "fixed_transport_inr": "100",
+                    "fixed_transaction_inr": "0",
+                    "transport_inr_per_quintal": "10",
+                    "handling_inr_per_quintal": "0",
+                    "market_fee_rate": "0",
+                    "commission_rate": "0.05",
+                    "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+                  },
+                  "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+                  "scenarios": null
+                }
+              ],
+              "risk_tolerance": "balanced"
+            },
+            "explanations": [
+              "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+              "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+              "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+              "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+              "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+              "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+              "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+              "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+              "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+              "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "scope": {
+        "market": "Shivamogga Mandi",
+        "commodity": "Arecanut",
+        "variety": "rashi",
+        "grade": "local"
+      },
+      "forecasts": [
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "49069.00",
+            "intervals": [],
+            "horizon_calendar_days": 1,
+            "timestamp": "2026-11-05T09:31:56.627479+00:00",
+            "target_date": "2026-11-06",
+            "model_version": "e4b44d2b708617e7-champion-1d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable",
+              "short_history_baseline_only"
+            ],
+            "market": "Shivamogga Mandi",
+            "commodity": "Arecanut",
+            "variety": "rashi",
+            "grade": "local",
+            "latest_report_date": "2026-11-03",
+            "observation_age_calendar_days": 2,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 10,
+                  "sha256": "70e4b87e255c8d805a983d88cdfee917334b59330fd54b482ed9a6fac63b7b83",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:57.354594+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 19,
+                  "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-a18c6b2407216a5a/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:56.627479+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "No calibration transfers to a refitted learned model"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "71be8b32-ff99-4eee-bc39-6de0e745def7",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "49069.00",
+            "intervals": [],
+            "horizon_calendar_days": 3,
+            "timestamp": "2026-11-05T09:31:56.714438+00:00",
+            "target_date": "2026-11-08",
+            "model_version": "41317315acf51111-champion-3d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable",
+              "short_history_baseline_only"
+            ],
+            "market": "Shivamogga Mandi",
+            "commodity": "Arecanut",
+            "variety": "rashi",
+            "grade": "local",
+            "latest_report_date": "2026-11-03",
+            "observation_age_calendar_days": 2,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 10,
+                  "sha256": "70e4b87e255c8d805a983d88cdfee917334b59330fd54b482ed9a6fac63b7b83",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:57.354594+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 19,
+                  "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-a18c6b2407216a5a/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:56.714438+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "No calibration transfers to a refitted learned model"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "4f70d86b-27fe-41ad-88a5-71a9e7e59a66",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "48162.71",
+            "intervals": [],
+            "horizon_calendar_days": 7,
+            "timestamp": "2026-11-05T09:31:56.777783+00:00",
+            "target_date": "2026-11-12",
+            "model_version": "9f1fe6137c573338-champion-7d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable",
+              "short_history_baseline_only"
+            ],
+            "market": "Shivamogga Mandi",
+            "commodity": "Arecanut",
+            "variety": "rashi",
+            "grade": "local",
+            "latest_report_date": "2026-11-03",
+            "observation_age_calendar_days": 2,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 10,
+                  "sha256": "70e4b87e255c8d805a983d88cdfee917334b59330fd54b482ed9a6fac63b7b83",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:57.354594+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 19,
+                  "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-a18c6b2407216a5a/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:56.777783+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "No calibration transfers to a refitted learned model"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "5db7a3d8-c548-476b-bbb7-ee619d23a7e8",
+            "price_unit": "INR/quintal"
+          }
+        }
+      ],
+      "history_n": 210,
+      "latest": {
+        "observation": {
+          "id": 20116,
+          "market_id": 3,
+          "commodity_id": 3,
+          "market": "Shivamogga Mandi",
+          "commodity": "Arecanut",
+          "report_date": "2026-11-03",
+          "variety": "rashi",
+          "grade": "local",
+          "min_price_inr_per_quintal": "42009.00",
+          "modal_price_inr_per_quintal": "49069.00",
+          "max_price_inr_per_quintal": "50000.00",
+          "arrivals_quintals": null,
+          "price_unit": "INR/quintal",
+          "source": "Official OGD / AGMARKNET historical APMC observations",
+          "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+          "fetched_at": "2026-11-05T08:39:45.844636Z",
+          "data_kind": "official"
+        },
+        "stale": false,
+        "age_calendar_days": 2,
+        "note": "Latest stored official wholesale observation, not a live buyer quote or guaranteed farmer realization."
+      },
+      "recommendation": {
+        "status": 200,
+        "request": {
+          "commodity": "Arecanut",
+          "market": "Shivamogga Mandi",
+          "variety": "rashi",
+          "grade": "local",
+          "decision_at": "2026-11-05T09:31:56.888222+00:00",
+          "total_quantity_quintals": "20",
+          "today_price_inr_per_quintal": "49069.00",
+          "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+          "required_net_cash_inr": "10000",
+          "storage_capacity_quintals": "10",
+          "decision_increment_quintals": "1",
+          "market_quantity_step_quintals": "0.01",
+          "minimum_sale_lot_quintals": "1",
+          "maximum_horizon_days": 7,
+          "risk_tolerance": "balanced",
+          "crop_storage_profile": {
+            "commodity": "Arecanut",
+            "maximum_holding_days": 3,
+            "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+            "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+          },
+          "today_sale_costs": {
+            "fixed_transport_inr": "100",
+            "transport_inr_per_quintal": "10",
+            "commission_rate": "0.05",
+            "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+          },
+          "holding_options": [
+            {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "transport_inr_per_quintal": "10",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "realization_multiplier": "1",
+              "price_basis_assumption": "EXAMPLE_ONLY gross farmer price equals mandi forecast; verify actual buyer terms",
+              "adverse_inr_per_quintal": "0",
+              "adverse_assumption": "EXAMPLE_ONLY zero-price adverse stress, not a statistical quantile"
+            }
+          ]
+        },
+        "response": {
+          "request_id": "945d57f6-d62b-4191-b295-324a4557d6d9",
+          "history_id": 11,
+          "market_data": {
+            "report_date": "2026-11-03",
+            "fetched_at": "2026-11-05T08:39:45.844636Z",
+            "source": "Official OGD / AGMARKNET historical APMC observations",
+            "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+            "file_sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+            "stale": false,
+            "data_kind": "official"
+          },
+          "predictions": [
+            {
+              "schema_version": "samay-reliability-v1",
+              "prediction_inr_per_quintal": "49069.00",
+              "intervals": [],
+              "horizon_calendar_days": 3,
+              "timestamp": "2026-11-05T09:31:56.888222+00:00",
+              "target_date": "2026-11-08",
+              "model_version": "41317315acf51111-champion-3d",
+              "reliability_status": "limited evidence",
+              "flags": [
+                "retrospective_research_only",
+                "historical_publication_unverified",
+                "interval_coverage_not_guaranteed",
+                "empirical_interval_unavailable",
+                "short_history_baseline_only"
+              ],
+              "market": "Shivamogga Mandi",
+              "commodity": "Arecanut",
+              "variety": "rashi",
+              "grade": "local",
+              "latest_report_date": "2026-11-03",
+              "observation_age_calendar_days": 2,
+              "data_source": {
+                "mode": "research_only",
+                "sources": [
+                  {
+                    "batch_id": 10,
+                    "sha256": "70e4b87e255c8d805a983d88cdfee917334b59330fd54b482ed9a6fac63b7b83",
+                    "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                    "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                    "fetched_at": "2026-11-04T19:36:57.354594+00:00",
+                    "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                    "source_kind": "secondary"
+                  },
+                  {
+                    "batch_id": 19,
+                    "sha256": "e1fbbc7716a6c242dcc0f987aafd84af44fdf11653befd50a1d0700c6f7f7d99",
+                    "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                    "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                    "fetched_at": "2026-11-05T08:39:45.844636+00:00",
+                    "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                    "source_kind": "official"
+                  }
+                ],
+                "selection_report": "models/research/research-snapshot-v1-a18c6b2407216a5a/comparison.json",
+                "input_decision_at": "2026-11-05T09:31:56.888222+00:00",
+                "calibration": {
+                  "radii": {},
+                  "reason": "No calibration transfers to a refitted learned model"
+                },
+                "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+              },
+              "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+              "request_id": "945d57f6-d62b-4191-b295-324a4557d6d9",
+              "price_unit": "INR/quintal"
+            }
+          ],
+          "reliability_warnings": [
+            "3d:empirical_interval_unavailable",
+            "3d:historical_publication_unverified",
+            "3d:interval_coverage_not_guaranteed",
+            "3d:limited evidence",
+            "3d:retrospective_research_only",
+            "3d:short_history_baseline_only"
+          ],
+          "optimization": {
+            "schema_version": "samay-selling-v1",
+            "status": "sell_all_now",
+            "recommendation_basis": "today_only_safe_fallback",
+            "has_unreliable_or_missing_scenarios": true,
+            "decision_at": "2026-11-05T09:31:56.888222Z",
+            "scope": {
+              "commodity": "Arecanut",
+              "market": "Shivamogga Mandi",
+              "variety": "rashi",
+              "grade": "local"
+            },
+            "units": {
+              "money": "INR",
+              "price": "INR/quintal",
+              "quantity": "quintals"
+            },
+            "sell_all_now": {
+              "sale": {
+                "gross_inr": "981380.00",
+                "commission_inr": "49069.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "932011.00"
+              },
+              "meets_minimum_lot": true,
+              "meets_cash_requirement": true
+            },
+            "maximum_today_net_cash_upper_bound_inr": "932011.00",
+            "cash_requirement_achievable_on_grid": true,
+            "recommended_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "981380.00",
+                "commission_inr": "49069.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "932011.00"
+              },
+              "cash_today_inr": "932011.00",
+              "cash_surplus_inr": "922011.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "932011.00",
+                "lower": "932011.00",
+                "central": "932011.00",
+                "upper": "932011.00"
+              },
+              "downside_total_net_inr": "932011.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "932011.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "best_scenario_only_or_validated_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "981380.00",
+                "commission_inr": "49069.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "932011.00"
+              },
+              "cash_today_inr": "932011.00",
+              "cash_surplus_inr": "922011.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "932011.00",
+                "lower": "932011.00",
+                "central": "932011.00",
+                "upper": "932011.00"
+              },
+              "downside_total_net_inr": "932011.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "932011.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "feasible_plans": [
+              {
+                "sell_today_quintals": "20",
+                "hold_initial_quintals": "0",
+                "holding_days": 0,
+                "later_saleable_quintals": "0",
+                "deterioration_loss_quintals": "0",
+                "rounding_discard_quintals": "0",
+                "storage_cost_inr": "0",
+                "storage_paid_today_inr": "0",
+                "storage_paid_later_inr": "0",
+                "today_sale": {
+                  "gross_inr": "981380.00",
+                  "commission_inr": "49069.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "300.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "932011.00"
+                },
+                "cash_today_inr": "932011.00",
+                "cash_surplus_inr": "922011.00",
+                "later_sales": {
+                  "adverse": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "lower": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "central": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "upper": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  }
+                },
+                "central_later_net_after_storage_inr": "0.00",
+                "total_net_inr": {
+                  "adverse": "932011.00",
+                  "lower": "932011.00",
+                  "central": "932011.00",
+                  "upper": "932011.00"
+                },
+                "downside_total_net_inr": "932011.00",
+                "difference_vs_sell_all_now_inr": {
+                  "adverse": "0.00",
+                  "lower": "0.00",
+                  "central": "0.00",
+                  "upper": "0.00"
+                },
+                "risk_adjusted_objective_inr": "932011.00",
+                "recommendation_eligible": true,
+                "warnings": [],
+                "break_even_future_price_inr_per_quintal": null,
+                "assumptions": {
+                  "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+                }
+              }
+            ],
+            "rejected_counts": {
+              "missing_price_scenarios": 1
+            },
+            "risk_tolerance": "balanced",
+            "request_and_assumptions": {
+              "commodity": "Arecanut",
+              "market": "Shivamogga Mandi",
+              "variety": "rashi",
+              "grade": "local",
+              "decision_at": "2026-11-05T09:31:56.888222Z",
+              "total_quantity_quintals": "20",
+              "today_price_inr_per_quintal": "49069.00",
+              "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+              "required_net_cash_inr": "10000",
+              "storage_capacity_quintals": "10",
+              "decision_increment_quintals": "1",
+              "market_quantity_step_quintals": "0.01",
+              "minimum_sale_lot_quintals": "1",
+              "maximum_horizon_days": 7,
+              "crop_storage_profile": {
+                "commodity": "Arecanut",
+                "maximum_holding_days": 3,
+                "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+                "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+              },
+              "today_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+              },
+              "holding_options": [
+                {
+                  "days": 3,
+                  "daily_loss_fractions": [
+                    "0.01",
+                    "0.01",
+                    "0.01"
+                  ],
+                  "daily_storage_inr_per_quintal": [
+                    "2",
+                    "2",
+                    "2"
+                  ],
+                  "fixed_storage_inr": "0",
+                  "storage_payment": "later",
+                  "future_sale_costs": {
+                    "fixed_transport_inr": "100",
+                    "fixed_transaction_inr": "0",
+                    "transport_inr_per_quintal": "10",
+                    "handling_inr_per_quintal": "0",
+                    "market_fee_rate": "0",
+                    "commission_rate": "0.05",
+                    "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+                  },
+                  "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+                  "scenarios": null
+                }
+              ],
+              "risk_tolerance": "balanced"
+            },
+            "explanations": [
+              "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+              "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+              "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+              "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+              "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+              "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+              "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+              "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+              "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+              "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "scope": {
+        "market": "Hubballi APMC",
+        "commodity": "Onion",
+        "variety": "puna",
+        "grade": "local"
+      },
+      "forecasts": [
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "4517.86",
+            "intervals": [],
+            "horizon_calendar_days": 1,
+            "timestamp": "2026-11-05T09:31:57.020611+00:00",
+            "target_date": "2026-11-06",
+            "model_version": "f53a132c924ed1df-champion-1d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable"
+            ],
+            "market": "Hubballi APMC",
+            "commodity": "Onion",
+            "variety": "puna",
+            "grade": "local",
+            "latest_report_date": "2026-11-04",
+            "observation_age_calendar_days": 1,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 14,
+                  "sha256": "9591b22bde2438e0376c49228aee8c79132fa293a6cf302fa5e30a0da35bf17b",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:58.468313+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 20,
+                  "sha256": "fd9e56f514f1f09422a664c77c9432f8586898b776d4c5920af04c6b70a01846",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:53.310684+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-dfc4c731994b0419/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:57.020611+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "b086b8a1-63d7-4728-8713-855147d91340",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "4500.00",
+            "intervals": [],
+            "horizon_calendar_days": 3,
+            "timestamp": "2026-11-05T09:31:57.081560+00:00",
+            "target_date": "2026-11-08",
+            "model_version": "58b38c31458c73e0-champion-3d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable"
+            ],
+            "market": "Hubballi APMC",
+            "commodity": "Onion",
+            "variety": "puna",
+            "grade": "local",
+            "latest_report_date": "2026-11-04",
+            "observation_age_calendar_days": 1,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 14,
+                  "sha256": "9591b22bde2438e0376c49228aee8c79132fa293a6cf302fa5e30a0da35bf17b",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:58.468313+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 20,
+                  "sha256": "fd9e56f514f1f09422a664c77c9432f8586898b776d4c5920af04c6b70a01846",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:53.310684+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-dfc4c731994b0419/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:57.081560+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "2608feb1-4007-4ba7-8c0e-51d9e3410be7",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "4535.71",
+            "intervals": [],
+            "horizon_calendar_days": 7,
+            "timestamp": "2026-11-05T09:31:57.134099+00:00",
+            "target_date": "2026-11-12",
+            "model_version": "69a866806f78814f-champion-7d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable"
+            ],
+            "market": "Hubballi APMC",
+            "commodity": "Onion",
+            "variety": "puna",
+            "grade": "local",
+            "latest_report_date": "2026-11-04",
+            "observation_age_calendar_days": 1,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 14,
+                  "sha256": "9591b22bde2438e0376c49228aee8c79132fa293a6cf302fa5e30a0da35bf17b",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:58.468313+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 20,
+                  "sha256": "fd9e56f514f1f09422a664c77c9432f8586898b776d4c5920af04c6b70a01846",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:53.310684+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-dfc4c731994b0419/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:57.134099+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "No calibration transfers to a refitted learned model"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "dfd88982-910d-4aa0-b279-ff0f2b2a49cf",
+            "price_unit": "INR/quintal"
+          }
+        }
+      ],
+      "history_n": 254,
+      "latest": {
+        "observation": {
+          "id": 20280,
+          "market_id": 4,
+          "commodity_id": 4,
+          "market": "Hubballi APMC",
+          "commodity": "Onion",
+          "report_date": "2026-11-04",
+          "variety": "puna",
+          "grade": "local",
+          "min_price_inr_per_quintal": "1000.00",
+          "modal_price_inr_per_quintal": "4500.00",
+          "max_price_inr_per_quintal": "5200.00",
+          "arrivals_quintals": null,
+          "price_unit": "INR/quintal",
+          "source": "Official OGD / AGMARKNET historical APMC observations",
+          "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+          "fetched_at": "2026-11-05T08:39:53.310684Z",
+          "data_kind": "official"
+        },
+        "stale": false,
+        "age_calendar_days": 1,
+        "note": "Latest stored official wholesale observation, not a live buyer quote or guaranteed farmer realization."
+      },
+      "recommendation": {
+        "status": 200,
+        "request": {
+          "commodity": "Onion",
+          "market": "Hubballi APMC",
+          "variety": "puna",
+          "grade": "local",
+          "decision_at": "2026-11-05T09:31:57.313224+00:00",
+          "total_quantity_quintals": "20",
+          "today_price_inr_per_quintal": "4500.00",
+          "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+          "required_net_cash_inr": "10000",
+          "storage_capacity_quintals": "10",
+          "decision_increment_quintals": "1",
+          "market_quantity_step_quintals": "0.01",
+          "minimum_sale_lot_quintals": "1",
+          "maximum_horizon_days": 7,
+          "risk_tolerance": "balanced",
+          "crop_storage_profile": {
+            "commodity": "Onion",
+            "maximum_holding_days": 3,
+            "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+            "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+          },
+          "today_sale_costs": {
+            "fixed_transport_inr": "100",
+            "transport_inr_per_quintal": "10",
+            "commission_rate": "0.05",
+            "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+          },
+          "holding_options": [
+            {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "transport_inr_per_quintal": "10",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "realization_multiplier": "1",
+              "price_basis_assumption": "EXAMPLE_ONLY gross farmer price equals mandi forecast; verify actual buyer terms",
+              "adverse_inr_per_quintal": "0",
+              "adverse_assumption": "EXAMPLE_ONLY zero-price adverse stress, not a statistical quantile"
+            }
+          ]
+        },
+        "response": {
+          "request_id": "f43f197e-07b3-417b-b433-0aad8274c24f",
+          "history_id": 12,
+          "market_data": {
+            "report_date": "2026-11-04",
+            "fetched_at": "2026-11-05T08:39:53.310684Z",
+            "source": "Official OGD / AGMARKNET historical APMC observations",
+            "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+            "file_sha256": "fd9e56f514f1f09422a664c77c9432f8586898b776d4c5920af04c6b70a01846",
+            "stale": false,
+            "data_kind": "official"
+          },
+          "predictions": [
+            {
+              "schema_version": "samay-reliability-v1",
+              "prediction_inr_per_quintal": "4500.00",
+              "intervals": [],
+              "horizon_calendar_days": 3,
+              "timestamp": "2026-11-05T09:31:57.313224+00:00",
+              "target_date": "2026-11-08",
+              "model_version": "58b38c31458c73e0-champion-3d",
+              "reliability_status": "limited evidence",
+              "flags": [
+                "retrospective_research_only",
+                "historical_publication_unverified",
+                "interval_coverage_not_guaranteed",
+                "empirical_interval_unavailable"
+              ],
+              "market": "Hubballi APMC",
+              "commodity": "Onion",
+              "variety": "puna",
+              "grade": "local",
+              "latest_report_date": "2026-11-04",
+              "observation_age_calendar_days": 1,
+              "data_source": {
+                "mode": "research_only",
+                "sources": [
+                  {
+                    "batch_id": 14,
+                    "sha256": "9591b22bde2438e0376c49228aee8c79132fa293a6cf302fa5e30a0da35bf17b",
+                    "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                    "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                    "fetched_at": "2026-11-04T19:36:58.468313+00:00",
+                    "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                    "source_kind": "secondary"
+                  },
+                  {
+                    "batch_id": 20,
+                    "sha256": "fd9e56f514f1f09422a664c77c9432f8586898b776d4c5920af04c6b70a01846",
+                    "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                    "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                    "fetched_at": "2026-11-05T08:39:53.310684+00:00",
+                    "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                    "source_kind": "official"
+                  }
+                ],
+                "selection_report": "models/research/research-snapshot-v1-dfc4c731994b0419/comparison.json",
+                "input_decision_at": "2026-11-05T09:31:57.313224+00:00",
+                "calibration": {
+                  "radii": {},
+                  "reason": "Insufficient separated calibration/diagnostic observations"
+                },
+                "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+              },
+              "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+              "request_id": "f43f197e-07b3-417b-b433-0aad8274c24f",
+              "price_unit": "INR/quintal"
+            }
+          ],
+          "reliability_warnings": [
+            "3d:empirical_interval_unavailable",
+            "3d:historical_publication_unverified",
+            "3d:interval_coverage_not_guaranteed",
+            "3d:limited evidence",
+            "3d:retrospective_research_only"
+          ],
+          "optimization": {
+            "schema_version": "samay-selling-v1",
+            "status": "sell_all_now",
+            "recommendation_basis": "today_only_safe_fallback",
+            "has_unreliable_or_missing_scenarios": true,
+            "decision_at": "2026-11-05T09:31:57.313224Z",
+            "scope": {
+              "commodity": "Onion",
+              "market": "Hubballi APMC",
+              "variety": "puna",
+              "grade": "local"
+            },
+            "units": {
+              "money": "INR",
+              "price": "INR/quintal",
+              "quantity": "quintals"
+            },
+            "sell_all_now": {
+              "sale": {
+                "gross_inr": "90000.00",
+                "commission_inr": "4500.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "85200.00"
+              },
+              "meets_minimum_lot": true,
+              "meets_cash_requirement": true
+            },
+            "maximum_today_net_cash_upper_bound_inr": "85200.00",
+            "cash_requirement_achievable_on_grid": true,
+            "recommended_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "90000.00",
+                "commission_inr": "4500.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "85200.00"
+              },
+              "cash_today_inr": "85200.00",
+              "cash_surplus_inr": "75200.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "85200.00",
+                "lower": "85200.00",
+                "central": "85200.00",
+                "upper": "85200.00"
+              },
+              "downside_total_net_inr": "85200.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "85200.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "best_scenario_only_or_validated_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "90000.00",
+                "commission_inr": "4500.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "85200.00"
+              },
+              "cash_today_inr": "85200.00",
+              "cash_surplus_inr": "75200.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "85200.00",
+                "lower": "85200.00",
+                "central": "85200.00",
+                "upper": "85200.00"
+              },
+              "downside_total_net_inr": "85200.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "85200.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "feasible_plans": [
+              {
+                "sell_today_quintals": "20",
+                "hold_initial_quintals": "0",
+                "holding_days": 0,
+                "later_saleable_quintals": "0",
+                "deterioration_loss_quintals": "0",
+                "rounding_discard_quintals": "0",
+                "storage_cost_inr": "0",
+                "storage_paid_today_inr": "0",
+                "storage_paid_later_inr": "0",
+                "today_sale": {
+                  "gross_inr": "90000.00",
+                  "commission_inr": "4500.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "300.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "85200.00"
+                },
+                "cash_today_inr": "85200.00",
+                "cash_surplus_inr": "75200.00",
+                "later_sales": {
+                  "adverse": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "lower": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "central": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "upper": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  }
+                },
+                "central_later_net_after_storage_inr": "0.00",
+                "total_net_inr": {
+                  "adverse": "85200.00",
+                  "lower": "85200.00",
+                  "central": "85200.00",
+                  "upper": "85200.00"
+                },
+                "downside_total_net_inr": "85200.00",
+                "difference_vs_sell_all_now_inr": {
+                  "adverse": "0.00",
+                  "lower": "0.00",
+                  "central": "0.00",
+                  "upper": "0.00"
+                },
+                "risk_adjusted_objective_inr": "85200.00",
+                "recommendation_eligible": true,
+                "warnings": [],
+                "break_even_future_price_inr_per_quintal": null,
+                "assumptions": {
+                  "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+                }
+              }
+            ],
+            "rejected_counts": {
+              "missing_price_scenarios": 1
+            },
+            "risk_tolerance": "balanced",
+            "request_and_assumptions": {
+              "commodity": "Onion",
+              "market": "Hubballi APMC",
+              "variety": "puna",
+              "grade": "local",
+              "decision_at": "2026-11-05T09:31:57.313224Z",
+              "total_quantity_quintals": "20",
+              "today_price_inr_per_quintal": "4500.00",
+              "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+              "required_net_cash_inr": "10000",
+              "storage_capacity_quintals": "10",
+              "decision_increment_quintals": "1",
+              "market_quantity_step_quintals": "0.01",
+              "minimum_sale_lot_quintals": "1",
+              "maximum_horizon_days": 7,
+              "crop_storage_profile": {
+                "commodity": "Onion",
+                "maximum_holding_days": 3,
+                "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+                "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+              },
+              "today_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+              },
+              "holding_options": [
+                {
+                  "days": 3,
+                  "daily_loss_fractions": [
+                    "0.01",
+                    "0.01",
+                    "0.01"
+                  ],
+                  "daily_storage_inr_per_quintal": [
+                    "2",
+                    "2",
+                    "2"
+                  ],
+                  "fixed_storage_inr": "0",
+                  "storage_payment": "later",
+                  "future_sale_costs": {
+                    "fixed_transport_inr": "100",
+                    "fixed_transaction_inr": "0",
+                    "transport_inr_per_quintal": "10",
+                    "handling_inr_per_quintal": "0",
+                    "market_fee_rate": "0",
+                    "commission_rate": "0.05",
+                    "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+                  },
+                  "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+                  "scenarios": null
+                }
+              ],
+              "risk_tolerance": "balanced"
+            },
+            "explanations": [
+              "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+              "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+              "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+              "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+              "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+              "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+              "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+              "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+              "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+              "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "scope": {
+        "market": "Bengaluru APMC",
+        "commodity": "Potato",
+        "variety": "local",
+        "grade": "medium"
+      },
+      "forecasts": [
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "4000.00",
+            "intervals": [],
+            "horizon_calendar_days": 1,
+            "timestamp": "2026-11-05T09:31:57.439048+00:00",
+            "target_date": "2026-11-06",
+            "model_version": "8a13bb943e3d71c2-champion-1d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable"
+            ],
+            "market": "Bengaluru APMC",
+            "commodity": "Potato",
+            "variety": "local",
+            "grade": "medium",
+            "latest_report_date": "2026-11-04",
+            "observation_age_calendar_days": 1,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 16,
+                  "sha256": "397b05980a524fd6e853b2bb082b57a1c31fd04ac6c342be93945fbda20ebdc8",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:59.824210+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 21,
+                  "sha256": "43ab05654c103a55ec7e9171de347f346bd1560e242dd080d2bccf9d2aed53a2",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:55.871780+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-35245f4e3dabb00e/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:57.439048+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "66d7165e-d2a9-4f45-97d9-f29d04ee7edc",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "4000.00",
+            "intervals": [],
+            "horizon_calendar_days": 3,
+            "timestamp": "2026-11-05T09:31:57.517685+00:00",
+            "target_date": "2026-11-08",
+            "model_version": "1115c3d1b37ff78a-champion-3d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable"
+            ],
+            "market": "Bengaluru APMC",
+            "commodity": "Potato",
+            "variety": "local",
+            "grade": "medium",
+            "latest_report_date": "2026-11-04",
+            "observation_age_calendar_days": 1,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 16,
+                  "sha256": "397b05980a524fd6e853b2bb082b57a1c31fd04ac6c342be93945fbda20ebdc8",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:59.824210+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 21,
+                  "sha256": "43ab05654c103a55ec7e9171de347f346bd1560e242dd080d2bccf9d2aed53a2",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:55.871780+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-35245f4e3dabb00e/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:57.517685+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "45a0bd36-7ee5-4f82-9a65-8d80df937689",
+            "price_unit": "INR/quintal"
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "schema_version": "samay-reliability-v1",
+            "prediction_inr_per_quintal": "2900.00",
+            "intervals": [],
+            "horizon_calendar_days": 7,
+            "timestamp": "2026-11-05T09:31:57.580433+00:00",
+            "target_date": "2026-11-12",
+            "model_version": "704f54e65aa5bdf9-champion-7d",
+            "reliability_status": "limited evidence",
+            "flags": [
+              "retrospective_research_only",
+              "historical_publication_unverified",
+              "interval_coverage_not_guaranteed",
+              "empirical_interval_unavailable"
+            ],
+            "market": "Bengaluru APMC",
+            "commodity": "Potato",
+            "variety": "local",
+            "grade": "medium",
+            "latest_report_date": "2026-11-04",
+            "observation_age_calendar_days": 1,
+            "data_source": {
+              "mode": "research_only",
+              "sources": [
+                {
+                  "batch_id": 16,
+                  "sha256": "397b05980a524fd6e853b2bb082b57a1c31fd04ac6c342be93945fbda20ebdc8",
+                  "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                  "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                  "fetched_at": "2026-11-04T19:36:59.824210+00:00",
+                  "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                  "source_kind": "secondary"
+                },
+                {
+                  "batch_id": 21,
+                  "sha256": "43ab05654c103a55ec7e9171de347f346bd1560e242dd080d2bccf9d2aed53a2",
+                  "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                  "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                  "fetched_at": "2026-11-05T08:39:55.871780+00:00",
+                  "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                  "source_kind": "official"
+                }
+              ],
+              "selection_report": "models/research/research-snapshot-v1-35245f4e3dabb00e/comparison.json",
+              "input_decision_at": "2026-11-05T09:31:57.580433+00:00",
+              "calibration": {
+                "radii": {},
+                "reason": "Insufficient separated calibration/diagnostic observations"
+              },
+              "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+            },
+            "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+            "request_id": "1cc76f95-c53b-459a-a567-06dfe27fd765",
+            "price_unit": "INR/quintal"
+          }
+        }
+      ],
+      "history_n": 277,
+      "latest": {
+        "observation": {
+          "id": 20631,
+          "market_id": 6,
+          "commodity_id": 6,
+          "market": "Bengaluru APMC",
+          "commodity": "Potato",
+          "report_date": "2026-11-04",
+          "variety": "local",
+          "grade": "medium",
+          "min_price_inr_per_quintal": "3200.00",
+          "modal_price_inr_per_quintal": "4000.00",
+          "max_price_inr_per_quintal": "4600.00",
+          "arrivals_quintals": null,
+          "price_unit": "INR/quintal",
+          "source": "Official OGD / AGMARKNET historical APMC observations",
+          "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+          "fetched_at": "2026-11-05T08:39:55.871780Z",
+          "data_kind": "official"
+        },
+        "stale": false,
+        "age_calendar_days": 1,
+        "note": "Latest stored official wholesale observation, not a live buyer quote or guaranteed farmer realization."
+      },
+      "recommendation": {
+        "status": 200,
+        "request": {
+          "commodity": "Potato",
+          "market": "Bengaluru APMC",
+          "variety": "local",
+          "grade": "medium",
+          "decision_at": "2026-11-05T09:31:57.743989+00:00",
+          "total_quantity_quintals": "20",
+          "today_price_inr_per_quintal": "4000.00",
+          "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+          "required_net_cash_inr": "10000",
+          "storage_capacity_quintals": "10",
+          "decision_increment_quintals": "1",
+          "market_quantity_step_quintals": "0.01",
+          "minimum_sale_lot_quintals": "1",
+          "maximum_horizon_days": 7,
+          "risk_tolerance": "balanced",
+          "crop_storage_profile": {
+            "commodity": "Potato",
+            "maximum_holding_days": 3,
+            "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+            "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+          },
+          "today_sale_costs": {
+            "fixed_transport_inr": "100",
+            "transport_inr_per_quintal": "10",
+            "commission_rate": "0.05",
+            "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+          },
+          "holding_options": [
+            {
+              "days": 3,
+              "daily_loss_fractions": [
+                "0.01",
+                "0.01",
+                "0.01"
+              ],
+              "daily_storage_inr_per_quintal": [
+                "2",
+                "2",
+                "2"
+              ],
+              "storage_payment": "later",
+              "future_sale_costs": {
+                "fixed_transport_inr": "100",
+                "transport_inr_per_quintal": "10",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+              },
+              "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+              "realization_multiplier": "1",
+              "price_basis_assumption": "EXAMPLE_ONLY gross farmer price equals mandi forecast; verify actual buyer terms",
+              "adverse_inr_per_quintal": "0",
+              "adverse_assumption": "EXAMPLE_ONLY zero-price adverse stress, not a statistical quantile"
+            }
+          ]
+        },
+        "response": {
+          "request_id": "5e1bd5fd-f3b8-43f3-8a63-ca060240f8bc",
+          "history_id": 13,
+          "market_data": {
+            "report_date": "2026-11-04",
+            "fetched_at": "2026-11-05T08:39:55.871780Z",
+            "source": "Official OGD / AGMARKNET historical APMC observations",
+            "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+            "file_sha256": "43ab05654c103a55ec7e9171de347f346bd1560e242dd080d2bccf9d2aed53a2",
+            "stale": false,
+            "data_kind": "official"
+          },
+          "predictions": [
+            {
+              "schema_version": "samay-reliability-v1",
+              "prediction_inr_per_quintal": "4000.00",
+              "intervals": [],
+              "horizon_calendar_days": 3,
+              "timestamp": "2026-11-05T09:31:57.743989+00:00",
+              "target_date": "2026-11-08",
+              "model_version": "1115c3d1b37ff78a-champion-3d",
+              "reliability_status": "limited evidence",
+              "flags": [
+                "retrospective_research_only",
+                "historical_publication_unverified",
+                "interval_coverage_not_guaranteed",
+                "empirical_interval_unavailable"
+              ],
+              "market": "Bengaluru APMC",
+              "commodity": "Potato",
+              "variety": "local",
+              "grade": "medium",
+              "latest_report_date": "2026-11-04",
+              "observation_age_calendar_days": 1,
+              "data_source": {
+                "mode": "research_only",
+                "sources": [
+                  {
+                    "batch_id": 16,
+                    "sha256": "397b05980a524fd6e853b2bb082b57a1c31fd04ac6c342be93945fbda20ebdc8",
+                    "source_url": "https://ckandev.indiadataportal.com/dataset/1749d812-35b4-4635-ac29-dd3116ed31b0/resource/078fd1ea-dab6-4aca-aed9-3a4b8b2c761d/download/apmc-arrivals-and-prices-new-source.csv",
+                    "source_label": "India Data Portal AGMARKNET mirror (secondary)",
+                    "fetched_at": "2026-11-04T19:36:59.824210+00:00",
+                    "unit_evidence": "Publisher price_unit and data dictionary: Rs/Quintal or Rs./Quintal; response pages retained unchanged",
+                    "source_kind": "secondary"
+                  },
+                  {
+                    "batch_id": 21,
+                    "sha256": "43ab05654c103a55ec7e9171de347f346bd1560e242dd080d2bccf9d2aed53a2",
+                    "source_url": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+                    "source_label": "Official OGD / AGMARKNET historical APMC observations",
+                    "fetched_at": "2026-11-05T08:39:55.871780+00:00",
+                    "unit_evidence": "AGMARKNET public last-week reports for these four APMCs explicitly return unitOfPrice=Rs./Quintal; archived under data/raw/official-multi-recent/.",
+                    "source_kind": "official"
+                  }
+                ],
+                "selection_report": "models/research/research-snapshot-v1-35245f4e3dabb00e/comparison.json",
+                "input_decision_at": "2026-11-05T09:31:57.743989+00:00",
+                "calibration": {
+                  "radii": {},
+                  "reason": "Insufficient separated calibration/diagnostic observations"
+                },
+                "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts."
+              },
+              "disclaimer": "Empirical uncertainty for mandi modal wholesale prices only. Coverage is not guaranteed. This does not capture individual farmer grade, quality, sorting, fees, transport, bargaining or transaction-price uncertainty, and is not a guaranteed realized selling price or advice to hold produce.",
+              "request_id": "5e1bd5fd-f3b8-43f3-8a63-ca060240f8bc",
+              "price_unit": "INR/quintal"
+            }
+          ],
+          "reliability_warnings": [
+            "3d:empirical_interval_unavailable",
+            "3d:historical_publication_unverified",
+            "3d:interval_coverage_not_guaranteed",
+            "3d:limited evidence",
+            "3d:retrospective_research_only"
+          ],
+          "optimization": {
+            "schema_version": "samay-selling-v1",
+            "status": "sell_all_now",
+            "recommendation_basis": "today_only_safe_fallback",
+            "has_unreliable_or_missing_scenarios": true,
+            "decision_at": "2026-11-05T09:31:57.743989Z",
+            "scope": {
+              "commodity": "Potato",
+              "market": "Bengaluru APMC",
+              "variety": "local",
+              "grade": "medium"
+            },
+            "units": {
+              "money": "INR",
+              "price": "INR/quintal",
+              "quantity": "quintals"
+            },
+            "sell_all_now": {
+              "sale": {
+                "gross_inr": "80000.00",
+                "commission_inr": "4000.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "75700.00"
+              },
+              "meets_minimum_lot": true,
+              "meets_cash_requirement": true
+            },
+            "maximum_today_net_cash_upper_bound_inr": "75700.00",
+            "cash_requirement_achievable_on_grid": true,
+            "recommended_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "80000.00",
+                "commission_inr": "4000.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "75700.00"
+              },
+              "cash_today_inr": "75700.00",
+              "cash_surplus_inr": "65700.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "75700.00",
+                "lower": "75700.00",
+                "central": "75700.00",
+                "upper": "75700.00"
+              },
+              "downside_total_net_inr": "75700.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "75700.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "best_scenario_only_or_validated_plan": {
+              "sell_today_quintals": "20",
+              "hold_initial_quintals": "0",
+              "holding_days": 0,
+              "later_saleable_quintals": "0",
+              "deterioration_loss_quintals": "0",
+              "rounding_discard_quintals": "0",
+              "storage_cost_inr": "0",
+              "storage_paid_today_inr": "0",
+              "storage_paid_later_inr": "0",
+              "today_sale": {
+                "gross_inr": "80000.00",
+                "commission_inr": "4000.00",
+                "market_fee_inr": "0.00",
+                "transport_inr": "300.00",
+                "handling_inr": "0.00",
+                "fixed_transaction_inr": "0.00",
+                "net_inr": "75700.00"
+              },
+              "cash_today_inr": "75700.00",
+              "cash_surplus_inr": "65700.00",
+              "later_sales": {
+                "adverse": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "lower": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "central": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                },
+                "upper": {
+                  "gross_inr": "0.00",
+                  "commission_inr": "0.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "0.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "0.00"
+                }
+              },
+              "central_later_net_after_storage_inr": "0.00",
+              "total_net_inr": {
+                "adverse": "75700.00",
+                "lower": "75700.00",
+                "central": "75700.00",
+                "upper": "75700.00"
+              },
+              "downside_total_net_inr": "75700.00",
+              "difference_vs_sell_all_now_inr": {
+                "adverse": "0.00",
+                "lower": "0.00",
+                "central": "0.00",
+                "upper": "0.00"
+              },
+              "risk_adjusted_objective_inr": "75700.00",
+              "recommendation_eligible": true,
+              "warnings": [],
+              "break_even_future_price_inr_per_quintal": null,
+              "assumptions": {
+                "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+              }
+            },
+            "feasible_plans": [
+              {
+                "sell_today_quintals": "20",
+                "hold_initial_quintals": "0",
+                "holding_days": 0,
+                "later_saleable_quintals": "0",
+                "deterioration_loss_quintals": "0",
+                "rounding_discard_quintals": "0",
+                "storage_cost_inr": "0",
+                "storage_paid_today_inr": "0",
+                "storage_paid_later_inr": "0",
+                "today_sale": {
+                  "gross_inr": "80000.00",
+                  "commission_inr": "4000.00",
+                  "market_fee_inr": "0.00",
+                  "transport_inr": "300.00",
+                  "handling_inr": "0.00",
+                  "fixed_transaction_inr": "0.00",
+                  "net_inr": "75700.00"
+                },
+                "cash_today_inr": "75700.00",
+                "cash_surplus_inr": "65700.00",
+                "later_sales": {
+                  "adverse": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "lower": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "central": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  },
+                  "upper": {
+                    "gross_inr": "0.00",
+                    "commission_inr": "0.00",
+                    "market_fee_inr": "0.00",
+                    "transport_inr": "0.00",
+                    "handling_inr": "0.00",
+                    "fixed_transaction_inr": "0.00",
+                    "net_inr": "0.00"
+                  }
+                },
+                "central_later_net_after_storage_inr": "0.00",
+                "total_net_inr": {
+                  "adverse": "75700.00",
+                  "lower": "75700.00",
+                  "central": "75700.00",
+                  "upper": "75700.00"
+                },
+                "downside_total_net_inr": "75700.00",
+                "difference_vs_sell_all_now_inr": {
+                  "adverse": "0.00",
+                  "lower": "0.00",
+                  "central": "0.00",
+                  "upper": "0.00"
+                },
+                "risk_adjusted_objective_inr": "75700.00",
+                "recommendation_eligible": true,
+                "warnings": [],
+                "break_even_future_price_inr_per_quintal": null,
+                "assumptions": {
+                  "today": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization"
+                }
+              }
+            ],
+            "rejected_counts": {
+              "missing_price_scenarios": 1
+            },
+            "risk_tolerance": "balanced",
+            "request_and_assumptions": {
+              "commodity": "Potato",
+              "market": "Bengaluru APMC",
+              "variety": "local",
+              "grade": "medium",
+              "decision_at": "2026-11-05T09:31:57.743989Z",
+              "total_quantity_quintals": "20",
+              "today_price_inr_per_quintal": "4000.00",
+              "today_price_assumption": "EXAMPLE_ONLY: use latest dated mandi observation as a gross buyer quote assumption; not guaranteed farmer realization",
+              "required_net_cash_inr": "10000",
+              "storage_capacity_quintals": "10",
+              "decision_increment_quintals": "1",
+              "market_quantity_step_quintals": "0.01",
+              "minimum_sale_lot_quintals": "1",
+              "maximum_horizon_days": 7,
+              "crop_storage_profile": {
+                "commodity": "Potato",
+                "maximum_holding_days": 3,
+                "storage_conditions": "EXAMPLE_ONLY storage conditions; verify actual temperature, ripeness and handling before use",
+                "assumption_source": "EXAMPLE_ONLY manual crop storage assumption, not a verified storage facility"
+              },
+              "today_sale_costs": {
+                "fixed_transport_inr": "100",
+                "fixed_transaction_inr": "0",
+                "transport_inr_per_quintal": "10",
+                "handling_inr_per_quintal": "0",
+                "market_fee_rate": "0",
+                "commission_rate": "0.05",
+                "assumptions": "EXAMPLE_ONLY cost quotation: fixed trip plus quantity transport and gross-value commission"
+              },
+              "holding_options": [
+                {
+                  "days": 3,
+                  "daily_loss_fractions": [
+                    "0.01",
+                    "0.01",
+                    "0.01"
+                  ],
+                  "daily_storage_inr_per_quintal": [
+                    "2",
+                    "2",
+                    "2"
+                  ],
+                  "fixed_storage_inr": "0",
+                  "storage_payment": "later",
+                  "future_sale_costs": {
+                    "fixed_transport_inr": "100",
+                    "fixed_transaction_inr": "0",
+                    "transport_inr_per_quintal": "10",
+                    "handling_inr_per_quintal": "0",
+                    "market_fee_rate": "0",
+                    "commission_rate": "0.05",
+                    "assumptions": "EXAMPLE_ONLY separate future transaction quotation"
+                  },
+                  "assumptions": "EXAMPLE_ONLY compounded daily loss and storage charges; not a universal spoilage rate",
+                  "scenarios": null
+                }
+              ],
+              "risk_tolerance": "balanced"
+            },
+            "explanations": [
+              "All money is INR, prices INR/quintal and quantity quintals. Each sale pays gross less percentage fees, transport, handling and fixed transaction costs.",
+              "Fixed sale costs apply only to a nonzero transaction. Separate today and future sales incur separate fixed costs.",
+              "Percentage fees are rounded once on the combined rate; commission is allocated first and the residual fee goes to the market-fee line.",
+              "Daily deterioration compounds on remaining quantity. Storage charges use that day's opening quantity. Storage payment timing changes cash today.",
+              "Future marketable quantity rounds down to the market step. Deterioration and rounding discards have zero assumed salvage value; disposal costs are not included.",
+              "Central later proceeds are a planning scenario, not a probability-weighted expected value. Risk weights are utility preferences, not scenario probabilities.",
+              "Conservative objective=adverse net; balanced=.5 central+.5 adverse; aggressive=.8 central+.2 adverse. Ties prefer downside, more sold today, then shorter holding.",
+              "All enumerated plans meet mandatory immediate cash and storage/lot constraints. Scenario-only plans cannot be promoted as hold recommendations.",
+              "Crop holding limits, loss schedules, price-realization adjustments and cost assumptions are user-supplied; no universal tomato spoilage rate is assumed.",
+              "Forecast bands describe wholesale mandi statistics, not guaranteed farmer transaction prices. No plan guarantees a buyer, future cash or profit."
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -4,17 +4,18 @@ import { ReadAloud } from './Speech';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertCircle, ArrowRight, CheckCircle2, Download, RefreshCw, Scale, Sparkles } from 'lucide-react';
-import { api, type Recommendation } from './api';
+import { api, getDecisionPlan, type Recommendation } from './api';
 import { useApp } from './state';
 import { Badge, Card, Empty, Notice, PageHeading, Stat, dateLabel, inr, qty } from './ui';
 import { ScenarioChart } from './Charts';
 import { buildRecommendation } from './advisor';
+import { DecisionPanel } from './DecisionPanel';
 
 export function ResultSummary({ result }: { result: Recommendation }) {
-  const plan = result.optimization.recommended_plan;
+  const plan = getDecisionPlan(result);
   return localize(
     <div className="compact-result">
-      <h3>{plan ? `${qty(plan.sell_today_quintals)} today` : 'No feasible selected plan'}</h3>
+      <h3>{result.decision_support?.conditional && `${t('Conditional')}: `}{plan ? `${qty(plan.sell_today_quintals)} today` : 'No feasible selected plan'}</h3>
       <p>{plan ? `${qty(plan.hold_initial_quintals)} held · ${inr(plan.cash_today_inr)} net cash today` : 'Review cash requirements and physical constraints.'}</p>
     </div>
   );
@@ -24,7 +25,7 @@ export function Results() {
   const { result, priorResult, language, mode, draft, scope, setResult, catalog } = useApp();
   const [showAll, setShowAll] = useState(false);
   const [scenario, setScenario] = useState<'lower' | 'central' | 'adverse'>('central');
-  const [customPrice, setCustomPrice] = useState(draft.price || '1400');
+  const [customPrice, setCustomPrice] = useState(draft.price || String(result?.optimization.request_and_assumptions.today_price_inr_per_quintal || ''));
   const [simBusy, setSimBusy] = useState(false);
   const [simDirty, setSimDirty] = useState(false);
   const [simError, setSimError] = useState<string | null>(null);
@@ -52,8 +53,12 @@ export function Results() {
   }
 
   const output = result.optimization;
-  const plan = output.recommended_plan;
+  const plan = getDecisionPlan(result);
+  const conditionalPlan = Boolean(result.decision_support?.conditional);
   const sellAll = output.sell_all_now;
+  const originalQuantity = String(output.request_and_assumptions.total_quantity_quintals || '0');
+  const originalPrice = String(output.request_and_assumptions.today_price_inr_per_quintal || '0');
+  const originalCash = String(output.request_and_assumptions.required_net_cash_inr || '0');
   const lines = explainRecommendation(result, language);
   const changes = explainChanges(priorResult, result, language);
 
@@ -71,7 +76,7 @@ export function Results() {
     setSimBusy(true);
     setSimError(null);
     try {
-      const updatedDraft = { ...draft, scenarioPrice: customPrice };
+      const updatedDraft = { ...draft, price: draft.price || originalPrice, quantity: originalQuantity, cash: originalCash, scenarioPrice: customPrice };
       const req = buildRecommendation(
         updatedDraft,
         scope,
@@ -97,7 +102,7 @@ export function Results() {
       <PageHeading
         eyebrow={t('YOUR BACKEND-CALCULATED PLAN')}
         title={
-          plan
+          conditionalPlan ? t('Conditional sell-or-hold analysis') : plan
             ? plan.holding_days
               ? t('A balanced view of selling and holding.')
               : t('Keep today’s cash needs covered.')
@@ -112,21 +117,24 @@ export function Results() {
         {output.scope.market} · {output.scope.commodity} · {output.scope.variety} / {output.scope.grade} · {t('decision')} {dateLabel(output.decision_at)}
       </PageHeading>
 
+      <DecisionPanel result={result}/>
+      {result.decision_support && <h2>{t('Full calculation audit for the displayed plan')}</h2>}
+
       {/* Main Status Banner */}
-      <div className={`result-banner ${plan ? 'is-feasible' : 'is-infeasible'}`}>
+      <div className={`result-banner ${conditionalPlan ? 'is-conditional' : plan ? 'is-feasible' : 'is-infeasible'}`}>
         {plan ? <CheckCircle2 size={24} /> : <AlertCircle size={24} />}
         <div>
-          <strong>{t(output.recommendation_basis.replaceAll('_', ' '))}</strong>
+          <strong>{t(conditionalPlan ? 'Conditional analysis, not validated advice' : output.recommendation_basis.replaceAll('_', ' '))}</strong>
           <p>
-            {plan
+            {conditionalPlan ? t('Holding is conditional on the displayed price and storage assumptions. The adverse outcome may be worse than selling now.') : plan
               ? plan.holding_days
                 ? t('Holding is eligible under the supplied constraints and service evidence. The adverse outcome still matters.')
                 : t('A full immediate sale is the selected feasible plan under these inputs.')
               : t('No mandatory cash, market-lot or physical constraint has been relaxed.')}
           </p>
         </div>
-        <Badge tone={plan ? 'green' : 'amber'}>
-          {plan ? t('Calculated') : t('Infeasible')}
+        <Badge tone={plan && !conditionalPlan ? 'green' : 'amber'}>
+          {conditionalPlan ? t('Scenario only') : plan ? t('Calculated') : t('Infeasible')}
         </Badge>
       </div>
 
@@ -134,7 +142,7 @@ export function Results() {
         <Notice tone="amber">
           <strong>{t('Reliability limitations')}</strong>
           <ul>
-            {result.reliability_warnings.map(w => (
+            {[...new Set(result.reliability_warnings.map(w => w.replace(/^\d+d:/,'')))].map(w => (
               <li key={w}>{warningText(w)}</li>
             ))}
           </ul>
@@ -157,8 +165,8 @@ export function Results() {
           <div className="stats-grid three" style={{ margin: '15px 0' }}>
             <Stat
               label={t('Harvest gross value')}
-              value={inr(Number(draft.quantity || '0') * Number(draft.price || '0'))}
-              note={`${draft.quantity || '0'} qtl @ ₹${draft.price || '0'}/qtl`}
+              value={inr(sellAll.sale.gross_inr)}
+              note={`${originalQuantity} qtl @ ₹${originalPrice}/qtl`}
             />
             <Stat
               label={t('Max net cash from 100% sale')}
@@ -167,7 +175,7 @@ export function Results() {
             />
             <Stat
               label={t('Your cash requirement')}
-              value={inr(draft.cash || '0')}
+              value={inr(originalCash)}
               note={t('Immediate net cash needed today')}
             />
           </div>
@@ -207,7 +215,7 @@ export function Results() {
         />
       </div>
 
-      {output.best_scenario_only_or_validated_plan && !output.best_scenario_only_or_validated_plan.recommendation_eligible && output.best_scenario_only_or_validated_plan.holding_days > 0 && (
+      {!result.decision_support && output.best_scenario_only_or_validated_plan && !output.best_scenario_only_or_validated_plan.recommendation_eligible && output.best_scenario_only_or_validated_plan.holding_days > 0 && (
         <Card>
           <h2>{t('Best scenario-only plan: not validated advice')}</h2>
           <Notice tone="amber">{t('This comparison uses uncertain prices or user assumptions. The operational safe fallback remains separate.')}</Notice>
@@ -240,7 +248,7 @@ export function Results() {
               <dl className="option-metrics">
                 <div>
                   <dt>{t('Sell today')}</dt>
-                  <dd><strong>{qty(draft.quantity)}</strong></dd>
+                  <dd><strong>{qty(originalQuantity)}</strong></dd>
                 </div>
                 <div>
                   <dt>{t('Net cash today')}</dt>
@@ -262,7 +270,7 @@ export function Results() {
               <div className="option-card is-selected">
                 <div className="option-header">
                   <span className="option-tag">{t('Cash-First Split')}</span>
-                  <Badge tone="green">{t('Recommended Plan')}</Badge>
+                  <Badge tone={conditionalPlan ? 'amber' : 'green'}>{t(conditionalPlan ? 'Conditional plan' : 'Recommended Plan')}</Badge>
                 </div>
                 <h3>{t('Sell Now + Hold Rest')}</h3>
                 <p className="option-desc">{t('Meets today’s cash need; holds remainder for potential upside.')}</p>

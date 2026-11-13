@@ -1,0 +1,6 @@
+Tomato saved_days 1..7 HTTP 200 prediction 1255.71 INR/quintal source 2026-10-31
+Copra saved_days 1..60 HTTP 200 prediction 18500.00 INR/quintal source 2026-11-03
+Arecanut saved_days 1..73 HTTP 200 prediction 49069.00 INR/quintal source 2026-11-03
+Onion saved_days 1..83 HTTP 200 prediction 4500.00 INR/quintal source 2026-11-04
+Potato saved_days 1..84 HTTP 200 prediction 4000.00 INR/quintal source 2026-11-04
+Copra 365 days: 503 insufficient_horizon_evidence

@@ -1,0 +1,142 @@
+{
+  "version": "3f612441e929ab4b-champion-4d",
+  "algorithm_version": "samay-forecast-v1",
+  "candidate": "naive",
+  "horizon": 4,
+  "market": "Kolar APMC",
+  "commodity": "Tomato",
+  "variety": "tomato",
+  "grade": "local",
+  "feature_schema": [
+    "lag_1_obs_inr_per_quintal",
+    "lag_2_obs_inr_per_quintal",
+    "lag_3_obs_inr_per_quintal",
+    "lag_7_obs_inr_per_quintal",
+    "lag_14_obs_inr_per_quintal",
+    "lag_30_obs_inr_per_quintal",
+    "rolling_mean_7_obs_inr_per_quintal",
+    "rolling_median_7_obs_inr_per_quintal",
+    "rolling_std_7_obs_inr_per_quintal",
+    "rolling_mean_14_obs_inr_per_quintal",
+    "rolling_median_14_obs_inr_per_quintal",
+    "rolling_std_14_obs_inr_per_quintal",
+    "rolling_mean_30_obs_inr_per_quintal",
+    "rolling_median_30_obs_inr_per_quintal",
+    "rolling_std_30_obs_inr_per_quintal",
+    "origin_weekday",
+    "origin_month",
+    "target_weekday",
+    "target_month",
+    "days_since_latest_report",
+    "history_30_obs_span_days"
+  ],
+  "training_window": [
+    "2025-08-13",
+    "2026-10-27"
+  ],
+  "trained_before": "2026-11-05T11:52:53.555263+00:00",
+  "seed": 42,
+  "dataset_fingerprint": "9d2afa14c2f30c4cdcf81de880d0bbda29429464403a95e45d0045270a04dc0d",
+  "model_sha256": "6c09635decb8153d3c12e3782a69fd2eb097426f912547d351a8647b27d5580a",
+  "comparison": {
+    "horizon": 4,
+    "sample_policy": {
+      "effective_train_samples": 226,
+      "effective_validation_samples": 57,
+      "available_development_pairs": 288,
+      "nonoverlapping_benchmark_cases": 69,
+      "train_span_calendar_days": 394,
+      "status": "baseline_only_limited_evidence"
+    },
+    "status": "baseline_only",
+    "champion": "naive",
+    "comparisons": [],
+    "learned_model_eligible": false,
+    "final_evaluation": "not_performed; existing final period excluded",
+    "reason": [
+      "insufficient_separated_train_validation_folds_for_model_selection"
+    ],
+    "selection_train_end": "2026-07-15",
+    "selection_reason": "Predeclared last-observed-price rule; not selected/tuned on these errors",
+    "retrospective_benchmark": {
+      "n": 288,
+      "mae_inr_per_quintal": 207.04861111111111,
+      "rmse_inr_per_quintal": 275.7836057894345,
+      "smape_pct": 17.264234509429816,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 16.666666666666668,
+      "directional_accuracy": 0.13541666666666666,
+      "p90_absolute_error_inr_per_quintal": 470.0,
+      "p90_overprediction_inr_per_quintal": 400.0
+    },
+    "nonoverlapping_benchmark": {
+      "n": 69,
+      "mae_inr_per_quintal": 213.47826086956522,
+      "rmse_inr_per_quintal": 283.0603970989179,
+      "smape_pct": 17.289873152152516,
+      "smape_excluded_tiny_denominator": 0,
+      "wape_pct": 16.24751819986764,
+      "directional_accuracy": 0.14492753623188406,
+      "p90_absolute_error_inr_per_quintal": 482.00000000000017,
+      "p90_overprediction_inr_per_quintal": 282.00000000000017
+    }
+  },
+  "created_at": "2026-11-05T11:52:52.426970+00:00",
+  "plan": {
+    "start": "2025-07-03",
+    "train_end": "2026-07-15",
+    "validation_end": "2026-09-15",
+    "holdout_end": "2026-11-04",
+    "variety": "tomato",
+    "grade": "local",
+    "market": "Kolar APMC",
+    "commodity": "Tomato",
+    "min_train": 90,
+    "min_validation": 20,
+    "min_train_span_days": 90,
+    "min_train_coverage": 0.5,
+    "max_price_age_days": 7,
+    "source_kind": "verified",
+    "candidate_suite": "recent_v3"
+  },
+  "training_samples": 334,
+  "runtime": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "python": "3.12.10",
+    "lightgbm": "4.7.0"
+  },
+  "input_transform": "Original causal feature schema",
+  "research_only": true,
+  "limitations": "RETROSPECTIVE RESEARCH ONLY: current government snapshot, not verified historical vintages. Feature-view availability assumes next-day 00:00 Asia/Kolkata publication. Later source revisions may be present. Metrics are conditional on this assumption, not demonstrated live/as-of performance or farmer realized-price accuracy. Artifacts cannot be deployed as validated production forecasts. This extension has NO new final test. Selection validation scores are not final accuracy.",
+  "selection_report": "models/crop-horizons/3f612441e929ab4b/comparison.json",
+  "source": [
+    {
+      "source": "AGMARKNET 2.0 official browser CSV export",
+      "url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+      "sha256": "490ce2ca1aa0cf47ce0e63b69a1739bca590952eb189373b540671f62e52d54b",
+      "fetched_at": "2026-11-04T09:37:35.834938+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": null
+    },
+    {
+      "source": "AGMARKNET 2.0 official browser CSV export",
+      "url": "https://agmarknet.gov.in/daily-price-and-arrival-report",
+      "sha256": "eff22083797f7cd74ab99938c0fa810022a68fd1115e929e7747d8d34461e8dc",
+      "fetched_at": "2026-11-04T09:38:58.059991+00:00",
+      "source_kind": "official",
+      "upstream_source_url": null,
+      "license": null
+    }
+  ],
+  "empirical_calibration": {
+    "radii": {},
+    "reason": "No independent long-horizon residual calibration; sensitivity scenarios are not prediction intervals"
+  },
+  "horizon_evidence_status": "baseline_only",
+  "refit_policy": "Frozen development-selected configuration. No new final holdout evaluation.",
+  "selection_report_sha256": "207968d9517343e863582299b6d26565aa9c9f06f2eebb491eff7e560dccebfa",
+  "training_source_fingerprint": "fd3ce00f379a3263110b1f9f62040074c9a0d17dea5b4507f6c0e3486338d248"
+}

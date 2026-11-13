@@ -4,7 +4,9 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from app.decision_support import CROP_PLANNING_CEILINGS, DecisionPolicy
 from app.ingestion import commodity_name, label, market_name
+from app.market_context import MarketContext
 from app.reliability import ReliabilityForecast
 from app.selling import HoldingOption, Name, Nonnegative, SellingRequest
 
@@ -26,14 +28,14 @@ class PredictRequest(BaseModel):
     commodity: str = "Tomato"
     variety: Name
     grade: Name
-    horizon: Literal[1, 3, 7]
+    horizon: int = Field(ge=1, le=730, description="Exact calendar-day horizon; requires a saved artifact for the selected crop/variety/grade")
     origin_date: date | None = None
 
     @field_validator("horizon", mode="before")
     @classmethod
     def strict_horizon(cls, value):
         if type(value) is not int:
-            raise ValueError("horizon must be an integer: 1, 3 or 7")
+            raise ValueError("horizon must be an integer from 1 to 730")
         return value
 
     @field_validator("market")
@@ -50,6 +52,12 @@ class PredictRequest(BaseModel):
     @classmethod
     def names(cls, value):
         return label(value)
+
+    @model_validator(mode="after")
+    def crop_horizon(self):
+        if self.horizon > CROP_PLANNING_CEILINGS.get(self.commodity, 0):
+            raise ValueError("Requested horizon exceeds this crop's application planning ceiling")
+        return self
 
 
 class ApiInterval(BaseModel):
@@ -77,6 +85,7 @@ class RecommendationHolding(HoldingOption):
 
 class RecommendRequest(SellingRequest):
     holding_options: tuple[RecommendationHolding, ...] = ()
+    decision_policy: DecisionPolicy | None = None
 
     @model_validator(mode="after")
     def supported(self):
@@ -84,6 +93,9 @@ class RecommendRequest(SellingRequest):
             raise ValueError("Use supported Karnataka mandi / commodity scope")
         if self.variety != label(self.variety) or self.grade != label(self.grade):
             raise ValueError("Use normalized variety and grade")
+        ceiling=CROP_PLANNING_CEILINGS[self.commodity]
+        if max(self.maximum_horizon_days,self.crop_storage_profile.maximum_holding_days,max((o.days for o in self.holding_options),default=0)) > ceiling:
+            raise ValueError(f"{self.commodity} planning ceiling is {ceiling} days; this is not a verified shelf-life guarantee")
         return self
 
 
@@ -156,6 +168,19 @@ class Freshness(BaseModel):
     file_sha256: str | None = None
     stale: bool = True
     data_kind: str = "official"
+    reference_modal_price_inr_per_quintal: Decimal | None = None
+
+
+class DecisionSupport(BaseModel):
+    action: Literal["hold", "partial_sell_and_hold", "sell_now", "infeasible", "insufficient_evidence"]
+    basis: str
+    conditional: bool
+    plan: SellingPlan | None
+    safe_fallback_plan: SellingPlan | None
+    reasons: list[str]
+    horizon_comparisons: list[SellingPlan]
+    context: MarketContext
+    note: str
 
 
 class RecommendationResponse(BaseModel):
@@ -165,6 +190,7 @@ class RecommendationResponse(BaseModel):
     predictions: list[PredictionResponse]
     reliability_warnings: list[str]
     optimization: OptimizationResponse
+    decision_support: DecisionSupport | None = None
 
 
 class ModelStatusItem(BaseModel):
@@ -181,6 +207,23 @@ class ModelStatusItem(BaseModel):
     reliability_evidence_configured: bool = False
     validation_metrics: dict[str, float | int | None] | None = None
     final_holdout_metrics: dict[str, float | int | None] | None = None
+    evidence_status: str | None = None
+    model_name: str | None = None
+    retrospective_benchmark_metrics: dict[str, float | int | None] | None = None
+
+
+class HorizonAvailability(BaseModel):
+    market: str
+    commodity: str
+    variety: str
+    grade: str
+    planning_ceiling_calendar_days: int
+    saved_horizons: list[int]
+    requested_horizon: int | None = None
+    requested_status: str | None = None
+    reasons: list[str] = []
+    sample_counts: dict = {}
+    note: str = "Saved research baselines are not validated advice. Missing dates are not interpolated; planning ceilings are not shelf-life guarantees."
 
 
 class ResearchHorizon(BaseModel):

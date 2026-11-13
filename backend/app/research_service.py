@@ -33,6 +33,7 @@ def bundles():
     registry = settings.research_serving_registry_path
     registry = registry if registry.is_absolute() else ROOT / registry
     entries = []
+    verified_reports = set()
     for entry in json.loads(registry.read_text(encoding="utf-8-sig")):
         folder = Path(entry["directory"])
         folder = folder if folder.is_absolute() else ROOT / folder
@@ -43,8 +44,11 @@ def bundles():
         if meta.get("research_only") is not True or meta["feature_schema"] != FEATURES:
             raise ValueError("Research artifact/schema attestation missing")
         report = ROOT / meta["selection_report"]
-        if hashlib.sha256(report.read_bytes()).hexdigest() != meta["selection_report_sha256"]:
-            raise ValueError("Frozen selection report integrity failure")
+        report_key=(report,meta["selection_report_sha256"])
+        if report_key not in verified_reports:
+            if hashlib.sha256(report.read_bytes()).hexdigest() != meta["selection_report_sha256"]:
+                raise ValueError("Frozen selection report integrity failure")
+            verified_reports.add(report_key)
         entries.append((folder, meta))
     return entries
 
@@ -53,7 +57,7 @@ def forecast(session, scope, origin, horizon, decision_at=None):
     match = next(((folder, meta) for folder, meta in bundles()
         if tuple(meta[k] for k in ("market", "commodity", "variety", "grade")) == scope and meta["horizon"] == horizon), None)
     if match is None:
-        raise ValueError("No saved research artifact for requested series/horizon")
+        raise ResearchInputsUnavailable("insufficient_horizon_evidence")
     folder, meta = match
     now = datetime.now(UTC)
     from app.features import midnight
@@ -85,10 +89,21 @@ def forecast(session, scope, origin, horizon, decision_at=None):
     # Coverage diagnostics use only the later subset, never the calibration rows.
     intervals = [EmpiricalInterval(nominal_level=float(level), lower_inr_per_quintal=max(0, value-radius), upper_inr_per_quintal=value+radius)
         for level, radius in sorted(meta.get("empirical_calibration", {}).get("radii", {}).items())]
+    flags = ["retrospective_research_only", "historical_publication_unverified", "interval_coverage_not_guaranteed"]
+    if not intervals:
+        flags.append("empirical_interval_unavailable")
+    if meta.get("comparison", {}).get("learned_model_eligible") is False:
+        flags.append("short_history_baseline_only")
+    if meta.get('horizon_evidence_status'):
+        flags.append('extended_horizon_no_new_final_test')
+        if meta['horizon_evidence_status']=='baseline_only':
+            flags.append('predeclared_persistence_baseline_not_trained_ml')
     return ReliabilityForecast(prediction_inr_per_quintal=value, intervals=intervals, horizon_calendar_days=horizon,
         timestamp=when.isoformat(), target_date=(origin+timedelta(days=horizon)).isoformat(), model_version=meta["version"],
-        reliability_status="limited evidence", flags=["retrospective_research_only", "historical_publication_unverified", "interval_coverage_not_guaranteed"],
+        reliability_status="limited evidence", flags=flags,
         market=scope[0], commodity=scope[1], variety=scope[2], grade=scope[3], latest_report_date=audit["max_feature_report_date"],
         observation_age_calendar_days=int(feature["days_since_latest_report"]),
         data_source={"mode": "research_only", "sources": provenance["sources"], "selection_report": meta["selection_report"], "input_decision_at":audit["decision_at"],
+            "horizon_evidence_status":meta.get('horizon_evidence_status'),
+            "evaluation_metrics":meta.get('comparison',{}).get('retrospective_benchmark') if meta.get('horizon_evidence_status')=='baseline_only' else next((r['validation'] for r in meta.get('comparison',{}).get('comparisons',[]) if r['candidate']==meta['candidate']),None),
             "calibration": meta.get("empirical_calibration"), "limitations": meta["limitations"]})

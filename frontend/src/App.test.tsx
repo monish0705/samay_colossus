@@ -5,7 +5,7 @@ import { App } from './App';
 import { setLanguage, t } from './i18n';
 import { explainRecommendation, explainChanges } from './explanations';
 import { validateAdvisor, exampleAdvisor, buildRecommendation, getEffectiveAdvisorValues, blankAdvisor } from './advisor';
-import { defaultScope, type Recommendation } from './api';
+import { CROP_SCOPES, defaultScope, type Recommendation } from './api';
 import { ReadAloud } from './Speech';
 import recommendationFixture from './test/fixtures/recommendation.json';
 import infeasibleFixture from './test/fixtures/infeasible.json';
@@ -16,6 +16,9 @@ const conditional = conditionalFixture as Recommendation;
 let research = false;
 let historical = false;
 let staleReference = false;
+let multiCrop = false;
+let dailyHorizons = false;
+let forecastRequests: Record<string, unknown>[] = [];
 let offline = false, rows: unknown[] = [], model = false, submitted: unknown[] = [], nextResult: Recommendation = recommendation;
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
@@ -26,7 +29,15 @@ const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
   if (path === '/api/health') return json({ status: 'ok', service: 'samay', version: '0.1.0' });
   if (path === '/api/v1/markets') return json([]);
   if (path === '/api/v1/commodities') return json([]);
+  if (path === '/api/v1/models/horizons') return json({ ...defaultScope, planning_ceiling_calendar_days: 365, saved_horizons:dailyHorizons ? [1,3,7,14,30,60] : [], requested_status:'saved_artifact',reasons:[],sample_counts:{} });
+  if (path === '/api/v1/context') return json({ status: 'unavailable', market: defaultScope.market, commodity: defaultScope.commodity, decision_at: '2026-11-05T12:00:00Z', weather: [], events: [], news: [], sources: [], warnings: [], numeric_price_adjustment_applied: false, note: 'TEST_ONLY' });
   if (path === '/api/v1/data/status') return json({ status: 'unavailable', official_observations: 0, fixture_observations: 3, demo_observations: 0, latest_official_report_date: null, latest_official_fetched_at: null, note: 'TEST_ONLY' });
+  if (path === '/api/v1/models/status' && multiCrop) return json({ status: 'no_models_deployed', models: [], research_studies: [], research_models: Object.values(CROP_SCOPES).map(scope => ({ ...scope, horizon: 3, model_version: 'TEST_ONLY_CURRENT', status: 'research_only_limited_evidence' })) });
+  if (path === '/api/v1/predict' && multiCrop) {
+    const body = await request.clone().json() as Record<string, unknown>;
+    forecastRequests.push(body);
+    return json({ ...body, request_id: 'TEST_ONLY_CURRENT', horizon_calendar_days: body.horizon, timestamp: '2026-11-05T12:00:00+05:30', target_date: '2026-11-08', latest_report_date: '2026-11-03', reliability_status: 'limited evidence', prediction_inr_per_quintal: '1000.00', model_version: 'TEST_ONLY_CURRENT', intervals: [], flags: ['short_history_baseline_only'], data_source: { source: 'TEST_ONLY' } });
+  }
   if (path === '/api/v1/models/status') return json({ status: model ? 'configured' : 'no_models_deployed', research_studies: research ? [{ ...defaultScope, version: 'TEST_ONLY_RESEARCH', research_only: true, train_start: '2021-01-01', train_end: '2023-12-31', validation_end: '2024-12-31', test_end: '2025-06-30', limitations: 'TEST_ONLY', source_fingerprint: 'TEST_ONLY', horizons: [{ horizon: 1, selected_model: 'naive', train_n: 120, validation_n: 30, final_n: 2, final_metrics: { mae_inr_per_quintal: 10, wape_pct: 1 }, naive_metrics: { mae_inr_per_quintal: 10 } }] }] : [], models: model ? [{ ...defaultScope, horizon: 3, model_version: 'TEST_ONLY', status: 'artifact_present', reliability_evidence_configured: false }] : [] });
   if (path === '/api/v1/models/evaluation') {
     if (!historical) return json({ error: { code: 'no_research_evaluation', message: 'TEST_ONLY no report', request_id: 'TEST_ONLY' } },404);
@@ -41,10 +52,62 @@ const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
   throw new Error(`Unexpected test request ${path}`);
 });
 const show = (path = '/') => render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>);
-beforeEach(() => { setLanguage('en'); research = false; historical = false; staleReference = false; offline = false; rows = []; model = false; submitted = []; nextResult = recommendation; vi.stubGlobal('fetch', mockFetch); mockFetch.mockClear(); });
+beforeEach(() => { setLanguage('en'); research = false; historical = false; staleReference = false; multiCrop = false; dailyHorizons = false; forecastRequests = []; offline = false; rows = []; model = false; submitted = []; nextResult = recommendation; vi.stubGlobal('fetch', mockFetch); mockFetch.mockClear(); });
 afterEach(() => { vi.unstubAllGlobals(); setLanguage('en'); });
 
 describe('SAMAY farmer dashboard and Kannada journey', () => {
+  it('shows the conditional hold decision separately from the safe fallback in both languages', async () => {
+    const held = conditional.optimization.recommended_plan!;
+    nextResult = { ...recommendation, decision_support: {
+      action: 'partial_sell_and_hold', basis: 'conditional_scenario_analysis', conditional: true,
+      plan: { ...held, recommendation_eligible: false }, safe_fallback_plan: recommendation.optimization.recommended_plan,
+      reasons: ['mandatory_cash_and_storage_constraints_satisfied'], horizon_comparisons: [held],
+      context: { status: 'unavailable', market: defaultScope.market, commodity: defaultScope.commodity, decision_at: '2026-11-05T12:00:00Z', weather: [], events: [], news: [], sources: [], warnings: [], numeric_price_adjustment_applied: false, note: 'TEST_ONLY' }, note: 'TEST_ONLY conditional analysis',
+    } };
+    show('/advisor');
+    fireEvent.click(screen.getByRole('button', { name: 'Load labeled example' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Calculate my sale plan' }));
+    expect(await screen.findByRole('heading', { name: 'Sell some now; conditionally hold the rest' })).toBeInTheDocument();
+    expect(screen.getAllByText('Conditional analysis, not validated advice')[0]).toBeInTheDocument();
+    expect(screen.getByText('Full calculation audit for the displayed plan')).toBeInTheDocument();
+    const expectedCash = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(Number(held.cash_today_inr));
+    expect(screen.getAllByText(expectedCash).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: 'ಕನ್ನಡ' }));
+    expect(screen.getByRole('heading', { name: 'ಈಗ ಸ್ವಲ್ಪ ಮಾರಿ; ಉಳಿದುದನ್ನು ಷರತ್ತುಗಳಿಗೆ ಒಳಪಟ್ಟು ಇಡಿ' })).toBeInTheDocument();
+    expect(screen.getAllByText(expectedCash).length).toBeGreaterThan(0);
+  });
+  it('builds short-date comparisons and an explicit long buyer-price scenario without changing values by language', () => {
+    const scope = CROP_SCOPES.Arecanut;
+    const draft = { ...exampleAdvisor, capacity: '10', days: '90', limit: '180', scenarioPrice: '60000', loss: '0.01' };
+    const english = buildRecommendation(draft,scope,'2026-11-04');
+    expect(english.holding_options.map(o => o.days)).toEqual([1,3,7,90]);
+    expect(english.holding_options.find(o => o.days === 90)?.scenario_price_inr_per_quintal).toBe('60000');
+    expect(english.holding_options.find(o => o.days === 3)?.scenario_price_inr_per_quintal).toBeUndefined();
+    expect(english.decision_policy?.adverse_fraction).toBe('0.200000');
+    setLanguage('kn');
+    expect(buildRecommendation(draft,scope,'2026-11-04')).toEqual(english);
+  });
+  it('requires an honest price basis for longer holding dates', () => {
+    const draft = { ...exampleAdvisor, capacity: '10', days: '90', limit: '180', scenarioPrice: '' };
+    expect(validateAdvisor({...draft,longReference:'require_user_price'},'Arecanut').scenarioPrice).toMatch(/future buyer quote/);
+    expect(validateAdvisor({...draft,longReference:'saved_forecast'},'Arecanut').scenarioPrice).toBeUndefined();
+    expect(validateAdvisor({ ...draft, longReference: 'flat_reference' },'Arecanut').scenarioPrice).toBeUndefined();
+  });
+  it('requests the saved current variety and grade for every additional crop', async () => {
+    multiCrop = true; show('/forecast');
+    await screen.findAllByText('Research only · limited evidence');
+    for (const crop of ['Copra', 'Arecanut', 'Onion', 'Potato']) {
+      const scope = CROP_SCOPES[crop];
+      fireEvent.click(screen.getByRole('button', { name: new RegExp(`${crop} ·`) }));
+      fireEvent.click(screen.getByRole('button', { name: 'Get forecast' }));
+      await screen.findAllByText('₹1,000.00');
+      expect(forecastRequests.at(-1)).toMatchObject({ market: scope.market, commodity: crop, variety: scope.variety, grade: scope.grade, horizon: 3 });
+      expect(screen.getByText('No sufficiently calibrated interval is available.')).toBeInTheDocument();
+    }
+    expect(forecastRequests).toHaveLength(4);
+    fireEvent.click(screen.getByRole('button', { name: 'ಕನ್ನಡ' }));
+    expect(screen.getByText('ಹಳೆಯ ದಾಖಲೆಗಳು ಮೂಲಭೂತ ಮುನ್ಸೂಚನೆಗೆ ಮಾತ್ರ ಸಾಕಾಗಿವೆ; ಮುಂದುವರಿದ ಮಾದರಿಯ ತರಬೇತಿಗೆ ಸಾಕಾಗುವುದಿಲ್ಲ.')).toBeInTheDocument();
+  });
   it('shows truthful empty/connected states and switches all core headings', async () => {
     show();
     expect(await screen.findByText('Backend connected')).toBeInTheDocument();
@@ -164,19 +227,22 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getAllByText('₹10.00')).toHaveLength(2);
   });
   it('handles unknown routes', () => { show('/missing'); expect(screen.getByRole('heading', { name: 'Page not found' })).toBeInTheDocument(); });
-  it('allows selecting Arecanut and reflects Shivamogga MAMCOS scope and long-term storage', async () => {
+  it('selects the actual Arecanut scope, requires a manual quote when disconnected and retains long planning dates', async () => {
     show('/advisor');
     const arecaBtn = screen.getByRole('button', { name: /Arecanut/i });
     expect(arecaBtn).toBeInTheDocument();
     fireEvent.click(arecaBtn);
     expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/48,000/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/48,000/i)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/rashi.*local/i).length).toBeGreaterThan(0);
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
+    fireEvent.change(screen.getByLabelText(/Expected buyer price today/), { target: { value: '48000' } });
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(screen.getByText(/No verified storage facility or tariff is configured/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/730 days/i).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: 'Yes (Can hold)' }));
+    expect(screen.getByRole('option', { name: /730 calendar days/ })).toBeInTheDocument();
   });
 });
 
@@ -206,6 +272,19 @@ describe('frozen historical evaluation', () => {
 });
 
 describe('deterministic explanation and request construction', () => {
+  it('requests an exact saved monthly horizon and preserves the forecast value in Kannada', async () => {
+    dailyHorizons=true; multiCrop=true; show('/forecast');
+    fireEvent.click(screen.getByRole('button',{name:/Copra ·/}));
+    const exact=screen.getByLabelText('Exact forecast horizon (calendar days)');
+    fireEvent.change(exact,{target:{value:'30'}});
+    const button=await screen.findByRole('button',{name:'Get forecast'});
+    fireEvent.click(button);
+    await screen.findAllByText('₹1,000.00');
+    expect(forecastRequests.at(-1)).toMatchObject({commodity:'Copra',horizon:30});
+    fireEvent.click(screen.getByRole('button',{name:'ಕನ್ನಡ'}));
+    expect(screen.getAllByText('₹1,000.00').length).toBeGreaterThan(0);
+    expect(screen.getByLabelText('ಮುನ್ಸೂಚನೆಯ ನಿಖರ ಅವಧಿ (ಕ್ಯಾಲೆಂಡರ್ ದಿನಗಳು)')).toHaveValue(30);
+  });
   it('preserves zero loss assumptions and never inserts a missing buyer quote', () => {
     expect(getEffectiveAdvisorValues({ ...exampleAdvisor, loss: '0' }).loss).toBe('0');
     expect(getEffectiveAdvisorValues(blankAdvisor).price).toBe('');

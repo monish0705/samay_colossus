@@ -1,0 +1,24 @@
+{
+  "endpoint": "https://api.data.gov.in/resource/35985678-0d79-46b4-9ed6-6f13308a1d24",
+  "publisher_page": "https://www.data.gov.in/resource/variety-wise-daily-market-prices-data-commodity",
+  "total": 352,
+  "pages": [
+    {
+      "file": "page-000000.json",
+      "sha256": "ad912068fe60fbad6648213c4b0bdf599db7789d236cc0cef1f8fd6648dfaef9",
+      "fetched_at": "2026-11-05T08:39:55.871780+00:00",
+      "query": {
+        "format": "json",
+        "offset": 0,
+        "limit": 1000,
+        "filters[State]": "Karnataka",
+        "filters[Market]": "Bengaluru APMC",
+        "filters[Commodity]": "Potato",
+        "sort[Arrival_Date]": "asc",
+        "sort[Variety]": "asc",
+        "sort[Grade]": "asc"
+      }
+    }
+  ],
+  "transformation": "Exact published field values projected to CSV; no prices, dates, varieties or grades changed. Unit from independently archived official report."
+}

@@ -11,7 +11,10 @@ and [source provenance](docs/ACQUISITION.md). Research results appear separately
 on the Transparency screen. Validated live forecasts remain unavailable because
 original publication/revision history is unverified. No guaranteed accuracy or
 profit improvement is claimed.
+  
 
+
+  
 ## Windows two-command setup and launch
 
 Prerequisites: Python 3.12 recommended (3.11+ source requirement), Node.js 22.12+

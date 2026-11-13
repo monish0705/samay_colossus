@@ -34,3 +34,5 @@ data/processed/backups/
 !models/**/*.bin
 *.tsbuildinfo
 .ruff_cache/
+reports/local-startup.stdout.log
+reports/local-startup.stderr.log

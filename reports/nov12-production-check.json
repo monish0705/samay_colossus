@@ -1,0 +1,48 @@
+{
+  "/backend/api/health": {
+    "status": 200,
+    "records": 0
+  },
+  "/backend/api/v1/data/status": {
+    "status": 200,
+    "records": 3988
+  },
+  "/backend/api/v1/models/status": {
+    "status": 200,
+    "records": 322
+  },
+  "/backend/api/v1/prices?commodity=Tomato": {
+    "status": 200,
+    "records": 2
+  },
+  "Tomato": {
+    "status": 200,
+    "price": "1255.71",
+    "source_date": "2026-11-07"
+  },
+  "Copra": {
+    "status": 200,
+    "price": "17500.00",
+    "source_date": "2026-11-09"
+  },
+  "Arecanut": {
+    "status": 200,
+    "price": "48009.00",
+    "source_date": "2026-11-06"
+  },
+  "Onion": {
+    "status": 200,
+    "price": "4200.00",
+    "source_date": "2026-11-11"
+  },
+  "Potato": {
+    "status": 200,
+    "price": "3000.00",
+    "source_date": "2026-11-11"
+  },
+  "advisor": {
+    "status": 200,
+    "action": "hold",
+    "forecasts": 60
+  }
+}

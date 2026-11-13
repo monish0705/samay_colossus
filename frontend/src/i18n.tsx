@@ -1,6 +1,9 @@
 import { cloneElement, isValidElement, useSyncExternalStore, type ReactElement, type ReactNode } from 'react';
 import { kannada } from './locales/kn';
 import { saleKannada } from './locales/sale-kn';
+import { advisorKannada } from './locales/advisor-kn';
+import { purchaseKannada } from './locales/purchase-kn';
+import { businessKannada } from './locales/business-kn';
 export type Language = 'en' | 'kn';
 let language: Language = 'kn';
 try {
@@ -9,7 +12,7 @@ try {
   else if (saved === 'kn') language = 'kn';
 } catch { /* Storage is optional. */ }
 const listeners = new Set<() => void>();
-const dictionary = new Map(Object.entries({ ...kannada, ...saleKannada }).map(([key, value]) => [key.toLowerCase(), value]));
+const dictionary = new Map(Object.entries({ ...kannada, ...saleKannada, ...advisorKannada, ...businessKannada, ...purchaseKannada }).map(([key, value]) => [key.toLowerCase(), value]));
 export function setLanguage(value: Language) { language = value; try { localStorage.setItem('samay-language', value); } catch { /* No financial data is stored. */ } listeners.forEach(listener => listener()); }
 export const getLanguage = () => language;
 export function useLanguage() { return useSyncExternalStore(callback => { listeners.add(callback); return () => { listeners.delete(callback); }; }, getLanguage, () => 'kn' as Language); }
@@ -31,6 +34,7 @@ export function t(text: string, values: Record<string, string | number> = {}, lo
   return `${text.match(/^\s*/)?.[0] || ''}${translated}${text.match(/\s*$/)?.[0] || ''}`;
 }
 export const warningMessages: Record<string, string> = {
+  mandi_modal_used_as_estimated_realization_not_buyer_offer: 'Mandi prices are used as estimates; your actual selling price may differ.',
   extended_horizon_no_new_final_test: 'This horizon has no new untouched final test; research evidence only.',
   predeclared_persistence_baseline_not_trained_ml: 'Predeclared last-price baseline; not trained ML',
   insufficient_horizon_evidence: 'Insufficient evidence for this date. No future price will be invented.',

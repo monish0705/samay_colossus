@@ -1,5 +1,10 @@
 # Farmer-to-mandi sale requests
 
+**13 November update:** the farmer price/form and unonboarded-mandi behavior described below
+have been simplified. See [automatic prices and pending activation](MANDI-PRICE-AND-REQUESTS.md).
+New farmer screens use automatic dated mandi references, two required request fields and
+durable waiting requests. Existing farmer-entered-price API clients remain compatible.
+
 SAMAY facilitates requests, negotiated terms, arrival bookings and recorded sale details.
 It does not execute physical sales or transfer money. Market observations, farmer expectations,
 owner offers and actual weighment prices are stored and displayed separately.

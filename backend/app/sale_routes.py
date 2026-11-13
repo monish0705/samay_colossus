@@ -46,7 +46,19 @@ from app.sale_schemas import (
     Versioned,
     WeighmentInput,
 )
-from app.sale_service import assignment, expire, latest_offer, load_request, money, notify, owners, request_dict, transition, view
+from app.sale_service import (
+    assignment,
+    dispatch_waiting,
+    expire,
+    latest_offer,
+    load_request,
+    money,
+    notify,
+    owners,
+    request_dict,
+    transition,
+    view,
+)
 
 router = APIRouter(prefix='/api/v1', tags=['sale marketplace'], dependencies=[Depends(write_guard)], responses={
     status: {'model': ErrorEnvelope, 'description': meaning} for status, meaning in [
@@ -57,6 +69,7 @@ router = APIRouter(prefix='/api/v1', tags=['sale marketplace'], dependencies=[De
 
 def identity(user):
     return {'id': user.id, 'name': user.name, 'email': user.email, 'role': user.role,
+            'roles': getattr(user, 'authorized_roles', [user.role]),
             'language': user.language, 'email_verified': user.email_verified, 'phone_verified': user.phone_verified}
 
 
@@ -89,8 +102,12 @@ def register(body: Register, request: Request, response: Response, db: DB):
     user = SaleUser(email=body.email, name=body.name, password_hash=password_hash(body.password), role=role, language=body.language)
     db.add(user)
     db.flush()
+    from app.business_models import AccountRole
+    db.add(AccountRole(user_id=user.id, role=role))
     if invitation:
         db.add(MandiAssignment(user_id=user.id, market_id=invitation.market_id, can_transact=role == 'MANDI_OWNER'))
+        db.flush()
+        dispatch_waiting(db, invitation.market_id, user)
     db.add(NotificationPreference(user_id=user.id))
     return session_login(db, user, response)
 
@@ -162,6 +179,8 @@ def register_mandi(body: MandiInput, db: DB, user: User):
         db.add(row)
     row.active, row.registration_details = body.active, body.registration_details
     row.commodity_ids, row.approved_by, row.approved_at = body.commodity_ids, user.id, now()
+    db.flush()
+    dispatch_waiting(db, body.market_id, user)
     db.commit()
     return {'market_id': body.market_id, 'active': row.active}
 
@@ -188,7 +207,8 @@ def sale_mandis(db: DB):
         reg = db.get(MandiRegistration, market.id)
         available = bool(reg and reg.active and any(u.role == 'MANDI_OWNER' for u in owners(db, market.id)))
         result.append({'id': market.id, 'name': market.name, 'online_requests_available': available,
-                       'commodity_ids': reg.commodity_ids if reg else [],
+                       'commodity_ids': reg.commodity_ids if reg else list(db.scalars(select(MandiObservation.commodity_id).where(MandiObservation.market_id == market.id, MandiObservation.data_kind.in_(['official', 'secondary'])).distinct())),
+                       'can_save_request': not reg or reg.active,
                        'reason': None if available else 'mandi_has_not_activated_online_requests'})
     return result
 
@@ -205,17 +225,22 @@ def create_sale(body: SaleCreate, db: DB, user: User, idempotency_key: str = Hea
     throttle(db, f'create-sale:{user.id}', 30)
     reg = db.get(MandiRegistration, body.mandi_id)
     recipients = owners(db, body.mandi_id)
-    if not reg or not reg.active or not any(u.role == 'MANDI_OWNER' for u in recipients):
-        raise HTTPException(409, 'mandi_has_not_activated_online_requests')
-    if body.crop_id not in reg.commodity_ids or not db.get(Commodity, body.crop_id):
-        raise HTTPException(422, 'crop_not_accepted_by_mandi')
+    validate_sale_market(db, body, reg)
+    online = bool(reg and reg.active and any(u.role == 'MANDI_OWNER' for u in recipients))
     if body.preferred_arrival_at <= now():
         raise HTTPException(422, 'arrival_must_be_in_future')
     obs = db.scalar(select(MandiObservation).where(MandiObservation.market_id == body.mandi_id,
         MandiObservation.commodity_id == body.crop_id, MandiObservation.variety == body.variety,
         MandiObservation.grade == body.grade, MandiObservation.data_kind == 'official', MandiObservation.observed_on <= now().date())
         .order_by(MandiObservation.observed_on.desc(), MandiObservation.id.desc()))
-    row = SaleRequest(**body.model_dump(), farmer_id=user.id,
+    price = body.expected_price_per_quintal
+    if body.use_mandi_price:
+        from app.mandi_quote import latest_quote
+        obs = latest_quote(db, body.mandi_id, body.crop_id, body.variety, body.grade, now())
+        price = obs.modal_price_inr_per_quintal
+        if body.expected_price_per_quintal is not None and price != body.expected_price_per_quintal:
+            raise HTTPException(409, 'mandi_price_changed_review_again')
+    row = SaleRequest(**body.model_dump(exclude={'use_mandi_price', 'expected_price_per_quintal'}), expected_price_per_quintal=price, farmer_id=user.id,
         public_request_id=f'SAMAY-SALE-{now().year}-{uuid4().hex[:16].upper()}',
         status='SUBMITTED', idempotency_key=idempotency_key, payload_hash=fingerprint,
         reference_modal_price=obs.modal_price_inr_per_quintal if obs else None,
@@ -223,10 +248,15 @@ def create_sale(body: SaleCreate, db: DB, user: User, idempotency_key: str = Hea
     db.add(row)
     try:
         db.flush()
-        db.add(SaleEvent(request_id=row.id, actor_id=user.id, from_status=None, to_status='SUBMITTED', details={}))
-        event = transition(db, row, user, 'NOTIFIED', row.version,
-            {'channel': 'in_app', 'meaning': 'Persisted in assigned inboxes; not proof of external delivery or reading.'})
-        notify(db, row, event, recipients)
+        created = SaleEvent(request_id=row.id, actor_id=user.id, from_status=None, to_status='SUBMITTED',
+            details={'price_basis': 'mandi_reference' if body.use_mandi_price else 'farmer_expectation',
+                     'waiting_for_mandi_activation': not online})
+        db.add(created)
+        db.flush()
+        if online:
+            event = transition(db, row, user, 'NOTIFIED', row.version,
+                {'channel': 'in_app', 'meaning': 'Persisted in assigned inboxes; not proof of external delivery or reading.'})
+            notify(db, row, event, recipients)
         db.commit()
     except IntegrityError:
         db.rollback()
@@ -241,15 +271,22 @@ def create_sale(body: SaleCreate, db: DB, user: User, idempotency_key: str = Hea
 def preview_sale(body: SaleCreate, db: DB, user: User):
     require_role(user, 'FARMER')
     reg = db.get(MandiRegistration, body.mandi_id)
-    if not reg or not reg.active or body.crop_id not in reg.commodity_ids or not any(u.role == 'MANDI_OWNER' for u in owners(db, body.mandi_id)):
-        raise HTTPException(409, 'mandi_has_not_activated_online_requests')
+    validate_sale_market(db, body, reg)
+    if body.preferred_arrival_at <= now():
+        raise HTTPException(422, 'arrival_must_be_in_future')
     obs = db.scalar(select(MandiObservation).where(MandiObservation.market_id == body.mandi_id,
         MandiObservation.commodity_id == body.crop_id, MandiObservation.variety == body.variety,
         MandiObservation.grade == body.grade, MandiObservation.data_kind == 'official',
         MandiObservation.observed_on <= now().date()).order_by(MandiObservation.observed_on.desc()))
-    return {'reference_modal_price': str(obs.modal_price_inr_per_quintal) if obs else None,
+    price = body.expected_price_per_quintal
+    if body.use_mandi_price:
+        from app.mandi_quote import latest_quote
+        obs = latest_quote(db, body.mandi_id, body.crop_id, body.variety, body.grade, now())
+        price = obs.modal_price_inr_per_quintal
+    return {'expected_price_per_quintal': str(price), 'waiting_for_mandi_activation': not bool(reg and reg.active and any(u.role == 'MANDI_OWNER' for u in owners(db, body.mandi_id))),
+            'reference_modal_price': str(obs.modal_price_inr_per_quintal) if obs else None,
             'reference_price_date': obs.observed_on if obs else None,
-            'estimated_net_inr': str(money(body.requested_quantity * body.expected_price_per_quintal - body.estimated_costs_inr)),
+            'estimated_net_inr': str(money(body.requested_quantity * price - body.estimated_costs_inr)),
             'unit': 'INR/quintal', 'notice': 'Reference only; no confirmed owner offer yet.'}
 
 
@@ -260,6 +297,7 @@ def list_sales(request: Request, db: DB, user: User, status: str | None = None, 
     if '/mandi/' in request.url.path:
         require_role(user, 'MANDI_OWNER', 'MANDI_STAFF')
         query = query.join(MandiAssignment, MandiAssignment.market_id == SaleRequest.mandi_id).where(MandiAssignment.user_id == user.id)
+        query = query.where(SaleRequest.status != 'SUBMITTED')
     else:
         require_role(user, 'FARMER')
         query = query.where(SaleRequest.farmer_id == user.id)
@@ -527,3 +565,17 @@ def update_staff(body: StaffInput, db: DB, user: User):
         db.delete(row)
     db.commit()
     return {'updated': True}
+
+
+def validate_sale_market(db, body, registration):
+    if registration:
+        if not registration.active:
+            raise HTTPException(409, 'mandi_online_requests_paused')
+        if body.crop_id not in registration.commodity_ids:
+            raise HTTPException(422, 'crop_not_accepted_by_mandi')
+    else:
+        authentic = db.scalar(select(MandiObservation.id).where(MandiObservation.market_id == body.mandi_id,
+            MandiObservation.commodity_id == body.crop_id, MandiObservation.variety == body.variety,
+            MandiObservation.grade == body.grade, MandiObservation.data_kind.in_(['official', 'secondary'])).limit(1))
+        if not authentic:
+            raise HTTPException(422, 'unknown_market_crop_series')

@@ -1,5 +1,7 @@
 from alembic import context
 from app import (
+    purchase_models,  # noqa: F401
+    business_models,  # noqa: F401
     models,  # noqa: F401
     sale_models,  # noqa: F401
 )

@@ -83,7 +83,7 @@ export const CROP_SCOPES: Record<string, CropScopeConfig> = {
     titleKn: 'ಅಡಿಕೆ (ರಾಶಿ) · ಶಿವಮೊಗ್ಗ ಎಪಿಎಂಸಿ',
     marketNameKn: 'ಶಿವಮೊಗ್ಗ ಎಪಿಎಂಸಿ',
     cropNameKn: 'ಅಡಿಕೆ',
-    icon: '🌴',
+    icon: '🌰',
     tag: 'Very Durable · 2 Months - 2 Years',
     defaultQuantity: '10',
     defaultCash: '100000',

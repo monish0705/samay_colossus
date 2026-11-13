@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "steps": 3,
+  "removed": [
+    "judge mode",
+    "90-second demo",
+    "guided tour",
+    "example loader"
+  ],
+  "mobile_overflow": false,
+  "languages": [
+    "English",
+    "Kannada"
+  ],
+  "safe_holding_days_selection_preserved": 7,
+  "browser_page_errors": []
+}

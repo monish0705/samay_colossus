@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import time
 from pathlib import Path
 from urllib.request import urlopen
@@ -20,6 +21,10 @@ def ready(url):
 
 
 def main():
+    # Redirected Windows consoles may default to cp1252 even in a Unicode workspace.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, 'reconfigure'):
+            stream.reconfigure(encoding='utf-8', errors='backslashreplace')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend-port", type=int, default=8010)
     parser.add_argument("--frontend-port", type=int, default=5173)

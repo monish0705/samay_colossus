@@ -26,7 +26,11 @@ def main():
             password = getpass.getpass('New administrator password (12–128 characters): ')
             if not 12 <= len(password) <= 128 or password != getpass.getpass('Repeat password: '):
                 raise SystemExit('Password invalid or mismatch')
-            db.add(SaleUser(email=args.email.lower(), name=args.name, password_hash=password_hash(password), role='SYSTEM_ADMIN'))
+            from app.business_models import AccountRole
+            account = SaleUser(email=args.email.lower(), name=args.name, password_hash=password_hash(password), role='SYSTEM_ADMIN')
+            db.add(account)
+            db.flush()
+            db.add(AccountRole(user_id=account.id, role='SYSTEM_ADMIN'))
         else:
             import re
             if not user or not args.phone or not re.fullmatch(r'\+[1-9]\d{7,14}', args.phone) or not args.evidence:

@@ -11,6 +11,8 @@ def assert_public_market_snapshot(connection):
     private = {'mandi_users', 'mandi_user_market_assignments', 'mandi_registrations',
                'notifications', 'notification_preferences', 'notification_deliveries', 'notification_outbox'}
     private |= {name for name in tables if name.startswith('sale_')}
+    private |= {name for name in tables if name.startswith(('business_', 'private_', 'purchase_', 'farmer_sale_'))}
+    private |= {'account_roles', 'account_workspace_preferences'}
     for name in sorted(tables & private):
         # Names originate from our schema, not request input.
         quoted = name.replace('"', '""')

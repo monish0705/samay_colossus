@@ -18,6 +18,8 @@ from app.api_services import ServiceProblem
 from app.config import get_settings
 from app.prices import router as prices_router
 from app.sale_routes import router as sale_router
+from app.business_routes import router as business_router
+from app.purchase_routes import router as purchase_router
 
 
 @asynccontextmanager
@@ -46,7 +48,7 @@ async def lifespan(application):
 
 
 app = FastAPI(title="SAMAY API", version="0.1.0", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=get_settings().cors_origins, allow_credentials=True, allow_methods=["GET", "POST"], allow_headers=["Content-Type", "X-Request-ID", "X-SAMAY-Action", "Idempotency-Key"], expose_headers=["X-Request-ID"])
+app.add_middleware(CORSMiddleware, allow_origins=get_settings().cors_origins, allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type", "X-Request-ID", "X-SAMAY-Action", "Idempotency-Key"], expose_headers=["X-Request-ID"])
 logger = logging.getLogger("samay.api")
 logger.setLevel(logging.INFO)
 if not logger.handlers:
@@ -75,6 +77,8 @@ async def request_context(request: Request, call_next):
             result.headers["Vary"] = "Origin"
     result.headers["X-Request-ID"] = request.state.request_id
     if request.url.path.startswith(('/api/v1/auth', '/api/v1/sale-', '/api/v1/mandi/', '/api/v1/admin/', '/api/v1/notification')):
+        result.headers['Cache-Control'] = 'private, no-store'
+    if request.url.path.startswith(('/api/v1/business', '/api/v1/private-purchases')):
         result.headers['Cache-Control'] = 'private, no-store'
     logger.info(json.dumps({"event": "http_request", "request_id": request.state.request_id,
         "method": request.method, "route": getattr(request.scope.get("route"), "path", "unmatched"),
@@ -119,3 +123,5 @@ def health() -> HealthResponse:
 app.include_router(prices_router)
 app.include_router(api_router)
 app.include_router(sale_router)
+app.include_router(business_router)
+app.include_router(purchase_router)

@@ -18,7 +18,9 @@ let offline = false, rows: unknown[] = [], model = false, submitted: unknown[] =
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 const mockFetch = vi.fn(async (input: RequestInfo | URL) => {
   if (offline) throw new TypeError('offline');
-  const request = input as Request, path = new URL(request.url).pathname;
+  const request = input as Request;
+  const rawUrl = typeof input === 'string' ? input : (input && 'url' in input) ? (input as Request).url : String(input);
+  const path = (rawUrl.startsWith('http') ? new URL(rawUrl).pathname : rawUrl).replace(/^\/backend/, '');
   if (path === '/api/health') return json({ status: 'ok', service: 'samay', version: '0.1.0' });
   if (path === '/api/v1/markets') return json([]);
   if (path === '/api/v1/commodities') return json([]);
@@ -84,6 +86,23 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getByLabelText(/ಇಂದು ಖರೀದಿದಾರರಿಂದ ನಿರೀಕ್ಷಿಸುವ ಬೆಲೆ/)).toHaveValue('1000');
     expect(submitted).toHaveLength(0);
   });
+  it('allows quantity-only input with auto-projected reference price and submits successfully', async () => {
+    show('/advisor');
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.change(screen.getByLabelText(/Harvest quantity/), { target: { value: '30' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.change(screen.getByLabelText(/Immediate net cash needed/), { target: { value: '10000' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    const calcBtn = screen.getByRole('button', { name: 'Calculate my sale plan' });
+    expect(calcBtn).not.toBeDisabled();
+    fireEvent.click(calcBtn);
+    expect(await screen.findByRole('heading', { name: 'Keep today’s cash needs covered.' })).toBeInTheDocument();
+    expect(submitted).toHaveLength(1);
+    const sub = submitted[0] as any;
+    expect(sub.total_quantity_quintals).toBe('30');
+    expect(sub.today_price_inr_per_quintal).toBe('1400');
+  });
   it('calculates through the API, switches languages without recalculation and exposes exact numbers', async () => {
     show('/advisor');
     fireEvent.click(screen.getByRole('button', { name: 'Load labeled example' }));
@@ -135,6 +154,20 @@ describe('SAMAY farmer dashboard and Kannada journey', () => {
     expect(screen.getAllByText('₹10.00')).toHaveLength(2);
   });
   it('handles unknown routes', () => { show('/missing'); expect(screen.getByRole('heading', { name: 'Page not found' })).toBeInTheDocument(); });
+  it('allows selecting Arecanut and reflects Shivamogga MAMCOS scope and long-term storage', async () => {
+    show('/advisor');
+    const arecaBtn = screen.getByRole('button', { name: /Arecanut/i });
+    expect(arecaBtn).toBeInTheDocument();
+    fireEvent.click(arecaBtn);
+    expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/48,000/i).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getAllByText(/Shivamogga Mandi/i).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getAllByText(/Shivamogga MAMCOS Central Godown/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/730 days/i).length).toBeGreaterThan(0);
+  });
 });
 
 describe('deterministic explanation and request construction', () => {

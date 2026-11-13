@@ -79,7 +79,7 @@ def history(market: str = "Kolar APMC", commodity: str = "Tomato", start_date: d
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from exc
     stmt = select(MandiObservation, Market, Commodity, ImportBatch).join(Market, MandiObservation.market_id == Market.id).join(Commodity, MandiObservation.commodity_id == Commodity.id).outerjoin(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(
-        Market.name == market, Market.state == "Karnataka", Market.district == "Kolar", Commodity.name == commodity, MandiObservation.data_kind == data_kind)
+        Market.name == market, Market.state == "Karnataka", Commodity.name == commodity, MandiObservation.data_kind == data_kind)
     if start_date:
         stmt = stmt.where(MandiObservation.observed_on >= start_date)
     if end_date:

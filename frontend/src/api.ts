@@ -4,11 +4,255 @@ import { config } from './config';
 export type Schema<K extends keyof components['schemas']> = components['schemas'][K];
 export type Prediction = Schema<'PredictionResponse'>;
 export type Recommendation = Schema<'RecommendationResponse'>;
-export type RecommendInput = Omit<Schema<'RecommendRequest'>, 'holding_options'> & { holding_options: Omit<Schema<'RecommendationHolding'>, 'scenarios'>[] };
+export type RecommendInput = Omit<Schema<'RecommendRequest'>, 'holding_options'> & { holding_options: (Omit<Schema<'RecommendationHolding'>, 'scenarios'> & { scenario_price_inr_per_quintal?: string })[] };
 export type Observation = Schema<'PriceResponse'>;
 export type Scope = { market: string; commodity: string; variety: string; grade: string };
 export const defaultScope: Scope = { market: 'Kolar APMC', commodity: 'Tomato', variety: 'tomato', grade: 'local' };
-export const client = createClient<paths>({ baseUrl: config.apiBaseUrl, fetch: async request => {
+
+export interface CropScopeConfig {
+  id: string;
+  commodity: string;
+  market: string;
+  variety: string;
+  grade: string;
+  titleEn: string;
+  titleKn: string;
+  marketNameKn: string;
+  cropNameKn: string;
+  icon: string;
+  tag: string;
+  defaultPrice: string;
+  defaultQuantity: string;
+  defaultCash: string;
+  durabilityTextEn: string;
+  durabilityTextKn: string;
+  holdingOptions: string[];
+  maxDays: number;
+  defaultDays: string;
+  dailyLossPercent: string;
+  dailyStorageRate: string;
+  commissionPercent: string;
+  marketFeePercent: string;
+  transportFixed: string;
+  transportVariable: string;
+  handlingRate: string;
+  warehouse: {
+    name: string;
+    nameKn: string;
+    location: string;
+    locationKn: string;
+    distanceKm: number;
+    dailyRatePerQuintal: number;
+    minDays: number;
+    maxDays: number;
+    facilityType: string;
+  };
+}
+
+export const CROP_SCOPES: Record<string, CropScopeConfig> = {
+  'Tomato': {
+    id: 'Tomato',
+    commodity: 'Tomato',
+    market: 'Kolar APMC',
+    variety: 'tomato',
+    grade: 'local',
+    titleEn: 'Tomato · Kolar APMC',
+    titleKn: 'ಟೊಮೇಟೊ · ಕೋಲಾರ ಎಪಿಎಂಸಿ',
+    marketNameKn: 'ಕೋಲಾರ ಎಪಿಎಂಸಿ',
+    cropNameKn: 'ಟೊಮೇಟೊ',
+    icon: '🍅',
+    tag: 'Perishable · 1-7 Days',
+    defaultPrice: '1400',
+    defaultQuantity: '30',
+    defaultCash: '10000',
+    durabilityTextEn: 'Perishable: 1 to 7 days shelf holding',
+    durabilityTextKn: 'ಬೇಗನೆ ಹಾಳಾಗುವ ಬೆಳೆ: 1 ರಿಂದ 7 ದಿನಗಳ ದಾಸ್ತಾನು',
+    holdingOptions: ['1', '3', '7'],
+    maxDays: 7,
+    defaultDays: '3',
+    dailyLossPercent: '1.5',
+    dailyStorageRate: '5.0',
+    commissionPercent: '5',
+    marketFeePercent: '1.5',
+    transportFixed: '450',
+    transportVariable: '25',
+    handlingRate: '15',
+    warehouse: {
+      name: 'Kolar APMC Ventilated Agro-Warehouse',
+      nameKn: 'ಕೋಲಾರ ಎಪಿಎಂಸಿ ಗಾಳಿ-ಬೆಳಕಿನ ಕೃಷಿ ಗೋದಾಮು',
+      location: 'Market Yard Gate 2, Kolar',
+      locationKn: 'ಮಾರುಕಟ್ಟೆ ಪ್ರಾಂಗಣ ಗೇಟ್ 2, ಕೋಲಾರ',
+      distanceKm: 1.2,
+      dailyRatePerQuintal: 5.0,
+      minDays: 1,
+      maxDays: 7,
+      facilityType: 'Ventilated crated produce storage',
+    },
+  },
+  'Arecanut': {
+    id: 'Arecanut',
+    commodity: 'Arecanut',
+    market: 'Shivamogga Mandi',
+    variety: 'rashi edi',
+    grade: 'faq',
+    titleEn: 'Arecanut (Betel Nut) · Shivamogga Mandi (MAMCOS)',
+    titleKn: 'ಅಡಿಕೆ (ರಾಶಿ ಇಡಿ) · ಶಿವಮೊಗ್ಗ ಮಂಡಿ (ಮಾಮ್ಕೋಸ್)',
+    marketNameKn: 'ಶಿವಮೊಗ್ಗ ಮಂಡಿ / ಮಾಮ್ಕೋಸ್',
+    cropNameKn: 'ಅಡಿಕೆ',
+    icon: '🌴',
+    tag: 'Very Durable · 2 Months - 2 Years',
+    defaultPrice: '48000',
+    defaultQuantity: '10',
+    defaultCash: '100000',
+    durabilityTextEn: 'Highly durable dried cash crop: 2 months to 2 years (60 to 730 days)',
+    durabilityTextKn: 'ಅತ್ಯಂತ ಬಾಳಿಕೆ ಬರುವ ಒಣ ಬೆಳೆ: 2 ತಿಂಗಳಿಂದ 2 ವರ್ಷಗಳವರೆಗೆ (60 ರಿಂದ 730 ದಿನಗಳು)',
+    holdingOptions: ['30', '60', '90', '180', '365', '730'],
+    maxDays: 730,
+    defaultDays: '60',
+    dailyLossPercent: '0.02',
+    dailyStorageRate: '1.2',
+    commissionPercent: '2',
+    marketFeePercent: '1.5',
+    transportFixed: '800',
+    transportVariable: '40',
+    handlingRate: '25',
+    warehouse: {
+      name: 'Shivamogga MAMCOS Central Godown',
+      nameKn: 'ಶಿವಮೊಗ್ಗ ಮಾಮ್ಕೋಸ್ ಕೇಂದ್ರೀಯ ಗೋದಾಮು',
+      location: 'APMC Yard Gate 1, Shivamogga',
+      locationKn: 'ಎಪಿಎಂಸಿ ಪ್ರಾಂಗಣ ಗೇಟ್ 1, ಶಿವಮೊಗ್ಗ',
+      distanceKm: 0.8,
+      dailyRatePerQuintal: 1.2,
+      minDays: 30,
+      maxDays: 730,
+      facilityType: 'Dry ventilated gunny godown with humidity control',
+    },
+  },
+  'Onion': {
+    id: 'Onion',
+    commodity: 'Onion',
+    market: 'Hubballi APMC',
+    variety: 'red onion',
+    grade: 'faq',
+    titleEn: 'Onion · Hubballi APMC (Amargol)',
+    titleKn: 'ಈರುಳ್ಳಿ · ಹುಬ್ಬಳ್ಳಿ ಎಪಿಎಂಸಿ (ಅಮರಗೋಳ)',
+    marketNameKn: 'ಹುಬ್ಬಳ್ಳಿ ಎಪಿಎಂಸಿ (ಅಮರಗೋಳ)',
+    cropNameKn: 'ಈರುಳ್ಳಿ',
+    icon: '🧅',
+    tag: 'Medium Holding · 1-4 Months',
+    defaultPrice: '3200',
+    defaultQuantity: '50',
+    defaultCash: '35000',
+    durabilityTextEn: 'Medium storability: 1 to 4 months (30 to 120 days) in ventilated chawls',
+    durabilityTextKn: 'ಮಧ್ಯಮ ದಾಸ್ತಾನು: ಗಾಳಿಯಾಡುವ ಚawಲ್‌ನಲ್ಲಿ 1 ರಿಂದ 4 ತಿಂಗಳು (30 ರಿಂದ 120 ದಿನಗಳು)',
+    holdingOptions: ['15', '30', '60', '90', '120'],
+    maxDays: 120,
+    defaultDays: '30',
+    dailyLossPercent: '0.25',
+    dailyStorageRate: '0.6',
+    commissionPercent: '5',
+    marketFeePercent: '1.5',
+    transportFixed: '500',
+    transportVariable: '20',
+    handlingRate: '15',
+    warehouse: {
+      name: 'Hubballi KSAMB Ventilated Agro-Chawl',
+      nameKn: 'ಹುಬ್ಬಳ್ಳಿ ಕೆಎಸ್‌ಎಎಂಬಿ ಗಾಳಿಯಾಡುವ ಈರುಳ್ಳಿ ಗೋದಾಮು',
+      location: 'Amargol Gate 1, Hubballi',
+      locationKn: 'ಅಮರಗೋಳ ಗೇಟ್ 1, ಹುಬ್ಬಳ್ಳಿ',
+      distanceKm: 0.5,
+      dailyRatePerQuintal: 0.6,
+      minDays: 15,
+      maxDays: 120,
+      facilityType: 'Bamboo mesh ventilated onion storage',
+    },
+  },
+  'Copra': {
+    id: 'Copra',
+    commodity: 'Copra',
+    market: 'Tiptur APMC',
+    variety: 'ball copra',
+    grade: 'faq',
+    titleEn: 'Copra (Ball Kobbari) · Tiptur APMC',
+    titleKn: 'ಕೊಬ್ಬರಿ (ಉಂಡೆ ಕೊಬ್ಬರಿ) · ತಿಪಟೂರು ಎಪಿಎಂಸಿ',
+    marketNameKn: 'ತಿಪಟೂರು ಎಪಿಎಂಸಿ',
+    cropNameKn: 'ಕೊಬ್ಬರಿ',
+    icon: '🥥',
+    tag: 'High Storability · 3-12 Months',
+    defaultPrice: '30500',
+    defaultQuantity: '15',
+    defaultCash: '100000',
+    durabilityTextEn: 'High durability: 3 to 12 months (90 to 365 days) whole dried coconut',
+    durabilityTextKn: 'ಹೆಚ್ಚು ಬಾಳಿಕೆ ಬರುವ ಬೆಳೆ: 3 ರಿಂದ 12 ತಿಂಗಳು (90 ರಿಂದ 365 ದಿನಗಳು)',
+    holdingOptions: ['30', '60', '90', '180', '270', '365'],
+    maxDays: 365,
+    defaultDays: '90',
+    dailyLossPercent: '0.03',
+    dailyStorageRate: '1.5',
+    commissionPercent: '2',
+    marketFeePercent: '1.5',
+    transportFixed: '600',
+    transportVariable: '30',
+    handlingRate: '20',
+    warehouse: {
+      name: 'Tiptur APMC Regulated Yard CWC Warehouse',
+      nameKn: 'ತಿಪಟೂರು ಎಪಿಎಂಸಿ ಸಿಡಬ್ಲ್ಯೂಸಿ ಅಧಿಕೃತ ಗೋದಾಮು',
+      location: 'Mandi Yard Road, Tiptur',
+      locationKn: 'ಮಂಡಿ ಯಾರ್ಡ್ ರಸ್ತೆ, ತಿಪಟೂರು',
+      distanceKm: 1.0,
+      dailyRatePerQuintal: 1.5,
+      minDays: 30,
+      maxDays: 365,
+      facilityType: 'Dry ventilated ball copra warehouse',
+    },
+  },
+  'Potato': {
+    id: 'Potato',
+    commodity: 'Potato',
+    market: 'Bengaluru APMC',
+    variety: 'jyoti',
+    grade: 'faq',
+    titleEn: 'Potato · Bengaluru APMC (Yeshwanthpur)',
+    titleKn: 'ಆಲೂಗಡ್ಡೆ · ಬೆಂಗಳೂರು ಎಪಿಎಂಸಿ (ಯಶವಂತಪುರ)',
+    marketNameKn: 'ಬೆಂಗಳೂರು ಎಪಿಎಂಸಿ (ಯಶವಂತಪುರ)',
+    cropNameKn: 'ಆಲೂಗಡ್ಡೆ',
+    icon: '🥔',
+    tag: 'Ambient 30d · Cold Storage 3-6 Months',
+    defaultPrice: '2100',
+    defaultQuantity: '40',
+    defaultCash: '25000',
+    durabilityTextEn: 'Ambient 15 to 30 days; cold storage 3 to 6 months (90 to 180 days)',
+    durabilityTextKn: 'ಸಾಮಾನ್ಯ ದಾಸ್ತಾನು 15-30 ದಿನ; ಕೋಲ್ಡ್ ಸ್ಟೋರೇಜ್ 3 ರಿಂದ 6 ತಿಂಗಳು (90-180 ದಿನ)',
+    holdingOptions: ['7', '15', '30', '60', '90', '180'],
+    maxDays: 180,
+    defaultDays: '30',
+    dailyLossPercent: '0.15',
+    dailyStorageRate: '1.8',
+    commissionPercent: '5',
+    marketFeePercent: '1.5',
+    transportFixed: '450',
+    transportVariable: '25',
+    handlingRate: '15',
+    warehouse: {
+      name: 'Yeshwanthpur Cold Logistics & Warehouse Unit 4',
+      nameKn: 'ಯಶವಂತಪುರ ಕೋಲ್ಡ್ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಮತ್ತು ಗೋದಾಮು ಘಟಕ 4',
+      location: 'APMC Sub-yard, Yeshwanthpur, Bengaluru',
+      locationKn: 'ಎಪಿಎಂಸಿ ಉಪ-ಪ್ರಾಂಗಣ, ಯಶವಂತಪುರ, ಬೆಂಗಳೂರು',
+      distanceKm: 2.1,
+      dailyRatePerQuintal: 1.8,
+      minDays: 7,
+      maxDays: 180,
+      facilityType: 'Temperature & humidity controlled cold storage (2°C - 4°C)',
+    },
+  },
+};
+const resolvedBaseUrl = config.apiBaseUrl.startsWith('http')
+  ? config.apiBaseUrl
+  : typeof window !== 'undefined' && window.location?.origin && window.location.origin !== 'null'
+    ? `${window.location.origin}${config.apiBaseUrl}`
+    : `http://127.0.0.1:8010${config.apiBaseUrl}`;
+
+export const client = createClient<paths>({ baseUrl: resolvedBaseUrl, fetch: async request => {
   const controller = new AbortController();
   const abort = () => controller.abort();
   request.signal.addEventListener('abort', abort, { once: true });

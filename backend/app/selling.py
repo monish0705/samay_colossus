@@ -37,7 +37,7 @@ class SaleCosts(Input):
 
 class CropStorageProfile(Input):
     commodity: Name
-    maximum_holding_days: Annotated[StrictInt, Field(ge=0, le=365)]
+    maximum_holding_days: Annotated[StrictInt, Field(ge=0, le=730)]
     storage_conditions: Name
     assumption_source: Name
 
@@ -70,7 +70,7 @@ class PriceScenarios(Input):
 
 
 class HoldingOption(Input):
-    days: Annotated[StrictInt, Field(ge=1, le=365)]
+    days: Annotated[StrictInt, Field(ge=1, le=730)]
     daily_loss_fractions: tuple[Rate, ...]
     daily_storage_inr_per_quintal: tuple[Nonnegative, ...]
     fixed_storage_inr: Nonnegative = D(0)
@@ -100,7 +100,7 @@ class SellingRequest(Input):
     decision_increment_quintals: Annotated[Quantity, Field(gt=0)]
     market_quantity_step_quintals: Annotated[Quantity, Field(gt=0)]
     minimum_sale_lot_quintals: Annotated[Quantity, Field(gt=0)]
-    maximum_horizon_days: Annotated[StrictInt, Field(ge=0, le=365)]
+    maximum_horizon_days: Annotated[StrictInt, Field(ge=0, le=730)]
     crop_storage_profile: CropStorageProfile
     today_sale_costs: SaleCosts
     holding_options: tuple[HoldingOption, ...] = ()

@@ -72,6 +72,7 @@ class RecommendationHolding(HoldingOption):
     price_basis_assumption: Name
     adverse_inr_per_quintal: Nonnegative
     adverse_assumption: Name
+    scenario_price_inr_per_quintal: Nonnegative | None = None
 
 
 class RecommendRequest(SellingRequest):
@@ -80,7 +81,7 @@ class RecommendRequest(SellingRequest):
     @model_validator(mode="after")
     def supported(self):
         if self.market != market_name(self.market) or self.commodity != commodity_name(self.commodity):
-            raise ValueError("Use canonical Kolar APMC / Tomato scope")
+            raise ValueError("Use supported Karnataka mandi / commodity scope")
         if self.variety != label(self.variety) or self.grade != label(self.grade):
             raise ValueError("Use normalized variety and grade")
         return self

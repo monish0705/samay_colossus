@@ -121,7 +121,7 @@ def recommend(session, body: RecommendRequest, request_id):
     elif data.stale:
         warnings.append("stale_market_data")
     for option in body.holding_options:
-        payload = option.model_dump(exclude={"realization_multiplier", "price_basis_assumption", "adverse_inr_per_quintal", "adverse_assumption", "scenarios"})
+        payload = option.model_dump(exclude={"realization_multiplier", "price_basis_assumption", "adverse_inr_per_quintal", "adverse_assumption", "scenarios", "scenario_price_inr_per_quintal"})
         payload["scenarios"] = None
         if option.days not in (1, 3, 7):
             warnings.append(f"unsupported_horizon:{option.days}")
@@ -142,6 +142,29 @@ def recommend(session, body: RecommendRequest, request_id):
                 if exc.status < 500:
                     raise
                 warnings.append(f"{option.days}d:{exc.code}")
+                if option.scenario_price_inr_per_quintal is not None and option.scenario_price_inr_per_quintal > 0:
+                    adverse = option.adverse_inr_per_quintal
+                    central = option.scenario_price_inr_per_quintal
+                    lower = adverse if adverse <= central else central
+                    from app.selling import PriceScenarios
+                    payload["scenarios"] = PriceScenarios(
+                        adverse_inr_per_quintal=adverse,
+                        lower_inr_per_quintal=lower,
+                        central_inr_per_quintal=central,
+                        upper_inr_per_quintal=central,
+                        reliability_status="scenario only",
+                        market=body.market,
+                        commodity=body.commodity,
+                        variety=body.variety,
+                        grade=body.grade,
+                        target_date=origin + timedelta(days=option.days),
+                        issued_at=body.decision_at,
+                        model_version="user_scenario_only",
+                        source="Farmer/judge scenario assumption (not an operational model prediction)",
+                        price_basis_assumption=option.price_basis_assumption,
+                        adverse_assumption=option.adverse_assumption,
+                        flags=("scenario_only_simulation",),
+                    )
         holding.append(payload)
     request_data = body.model_dump(exclude={"holding_options"})
     request_data["holding_options"] = holding

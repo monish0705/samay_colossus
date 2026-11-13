@@ -215,3 +215,64 @@ def test_no_cash_feasibility_claim_when_upfront_costs_block_every_plan():
     assert result["maximum_today_net_cash_upper_bound_inr"] == 0
     assert result["cash_requirement_achievable_on_grid"] is False
     assert result["recommended_plan"] is None
+
+
+def test_arecanut_long_term_storage():
+    """Verify long-term holding (180 days) for durable crops like Arecanut at Shivamogga Mandi."""
+    costs = {"fixed_transport_inr": "800", "transport_inr_per_quintal": "40", "commission_rate": ".02", "market_fee_rate": ".015", "assumptions": "MAMCOS auction costs"}
+    days = 180
+    r = {
+        "commodity": "Arecanut",
+        "market": "Shivamogga Mandi",
+        "variety": "rashi edi",
+        "grade": "faq",
+        "decision_at": "2026-11-04T08:00:00+05:30",
+        "total_quantity_quintals": "10",
+        "today_price_inr_per_quintal": "48000",
+        "today_price_assumption": "MAMCOS official rate",
+        "required_net_cash_inr": "100000",
+        "storage_capacity_quintals": "10",
+        "decision_increment_quintals": "1",
+        "market_quantity_step_quintals": ".01",
+        "minimum_sale_lot_quintals": "1",
+        "maximum_horizon_days": 730,
+        "risk_tolerance": "balanced",
+        "today_sale_costs": costs,
+        "crop_storage_profile": {
+            "commodity": "Arecanut",
+            "maximum_holding_days": 730,
+            "storage_conditions": "Ventilated gunny bag warehouse",
+            "assumption_source": "MAMCOS storage practice",
+        },
+        "holding_options": [{
+            "days": days,
+            "daily_loss_fractions": [".0002"] * days,
+            "daily_storage_inr_per_quintal": ["1.2"] * days,
+            "storage_payment": "later",
+            "future_sale_costs": costs,
+            "assumptions": "MAMCOS central godown",
+            "scenarios": {
+                "adverse_inr_per_quintal": "49000",
+                "lower_inr_per_quintal": "51000",
+                "central_inr_per_quintal": "54000",
+                "upper_inr_per_quintal": "56000",
+                "reliability_status": "validated",
+                "market": "Shivamogga Mandi",
+                "commodity": "Arecanut",
+                "variety": "rashi edi",
+                "grade": "faq",
+                "target_date": "2027-05-03",
+                "issued_at": "2026-11-04T00:00:00+05:30",
+                "model_version": "arecanut-naive-v1",
+                "source": "MAMCOS",
+                "price_basis_assumption": "Farmer sale prices",
+                "adverse_assumption": "Stress scenario",
+            }
+        }]
+    }
+    result = optimize_selling(r)
+    chosen = result["recommended_plan"]
+    assert chosen is not None
+    assert chosen["holding_days"] == 180
+    assert chosen["hold_initial_quintals"] > 0
+    assert chosen["cash_today_inr"] >= D("100000")

@@ -51,8 +51,10 @@ class Plan:
             raise ValueError("Date window must not exceed 100 years")
         if self.min_train < 2 or self.min_validation < 2 or self.min_train_span_days < 1 or self.max_price_age_days < 1 or not 0 < self.min_train_coverage <= 1:
             raise ValueError("Invalid reliability policy")
-        if self.market != "Kolar APMC" or self.commodity != "Tomato" or not self.variety.strip() or not self.grade.strip():
-            raise ValueError("Select Kolar APMC / Tomato and an explicit consistent variety/grade")
+        supported_markets = {"Kolar APMC", "Shivamogga Mandi", "Hubballi APMC", "Tiptur APMC", "Bengaluru APMC"}
+        supported_commodities = {"Tomato", "Arecanut", "Onion", "Copra", "Potato"}
+        if self.market not in supported_markets or self.commodity not in supported_commodities or not self.variety.strip() or not self.grade.strip():
+            raise ValueError("Select a supported Karnataka market/commodity and an explicit consistent variety/grade")
 
     def serializable(self):
         return {k: v.isoformat() if isinstance(v, date) else v for k, v in asdict(self).items()}

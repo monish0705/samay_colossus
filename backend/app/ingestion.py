@@ -47,12 +47,29 @@ def market_name(value: str) -> str:
     name = label(value)
     if name in {"kolar", "kolar apmc", "kolar (apmc)", "kolar a.p.m.c."}:
         return "Kolar APMC"
+    if name in {"shivamogga", "shivamogga mandi", "shivamogga apmc", "shimoga", "shimoga apmc", "mamcos", "shivamogga (apmc)", "shivamogga / mamcos", "shivamogga mandi (apmc / mamcos)"}:
+        return "Shivamogga Mandi"
+    if name in {"hubballi", "hubballi apmc", "hubli", "hubli apmc", "amargol", "amaragol", "apmc amargol in hubballi (hubli)", "hubli (amargol)", "hubballi (amargol)", "apmc amargol in hubballi", "apmc amargol"}:
+        return "Hubballi APMC"
+    if name in {"tiptur", "tiptur apmc", "tiptur mandi", "tiptur apmc mandi", "tiptur (apmc)"}:
+        return "Tiptur APMC"
+    if name in {"bengaluru", "bengaluru apmc", "bangalore", "bangalore apmc", "yeshwanthpur", "yeshwanthpur apmc", "bengluru", "bengluru apmc", "bengluru apmc mandi", "bengaluru apmc mandi"}:
+        return "Bengaluru APMC"
     raise ValueError(f"Unsupported market: {value!r}")
 
 
 def commodity_name(value: str) -> str:
-    if label(value) == "tomato":
+    name = label(value)
+    if name in {"tomato", "tomatoes"}:
         return "Tomato"
+    if name in {"arecanut", "areca nut", "betelnut", "betel nut", "adike", "supari"}:
+        return "Arecanut"
+    if name in {"onion", "onions", "eerulli", "pyaz"}:
+        return "Onion"
+    if name in {"copra", "kobbari", "ball copra", "copra (kobbari)", "dry coconut", "gola copra"}:
+        return "Copra"
+    if name in {"potato", "potatoes", "aaloo", "alugadde"}:
+        return "Potato"
     raise ValueError(f"Unsupported commodity: {value!r}")
 
 
@@ -90,7 +107,8 @@ REQUIRED = {"state", "district", "market", "commodity", "variety", "report_date"
 
 
 def normalize(row: dict, manifest: SourceManifest) -> dict:
-    if label(row["state"]) != "karnataka" or label(row["district"]) != "kolar":
+    valid_districts = {"kolar", "shivamogga", "shimoga", "dharwad", "tumakuru", "tumkur", "bengaluru", "bengaluru urban", "bangalore"}
+    if label(row["state"]) != "karnataka" or label(row["district"]) not in valid_districts:
         raise ValueError("outside_scope")
     market = market_name(row["market"])
     commodity = commodity_name(row["commodity"])
@@ -109,7 +127,7 @@ def normalize(row: dict, manifest: SourceManifest) -> dict:
         raise ValueError("Price exceeds database precision")
     if not row["variety"].strip():
         raise ValueError("Missing variety")
-    return {"market": market, "commodity": commodity, "state": "Karnataka", "district": "Kolar",
+    return {"market": market, "commodity": commodity, "state": "Karnataka", "district": row["district"].strip().title(),
             "report_date": observed.isoformat(), "variety": label(row["variety"]),
             "grade": label(row.get("grade", "")) or "unspecified", "raw_unit": raw_unit,
             "price_unit": "INR/quintal", **{k: str(v.quantize(Decimal("0.01"))) for k, v in prices.items()}}

@@ -56,6 +56,7 @@ def main():
     if profile_database is not None:
         repair_command += ['--database', str(profile_database)]
     subprocess.run(repair_command, cwd=ROOT, env=env, check=True)
+    subprocess.run([str(python), "scripts/seed_three_personas.py"], cwd=ROOT, env=env, check=False)
     backend = f"http://127.0.0.1:{args.backend_port}"
     frontend = f"http://127.0.0.1:{args.frontend_port}"
     owned = []

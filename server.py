@@ -24,8 +24,8 @@ if os.getenv('SAMAY_PERSISTENT_DATABASE_URL'):
     os.environ['SAMAY_DATABASE_URL'] = os.environ['SAMAY_PERSISTENT_DATABASE_URL']
 else:
     os.environ["SAMAY_DATABASE_URL"] = f"sqlite:///{database.as_posix()}"
-    # A per-instance temporary database cannot preserve bookings or user accounts.
-    os.environ['SAMAY_MARKETPLACE_ENABLED'] = 'false'
+if 'SAMAY_MARKETPLACE_ENABLED' not in os.environ:
+    os.environ['SAMAY_MARKETPLACE_ENABLED'] = 'true'
 os.environ["SAMAY_ENVIRONMENT"] = "production"
 
 # Upgrade the writable runtime copy before importing services that use new fields.
@@ -39,6 +39,13 @@ from app.db_migration import upgrade_database  # noqa: E402
 from app.main import app as api  # noqa: E402
 
 upgrade_database()
+
+try:
+    from scripts.seed_three_personas import run as seed_personas  # noqa: E402
+    seed_personas(database.as_posix())
+except Exception as e:
+    import logging  # noqa: E402
+    logging.getLogger("samay.server").warning(f"Persona seeding skipped: {e}")
 
 
 @asynccontextmanager
@@ -70,9 +77,30 @@ async def buffer_recommendation(request: Request, call_next):
 app.mount("/backend", api)
 
 
+SPA_ROUTES = {
+    "advisor", "forecast", "insights", "results", "explorer", "transparency",
+    "business", "sale-requests", "private-rates", "mandi"
+}
+
+
 @app.get("/{page}", include_in_schema=False)
 def farmer_page(page: str):
-    if page in {"advisor", "forecast", "insights", "results", "explorer", "transparency"}:
+    file_path = ROOT / "frontend" / "dist" / page
+    if file_path.is_file():
+        return FileResponse(file_path)
+    if page in SPA_ROUTES:
+        return FileResponse(ROOT / "frontend" / "dist" / "index.html", headers={"Cache-Control": "no-store"})
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404)
+
+
+@app.get("/{first_part}/{rest_of_path:path}", include_in_schema=False)
+def nested_spa_page(first_part: str, rest_of_path: str):
+    full_path = f"{first_part}/{rest_of_path}"
+    file_path = ROOT / "frontend" / "dist" / full_path
+    if file_path.is_file():
+        return FileResponse(file_path)
+    if first_part in SPA_ROUTES:
         return FileResponse(ROOT / "frontend" / "dist" / "index.html", headers={"Cache-Control": "no-store"})
     from fastapi import HTTPException
     raise HTTPException(status_code=404)

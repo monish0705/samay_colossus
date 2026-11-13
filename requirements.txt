@@ -9,3 +9,4 @@ scipy==1.18.1
 SQLAlchemy==2.1.8
 starlette==1.10.0
 tzdata==2026.6
+uvicorn==0.54.0

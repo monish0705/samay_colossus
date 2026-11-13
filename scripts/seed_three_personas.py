@@ -3,8 +3,9 @@ import json
 import sqlite3
 from datetime import datetime, timezone
 
-def run():
-    con = sqlite3.connect('samay.db')
+
+def run(db_path='samay.db'):
+    con = sqlite3.connect(db_path)
     cur = con.cursor()
     now_str = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
 
@@ -12,17 +13,24 @@ def run():
     user = cur.execute('SELECT id, name, email, phone FROM mandi_users WHERE id = 1').fetchone()
     if not user:
         cur.execute(
-            'INSERT INTO mandi_users (id, name, email, phone, role, password_hash, language, email_verified, phone_verified, active, created_at, updated_at) '
-            'VALUES (1, ?, ?, ?, ?, ?, ?, 1, 1, 1, ?, ?)',
-            ('Monish MR', 'monishmr1986@gmail.com', '+917894561238', 'MANDI_OWNER', 'sha256-mock', 'en', now_str, now_str)
+            'INSERT INTO mandi_users (id, name, email, phone, role, password_hash, language, email_verified, phone_verified, active, created_at) '
+            'VALUES (1, ?, ?, ?, ?, ?, ?, 1, 1, 1, ?)',
+            ('Monish MR', 'monishmr1986@gmail.com', '+917894561238', 'MANDI_OWNER', 'sha256-mock', 'en', now_str)
         )
     else:
         cur.execute('UPDATE mandi_users SET role = "MANDI_OWNER" WHERE id = 1')
 
-    # 2. Upgrade / Verify Private Mandi (ID 1)
-    cur.execute(
-        "UPDATE business_accounts SET verification_state = 'VERIFIED' WHERE id = 1"
-    )
+    # 2. Create / Upgrade / Verify Private Mandi (ID 1)
+    b1 = cur.execute('SELECT id FROM business_accounts WHERE id = 1').fetchone()
+    if not b1:
+        cur.execute(
+            'INSERT INTO business_accounts (id, business_type, name, contact_name, phone, email, address, district, state, registration_details, verification_information, document_references, verification_state, version, created_by, submission_key, payload_hash, created_at) '
+            'VALUES (1, "PRIVATE_MANDI", "Monish MR Private Mandi", "Monish MR", "+917894561238", "monishmr1986@gmail.com", "bengaluru, tukur, Karnataka", "tukur", "Karnataka", "PM-REG-2026-001", "Verified Private Mandi", "[]", "VERIFIED", 1, 1, "auto-mandi-key-12345678", "hash-mandi-12345678", ?)',
+            (now_str,)
+        )
+    else:
+        cur.execute("UPDATE business_accounts SET verification_state = 'VERIFIED' WHERE id = 1")
+
     cur.execute(
         "INSERT OR IGNORE INTO business_users (business_id, user_id, can_manage, active) VALUES (1, 1, 1, 1)"
     )
@@ -35,7 +43,7 @@ def run():
     # Ensure private_mandis entry
     pm = cur.execute('SELECT id FROM private_mandis WHERE business_id = 1').fetchone()
     if not pm:
-        cur.execute('INSERT INTO private_mandis (business_id, operating_hours) VALUES (1, "06:00 - 18:00 Mon-Sat")')
+        cur.execute('INSERT INTO private_mandis (business_id, operating_hours, created_at) VALUES (1, "06:00 - 18:00 Mon-Sat", ?)', (now_str,))
         pm_id = cur.lastrowid
     else:
         pm_id = pm[0]

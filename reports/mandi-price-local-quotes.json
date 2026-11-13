@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "price_display": {
+    "Tomato": "\u20b91,000.00 / qtl",
+    "Arecanut": "\u20b948,009.00 / qtl",
+    "Onion": "\u20b94,200.00 / qtl",
+    "Copra": "\u20b917,000.00 / qtl",
+    "Potato": "\u20b93,000.00 / qtl"
+  },
+  "five_horizontal_crop_cards": true,
+  "manual_price_field_present": false,
+  "mobile_overflow": false
+}

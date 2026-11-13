@@ -1,5 +1,37 @@
 # SAMAY status — 13 November 2026
 
+## Private purchasing portal — Prompt 2
+
+Implemented separate private-buyer/private-mandi purchasing dashboards, five-step draft
+forms, publication/edit/price revisions/pause/resume/cancellation, scoped incoming requests,
+accept/counteroffer/reject responses, frozen agreement snapshots, transactional quantity
+reservations and farmer API confirmation, real analytics and private in-app notifications.
+Migration `e5f6a7b8c9d0` adds nine tables; all 36 existing runtime tables were preserved.
+
+Validation reports and exact commands: [purchasing handoff](PRIVATE-PURCHASING-PORTAL.md).
+Backend 201 tests, frontend 45 tests, 3 actual HTTP tests, both private business browser
+flows and the existing APMC browser lifecycle pass. Lint, type checking and production
+build pass, with one existing backend deprecation warning and the bundle-size warning.
+
+Prompt 3 discovery/comparison UI, private bookings and actual sale/payment recording remain
+unimplemented and explicitly labeled in the portal. No real businesses or sales seeded;
+no external delivery, real identity verification or production deployment is claimed.
+
+## Private marketplace foundation — Prompt 1
+
+Implemented separate private mandi/buyer applications, manual administrator verification,
+scoped multi-role permissions, private market assignment, persistent authorized workspace
+switching, and English/Kannada onboarding/dashboard foundations. Ten additive tables;
+existing 26 runtime tables verified unchanged after migration. No fake business accounts.
+
+Verification: 191 backend tests, 40 frontend tests, 3 HTTP integration tests, private
+marketplace Chromium flow and existing complete APMC Chromium flow pass. Frontend lint,
+type checking and production build pass. See [full handoff](PRIVATE-MARKETPLACE-FOUNDATION.md).
+
+Not implemented in this prompt: purchase offers/private trading, secure document upload,
+automatic external verification and deployment. Manual approval requires an authorized
+administrator and independent contact/registration checks.
+
 ## Farmer-to-mandi workflow update
 
 Implemented and tested locally on branch `sub1`: authenticated farmer accounts,

@@ -1,5 +1,10 @@
 # SAMAY · Team Resonance · COLOSSUS 3.0
 
+Private purchasing portal (Prompt 2): see [offers, quantity safety, APIs and tested commands](docs/PRIVATE-PURCHASING-PORTAL.md).
+
+Private marketplace foundation: see [architecture, APIs and tested commands](docs/PRIVATE-MARKETPLACE-FOUNDATION.md).
+Register at `/business/register`; administrator approval grants scoped business workspaces.
+
 Farmer-to-mandi requests: see [sale workflow and onboarding](docs/SALE-WORKFLOW.md).
 Farmers use `/sale-requests`; approved operators use the separate `/mandi` portal.
 Online requests stay unavailable until a real operator is approved and assigned.

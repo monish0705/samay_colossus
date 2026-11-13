@@ -1,0 +1,12 @@
+
+> samay-frontend@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 C:/Users/Suhan/OneDrive/文件/ChatGPT/agritech/samay-sub2/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  33 passed (33)
+   Start at  20:41:33
+   Duration  4.71s (tests 46%, environment 32%, setup 11%, import 8%, transform 3%)

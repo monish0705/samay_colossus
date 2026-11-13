@@ -1,14 +1,15 @@
 import { Component, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import { ArrowRight, BarChart3, ChevronDown, ClipboardCheck, LayoutDashboard, Leaf, Menu, Play, RefreshCw, ShieldCheck, SlidersHorizontal, Sprout, TrendingUp, Wifi, WifiOff } from 'lucide-react';
+import { BarChart3, ClipboardCheck, LayoutDashboard, Menu, RefreshCw, ShieldCheck, SlidersHorizontal, Sprout, TrendingUp, Wifi, WifiOff } from 'lucide-react';
 import { AppProvider, useApp } from './state';
 import { Dashboard, Forecast, Insights, Transparency } from './MarketPages';
 import { AdvisorPage } from './AdvisorPage';
 import { Results } from './Results';
 import { ErrorState } from './ui';
 import { localize, setLanguage, t } from './i18n';
-import { Demo } from './Demo';
 import { SaleWorkspace } from './SalePages';
+import { BusinessPage } from './BusinessPages';
+import { BusinessWorkspaceProvider, RoleSwitcher, useBusinessWorkspace } from './business-context';
 
 interface NavItem {
   to: string;
@@ -25,6 +26,7 @@ const allNavigation: NavItem[] = [
   { to: '/insights', title: 'Market Insights', farmer: true, icon: BarChart3 },
   { to: '/sale-requests', title: 'My Sale Requests', farmer: true, icon: ClipboardCheck },
   { to: '/mandi', title: 'Mandi Owner Portal', farmer: true, icon: LayoutDashboard },
+  { to: '/business/register', title: 'Private businesses', farmer: true, icon: Sprout },
   { to: '/forecast', title: 'Price Forecast', farmer: false, icon: TrendingUp },
   { to: '/explorer', title: 'Scenario Explorer', farmer: false, icon: SlidersHorizontal },
   { to: '/transparency', title: 'Data & Model Transparency', farmer: false, icon: ShieldCheck },
@@ -45,15 +47,15 @@ class Boundary extends Component<{ children: ReactNode }, { failed: boolean }> {
 }
 
 function Shell() {
-  const { language, mode, setMode, scope, setScope, connection, catalog } = useApp();
+  const { language, scope, connection, catalog } = useApp();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scopeOpen, setScopeOpen] = useState(false);
-  const [series, setSeries] = useState(scope);
-  const [demo, setDemo] = useState(false);
   const location = useLocation();
+  const { access } = useBusinessWorkspace();
+  const privateView = location.pathname.startsWith('/business');
+  const businessMode = access?.active_workspace.mode === 'BUSINESS';
   const main = useRef<HTMLElement>(null);
 
-  const visibleNav = allNavigation.filter(item => mode === 'judge' || item.farmer);
+  const visibleNav = allNavigation;
   const activeNav = allNavigation.find(n => n.to === location.pathname);
 
   useEffect(() => {
@@ -70,7 +72,7 @@ function Shell() {
   const connected = !connection.error && connection.data?.status === 'ok';
 
   return localize(
-    <div className={`app-shell mode-${mode}`}>
+    <div className="app-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
       {mobileOpen && <button className="nav-scrim" aria-label="Close navigation" onClick={() => setMobileOpen(false)} />}
       
@@ -80,25 +82,18 @@ function Shell() {
           <span>SAMAY<small>THE RIGHT TIME TO DECIDE</small></span>
         </Link>
         <div className="workspace-label">
-          {mode === 'farmer' ? t('FARMER WORKSPACE') : t('JUDGE & AUDIT WORKSPACE')}
+          {t(businessMode ? 'BUSINESS WORKSPACE' : 'FARMER WORKSPACE')}
         </div>
         <nav aria-label="Main navigation">
-          {visibleNav.map(({ to, title, farmerTitle, icon: Icon }) => (
+          {businessMode ? <><NavLink to="/business/register">{t('My business applications')}</NavLink>{access.workspaces.map(w => <NavLink key={`${w.business_id}:${w.role}`} to={`/business/${w.business_type === 'PRIVATE_MANDI' ? 'mandi' : 'buyer'}/${w.business_id}`}>{w.name} · {t(w.business_type === 'PRIVATE_MANDI' ? 'Private mandi' : 'Private buyer')}</NavLink>)}</> : visibleNav.filter(item => item.farmer).map(({ to, title, farmerTitle, icon: Icon }) => (
             <NavLink end={to === '/'} key={to} to={to}>
               <Icon size={19} />
-              <span>{t(mode === 'farmer' && farmerTitle ? farmerTitle : title)}</span>
+              <span>{t(farmerTitle || title)}</span>
             </NavLink>
           ))}
+          {!businessMode && <details className="extra-navigation"><summary>{t('More tools')}</summary>{visibleNav.filter(item => !item.farmer).map(({ to, title, icon: Icon }) => <NavLink key={to} to={to}><Icon size={19} /><span>{t(title)}</span></NavLink>)}</details>}
         </nav>
         <div className="sidebar-bottom">
-          <div className="help-card">
-            <Leaf size={22} />
-            <strong>A little clarity goes a long way.</strong>
-            <p>Start with your cash needs. Keep the uncertainty visible.</p>
-            <button onClick={() => { setDemo(true); setMobileOpen(false); }} className="text-button">
-              Take the guided tour<ArrowRight size={14} />
-            </button>
-          </div>
           <p>TEAM RESONANCE<span>COLOSSUS 3.0 · Decision support</span></p>
         </div>
       </aside>
@@ -111,40 +106,16 @@ function Shell() {
             </button>
             <span className="breadcrumb">
               Your workspace<span>/</span>
-              <strong>{t(mode === 'farmer' && activeNav?.farmerTitle ? activeNav.farmerTitle : activeNav?.title || 'Page')}</strong>
+              <strong>{t(activeNav?.farmerTitle || activeNav?.title || 'Page')}</strong>
             </span>
           </div>
 
           <div className="topbar-actions">
-            <div className="mode-switch" role="group" aria-label="Experience mode">
-              <button
-                type="button"
-                aria-pressed={mode === 'farmer'}
-                onClick={() => setMode('farmer')}
-                title="Simplified, low-friction mobile experience for farmers"
-              >
-                <Sprout size={13} />
-                <span>{t('Farmer Mode')}</span>
-              </button>
-              <button
-                type="button"
-                aria-pressed={mode === 'judge'}
-                onClick={() => setMode('judge')}
-                title="Full transparency: data provenance, retrospective evaluations, model metrics, optimizer ledger"
-              >
-                <ShieldCheck size={13} />
-                <span>{t('Judge Mode')}</span>
-              </button>
-            </div>
-
+            <RoleSwitcher />
             <span className={`connection-pill ${connection.error ? 'is-offline' : ''}`} role="status">
               {connection.loading ? <RefreshCw size={14} className="spin" /> : connected ? <Wifi size={14} /> : <WifiOff size={14} />}
               <span>{connection.loading ? 'Connecting' : connected ? 'Backend connected' : 'Disconnected'}</span>
             </span>
-
-            <button className="button button-secondary demo-start" onClick={() => setDemo(true)}>
-              <Play size={14} />90-sec demo
-            </button>
 
             <div className="language-switch" role="group" aria-label="Language">
               <button lang="en" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>English</button>
@@ -154,7 +125,7 @@ function Shell() {
         </header>
 
         <main id="main-content" tabIndex={-1} ref={main}>
-          <div className="scope-bar">
+          {!privateView && <div className="scope-bar">
             <div>
               <span className="scope-dot" />
               <strong>{scope.market}</strong>
@@ -162,31 +133,7 @@ function Shell() {
               {scope.commodity}
               <span className="scope-detail">· {scope.variety} / {scope.grade} ({t('Pilot scope: Karnataka')})</span>
             </div>
-            {mode === 'judge' && (
-              <button className="text-button" aria-expanded={scopeOpen} onClick={() => { setSeries(scope); setScopeOpen(!scopeOpen); }}>
-                Change series<ChevronDown size={15} />
-              </button>
-            )}
-          </div>
-
-          {scopeOpen && mode === 'judge' && (
-            <form className="scope-editor card" onSubmit={e => { e.preventDefault(); setScope({ ...series, variety: series.variety.trim().toLowerCase(), grade: series.grade.trim().toLowerCase() }); setScopeOpen(false); }}>
-              <label>Market
-                <select value={series.market} onChange={e => setSeries({ ...series, market: e.target.value })}>
-                  <option value="Kolar APMC">Kolar APMC · configured scope</option>
-                </select>
-              </label>
-              <label>Commodity
-                <select value={series.commodity} onChange={e => setSeries({ ...series, commodity: e.target.value })}>
-                  <option value="Tomato">Tomato · configured scope</option>
-                </select>
-              </label>
-              <label>Variety<input value={series.variety} required maxLength={120} onChange={e => setSeries({ ...series, variety: e.target.value })} /></label>
-              <label>Grade<input value={series.grade} required maxLength={120} onChange={e => setSeries({ ...series, grade: e.target.value })} /></label>
-              <button className="button button-primary" type="submit">Apply series</button>
-              <p className="small muted">Only Kolar APMC / Tomato is supported. A configured series does not imply imported data or an operational forecast.</p>
-            </form>
-          )}
+          </div>}
 
           {connection.error ? (
             <div className="disconnect-banner">
@@ -194,12 +141,12 @@ function Shell() {
               <ErrorState error={connection.error} retry={() => { connection.retry(); catalog.retry(); }} />
             </div>
           ) : null}
-          {Boolean(catalog.error) && !connection.error && <ErrorState error={catalog.error} retry={catalog.retry} />}
+          {!privateView && Boolean(catalog.error) && !connection.error && <ErrorState error={catalog.error} retry={catalog.retry} />}
 
-          <p className="global-disclaimer" role="status" hidden={!catalog.data?.data.historical_demo_date}>
+          <p className="global-disclaimer" role="status" hidden={privateView || !catalog.data?.data.historical_demo_date}>
             {t('HISTORICAL REPLAY — not live market data')} · {catalog.data?.data.historical_demo_date}
           </p>
-          <p className="global-disclaimer" role="note">Future prices are uncertain. You make the final decision.</p>
+          {!privateView && <p className="global-disclaimer" role="note">Future prices are uncertain. You make the final decision.</p>}
 
           <Boundary>
             <Routes>
@@ -212,6 +159,11 @@ function Shell() {
               <Route path="/transparency" element={<Transparency />} />
               <Route path="/sale-requests/*" element={<SaleWorkspace />} />
               <Route path="/sale-requests/:requestId" element={<SaleWorkspace />} />
+              <Route path="/business" element={<BusinessPage />} />
+              <Route path="/business/register" element={<BusinessPage />} />
+              <Route path="/business/admin" element={<BusinessPage />} />
+              <Route path="/business/mandi/:businessId" element={<BusinessPage />} />
+              <Route path="/business/buyer/:businessId" element={<BusinessPage />} />
               <Route path="*" element={<><h1>{t('Page not found')}</h1><Link to="/">{t('Return to dashboard')}</Link></>} />
             </Routes>
           </Boundary>
@@ -222,7 +174,6 @@ function Shell() {
           </footer>
         </main>
       </div>
-      {demo && <Demo close={() => setDemo(false)} />}
     </div>
   );
 }
@@ -230,11 +181,13 @@ function Shell() {
 export function App() {
   return (
     <AppProvider>
+      <BusinessWorkspaceProvider>
       <Routes>
         <Route path="/mandi/*" element={<SaleWorkspace owner />} />
         <Route path="/mandi/requests/:requestId" element={<SaleWorkspace owner />} />
         <Route path="*" element={<Shell />} />
       </Routes>
+      </BusinessWorkspaceProvider>
     </AppProvider>
   );
 }

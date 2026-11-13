@@ -6,8 +6,8 @@ import { setLanguage } from './i18n';
 import { saleAPI, SaleAPIError } from './sale-api';
 
 vi.mock('./sale-api', async () => ({ ...await vi.importActual('./sale-api'), saleAPI: vi.fn() }));
-vi.mock('./api', () => ({ api: { commodities: async () => [{ id: 2, name: 'Copra' }, { id: 1, name: 'Tomato' }] }, getDecisionPlan: () => null }));
-vi.mock('./state', () => ({ useApp: () => ({ result: null, scope: { market: 'TEST_ONLY mandi', commodity: 'Tomato', variety: 'local', grade: 'faq' }, draft: { quantity: '20', price: '1000' } }) }));
+vi.mock('./api', async () => ({ ...await vi.importActual('./api'), api: { commodities: async () => [{ id: 2, name: 'Copra' }, { id: 1, name: 'Tomato' }], latest: async () => ({ observation: { modal_price_inr_per_quintal: '1000', report_date: '2026-11-12' }, stale: false }) }, getDecisionPlan: () => null }));
+vi.mock('./state', () => ({ useApp: () => ({ result: null, scope: { market: 'Kolar APMC', commodity: 'Tomato', variety: 'local', grade: 'faq' }, draft: { quantity: '20', price: '1000' } }) }));
 const user = { id: 1, role: 'FARMER', name: 'TEST_ONLY farmer', email: 'farmer@example.test' };
 const show = (path = '/sale-requests', owner = false) => render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/sale-requests/:requestId" element={<SaleWorkspace />} /><Route path="*" element={<SaleWorkspace owner={owner} />} /></Routes></MemoryRouter>);
 
@@ -15,25 +15,22 @@ beforeEach(() => { setLanguage('en'); vi.mocked(saleAPI).mockImplementation(asyn
   if (path === '/auth/me') return user;
   if (path === '/notifications') return [];
   if (path === '/notifications/unread-count') return { count: 0 };
-  if (path === '/sale-mandis') return [{ id: 1, name: 'TEST_ONLY mandi', online_requests_available: false, commodity_ids: [] }];
+  if (path === '/sale-mandis') return [{ id: 1, name: 'Kolar APMC', online_requests_available: false, commodity_ids: [] }];
   if (path === '/notification-preferences') return { email: false, sms: false, whatsapp: false, channels: { email: 'not_configured', sms: 'not_configured', whatsapp: 'not_configured' }, email_verified: false, phone_verified: false };
   return [];
 }); });
 
 describe('sale workflow UI — TEST_ONLY fixtures', () => {
-  it('disables submission for a mandi without an onboarded owner', async () => {
+  it('allows a farmer to save a pending request without inventing an onboarded owner', async () => {
     show('/sale-requests/new');
-    expect(await screen.findByText('This mandi has not activated online sale requests. No request can be delivered yet.')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Review request' })).toBeDisabled();
-  });
-  it('keeps the recommendation crop selected when the catalogue has other crops first', async () => {
-    const original = vi.mocked(saleAPI).getMockImplementation()!;
-    vi.mocked(saleAPI).mockImplementation((path, ...args) => path === '/sale-mandis'
-      ? Promise.resolve([{ id: 1, name: 'TEST_ONLY mandi', online_requests_available: true, commodity_ids: [1] }])
-      : original(path, ...args));
-    show('/sale-requests/new');
-    await waitFor(() => expect(screen.getByLabelText('Crop', { exact: true })).toHaveValue('1'));
+    expect(await screen.findByText('You can save this request now. The mandi will receive it after an approved operator activates the portal.')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Review request' })).toBeEnabled();
+    expect(screen.queryByLabelText('Expected selling price (INR/quintal)')).not.toBeInTheDocument();
+  });
+  it('shows horizontal emoji crop choices with the current crop selected', async () => {
+    show('/sale-requests/new');
+    await waitFor(() => expect(screen.getByRole('button', { name: /Tomato.*Kolar/ })).toHaveAttribute('aria-pressed', 'true'));
+    expect(screen.queryByRole('combobox', { name: 'Crop' })).not.toBeInTheDocument();
   });
   it('requires an authenticated account and handles login failure', async () => {
     vi.mocked(saleAPI).mockRejectedValue(new SaleAPIError(401, 'invalid_credentials'));
@@ -45,7 +42,8 @@ describe('sale workflow UI — TEST_ONLY fixtures', () => {
   });
   it('prevents a farmer account from opening owner requests', async () => {
     show('/mandi', true);
-    expect(await screen.findByText('This account cannot access this portal. Sign out and use the correct account.')).toBeInTheDocument();
+    expect(await screen.findByText('You are signed in as a farmer. Your farmer account cannot manage mandi requests.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sign in with an operator account' })).toBeInTheDocument();
   });
   it('switches the farmer workflow between English and Kannada', async () => {
     show();

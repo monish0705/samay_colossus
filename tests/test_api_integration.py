@@ -237,3 +237,25 @@ def test_research_registry_reports_metrics_without_deploying_predictors(api, tmp
     (folder / "comparison.json").write_text("{}")
     failed = client.get("/api/v1/models/status")
     assert failed.status_code == 503 and failed.json()["error"]["code"] == "research_registry_unavailable"
+
+
+def test_automatic_mandi_price_overrides_client_input(api, tmp_path, monkeypatch):
+    client, engine = api
+    deploy_test_model(engine, tmp_path, monkeypatch)
+    body = recommendation()
+    body.update(use_mandi_price=True, today_price_inr_per_quintal='99999', holding_options=[], storage_capacity_quintals='0')
+    response = client.post('/api/v1/recommend', json=body)
+    assert response.status_code == 200, response.text
+    output = response.json()
+    assert output['optimization']['request_and_assumptions']['today_price_inr_per_quintal'] == '1000.00'
+    assert output['market_data']['report_date'] == '2026-11-01'
+    assert 'mandi_modal_used_as_estimated_realization_not_buyer_offer' in output['reliability_warnings']
+
+
+def test_automatic_mandi_price_never_uses_a_client_price_if_data_missing(api):
+    client, _ = api
+    body = recommendation()
+    body.update(use_mandi_price=True)
+    response = client.post('/api/v1/recommend', json=body)
+    assert response.status_code == 503
+    assert response.json()['error']['message'] == 'mandi_price_unavailable'

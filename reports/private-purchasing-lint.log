@@ -1,0 +1,9 @@
+
+> samay-frontend@0.1.0 lint
+> eslint .
+
+
+> samay-frontend@0.1.0 typecheck
+> tsc --noEmit
+
+All checks passed!

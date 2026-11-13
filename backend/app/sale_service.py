@@ -23,7 +23,7 @@ from app.sale_models import (
 )
 
 TRANSITIONS = {
-    'SUBMITTED': {'NOTIFICATION_PENDING', 'NOTIFIED', 'CANCELLED'},
+    'SUBMITTED': {'NOTIFICATION_PENDING', 'NOTIFIED', 'CANCELLED', 'EXPIRED'},
     'NOTIFICATION_PENDING': {'NOTIFIED', 'VIEWED', 'CANCELLED'},
     'NOTIFIED': {'VIEWED', 'CANCELLED'},
     'VIEWED': {'MANDI_ACCEPTED', 'COUNTER_OFFERED', 'REJECTED', 'CANCELLED'},
@@ -42,7 +42,7 @@ def money(value):
 def assignment(db, user, market_id, transact=False):
     require_role(user, 'MANDI_OWNER', 'MANDI_STAFF')
     row = db.get(MandiAssignment, (user.id, market_id))
-    if not row or (transact and user.role == 'MANDI_STAFF' and not row.can_transact):
+    if not row or (transact and not row.can_transact and 'MANDI_OWNER' not in getattr(user, 'authorized_roles', [user.role])):
         raise HTTPException(403, 'mandi_not_assigned_or_permission_denied')
     return row
 
@@ -53,7 +53,9 @@ def load_request(db, public_id, user, owner=False, transact=False):
         raise HTTPException(404, 'sale_request_not_found')
     if owner:
         assignment(db, user, row.mandi_id, transact)
-    elif user.role != 'FARMER' or row.farmer_id != user.id:
+        if row.status == 'SUBMITTED':
+            raise HTTPException(409, 'request_waiting_for_mandi_activation')
+    elif 'FARMER' not in getattr(user, 'authorized_roles', [user.role]) or row.farmer_id != user.id:
         raise HTTPException(404, 'sale_request_not_found')
     return row
 
@@ -126,6 +128,23 @@ def latest_offer(db, row):
     return db.scalar(select(SaleOffer).where(SaleOffer.request_id == row.id).order_by(SaleOffer.id.desc()))
 
 
+def dispatch_waiting(db, market_id, actor):
+    """Activate durable pending requests only after a real approved owner is mapped."""
+    from app.sale_models import MandiRegistration
+    registration = db.get(MandiRegistration, market_id)
+    recipients = owners(db, market_id)
+    if not registration or not registration.active or not any(u.role == 'MANDI_OWNER' for u in recipients):
+        return 0
+    dispatched = 0
+    for row in db.scalars(select(SaleRequest).where(SaleRequest.mandi_id == market_id, SaleRequest.status == 'SUBMITTED')):
+        if row.preferred_arrival_at <= now():
+            transition(db, row, actor, 'EXPIRED', row.version, {'reason': 'Arrival date passed before mandi activation'}, [db.get(SaleUser, row.farmer_id)])
+        elif row.crop_id in registration.commodity_ids:
+            transition(db, row, actor, 'NOTIFIED', row.version, {'channel': 'in_app', 'queued_request_released': True}, recipients)
+            dispatched += 1
+    return dispatched
+
+
 def expire(db, row, actor):
     offer = latest_offer(db, row)
     if row.status in {'MANDI_ACCEPTED', 'COUNTER_OFFERED'} and offer and offer.expires_at <= now():
@@ -155,6 +174,11 @@ def request_dict(db, row, user):
         transaction={c.name: getattr(transaction, c.name) for c in transaction.__table__.columns} if transaction else None,
         unit='INR/quintal', quantity_unit='quintals',
         payment_notice='Payment status is manually recorded; SAMAY does not transfer money.')
+    first = db.scalar(select(SaleEvent).where(SaleEvent.request_id == row.id).order_by(SaleEvent.id))
+    result['price_basis'] = first.details.get('price_basis', 'farmer_expectation') if first else 'farmer_expectation'
+    delivered = db.scalar(select(SaleEvent.id).where(SaleEvent.request_id == row.id, SaleEvent.to_status == 'NOTIFIED').limit(1))
+    result['delivery_status'] = ('IN_APP_INBOX' if delivered else
+        'WAITING_FOR_MANDI_ACTIVATION' if row.status == 'SUBMITTED' else 'NOT_SENT')
     if row.contact_sharing_consent and farmer.phone_verified:
         result['farmer_phone'] = farmer.phone
     def exact(value):

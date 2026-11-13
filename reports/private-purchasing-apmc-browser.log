@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "Isolated TEST_ONLY fixtures, actual Chromium and HTTP services",
+  "steps": [
+    "administrator registers existing mandi and invites owner",
+    "farmer saves an automatically priced partial-quantity request while no owner is onboarded",
+    "approved owner redeems invitation; waiting request is released automatically",
+    "owner receives automatic in-app notification and counteroffers partial quantity",
+    "farmer reviews notification, accepts offer and creates arrival booking",
+    "owner records arrival, weighment and completion; farmer sees identical amounts in English/Kannada on mobile"
+  ],
+  "browser_errors": [],
+  "external_channels_tested": []
+}

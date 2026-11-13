@@ -21,6 +21,9 @@ def main():
     os.environ["SAMAY_ENVIRONMENT"] = "test"
     os.environ["SAMAY_ENABLE_RESEARCH_FORECASTS"] = "false"
     os.environ["SAMAY_HISTORICAL_DEMO_DATE"] = "2025-11-04"
+    if os.getenv('SAMAY_SALE_E2E_ADMIN_PASSWORD'):
+        # Sale bookings use the actual clock; do not weaken freshness for old fixtures.
+        os.environ['SAMAY_BUNDLED_RESEARCH_MODE'] = 'true'
     os.environ["SAMAY_SERVICE_REGISTRY_PATH"] = str(folder / "registry.json")
     (folder / "research-registry.json").write_text("[]")
     os.environ["SAMAY_RESEARCH_REGISTRY_PATH"] = str(folder / "research-registry.json")
@@ -89,6 +92,21 @@ def main():
         meta["artifact_sha256"][name] = hashlib.sha256((evidence / name).read_bytes()).hexdigest()
     (evidence / "summary.json").write_text(json.dumps(meta))
     (folder / "registry.json").write_text(json.dumps([{"feature_run": str(feature), "champions": str(champions), "evidence": str(evidence)}]))
+    if os.getenv('SAMAY_SALE_E2E_ADMIN_PASSWORD'):
+        # A separate current TEST_ONLY quote is inserted AFTER training/calibration.
+        # It is used for operational workflow assertions, never training or metrics.
+        from datetime import UTC, datetime
+        from zoneinfo import ZoneInfo
+        captured = datetime.now(UTC)
+        report = captured.astimezone(ZoneInfo('Asia/Kolkata')).date()
+        current = folder / 'TEST_ONLY-current-sale-quote.csv'
+        current.write_text('State,District,Market,Commodity,Variety,Grade,Arrival_Date,Min_Price,Max_Price,Modal_Price\n'
+            + f'Karnataka,Kolar,Kolar,Tomato,Tomato,Local,{report:%d/%m/%Y},900,1200,1002\n')
+        manifest = SourceManifest(source_label='HTTP_E2E_TEST_ONLY_CURRENT_SALE_NOT_GOVERNMENT_DATA', data_kind='official',
+            source_url='https://data.gov.in/resource/variety-wise-daily-market-prices-data-commodity',
+            fetched_at=captured.isoformat(), price_unit='INR/quintal', unit_evidence='TEST_ONLY synthetic schema; not training data')
+        with Session(engine) as session, session.begin():
+            import_csv(session, current, manifest, folder / 'imports')
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning")
 

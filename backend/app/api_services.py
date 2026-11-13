@@ -145,7 +145,22 @@ def recommend(session, body: RecommendRequest, request_id):
     origin = body.decision_at.astimezone(ZoneInfo("Asia/Kolkata")).date()
     scope = (body.market, body.commodity, body.variety, body.grade)
     data = freshness(session, scope, origin,body.decision_at)
+    if body.use_mandi_price:
+        from app.mandi_quote import latest_quote
+        market_id = session.scalar(select(Market.id).where(Market.name == body.market))
+        crop_id = session.scalar(select(Commodity.id).where(Commodity.name == body.commodity))
+        quote = latest_quote(session, market_id, crop_id, body.variety, body.grade, body.decision_at)
+        batch = session.get(ImportBatch, quote.latest_batch_id) if quote.latest_batch_id else None
+        body = body.model_copy(update={
+            'today_price_inr_per_quintal': quote.modal_price_inr_per_quintal,
+            'today_price_assumption': f'Mandi modal reference dated {quote.observed_on}; estimated realization, not a confirmed buyer offer.'})
+        data = Freshness(report_date=quote.observed_on, fetched_at=batch.fetched_at if batch else quote.created_at,
+            source=quote.data_source, source_url=batch.source_url if batch else None,
+            file_sha256=batch.file_sha256 if batch else None, stale=False, data_kind=quote.data_kind,
+            reference_modal_price_inr_per_quintal=quote.modal_price_inr_per_quintal)
     forecasts, warnings, holding = [], [], []
+    if body.use_mandi_price:
+        warnings.append('mandi_modal_used_as_estimated_realization_not_buyer_offer')
     from app.decision_support import rain_blocks, sensitivity_scenarios, summarize_decision
     from app.market_context import read_context
     policy = body.decision_policy
@@ -205,7 +220,7 @@ def recommend(session, body: RecommendRequest, request_id):
                     raise
                 warnings.append(f"{option.days}d:{exc.code}")
         holding.append(payload)
-    request_data = body.model_dump(exclude={"holding_options", "decision_policy"})
+    request_data = body.model_dump(exclude={"holding_options", "decision_policy", "use_mandi_price"})
     request_data["holding_options"] = holding
     try:
         result = optimize_selling(request_data)

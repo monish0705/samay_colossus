@@ -6,7 +6,6 @@ import { useLanguage } from './i18n';
 
 function useAppState() {
   const language = useLanguage();
-  const [mode, setMode] = useState<'farmer' | 'judge'>('farmer');
   const [scope, setScope] = useState<Scope>(defaultScope);
   const [draft, setDraft] = useState<AdvisorValues>(blankAdvisor);
   const [result, setResultState] = useState<Recommendation | null>(null);
@@ -16,7 +15,7 @@ function useAppState() {
   const connection = useResource(api.health, 'health');
   const catalog = useResource(async () => { const [markets, commodities, data, models] = await Promise.all([api.markets(), api.commodities(), api.data(), api.models()]); return { markets, commodities, data, models }; }, 'catalog');
   const rememberPrediction = (p: Prediction) => setPredictionHistory(old => [p, ...old.filter(x => x.request_id !== p.request_id)].slice(0, 10));
-  return { language, mode, setMode, scope, setScope, draft, setDraft, result, priorResult, setResult, predictionHistory, rememberPrediction, connection, catalog };
+  return { language, scope, setScope, draft, setDraft, result, priorResult, setResult, predictionHistory, rememberPrediction, connection, catalog };
 }
 type State = ReturnType<typeof useAppState>;
 const Context = createContext<State | null>(null);

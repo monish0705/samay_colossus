@@ -39,7 +39,8 @@ class SaleCreate(Input):
     grade: str = Field(min_length=1, max_length=120)
     total_harvest_quantity: Quantity
     requested_quantity: Quantity
-    expected_price_per_quintal: Price
+    expected_price_per_quintal: Price | None = None
+    use_mandi_price: bool = False
     preferred_arrival_at: datetime
     estimated_costs_inr: Money = Decimal('0')
     farmer_message: Text = ''
@@ -47,6 +48,8 @@ class SaleCreate(Input):
 
     @model_validator(mode='after')
     def valid_quantities(self):
+        if not self.use_mandi_price and self.expected_price_per_quintal is None:
+            raise ValueError('Expected price or automatic mandi pricing required')
         if self.requested_quantity > self.total_harvest_quantity:
             raise ValueError('Requested quantity exceeds harvest')
         if self.preferred_arrival_at.utcoffset() is None:
@@ -169,6 +172,8 @@ class TransactionResponse(BaseModel):
 
 
 class SaleResponse(BaseModel):
+    delivery_status: str = 'IN_APP_INBOX'
+    price_basis: str = 'farmer_expectation'
     id: int
     public_request_id: str
     mandi_id: int

@@ -920,10 +920,521 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/business/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register Business */
+        post: operations["register_business_api_v1_business_register_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Business Profile */
+        get: operations["business_profile_api_v1_business_profile_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Business Roles */
+        get: operations["business_roles_api_v1_business_roles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/active-role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Select Workspace */
+        post: operations["select_workspace_api_v1_business_active_role_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/verification-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Verification Status */
+        get: operations["verification_status_api_v1_business_verification_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/workspace/{business_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workspace */
+        get: operations["workspace_api_v1_business_workspace__business_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/businesses/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Pending Businesses */
+        get: operations["pending_businesses_api_v1_admin_businesses_pending_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/businesses/{business_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin Business */
+        get: operations["admin_business_api_v1_admin_businesses__business_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/businesses/{business_id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review Business */
+        post: operations["review_business_api_v1_admin_businesses__business_id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/businesses/{business_id}/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign Member */
+        post: operations["assign_member_api_v1_admin_businesses__business_id__members_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/businesses/{business_id}/market-assignment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign Private Market */
+        post: operations["assign_private_market_api_v1_admin_businesses__business_id__market_assignment_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/offers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Offers */
+        get: operations["offers_api_v1_business_offers_get"];
+        put?: never;
+        /** Create Offer */
+        post: operations["create_offer_api_v1_business_offers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/offers/{offer_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Offer Detail */
+        get: operations["offer_detail_api_v1_business_offers__offer_id__get"];
+        /** Update Offer */
+        put: operations["update_offer_api_v1_business_offers__offer_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/offers/{offer_id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish */
+        post: operations["publish_api_v1_business_offers__offer_id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/offers/{offer_id}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Pause */
+        post: operations["pause_api_v1_business_offers__offer_id__pause_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/offers/{offer_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel */
+        post: operations["cancel_api_v1_business_offers__offer_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requests */
+        get: operations["requests_api_v1_business_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/requests/{request_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Request Detail */
+        get: operations["request_detail_api_v1_business_requests__request_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/requests/{request_id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept */
+        post: operations["accept_api_v1_business_requests__request_id__accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/requests/{request_id}/counteroffer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Counteroffer */
+        post: operations["counteroffer_api_v1_business_requests__request_id__counteroffer_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/requests/{request_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["reject_api_v1_business_requests__request_id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/analytics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Analytics */
+        get: operations["analytics_api_v1_business_analytics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/business/purchase-notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notifications */
+        get: operations["notifications_api_v1_business_purchase_notifications_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/private-purchases/notifications/{notification_id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read Notification */
+        post: operations["read_notification_api_v1_private_purchases_notifications__notification_id__read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/private-purchases/offers/{offer_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Selected Offer */
+        get: operations["selected_offer_api_v1_private_purchases_offers__offer_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/private-purchases/offers/{offer_id}/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit Request */
+        post: operations["submit_request_api_v1_private_purchases_offers__offer_id__requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/private-purchases/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Farmer Requests */
+        get: operations["farmer_requests_api_v1_private_purchases_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/private-purchases/requests/{request_id}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm */
+        post: operations["confirm_api_v1_private_purchases_requests__request_id__confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/private-purchases/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Farmer Notifications */
+        get: operations["farmer_notifications_api_v1_private_purchases_notifications_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActiveWorkspace */
+        ActiveWorkspace: {
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "FARMER" | "BUSINESS";
+            /** Business Id */
+            business_id: number | null;
+            /** Role */
+            role: ("PRIVATE_MANDI_OWNER" | "PRIVATE_BUYER" | "MANDI_STAFF") | null;
+            /** Name */
+            name?: string | null;
+            /** Business Type */
+            business_type?: ("PRIVATE_MANDI" | "PRIVATE_BUYER") | null;
+        };
         /** ApiError */
         ApiError: {
             /** Code */
@@ -977,6 +1488,165 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+        };
+        /** BusinessAccessResponse */
+        BusinessAccessResponse: {
+            /** User Id */
+            user_id: number;
+            /** Roles */
+            roles: string[];
+            /** Workspaces */
+            workspaces: components["schemas"]["WorkspaceChoice"][];
+            active_workspace: components["schemas"]["ActiveWorkspace"];
+        };
+        /** BusinessMemberInput */
+        BusinessMemberInput: {
+            /** User Id */
+            user_id: number;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "PRIVATE_MANDI_OWNER" | "PRIVATE_BUYER" | "MANDI_STAFF";
+            /**
+             * Can Manage
+             * @default false
+             */
+            can_manage: boolean;
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+        };
+        /** BusinessProfileResponse */
+        BusinessProfileResponse: {
+            /** Id */
+            id: number;
+            /**
+             * Business Type
+             * @enum {string}
+             */
+            business_type: "PRIVATE_MANDI" | "PRIVATE_BUYER";
+            /** Name */
+            name: string;
+            /** Contact Name */
+            contact_name: string;
+            /** Phone */
+            phone: string;
+            /** Email */
+            email: string;
+            /** Address */
+            address: string;
+            /** District */
+            district: string;
+            /** State */
+            state: string;
+            /** Registration Details */
+            registration_details: string;
+            /** Verification Information */
+            verification_information: string;
+            /** Document References */
+            document_references: string[];
+            /**
+             * Verification State
+             * @enum {string}
+             */
+            verification_state: "PENDING_VERIFICATION" | "VERIFIED" | "REJECTED" | "SUSPENDED";
+            /** Created By */
+            created_by: number;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Commodity Ids */
+            commodity_ids: number[];
+            /** Authorized Roles */
+            authorized_roles: string[];
+            /** Can Publish */
+            can_publish: boolean;
+            /**
+             * Is Apmc
+             * @constant
+             */
+            is_apmc: false;
+            /**
+             * Public Offers Implemented
+             * @constant
+             */
+            public_offers_implemented: true;
+            /** Private Mandi Id */
+            private_mandi_id: number | null;
+            /** Assigned Private Mandi Id */
+            assigned_private_mandi_id: number | null;
+            /** Operating Hours */
+            operating_hours: string | null;
+            /** Buyer Type */
+            buyer_type: string | null;
+        };
+        /** BusinessRegistration */
+        BusinessRegistration: {
+            /**
+             * Business Type
+             * @enum {string}
+             */
+            business_type: "PRIVATE_MANDI" | "PRIVATE_BUYER";
+            /** Name */
+            name: string;
+            /** Contact Name */
+            contact_name: string;
+            /** Phone */
+            phone: string;
+            /** Email */
+            email: string;
+            /** Address */
+            address: string;
+            /** District */
+            district: string;
+            /** State */
+            state: string;
+            /** Registration Details */
+            registration_details: string;
+            /** Verification Information */
+            verification_information: string;
+            /** Document References */
+            document_references?: string[];
+            /** Commodity Ids */
+            commodity_ids: number[];
+            /** Operating Hours */
+            operating_hours?: string | null;
+            /** Buyer Type */
+            buyer_type?: ("INDIVIDUAL_TRADER" | "AGRICULTURAL_BUSINESS" | "PROCUREMENT_COMPANY" | "REGISTERED_BUYER") | null;
+        };
+        /** BusinessReview */
+        BusinessReview: {
+            /** Version */
+            version: number;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "PENDING_VERIFICATION" | "VERIFIED" | "REJECTED" | "SUSPENDED";
+            /** Evidence */
+            evidence: string;
+            /**
+             * Contact Verified
+             * @default false
+             */
+            contact_verified: boolean;
+            /**
+             * Registration Checked
+             * @default false
+             */
+            registration_checked: boolean;
+            /**
+             * Documents Required
+             * @default false
+             */
+            documents_required: boolean;
         };
         /** CalendarEvent */
         CalendarEvent: {
@@ -1253,6 +1923,46 @@ export interface components {
             /** Absolute Error Inr Per Quintal */
             absolute_error_inr_per_quintal: string;
         };
+        /** FarmerRequestInput */
+        FarmerRequestInput: {
+            /** Offer Version */
+            offer_version: number;
+            /** Available Quantity */
+            available_quantity: number | string;
+            /** Quantity */
+            quantity: number | string;
+            /** Expected Price */
+            expected_price: number | string;
+            /** Variety */
+            variety: string;
+            /** Grade */
+            grade: string;
+            /**
+             * Arrival At
+             * Format: date-time
+             */
+            arrival_at: string;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /**
+             * Contact Consent
+             * @default false
+             */
+            contact_consent: boolean;
+            /**
+             * Quality Confirmed
+             * @constant
+             */
+            quality_confirmed: true;
+            /**
+             * Terms Confirmed
+             * @constant
+             */
+            terms_confirmed: true;
+        };
         /** Freshness */
         Freshness: {
             /** Report Date */
@@ -1277,6 +1987,11 @@ export interface components {
             data_kind: string;
             /** Reference Modal Price Inr Per Quintal */
             reference_modal_price_inr_per_quintal?: string | null;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
         };
         /** HealthResponse */
         HealthResponse: {
@@ -1549,6 +2264,11 @@ export interface components {
             /** Tag Kn */
             tag_kn: string;
         };
+        /** MarketAssignmentInput */
+        MarketAssignmentInput: {
+            /** Private Mandi Id */
+            private_mandi_id: number;
+        };
         /** MarketContext */
         MarketContext: {
             /**
@@ -1689,6 +2409,122 @@ export interface components {
             /** Topics */
             topics?: string[];
         };
+        /** OfferCreate */
+        OfferCreate: {
+            /** Commodity Id */
+            commodity_id: number;
+            /** Variety */
+            variety: string;
+            /** Grade */
+            grade: string;
+            /** Crop Condition */
+            crop_condition: string;
+            /** Quality Standards */
+            quality_standards: string;
+            /** Image References */
+            image_references?: string[];
+            /** Total Quantity */
+            total_quantity: number | string;
+            /**
+             * Unit
+             * @default quintal
+             * @constant
+             */
+            unit: "quintal";
+            /** Minimum Quantity */
+            minimum_quantity: number | string;
+            /** Maximum Quantity */
+            maximum_quantity: number | string;
+            /** Daily Intake */
+            daily_intake?: number | string | null;
+            /** Offered Price */
+            offered_price: number | string;
+            /**
+             * Price Kind
+             * @enum {string}
+             */
+            price_kind: "FIRM" | "INDICATIVE" | "NEGOTIABLE";
+            /** Minimum Price */
+            minimum_price?: number | string | null;
+            /** Maximum Price */
+            maximum_price?: number | string | null;
+            /** Price Basis */
+            price_basis: string;
+            /**
+             * Price Valid Until
+             * Format: date-time
+             */
+            price_valid_until: string;
+            /** Purchasing Centre */
+            purchasing_centre: string;
+            /** Address */
+            address: string;
+            /** District */
+            district: string;
+            /** State */
+            state: string;
+            /** Latitude */
+            latitude?: number | string | null;
+            /** Longitude */
+            longitude?: number | string | null;
+            /** Service Area */
+            service_area: string;
+            /**
+             * Transport
+             * @enum {string}
+             */
+            transport: "FARMER_DELIVERY" | "BUSINESS_PICKUP";
+            /** Pickup Charge */
+            pickup_charge?: number | string | null;
+            /** Unloading Charge */
+            unloading_charge?: number | string | null;
+            /**
+             * Charge Basis
+             * @enum {string}
+             */
+            charge_basis: "INR_PER_QUINTAL" | "INR_PER_TRIP";
+            /** Weighment */
+            weighment: string;
+            /** Arrival Dates */
+            arrival_dates: string[];
+            /**
+             * Appointment Required
+             * @default true
+             */
+            appointment_required: boolean;
+            /** Payment Methods */
+            payment_methods: string[];
+            /** Payment Timing */
+            payment_timing: string;
+            /** Payment Terms */
+            payment_terms: string;
+            /** Known Deductions */
+            known_deductions: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions: string;
+            /** Contact Availability */
+            contact_availability: string;
+            /**
+             * Special Requirements
+             * @default
+             */
+            special_requirements: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Business Id */
+            business_id: number;
+        };
         /** OfferInput */
         OfferInput: {
             /** Version */
@@ -1744,6 +2580,236 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+        };
+        /** OfferTerms */
+        OfferTerms: {
+            /** Commodity Id */
+            commodity_id: number;
+            /** Variety */
+            variety: string;
+            /** Grade */
+            grade: string;
+            /** Crop Condition */
+            crop_condition: string;
+            /** Quality Standards */
+            quality_standards: string;
+            /** Image References */
+            image_references?: string[];
+            /** Total Quantity */
+            total_quantity: string;
+            /**
+             * Unit
+             * @default quintal
+             * @constant
+             */
+            unit: "quintal";
+            /** Minimum Quantity */
+            minimum_quantity: string;
+            /** Maximum Quantity */
+            maximum_quantity: string;
+            /** Daily Intake */
+            daily_intake?: string | null;
+            /** Offered Price */
+            offered_price: string;
+            /**
+             * Price Kind
+             * @enum {string}
+             */
+            price_kind: "FIRM" | "INDICATIVE" | "NEGOTIABLE";
+            /** Minimum Price */
+            minimum_price?: string | null;
+            /** Maximum Price */
+            maximum_price?: string | null;
+            /** Price Basis */
+            price_basis: string;
+            /**
+             * Price Valid Until
+             * Format: date-time
+             */
+            price_valid_until: string;
+            /** Purchasing Centre */
+            purchasing_centre: string;
+            /** Address */
+            address: string;
+            /** District */
+            district: string;
+            /** State */
+            state: string;
+            /** Latitude */
+            latitude?: string | null;
+            /** Longitude */
+            longitude?: string | null;
+            /** Service Area */
+            service_area: string;
+            /**
+             * Transport
+             * @enum {string}
+             */
+            transport: "FARMER_DELIVERY" | "BUSINESS_PICKUP";
+            /** Pickup Charge */
+            pickup_charge?: string | null;
+            /** Unloading Charge */
+            unloading_charge?: string | null;
+            /**
+             * Charge Basis
+             * @enum {string}
+             */
+            charge_basis: "INR_PER_QUINTAL" | "INR_PER_TRIP";
+            /** Weighment */
+            weighment: string;
+            /** Arrival Dates */
+            arrival_dates: string[];
+            /**
+             * Appointment Required
+             * @default true
+             */
+            appointment_required: boolean;
+            /** Payment Methods */
+            payment_methods: string[];
+            /** Payment Timing */
+            payment_timing: string;
+            /** Payment Terms */
+            payment_terms: string;
+            /** Known Deductions */
+            known_deductions: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions: string;
+            /** Contact Availability */
+            contact_availability: string;
+            /**
+             * Special Requirements
+             * @default
+             */
+            special_requirements: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+        };
+        /** OfferUpdate */
+        OfferUpdate: {
+            /** Commodity Id */
+            commodity_id: number;
+            /** Variety */
+            variety: string;
+            /** Grade */
+            grade: string;
+            /** Crop Condition */
+            crop_condition: string;
+            /** Quality Standards */
+            quality_standards: string;
+            /** Image References */
+            image_references?: string[];
+            /** Total Quantity */
+            total_quantity: number | string;
+            /**
+             * Unit
+             * @default quintal
+             * @constant
+             */
+            unit: "quintal";
+            /** Minimum Quantity */
+            minimum_quantity: number | string;
+            /** Maximum Quantity */
+            maximum_quantity: number | string;
+            /** Daily Intake */
+            daily_intake?: number | string | null;
+            /** Offered Price */
+            offered_price: number | string;
+            /**
+             * Price Kind
+             * @enum {string}
+             */
+            price_kind: "FIRM" | "INDICATIVE" | "NEGOTIABLE";
+            /** Minimum Price */
+            minimum_price?: number | string | null;
+            /** Maximum Price */
+            maximum_price?: number | string | null;
+            /** Price Basis */
+            price_basis: string;
+            /**
+             * Price Valid Until
+             * Format: date-time
+             */
+            price_valid_until: string;
+            /** Purchasing Centre */
+            purchasing_centre: string;
+            /** Address */
+            address: string;
+            /** District */
+            district: string;
+            /** State */
+            state: string;
+            /** Latitude */
+            latitude?: number | string | null;
+            /** Longitude */
+            longitude?: number | string | null;
+            /** Service Area */
+            service_area: string;
+            /**
+             * Transport
+             * @enum {string}
+             */
+            transport: "FARMER_DELIVERY" | "BUSINESS_PICKUP";
+            /** Pickup Charge */
+            pickup_charge?: number | string | null;
+            /** Unloading Charge */
+            unloading_charge?: number | string | null;
+            /**
+             * Charge Basis
+             * @enum {string}
+             */
+            charge_basis: "INR_PER_QUINTAL" | "INR_PER_TRIP";
+            /** Weighment */
+            weighment: string;
+            /** Arrival Dates */
+            arrival_dates: string[];
+            /**
+             * Appointment Required
+             * @default true
+             */
+            appointment_required: boolean;
+            /** Payment Methods */
+            payment_methods: string[];
+            /** Payment Timing */
+            payment_timing: string;
+            /** Payment Terms */
+            payment_terms: string;
+            /** Known Deductions */
+            known_deductions: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions: string;
+            /** Contact Availability */
+            contact_availability: string;
+            /**
+             * Special Requirements
+             * @default
+             */
+            special_requirements: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Version */
+            version: number;
         };
         /** OptimizationResponse */
         OptimizationResponse: {
@@ -2016,6 +3082,58 @@ export interface components {
              */
             data_status: string;
         };
+        /** PurchaseOfferView */
+        PurchaseOfferView: {
+            /** Id */
+            id: number;
+            /** Commodity Name */
+            commodity_name: string;
+            /** Business Id */
+            business_id: number;
+            /** Version */
+            version: number;
+            /** Status */
+            status: string;
+            terms: components["schemas"]["OfferTerms"];
+            /** Quantity Required */
+            quantity_required: string;
+            /** Quantity Reserved */
+            quantity_reserved: string;
+            /** Quantity Committed */
+            quantity_committed: string;
+            /** Quantity Remaining */
+            quantity_remaining: string;
+            /**
+             * Unit
+             * @constant
+             */
+            unit: "quintal";
+            /**
+             * Currency
+             * @constant
+             */
+            currency: "INR";
+            /**
+             * Price Updated At
+             * Format: date-time
+             */
+            price_updated_at: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Request Count */
+            request_count: number;
+            /** Price History */
+            price_history?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** History */
+            history?: {
+                [key: string]: unknown;
+            }[] | null;
+        };
         /** ReasonInput */
         ReasonInput: {
             /** Version */
@@ -2080,6 +3198,11 @@ export interface components {
              * @default 0
              */
             cash_deadline_days: number;
+            /**
+             * Use Mandi Price
+             * @default false
+             */
+            use_mandi_price: boolean;
             decision_policy?: components["schemas"]["DecisionPolicy"] | null;
         };
         /** RecommendationHolding */
@@ -2146,6 +3269,16 @@ export interface components {
             language: "en" | "kn";
             /** Invitation Token */
             invitation_token?: string | null;
+        };
+        /** RejectInput */
+        RejectInput: {
+            /** Version */
+            version: number;
+            /**
+             * Reason
+             * @default
+             */
+            reason: string;
         };
         /** ResearchHorizon */
         ResearchHorizon: {
@@ -2217,6 +3350,32 @@ export interface components {
             /** Horizons */
             horizons: components["schemas"]["ResearchHorizon"][];
         };
+        /** ResponseInput */
+        ResponseInput: {
+            /** Version */
+            version: number;
+            /** Quantity */
+            quantity: number | string;
+            /** Price */
+            price: number | string;
+            /**
+             * Arrival At
+             * Format: date-time
+             */
+            arrival_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Payment Terms */
+            payment_terms: string;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+        };
         /** SaleCosts */
         SaleCosts: {
             /**
@@ -2267,7 +3426,12 @@ export interface components {
             /** Requested Quantity */
             requested_quantity: number | string;
             /** Expected Price Per Quintal */
-            expected_price_per_quintal: number | string;
+            expected_price_per_quintal?: number | string | null;
+            /**
+             * Use Mandi Price
+             * @default false
+             */
+            use_mandi_price: boolean;
             /**
              * Preferred Arrival At
              * Format: date-time
@@ -2308,6 +3472,16 @@ export interface components {
         };
         /** SaleResponse */
         SaleResponse: {
+            /**
+             * Delivery Status
+             * @default IN_APP_INBOX
+             */
+            delivery_status: string;
+            /**
+             * Price Basis
+             * @default farmer_expectation
+             */
+            price_basis: string;
             /** Id */
             id: number;
             /** Public Request Id */
@@ -2498,6 +3672,24 @@ export interface components {
              */
             created_at: string;
         };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
+        };
+        /** VersionInput */
+        VersionInput: {
+            /** Version */
+            version: number;
+        };
         /** Versioned */
         Versioned: {
             /** Version */
@@ -2539,6 +3731,35 @@ export interface components {
              * @default
              */
             payment_reference: string;
+        };
+        /** WorkspaceChoice */
+        WorkspaceChoice: {
+            /** Business Id */
+            business_id: number;
+            /** Name */
+            name: string;
+            /**
+             * Business Type
+             * @enum {string}
+             */
+            business_type: "PRIVATE_MANDI" | "PRIVATE_BUYER";
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "PRIVATE_MANDI_OWNER" | "PRIVATE_BUYER" | "MANDI_STAFF";
+        };
+        /** WorkspaceSelection */
+        WorkspaceSelection: {
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "FARMER" | "BUSINESS";
+            /** Business Id */
+            business_id?: number | null;
+            /** Role */
+            role?: ("PRIVATE_MANDI_OWNER" | "PRIVATE_BUYER" | "MANDI_STAFF") | null;
         };
     };
     responses: never;
@@ -6973,6 +8194,1013 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    register_business_api_v1_business_register_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BusinessRegistration"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessProfileResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    business_profile_api_v1_business_profile_get: {
+        parameters: {
+            query?: {
+                business_id?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessProfileResponse"] | components["schemas"]["BusinessProfileResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    business_roles_api_v1_business_roles_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessAccessResponse"];
+                };
+            };
+        };
+    };
+    select_workspace_api_v1_business_active_role_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkspaceSelection"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessAccessResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    verification_status_api_v1_business_verification_status_get: {
+        parameters: {
+            query: {
+                business_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    workspace_api_v1_business_workspace__business_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                business_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessProfileResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pending_businesses_api_v1_admin_businesses_pending_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessProfileResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admin_business_api_v1_admin_businesses__business_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                business_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessProfileResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_business_api_v1_admin_businesses__business_id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                business_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BusinessReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessProfileResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_member_api_v1_admin_businesses__business_id__members_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                business_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BusinessMemberInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_private_market_api_v1_admin_businesses__business_id__market_assignment_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                business_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarketAssignmentInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    offers_api_v1_business_offers_get: {
+        parameters: {
+            query: {
+                business_id: number;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOfferView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_offer_api_v1_business_offers_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OfferCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOfferView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    offer_detail_api_v1_business_offers__offer_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOfferView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_offer_api_v1_business_offers__offer_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OfferUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOfferView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_api_v1_business_offers__offer_id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VersionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pause_api_v1_business_offers__offer_id__pause_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VersionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_api_v1_business_offers__offer_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VersionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_api_v1_business_requests_get: {
+        parameters: {
+            query: {
+                business_id: number;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_detail_api_v1_business_requests__request_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accept_api_v1_business_requests__request_id__accept_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResponseInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    counteroffer_api_v1_business_requests__request_id__counteroffer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResponseInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_api_v1_business_requests__request_id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    analytics_api_v1_business_analytics_get: {
+        parameters: {
+            query: {
+                business_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    notifications_api_v1_business_purchase_notifications_get: {
+        parameters: {
+            query: {
+                business_id: number;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_notification_api_v1_private_purchases_notifications__notification_id__read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notification_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    selected_offer_api_v1_private_purchases_offers__offer_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_request_api_v1_private_purchases_offers__offer_id__requests_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path: {
+                offer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FarmerRequestInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    farmer_requests_api_v1_private_purchases_requests_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_api_v1_private_purchases_requests__request_id__confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VersionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    farmer_notifications_api_v1_private_purchases_notifications_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };

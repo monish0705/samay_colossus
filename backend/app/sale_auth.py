@@ -51,7 +51,9 @@ def current_user(request: Request, db: DB, token: Annotated[str | None, Security
     user = db.get(SaleUser, session.user_id) if session and session.expires_at > now() else None
     if not user or not user.active:
         raise HTTPException(401, 'authentication_required')
-    if request.method == 'POST':
+    from app.business_service import roles_for
+    user.authorized_roles = roles_for(db, user)
+    if request.method in {'POST', 'PUT'}:
         throttle(db, f'marketplace-write:{user.id}', 120)
     return user
 
@@ -60,7 +62,7 @@ User = Annotated[SaleUser, Depends(current_user)]
 
 
 def require_role(user, *roles):
-    if user.role not in roles:
+    if not set(getattr(user, 'authorized_roles', [user.role])).intersection(roles):
         raise HTTPException(403, 'role_not_authorized')
 
 

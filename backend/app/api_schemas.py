@@ -86,6 +86,7 @@ class RecommendationHolding(HoldingOption):
 
 
 class RecommendRequest(SellingRequest):
+    use_mandi_price: bool = False
     holding_options: tuple[RecommendationHolding, ...] = ()
     decision_policy: DecisionPolicy | None = None
 

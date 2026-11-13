@@ -146,7 +146,9 @@ def test_no_owner_and_csrf_and_role_escalation(market_app):
             db.delete(assignment)
         db.commit()
     response, _, _ = create(market_app)
-    assert response.status_code == 409
+    assert response.status_code == 201
+    assert response.json()['delivery_status'] == 'WAITING_FOR_MANDI_ACTIVATION'
+    assert response.json()['status'] == 'SUBMITTED'
     assert not next(m for m in farmer.get('/api/v1/sale-mandis').json() if m['id'] == market)['online_requests_available']
     unauthenticated = TestClient(app)
     assert unauthenticated.post('/api/v1/auth/login', json={'email': 'x@y.test', 'password': PASSWORD}).status_code == 403
@@ -367,3 +369,62 @@ def test_frozen_migration_and_immutable_audit(tmp_path, monkeypatch):
     finally:
         engine.dispose()
         get_settings.cache_clear()
+
+
+def test_waiting_request_notifies_only_after_real_owner_assignment(market_app):
+    factory, admin, farmer, owner, _, market, crop = market_app
+    with factory() as db:
+        account = db.scalar(select(SaleUser).where(SaleUser.role == 'MANDI_OWNER'))
+        owner_id = account.id
+        db.delete(db.get(MandiAssignment, (owner_id, market)))
+        db.commit()
+    response, payload, key = create(market_app, use_mandi_price=True, expected_price_per_quintal=None)
+    assert response.status_code == 201, response.text
+    sale = response.json()
+    assert sale['delivery_status'] == 'WAITING_FOR_MANDI_ACTIVATION'
+    assert sale['expected_price_per_quintal'] == '1000.00'
+    assert sale['price_basis'] == 'mandi_reference'
+    assert owner.get('/api/v1/notifications/unread-count').json()['count'] == 0
+    assert farmer.post('/api/v1/sale-requests', json=payload, headers={'Idempotency-Key': key}).json()['id'] == sale['id']
+    with factory() as db:
+        db.add(MandiAssignment(user_id=owner_id, market_id=market, can_transact=True))
+        db.commit()
+    body = {'market_id': market, 'active': True, 'registration_details': 'TEST_ONLY authorized activation', 'commodity_ids': [crop]}
+    assert admin.post('/api/v1/admin/mandis', json=body).status_code == 200
+    assert admin.post('/api/v1/admin/mandis', json=body).status_code == 200
+    assert owner.get('/api/v1/notifications/unread-count').json()['count'] == 1
+    assert farmer.get(f'/api/v1/sale-requests/{sale["public_request_id"]}').json()['status'] == 'NOTIFIED'
+
+
+def test_automatic_sale_price_is_server_derived_and_stale_rejected(market_app):
+    from sqlalchemy import update
+    factory, _, farmer, _, _, market, crop = market_app
+    response, _, _ = create(market_app, use_mandi_price=True, expected_price_per_quintal='1')
+    assert response.status_code == 409
+    response, _, _ = create(market_app, use_mandi_price=True, expected_price_per_quintal=None)
+    assert response.json()['expected_price_per_quintal'] == '1000.00'
+    assert response.json()['reference_price_date'] == now().date().isoformat()
+    with factory() as db:
+        db.execute(update(MandiObservation).values(observed_on=now().date() - timedelta(days=10)))
+        db.commit()
+    response, _, _ = create(market_app, use_mandi_price=True, expected_price_per_quintal=None)
+    assert response.status_code == 503
+    assert 'stale' in response.json()['error']['message']
+
+
+def test_cancelled_waiting_request_is_not_released(market_app):
+    from app.sale_service import dispatch_waiting
+    factory, _, farmer, _, _, market, _ = market_app
+    with factory() as db:
+        assignment = db.scalar(select(MandiAssignment))
+        owner_id = assignment.user_id
+        db.delete(assignment)
+        db.commit()
+    response, _, _ = create(market_app)
+    sale = response.json()
+    assert farmer.post(f'/api/v1/sale-requests/{sale["public_request_id"]}/cancel', json={'version': sale['version']}).json()['status'] == 'CANCELLED'
+    with factory() as db:
+        db.add(MandiAssignment(user_id=owner_id, market_id=market, can_transact=True))
+        db.flush()
+        assert dispatch_waiting(db, market, db.get(SaleUser, owner_id)) == 0
+        db.commit()

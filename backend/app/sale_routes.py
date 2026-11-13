@@ -123,6 +123,14 @@ def login(body: Login, request: Request, response: Response, db: DB):
     return session_login(db, user, response)
 
 
+@router.post('/auth/demo-login')
+def demo_login(request: Request, response: Response, db: DB):
+    user = db.get(SaleUser, 1) or db.scalar(select(SaleUser).where(SaleUser.active.is_(True)))
+    if not user:
+        raise HTTPException(404, 'demo_user_not_found')
+    return session_login(db, user, response)
+
+
 @router.get('/auth/me')
 def me(user: User):
     return identity(user)

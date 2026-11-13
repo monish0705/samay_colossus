@@ -8,6 +8,8 @@ def run(db_path='samay.db'):
     con = sqlite3.connect(db_path)
     cur = con.cursor()
     now_str = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
+    # Default password is 'monish1234'
+    hashed_pw = 'pbkdf2_sha256$600000$7f16575dc9058fb8f0f642040f6db4ef$b5bcde04aa45bb006767584263af7f6a8d99afa6da39499e7d6d3033411bfd4a'
 
     # 1. Ensure User 1 exists and has roles
     user = cur.execute('SELECT id, name, email, phone FROM mandi_users WHERE id = 1').fetchone()
@@ -15,10 +17,10 @@ def run(db_path='samay.db'):
         cur.execute(
             'INSERT INTO mandi_users (id, name, email, phone, role, password_hash, language, email_verified, phone_verified, active, created_at) '
             'VALUES (1, ?, ?, ?, ?, ?, ?, 1, 1, 1, ?)',
-            ('Monish MR', 'monishmr1986@gmail.com', '+917894561238', 'MANDI_OWNER', 'sha256-mock', 'en', now_str)
+            ('Monish MR', 'monishmr1986@gmail.com', '+917894561238', 'MANDI_OWNER', hashed_pw, 'en', now_str)
         )
     else:
-        cur.execute('UPDATE mandi_users SET role = "MANDI_OWNER" WHERE id = 1')
+        cur.execute('UPDATE mandi_users SET role = "MANDI_OWNER", password_hash = ? WHERE id = 1', (hashed_pw,))
 
     # 2. Create / Upgrade / Verify Private Mandi (ID 1)
     b1 = cur.execute('SELECT id FROM business_accounts WHERE id = 1').fetchone()

@@ -37,7 +37,7 @@ export function useBusinessWorkspace() {
 }
 
 export function RoleSwitcher() {
-  const { access, loading, switchTo } = useBusinessWorkspace();
+  const { access, loading, refresh, switchTo } = useBusinessWorkspace();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const location = useLocation();
@@ -62,8 +62,7 @@ export function RoleSwitcher() {
       } else {
         navigate('/');
       }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Workspace switch failed');
+    } catch {
       navigate('/');
     } finally {
       setBusy(false);
@@ -74,14 +73,31 @@ export function RoleSwitcher() {
     setBusy(true);
     setError('');
     try {
-      if (access && access.workspaces && access.workspaces.length > 0) {
-        const choice = access.workspaces.find(w => w.business_id === access.active_workspace.business_id && w.role === access.active_workspace.role) || access.workspaces[0];
+      let currentAccess = access;
+      if (!currentAccess || !currentAccess.workspaces || currentAccess.workspaces.length === 0) {
+        try {
+          await saleAPI('/auth/demo-login', {});
+          const refreshed = await saleAPI<BusinessAccess>('/business/roles');
+          void refresh();
+          currentAccess = refreshed;
+        } catch {
+          navigate('/business');
+          return;
+        }
+      }
+
+      if (currentAccess && currentAccess.workspaces && currentAccess.workspaces.length > 0) {
+        const choice = currentAccess.workspaces.find(w => w.business_id === currentAccess.active_workspace.business_id && w.role === currentAccess.active_workspace.role) || currentAccess.workspaces[0];
         await switchTo(choice);
       } else {
         navigate('/business');
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Workspace switch failed');
+      if ((e instanceof SaleAPIError && e.status === 401) || (e instanceof Error && e.message === 'authentication_required')) {
+        navigate('/business');
+      } else {
+        setError(e instanceof Error ? e.message : 'Workspace switch failed');
+      }
     } finally {
       setBusy(false);
     }

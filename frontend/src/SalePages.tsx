@@ -37,6 +37,28 @@ export function Auth({ owner, onUser, purpose }: { owner: boolean; onUser: (user
       {register && owner && <Field name="invitation_token" label="Administrator invitation code" />}
       <ErrorMessage error={error} /><button className="button button-primary" disabled={busy}>{t(busy ? 'Please wait' : register ? 'Create account' : 'Sign in')}</button>
     </form>
+    <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(0,0,0,0.1)' }}>
+      <button
+        type="button"
+        className="button"
+        style={{ width: '100%', background: '#15803d', color: '#ffffff', fontWeight: 600, padding: '0.6rem' }}
+        disabled={busy}
+        onClick={async () => {
+          setBusy(true);
+          setError('');
+          try {
+            const u = await saleAPI<SaleUser>('/auth/demo-login', {});
+            onUser(u);
+          } catch (e) {
+            setError(e instanceof Error ? e.message : 'Demo sign in failed');
+          } finally {
+            setBusy(false);
+          }
+        }}
+      >
+        ⚡ {t('1-Click Sign In (Monish MR · All 3 Personas)')}
+      </button>
+    </div>
     <button className="text-button" onClick={() => { setRegister(!register); setError(''); }}>{t(register ? 'Already registered? Sign in' : owner ? 'Redeem authorized invitation' : 'Create farmer account')}</button>
     {owner && <p>{t('Mandi accounts require administrator approval. No owner accounts are created automatically.')}</p>}
   </section>;

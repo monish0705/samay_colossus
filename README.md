@@ -1,4 +1,4 @@
-# SAMAY · Team Resonance · COLOSSUS 3.0
+
 
 Farmer-to-mandi requests: see [sale workflow and onboarding](docs/SALE-WORKFLOW.md).
 Farmers use `/sale-requests`; approved operators use the separate `/mandi` portal.
@@ -39,7 +39,7 @@ See [additional data/model handoff](docs/SECONDARY-MODELS.md),
 [original tomato comparisons](docs/MODEL-RESULTS.md), and
 [initial engineering corrections](docs/CORRECTIONS.md).
 
-## Windows two-command setup and launch
+
 
 Prerequisites: Python 3.12 recommended (3.11+ source requirement), Node.js 22.12+
 and Git. Tested Python 3.12.10, Node 24.20.0, npm 11.19.0. Open PowerShell at the
@@ -59,7 +59,7 @@ the API contract. Ctrl+C stops only children it launched. Swagger: backend `/doc
 Health is process liveness, not forecast readiness. Restart existing listeners
 after code/configuration changes.
 
-### Other computer: app opens but data/models are missing
+
 
 Check out **`sub2`**, then use the isolated bundled research profile. An existing
 installation may still point to an empty database, disable research models in
@@ -114,7 +114,7 @@ Use `scripts/start_local.py --backend-port 8012 --frontend-port 5175` for fresh
 ports. `--check` verifies existing services without launching/stopping them.
 `SAMAY_CORS_ORIGINS` accepts a JSON origin array for direct cross-origin clients.
 
-## Release verification
+
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/verify_release.py
@@ -145,7 +145,6 @@ CSV imports, a saved baseline, computed chronological calibration residuals and
 the real optimizer. It never seeds the workspace with those observations and
 provides no evidence of real market performance.
 
-## Data and honest interpretation
 
 [Ingestion](docs/ingestion.md) explains official CSV download, provenance, units,
 quarantine and revisions. No HTTP endpoint/key is guessed. Never relabel fixtures
@@ -161,8 +160,6 @@ net settlement, mandatory cash/storage/lot constraints and downside objectives.
 Money is INR, prices INR/quintal, quantity quintals. Mandi modal prices are wholesale
 observations, not guaranteed farmer realization. Observed min/max are not prediction
 intervals. Future prices are uncertain; the farmer makes the final decision.
-
-## Handoff
 
 - [DEMO](docs/DEMO.md): guided bilingual flow, storage/adverse/infeasible scenarios, offline preparation.
 - [JUDGES](docs/JUDGES.md): architecture, differentiation, provenance and hard questions.

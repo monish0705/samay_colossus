@@ -19,9 +19,14 @@ class Settings(BaseSettings):
     enable_research_forecasts: bool = False
     research_serving_registry_path: Path | None = None
     historical_demo_date: date | None = None
+    bundled_research_mode: bool = False
 
     @model_validator(mode="after")
     def replay_mode(self):
+        if self.bundled_research_mode:
+            if self.environment == 'production':
+                raise ValueError('Bundled research mode is for local development/test only')
+            self.historical_demo_date = None
         if self.historical_demo_date is not None and (self.environment == "production" or self.historical_demo_date >= date.today()):
             raise ValueError("Historical replay requires a past date and development/test environment")
         return self

@@ -53,6 +53,34 @@ the API contract. Ctrl+C stops only children it launched. Swagger: backend `/doc
 Health is process liveness, not forecast readiness. Restart existing listeners
 after code/configuration changes.
 
+### Other computer: app opens but data/models are missing
+
+Check out **`sub2`**, then use the isolated bundled research profile. An existing
+installation may still point to an empty database, disable research models in
+its old `.env`, or reuse a backend that was started before the update.
+
+```powershell
+git switch sub2
+git pull --ff-only origin sub2
+.\.venv\Scripts\python.exe scripts/start_local.py --bundled-research --backend-port 8012 --frontend-port 5175
+```
+
+Open **http://127.0.0.1:5175 on that computer**. If dependencies are missing, stop
+the old Vite preview, run `python scripts/setup_local.py`, then repeat the launch.
+Use Python 3.12 for the pinned dependencies and saved artifacts.
+
+This profile verifies the bundled database, copies it to an isolated
+`.local-data/bundled-<hash>.db`, explicitly enables the saved research registries
+and ignores an old historical replay date. It preserves your original `samay.db`,
+`.env` and previous profile history. It refuses occupied ports rather than reusing
+a backend with different settings. Startup must verify **3,938 official + 5,834
+secondary observations and 322 research artifacts** before reporting ready.
+Research baselines remain limited evidence, not validated farmer advice.
+
+Verification: a fresh clone of remote `sub2`, with freshly installed dependencies,
+restored those observation counts, loaded all 322 model artifacts and returned a
+real Copra 30-day forecast. No retraining or separate model download is needed.
+
 For fresh ports and optional hourly internet context refresh:
 
 ```powershell

@@ -4,7 +4,7 @@ from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import exists, func, select
+from sqlalchemy import exists, func, literal, select
 from sqlalchemy.orm import Session
 
 from app.api_schemas import ErrorEnvelope
@@ -65,6 +65,15 @@ def markets(data_kind: Literal["verified", "official", "secondary", "fixture", "
     return session.scalars(select(Market).where(exists().where(MandiObservation.market_id == Market.id, MandiObservation.data_kind.in_(kinds))).order_by(Market.state, Market.district, Market.name)).all()
 
 
+COMPATIBLE_VARIETIES: dict[str, set[str]] = {
+    "Arecanut": {"rashi", "bette", "gorabalu", "saraku", "other", "new variety", "sippegotu"},
+    "Copra": {"other", "copra", "ball copra"},
+    "Onion": {"puna", "local", "other", "telagi"},
+    "Potato": {"local", "potato", "chips"},
+    "Tomato": {"tomato", "hybrid"},
+}
+
+
 @router.get("/prices/history", response_model=HistoryResponse)
 def history(market: str = "Kolar APMC", commodity: str = "Tomato", start_date: date | None = None,
             end_date: date | None = None, variety: str | None = None, grade: str | None = None,
@@ -82,24 +91,42 @@ def history(market: str = "Kolar APMC", commodity: str = "Tomato", start_date: d
     kinds = ("official", "secondary") if data_kind == "verified" else (data_kind,)
     stmt = select(MandiObservation, Market, Commodity, ImportBatch).join(Market, MandiObservation.market_id == Market.id).join(Commodity, MandiObservation.commodity_id == Commodity.id).outerjoin(ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(
         Market.name == market, Market.state == "Karnataka", Commodity.name == commodity, MandiObservation.data_kind.in_(kinds))
+
+    target_v = " ".join(variety.split()).casefold() if variety else None
+    target_g = " ".join(grade.split()).casefold() if grade else None
+    allowed_v = (COMPATIBLE_VARIETIES.get(commodity, set()) | {target_v}) if target_v else None
+    allowed_g = {target_g, "local", "medium", "unspecified", "faq"} if target_g else None
+
     if data_kind == "verified":
         ranked = select(MandiObservation.id.label("observation_id"), func.row_number().over(
-            partition_by=(MandiObservation.market_id, MandiObservation.commodity_id, MandiObservation.observed_on, MandiObservation.variety, MandiObservation.grade),
-            order_by=(func.coalesce(ImportBatch.fetched_at, MandiObservation.created_at).desc(),
-                (MandiObservation.data_kind == "official").desc(), MandiObservation.id.desc())).label("position")).outerjoin(
+            partition_by=(MandiObservation.market_id, MandiObservation.commodity_id, MandiObservation.observed_on),
+            order_by=(
+                (MandiObservation.variety == target_v).desc() if target_v else literal(1),
+                (MandiObservation.grade == target_g).desc() if target_g else literal(1),
+                (MandiObservation.data_kind == "official").desc(),
+                func.coalesce(ImportBatch.fetched_at, MandiObservation.created_at).desc(),
+                MandiObservation.id.desc())).label("position")).outerjoin(
                     ImportBatch, MandiObservation.latest_batch_id == ImportBatch.id).where(MandiObservation.data_kind.in_(kinds)).subquery()
         stmt = stmt.where(MandiObservation.id.in_(select(ranked.c.observation_id).where(ranked.c.position == 1)))
+
     if start_date:
         stmt = stmt.where(MandiObservation.observed_on >= start_date)
     if end_date:
         stmt = stmt.where(MandiObservation.observed_on <= end_date)
-    if variety:
-        stmt = stmt.where(MandiObservation.variety == " ".join(variety.split()).casefold())
-    if grade:
-        stmt = stmt.where(MandiObservation.grade == " ".join(grade.split()).casefold())
-    rows = session.execute(stmt.order_by(MandiObservation.observed_on, MandiObservation.variety, MandiObservation.grade, MandiObservation.id).limit(limit + 1).offset(offset)).all()
+    if allowed_v:
+        stmt = stmt.where(MandiObservation.variety.in_(allowed_v))
+    elif variety:
+        stmt = stmt.where(MandiObservation.variety == target_v)
+    if allowed_g:
+        stmt = stmt.where(MandiObservation.grade.in_(allowed_g))
+    elif grade:
+        stmt = stmt.where(MandiObservation.grade == target_g)
+
+    rows = session.execute(stmt.order_by(MandiObservation.observed_on.desc(), MandiObservation.id.desc()).limit(limit + 1).offset(offset)).all()
+    # Return chronologically ascending
+    rows_page = list(reversed(rows[:limit]))
     items = [PriceResponse(id=o.id, market_id=m.id, commodity_id=c.id, market=m.name, commodity=c.name, report_date=o.observed_on, variety=o.variety, grade=o.grade,
         min_price_inr_per_quintal=o.min_price_inr_per_quintal, modal_price_inr_per_quintal=o.modal_price_inr_per_quintal,
         max_price_inr_per_quintal=o.max_price_inr_per_quintal, arrivals_quintals=o.arrivals_quintals, price_unit=o.price_unit,
-        source=o.data_source, source_url=b.source_url if b else None, fetched_at=b.fetched_at if b else None, data_kind=o.data_kind) for o, m, c, b in rows[:limit]]
+        source=o.data_source, source_url=b.source_url if b else None, fetched_at=b.fetched_at if b else None, data_kind=o.data_kind) for o, m, c, b in rows_page]
     return HistoryResponse(items=items, limit=limit, offset=offset, next_offset=offset + limit if len(rows) > limit else None)

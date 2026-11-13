@@ -15,9 +15,9 @@ class Settings(BaseSettings):
     database_url: str = f"sqlite:///{(ROOT / 'samay.db').as_posix()}"
     cors_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     service_registry_path: Path | None = None
-    research_registry_path: Path | None = None
-    enable_research_forecasts: bool = False
-    research_serving_registry_path: Path | None = None
+    research_registry_path: Path | None = ROOT / "research-registry.json"
+    enable_research_forecasts: bool = True
+    research_serving_registry_path: Path | None = ROOT / "research-serving-registry.json"
     historical_demo_date: date | None = None
     bundled_research_mode: bool = False
 

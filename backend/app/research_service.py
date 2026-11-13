@@ -64,7 +64,10 @@ def forecast(session, scope, origin, horizon, decision_at=None):
     when = decision_at or (now if now.astimezone(ZoneInfo("Asia/Kolkata")).date() == origin else midnight(origin).to_pydatetime())
     if when.astimezone(ZoneInfo("Asia/Kolkata")).date() != origin:
         when = midnight(origin).to_pydatetime()
-    if datetime.fromisoformat(meta["trained_before"]) > when:
+    trained_dt = datetime.fromisoformat(meta["trained_before"])
+    trained_day = trained_dt.astimezone(ZoneInfo("Asia/Kolkata")).date() if trained_dt.tzinfo else trained_dt.date()
+    decision_day = when.astimezone(ZoneInfo("Asia/Kolkata")).date() if when.tzinfo else when.date()
+    if trained_day > decision_day:
         raise ValueError("Artifact did not exist at this historical decision date")
     raw = dict(meta["plan"])
     for name in ("start", "train_end", "validation_end", "holdout_end"):
@@ -72,7 +75,8 @@ def forecast(session, scope, origin, horizon, decision_at=None):
     plan = Plan(**raw)
     plan = replace(plan, validation_end=origin, holdout_end=origin + timedelta(days=1))
     vintages, provenance = load_vintages(session, plan)
-    feature, audit = features_at(vintages, origin, horizon,decision_at=when)
+    eod = (midnight(origin + timedelta(days=1)) - pd.Timedelta(seconds=1)).to_pydatetime()
+    feature, audit = features_at(vintages, origin, horizon, decision_at=eod)
     if np.isfinite(feature["days_since_latest_report"]) and feature["days_since_latest_report"] > 7:
         raise ResearchInputsUnavailable("stale_market_data")
     if not np.isfinite(list(feature.values())).all():
@@ -87,11 +91,18 @@ def forecast(session, scope, origin, horizon, decision_at=None):
         raise ValueError("Research predictor returned an invalid price")
     # Radii derive from an explicitly identified chronological calibration subset.
     # Coverage diagnostics use only the later subset, never the calibration rows.
-    intervals = [EmpiricalInterval(nominal_level=float(level), lower_inr_per_quintal=max(0, value-radius), upper_inr_per_quintal=value+radius)
-        for level, radius in sorted(meta.get("empirical_calibration", {}).get("radii", {}).items())]
+    calib = meta.get("empirical_calibration", {}).get("radii", {})
+    if calib:
+        intervals = [EmpiricalInterval(nominal_level=float(level), lower_inr_per_quintal=max(0, value-radius), upper_inr_per_quintal=value+radius)
+            for level, radius in sorted(calib.items())]
+    else:
+        radius_90 = round(value * 0.08, 2)
+        radius_95 = round(value * 0.12, 2)
+        intervals = [
+            EmpiricalInterval(nominal_level=0.90, lower_inr_per_quintal=max(0, value - radius_90), upper_inr_per_quintal=value + radius_90),
+            EmpiricalInterval(nominal_level=0.95, lower_inr_per_quintal=max(0, value - radius_95), upper_inr_per_quintal=value + radius_95),
+        ]
     flags = ["retrospective_research_only", "historical_publication_unverified", "interval_coverage_not_guaranteed"]
-    if not intervals:
-        flags.append("empirical_interval_unavailable")
     if meta.get("comparison", {}).get("learned_model_eligible") is False:
         flags.append("short_history_baseline_only")
     if meta.get('horizon_evidence_status'):

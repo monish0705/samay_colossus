@@ -61,7 +61,7 @@ export const blankAdvisor: AdvisorValues = {
   increment: '1',
   minimumLot: '1',
   step: '0.01',
-  risk: 'conservative',
+  risk: 'balanced',
   notes: 'Farmer quote at Kolar APMC',
   conditions: 'Standard ventilated crate storage',
   realization: '1',

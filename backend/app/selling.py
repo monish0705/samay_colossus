@@ -242,7 +242,7 @@ def _optimize(request):
             future = {key: sale(marketable, getattr(scenario, key + "_inr_per_quintal"), option.future_sale_costs) for key in ("adverse", "lower", "central", "upper")}
             plans.append(plan(now, held, option.days, cash, today_sale, marketable, loss, rounding_loss, storage, storage - upfront, future, eligible, warning, option))
     def rank(p):
-        return (p["risk_adjusted_objective_inr"], p["downside_total_net_inr"], p["sell_today_quintals"], -p["holding_days"])
+        return (p["risk_adjusted_objective_inr"], p["total_net_inr"]["central"], p["downside_total_net_inr"], -p["holding_days"])
     safe = [p for p in plans if p["recommendation_eligible"]]
     selected = max(safe, key=rank) if safe else None
     best_scenario = max(plans, key=rank) if plans else None

@@ -61,6 +61,33 @@ def summarize_decision(result, context, *, requested_holding, scenarios_availabl
     safe = result["recommended_plan"]
     candidate = result["best_scenario_only_or_validated_plan"]
     reasons = list(constraints)
+    held = [p for p in result["feasible_plans"] if p["holding_days"] > 0]
+    best_holding = max(held, key=lambda p: (p["total_net_inr"]["central"], p["downside_total_net_inr"], -p["holding_days"])) if held else None
+    baseline = result["sell_all_now"]["sale"]["net_inr"]
+
+    holding_econ = None
+    if best_holding:
+        central_diff = best_holding["total_net_inr"]["central"] - baseline
+        is_profitable = central_diff > 0
+        holding_econ = {
+            "is_profitable": bool(is_profitable),
+            "projected_diff_inr": f"{central_diff:+.2f}",
+            "today_net_sale_inr": f"{baseline:.2f}",
+            "later_central_net_inr": f"{best_holding['total_net_inr']['central']:.2f}",
+            "holding_days": best_holding["holding_days"],
+            "sell_today_quintals": f"{best_holding['sell_today_quintals']:.2f}",
+            "hold_quintals": f"{best_holding['hold_initial_quintals']:.2f}",
+            "storage_cost_inr": f"{best_holding['storage_cost_inr']:.2f}",
+            "deterioration_loss_quintals": f"{best_holding['deterioration_loss_quintals']:.2f}",
+            "break_even_price_inr_per_quintal": f"{best_holding['break_even_future_price_inr_per_quintal']:.2f}" if best_holding.get("break_even_future_price_inr_per_quintal") else None,
+            "verdict_title": f"Holding Recommended: +₹{central_diff:,.2f} Projected Profit" if is_profitable else f"Selling Today Recommended: Holding Results in -₹{abs(central_diff):,.2f} Net Loss",
+            "verdict_reason": (
+                f"Holding {best_holding['hold_initial_quintals']} qtl for {best_holding['holding_days']} days delivers a projected gain of +₹{central_diff:,.2f} after storage costs and quantity shrinkage."
+                if is_profitable else
+                f"Holding for {best_holding['holding_days']} days is projected to lose ₹{abs(central_diff):,.2f} versus selling today. Predicted future price does not cover storage costs (₹{best_holding['storage_cost_inr']:,.2f}) and deterioration ({best_holding['deterioration_loss_quintals']} qtl)."
+            ),
+        }
+
     if candidate is None:
         action, basis = "infeasible", "cash_or_physical_constraints"
         reasons.append("cash_requirement_not_achievable")
@@ -68,20 +95,42 @@ def summarize_decision(result, context, *, requested_holding, scenarios_availabl
         action, basis = "insufficient_evidence", "no_defensible_future_price_scenario"
         reasons.append("holding_cannot_be_assessed_without_future_scenarios")
         candidate = None
-    elif candidate["holding_days"]:
+    elif best_holding and (best_holding["total_net_inr"]["central"] > baseline):
+        candidate = best_holding
+        action = "partial_sell_and_hold" if candidate["sell_today_quintals"] else "hold"
+        basis = "validated_forecast" if candidate["recommendation_eligible"] else "conditional_scenario_analysis"
+        diff = candidate["total_net_inr"]["central"] - baseline
+        reasons += ["mandatory_cash_and_storage_constraints_satisfied", "risk_adjusted_net_exceeds_immediate_sale", f"projected_profit_gain_inr:{diff:.2f}"]
+    elif candidate and candidate["holding_days"]:
         action = "partial_sell_and_hold" if candidate["sell_today_quintals"] else "hold"
         basis = "validated_forecast" if candidate["recommendation_eligible"] else "conditional_scenario_analysis"
         reasons += ["mandatory_cash_and_storage_constraints_satisfied", "risk_adjusted_net_exceeds_immediate_sale"]
     else:
         action, basis = "sell_now", "constraints_and_supplied_scenarios"
-        reasons.append("holding_does_not_improve_risk_adjusted_net_or_is_infeasible")
+        if best_holding:
+            loss = baseline - best_holding["total_net_inr"]["central"]
+            reasons.append(f"holding_projected_loss_inr:{loss:.2f}")
+            reasons.append("storage_and_deterioration_exceed_future_price_gain")
+        else:
+            reasons.append("holding_does_not_improve_risk_adjusted_net_or_is_infeasible")
+        candidate = safe or candidate
+
     comparisons = []
-    held = [p for p in result['feasible_plans'] if p['holding_days'] > 0]
-    best_holding = max(held,key=lambda p:(p['total_net_inr']['central'],p['downside_total_net_inr'],-p['holding_days'])) if held else None
     for days in sorted({p["holding_days"] for p in result["feasible_plans"]}):
-        options = [p for p in result["feasible_plans"] if p["holding_days"]==days]
-        best = max(options,key=lambda p:(p["risk_adjusted_objective_inr"],p["downside_total_net_inr"],p["sell_today_quintals"]))
+        options = [p for p in result["feasible_plans"] if p["holding_days"] == days]
+        best = max(options, key=lambda p: (p["risk_adjusted_objective_inr"], p["total_net_inr"]["central"], p["downside_total_net_inr"]))
         comparisons.append(best)
-    return {"action":action,"basis":basis,"conditional":bool(candidate and not candidate["recommendation_eligible"]),
-        "plan":candidate,"safe_fallback_plan":safe,"best_holding_plan":best_holding,"reasons":reasons,"horizon_comparisons":comparisons,
-        "context":context,"note":"Compare conditional scenarios with the safe fallback. Calendar/news do not imply a price rise. Longer flat-reference scenarios are not trained long-horizon forecasts."}
+
+    return {
+        "action": action,
+        "basis": basis,
+        "conditional": bool(candidate and not candidate["recommendation_eligible"]),
+        "plan": candidate,
+        "safe_fallback_plan": safe,
+        "best_holding_plan": best_holding,
+        "holding_economics": holding_econ,
+        "reasons": reasons,
+        "horizon_comparisons": comparisons,
+        "context": context,
+        "note": "Compare conditional scenarios with the safe fallback. Calendar/news do not imply a price rise. Longer flat-reference scenarios are not trained long-horizon forecasts.",
+    }

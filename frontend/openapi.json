@@ -76,7 +76,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "Unprocessable Content"
           },
           "503": {
             "content": {
@@ -255,7 +255,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "Unprocessable Content"
           },
           "503": {
             "content": {
@@ -1506,6 +1506,76 @@
         ],
         "title": "ContextSource"
       },
+      "CropDomainProfile": {
+        "properties": {
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "market": {
+            "type": "string",
+            "title": "Market"
+          },
+          "optimal_storage_duration": {
+            "type": "string",
+            "title": "Optimal Storage Duration"
+          },
+          "spoilage_risk": {
+            "type": "string",
+            "title": "Spoilage Risk"
+          },
+          "drivers": {
+            "items": {
+              "$ref": "#/components/schemas/CropDriverItem"
+            },
+            "type": "array",
+            "title": "Drivers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "commodity",
+          "market",
+          "optimal_storage_duration",
+          "spoilage_risk",
+          "drivers"
+        ],
+        "title": "CropDomainProfile"
+      },
+      "CropDriverItem": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "bullish",
+              "bearish",
+              "neutral",
+              "watch"
+            ],
+            "title": "Impact"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "impact",
+          "title",
+          "description"
+        ],
+        "title": "CropDriverItem"
+      },
       "CropStorageProfile": {
         "properties": {
           "commodity": {
@@ -1785,6 +1855,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SellingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "holding_economics": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HoldingEconomics"
               },
               {
                 "type": "null"
@@ -2181,6 +2261,80 @@
         ],
         "title": "HistoryResponse"
       },
+      "HoldingEconomics": {
+        "properties": {
+          "is_profitable": {
+            "type": "boolean",
+            "title": "Is Profitable"
+          },
+          "projected_diff_inr": {
+            "type": "string",
+            "title": "Projected Diff Inr"
+          },
+          "today_net_sale_inr": {
+            "type": "string",
+            "title": "Today Net Sale Inr"
+          },
+          "later_central_net_inr": {
+            "type": "string",
+            "title": "Later Central Net Inr"
+          },
+          "holding_days": {
+            "type": "integer",
+            "title": "Holding Days"
+          },
+          "sell_today_quintals": {
+            "type": "string",
+            "title": "Sell Today Quintals"
+          },
+          "hold_quintals": {
+            "type": "string",
+            "title": "Hold Quintals"
+          },
+          "storage_cost_inr": {
+            "type": "string",
+            "title": "Storage Cost Inr"
+          },
+          "deterioration_loss_quintals": {
+            "type": "string",
+            "title": "Deterioration Loss Quintals"
+          },
+          "break_even_price_inr_per_quintal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Break Even Price Inr Per Quintal"
+          },
+          "verdict_title": {
+            "type": "string",
+            "title": "Verdict Title"
+          },
+          "verdict_reason": {
+            "type": "string",
+            "title": "Verdict Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_profitable",
+          "projected_diff_inr",
+          "today_net_sale_inr",
+          "later_central_net_inr",
+          "holding_days",
+          "sell_today_quintals",
+          "hold_quintals",
+          "storage_cost_inr",
+          "deterioration_loss_quintals",
+          "verdict_title",
+          "verdict_reason"
+        ],
+        "title": "HoldingEconomics"
+      },
       "HorizonAvailability": {
         "properties": {
           "market": {
@@ -2360,6 +2514,16 @@
             },
             "type": "array",
             "title": "Warnings"
+          },
+          "domain_profile": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CropDomainProfile"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "numeric_price_adjustment_applied": {
             "type": "boolean",

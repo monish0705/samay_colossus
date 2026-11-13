@@ -324,6 +324,33 @@ export interface components {
              */
             note: string;
         };
+        /** CropDomainProfile */
+        CropDomainProfile: {
+            /** Commodity */
+            commodity: string;
+            /** Market */
+            market: string;
+            /** Optimal Storage Duration */
+            optimal_storage_duration: string;
+            /** Spoilage Risk */
+            spoilage_risk: string;
+            /** Drivers */
+            drivers: components["schemas"]["CropDriverItem"][];
+        };
+        /** CropDriverItem */
+        CropDriverItem: {
+            /** Category */
+            category: string;
+            /**
+             * Impact
+             * @enum {string}
+             */
+            impact: "bullish" | "bearish" | "neutral" | "watch";
+            /** Title */
+            title: string;
+            /** Description */
+            description: string;
+        };
         /** CropStorageProfile */
         CropStorageProfile: {
             /** Commodity */
@@ -422,6 +449,7 @@ export interface components {
             plan: components["schemas"]["SellingPlan"] | null;
             safe_fallback_plan: components["schemas"]["SellingPlan"] | null;
             best_holding_plan?: components["schemas"]["SellingPlan"] | null;
+            holding_economics?: components["schemas"]["HoldingEconomics"] | null;
             /** Reasons */
             reasons: string[];
             /** Horizon Comparisons */
@@ -564,6 +592,33 @@ export interface components {
              */
             note: string;
         };
+        /** HoldingEconomics */
+        HoldingEconomics: {
+            /** Is Profitable */
+            is_profitable: boolean;
+            /** Projected Diff Inr */
+            projected_diff_inr: string;
+            /** Today Net Sale Inr */
+            today_net_sale_inr: string;
+            /** Later Central Net Inr */
+            later_central_net_inr: string;
+            /** Holding Days */
+            holding_days: number;
+            /** Sell Today Quintals */
+            sell_today_quintals: string;
+            /** Hold Quintals */
+            hold_quintals: string;
+            /** Storage Cost Inr */
+            storage_cost_inr: string;
+            /** Deterioration Loss Quintals */
+            deterioration_loss_quintals: string;
+            /** Break Even Price Inr Per Quintal */
+            break_even_price_inr_per_quintal?: string | null;
+            /** Verdict Title */
+            verdict_title: string;
+            /** Verdict Reason */
+            verdict_reason: string;
+        };
         /** HorizonAvailability */
         HorizonAvailability: {
             /** Market */
@@ -642,6 +697,7 @@ export interface components {
             sources?: components["schemas"]["ContextSource"][];
             /** Warnings */
             warnings?: string[];
+            domain_profile?: components["schemas"]["CropDomainProfile"] | null;
             /**
              * Numeric Price Adjustment Applied
              * @default false
@@ -1268,7 +1324,7 @@ export interface operations {
                     "application/json": components["schemas"]["MarketResponse"][];
                 };
             };
-            /** @description Unprocessable Entity */
+            /** @description Unprocessable Content */
             422: {
                 headers: {
                     [name: string]: unknown;
@@ -1325,7 +1381,7 @@ export interface operations {
                     "application/json": components["schemas"]["HistoryResponse"];
                 };
             };
-            /** @description Unprocessable Entity */
+            /** @description Unprocessable Content */
             422: {
                 headers: {
                     [name: string]: unknown;

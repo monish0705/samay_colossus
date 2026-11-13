@@ -171,6 +171,21 @@ class Freshness(BaseModel):
     reference_modal_price_inr_per_quintal: Decimal | None = None
 
 
+class HoldingEconomics(BaseModel):
+    is_profitable: bool
+    projected_diff_inr: str
+    today_net_sale_inr: str
+    later_central_net_inr: str
+    holding_days: int
+    sell_today_quintals: str
+    hold_quintals: str
+    storage_cost_inr: str
+    deterioration_loss_quintals: str
+    break_even_price_inr_per_quintal: str | None = None
+    verdict_title: str
+    verdict_reason: str
+
+
 class DecisionSupport(BaseModel):
     action: Literal["hold", "partial_sell_and_hold", "sell_now", "infeasible", "insufficient_evidence"]
     basis: str
@@ -178,6 +193,7 @@ class DecisionSupport(BaseModel):
     plan: SellingPlan | None
     safe_fallback_plan: SellingPlan | None
     best_holding_plan: SellingPlan | None = None
+    holding_economics: HoldingEconomics | None = None
     reasons: list[str]
     horizon_comparisons: list[SellingPlan]
     context: MarketContext

@@ -2,6 +2,44 @@ import { api, type Recommendation, type Schema, type Scope } from './api';
 import { localize, t, warningText } from './i18n';
 import { Badge, Card, Loading, Notice, Stat, dateLabel, inr, qty, useResource } from './ui';
 
+export function CropDomainCard({ profile }: { profile: NonNullable<Schema<'MarketContext'>['domain_profile']> }) {
+  const badgeTone = (impact: string): 'neutral' | 'green' | 'amber' | 'red' => {
+    switch (impact) {
+      case 'bullish': return 'green';
+      case 'bearish': return 'red';
+      case 'watch': return 'amber';
+      default: return 'neutral';
+    }
+  };
+
+  return localize(
+    <div className="crop-domain-card" style={{ marginTop: '1.25rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">{t('CROP DOMAIN RESEARCH')}</p>
+          <h4 style={{ margin: 0 }}>{t('Multi-factor market drivers')} ({profile.commodity} · {profile.market})</h4>
+        </div>
+        <Badge tone="green">{t('Karnataka Mandi Domain')}</Badge>
+      </div>
+      <div className="stats-grid two" style={{ margin: '0.75rem 0 1rem' }}>
+        <Stat label={t('Optimal storage duration')} value={profile.optimal_storage_duration} note={t('Storage feasibility & godown requirements')} />
+        <Stat label={t('Spoilage & storage risk')} value={profile.spoilage_risk} note={t('Shrinkage, decay & moisture factors')} />
+      </div>
+      <div className="driver-list" style={{ display: 'grid', gap: '0.75rem' }}>
+        {profile.drivers.map(d => (
+          <div key={d.title} style={{ padding: '0.85rem', background: 'var(--surface-sunken)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+              <strong>{d.title}</strong>
+              <Badge tone={badgeTone(d.impact)}>{t(d.category)}</Badge>
+            </div>
+            <p className="small muted" style={{ margin: 0, lineHeight: 1.45 }}>{d.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ContextEvidence({ context }: { context: Schema<'MarketContext'> }) {
   const weather = context.weather || [], events = context.events || [], news = context.news || [];
   return localize(<>
@@ -14,6 +52,7 @@ export function ContextEvidence({ context }: { context: Schema<'MarketContext'> 
     {events.length ? <><h4>{t('Upcoming calendar events')}</h4><ul>{events.slice(0,6).map(e => <li key={`${e.date}-${e.name}`}><a href={e.source_url} target="_blank" rel="noreferrer">{e.name}</a> · {dateLabel(e.date)}</li>)}</ul><p className="small muted">{t('An office holiday calendar does not confirm mandi closure or a crop price increase.')}</p></> : <p className="small muted">{t('No verified calendar event is available in this period.')}</p>}
     <h4>{t('Recent sourced headlines')}</h4>
     {news.length ? <ul>{news.map(n => <li key={n.url}><a href={n.url} target="_blank" rel="noreferrer">{n.title}</a><p className="small muted">{n.source} · {dateLabel(n.published_at)} · {t(n.topics?.includes('general_agriculture') ? 'General agriculture; crop-specific price effect unverified' : 'Crop-related headline; price effect unverified')}</p></li>)}</ul> : <p className="small muted">{t('No matching recent headline was found in the collected feeds. This does not mean there is no relevant news.')}</p>}
+    {context.domain_profile && <CropDomainCard profile={context.domain_profile} />}
     {!!context.warnings?.length && <Notice>{context.warnings.map(w => warningText(w)).join(' · ')}</Notice>}
     <details><summary>{t('Evidence sources and capture times')}</summary><ul>{(context.sources || []).map(s => <li key={`${s.url}-${s.fetched_at}`}><a href={s.url} target="_blank" rel="noreferrer">{s.name}</a> · {t(s.status)} · {new Intl.DateTimeFormat('en-IN',{ dateStyle: 'medium',timeStyle: 'short',timeZone: 'Asia/Kolkata' }).format(new Date(s.fetched_at))} IST</li>)}</ul></details>
   </>);
@@ -44,6 +83,53 @@ export function DecisionPanel({ result }: { result: Recommendation }) {
     {String(result.optimization.request_and_assumptions.today_price_assumption || '').startsWith('EXAMPLE_ONLY') && <Badge tone="amber">{t('Illustrative inputs, not a live farmer buyer quote')}</Badge>}
     <div className="section-heading"><h2>{t(actionLabels[decision.action])}</h2><Badge tone="amber">{t(decision.conditional ? 'Conditional analysis, not validated advice' : 'Calculated from your constraints')}</Badge></div>
     <p>{t('The decision compares net proceeds after fees, transport, storage and quantity loss. Mandatory cash needs are never relaxed.')}</p>
+    {decision.holding_economics && (
+      <div
+        className={`holding-verdict-card ${decision.holding_economics.is_profitable ? 'is-profitable' : 'is-loss'}`}
+        style={{
+          padding: '1.25rem',
+          margin: '1.25rem 0',
+          borderRadius: '10px',
+          border: decision.holding_economics.is_profitable ? '2px solid #16a34a' : '2px solid #ea580c',
+          background: decision.holding_economics.is_profitable ? 'rgba(22, 163, 74, 0.08)' : 'rgba(234, 88, 12, 0.08)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <h3 style={{ margin: 0, color: decision.holding_economics.is_profitable ? '#15803d' : '#c2410c', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span>{decision.holding_economics.is_profitable ? '✓' : '⚠'}</span>
+            <span>{t(decision.holding_economics.verdict_title)}</span>
+          </h3>
+          <Badge tone={decision.holding_economics.is_profitable ? 'green' : 'amber'}>
+            {decision.holding_economics.is_profitable ? t('Profit Opportunity') : t('Loss Avoidance')}
+          </Badge>
+        </div>
+        <p style={{ margin: '0.5rem 0 1rem', fontSize: '0.95rem', lineHeight: 1.5 }}>
+          {decision.holding_economics.verdict_reason}
+        </p>
+        <div className="stats-grid four">
+          <Stat
+            label={t('Immediate sale today')}
+            value={inr(decision.holding_economics.today_net_sale_inr)}
+            note={t('Net proceeds if sold today')}
+          />
+          <Stat
+            label={t('Projected later proceeds')}
+            value={inr(decision.holding_economics.later_central_net_inr)}
+            note={`${decision.holding_economics.holding_days} ${t('days holding net after storage')}`}
+          />
+          <Stat
+            label={decision.holding_economics.is_profitable ? t('Projected net profit gain') : t('Projected holding loss')}
+            value={inr(decision.holding_economics.projected_diff_inr)}
+            note={decision.holding_economics.is_profitable ? t('Net profit vs selling today') : t('Net loss vs selling today')}
+          />
+          <Stat
+            label={t('Break-even price needed')}
+            value={decision.holding_economics.break_even_price_inr_per_quintal ? inr(decision.holding_economics.break_even_price_inr_per_quintal) : '—'}
+            note={t('Future mandi price to match today')}
+          />
+        </div>
+      </div>
+    )}
     {plan ? <>
       <div className="stats-grid four">
         <Stat label={t('Sell today')} value={qty(plan.sell_today_quintals)} note={t('Quantity sold under cash and storage constraints')}/>

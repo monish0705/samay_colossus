@@ -4,8 +4,8 @@ Cash-aware market decision support for five Karnataka crop/market series.
 FastAPI + SQLite/Alembic, causal forecasting and empirical uncertainty, Decimal
 sale optimization, and a responsive English/Kannada React dashboard.
 
-**Current state, 5 November 2026:** fresh official OGD histories were obtained for
-Copra, Arecanut, Onion and Potato, with reports through 3–4 November 2026. All four
+current state nov 13 2026: fresh official OGD histories were obtained for
+Copra, Arecanut, Onion and Potato, with reports through. All four
 now return saved research forecasts at 1/3/7 calendar days through the browser UI.
 The database stores 3,938 official and 5,834 separately labeled secondary rows;
 source overlaps are deduplicated for training/history, and demo data is excluded.

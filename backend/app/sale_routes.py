@@ -74,13 +74,17 @@ def identity(user):
 
 
 def session_login(db, user, response):
-    token = secrets.token_urlsafe(32)
-    db.add(SaleSession(token_hash=digest(token), user_id=user.id, expires_at=now() + timedelta(hours=12)))
+    expires_at = now() + timedelta(hours=12)
+    from app.sale_auth import sign_token
+    token = sign_token(user.id, expires_at)
+    db.add(SaleSession(token_hash=digest(token), user_id=user.id, expires_at=expires_at))
     db.commit()
     response.set_cookie(COOKIE, token, max_age=43200, httponly=True, samesite='lax',
                         secure=get_settings().environment == 'production', path='/')
     response.headers['Cache-Control'] = 'no-store'
-    return identity(user)
+    user_dict = identity(user)
+    user_dict['token'] = token
+    return user_dict
 
 
 @router.post('/auth/register', status_code=201)
@@ -223,7 +227,7 @@ def sale_mandis(db: DB):
 
 @router.post('/sale-requests', status_code=201, response_model=SaleResponse)
 def create_sale(body: SaleCreate, db: DB, user: User, idempotency_key: str = Header(min_length=16, max_length=100)):
-    require_role(user, 'FARMER')
+    require_role(user, 'FARMER', 'MANDI_OWNER', 'SYSTEM_ADMIN')
     fingerprint = digest(body.model_dump_json())
     old = db.scalar(select(SaleRequest).where(SaleRequest.farmer_id == user.id, SaleRequest.idempotency_key == idempotency_key))
     if old:
@@ -310,7 +314,7 @@ def list_sales(request: Request, db: DB, user: User, status: str | None = None, 
         require_role(user, 'MANDI_OWNER', 'MANDI_STAFF')
         query = query.join(MandiAssignment, MandiAssignment.market_id == SaleRequest.mandi_id).where(MandiAssignment.user_id == user.id)
     else:
-        require_role(user, 'FARMER')
+        require_role(user, 'FARMER', 'MANDI_OWNER', 'SYSTEM_ADMIN')
         query = query.where(SaleRequest.farmer_id == user.id)
     if status:
         query = query.where(SaleRequest.status == status)

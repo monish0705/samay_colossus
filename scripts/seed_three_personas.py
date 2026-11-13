@@ -1,7 +1,7 @@
 """Seed and ensure all 3 business personas (APMC Mandi, Private Mandi, Private Buyer) are verified and active for testing."""
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 
 def run(db_path='samay.db'):
@@ -100,28 +100,38 @@ def run(db_path='samay.db'):
         )
 
     # 6. Ensure current active price observations for all 5 crops so Advisor/Selling pages never go stale
-    today_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    kolkata_tz = timezone(timedelta(hours=5, minutes=30))
+    now_ist = datetime.now(kolkata_tz)
+    dates_to_seed = [
+        (now_ist - timedelta(days=2)).strftime('%Y-%m-%d'),
+        (now_ist - timedelta(days=1)).strftime('%Y-%m-%d'),
+        now_ist.strftime('%Y-%m-%d'),
+    ]
+    # (market_id, commodity_id, variety, grade, min_price, modal_price, max_price, batch_id)
     pilot_observations = [
         (1, 1, 'tomato', 'local', 300, 1000, 2000, 26),
+        (1, 1, 'tomato', 'faq', 300, 1000, 2000, 26),
         (3, 3, 'rashi', 'local', 41900, 48009, 48689, 23),
         (4, 4, 'puna', 'local', 1000, 4200, 4700, 24),
+        (5, 5, 'other', 'local', 30000, 31707, 32100, 22),
         (5, 5, 'copra', 'local', 30000, 31707, 32100, 22),
         (6, 6, 'local', 'medium', 2400, 3000, 3600, 25),
     ]
-    for m_id, c_id, v, g, min_p, mod_p, max_p, b_id in pilot_observations:
-        exists_row = cur.execute(
-            'SELECT id FROM mandi_observations WHERE market_id = ? AND commodity_id = ? AND variety = ? AND grade = ? AND observed_on = ?',
-            (m_id, c_id, v, g, today_date)
-        ).fetchone()
-        if not exists_row:
-            cur.execute(
-                '''INSERT INTO mandi_observations (
-                    market_id, commodity_id, observed_on, variety, grade,
-                    min_price_inr_per_quintal, modal_price_inr_per_quintal, max_price_inr_per_quintal,
-                    price_unit, data_kind, data_source, latest_batch_id, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'INR/quintal', 'official', 'Official OGD / AGMARKNET historical APMC observations', ?, ?)''',
-                (m_id, c_id, today_date, v, g, min_p, mod_p, max_p, b_id, now_str)
-            )
+    for obs_date in dates_to_seed:
+        for m_id, c_id, v, g, min_p, mod_p, max_p, b_id in pilot_observations:
+            exists_row = cur.execute(
+                'SELECT id FROM mandi_observations WHERE market_id = ? AND commodity_id = ? AND variety = ? AND grade = ? AND observed_on = ?',
+                (m_id, c_id, v, g, obs_date)
+            ).fetchone()
+            if not exists_row:
+                cur.execute(
+                    '''INSERT INTO mandi_observations (
+                        market_id, commodity_id, observed_on, variety, grade,
+                        min_price_inr_per_quintal, modal_price_inr_per_quintal, max_price_inr_per_quintal,
+                        price_unit, data_kind, data_source, latest_batch_id, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'INR/quintal', 'official', 'Official OGD / AGMARKNET historical APMC observations', ?, ?)''',
+                    (m_id, c_id, obs_date, v, g, min_p, mod_p, max_p, b_id, now_str)
+                )
 
     con.commit()
     con.close()

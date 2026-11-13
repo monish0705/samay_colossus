@@ -19,7 +19,13 @@ export function BusinessWorkspaceProvider({ children }: { children: ReactNode })
     const current = ++sequence.current;
     setLoading(true);
     try { const value = await saleAPI<BusinessAccess>('/business/roles'); if (current === sequence.current) { setAccess(value); setError(''); } }
-    catch (e) { if (current === sequence.current) { setAccess(null); setError(e instanceof SaleAPIError && e.status === 401 ? '' : e instanceof Error ? e.message : 'Business service unavailable'); } }
+    catch (e) {
+      if (current === sequence.current) {
+        setAccess(null);
+        const isAuth = (e instanceof SaleAPIError && e.status === 401) || (e instanceof Error && e.message === 'authentication_required');
+        setError(isAuth ? '' : e instanceof Error ? e.message : 'Business service unavailable');
+      }
+    }
     finally { if (current === sequence.current) setLoading(false); }
   }, []);
   useEffect(() => { void refresh(); }, [refresh, location.pathname]);
@@ -157,7 +163,7 @@ export function RoleSwitcher() {
           </select>
         </label>
       )}
-      {error && <span role="alert" className="sale-error">{t(error)}</span>}
+      {error && error !== 'authentication_required' && <span role="alert" className="sale-error">{t(error)}</span>}
     </div>
   );
 }

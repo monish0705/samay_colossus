@@ -26,6 +26,7 @@ const errorMessage = (value: string) => {
     offer_validity_must_be_in_future: 'Offer and price validity must end in the future.',
     arrival_dates_must_not_be_in_past: 'Remove past arrival dates before publishing.',
     business_not_verified: 'This business is not currently verified for purchasing.',
+    authentication_required: 'Please sign in or select your business persona to continue.',
   };
   return translated !== value ? translated : (hints[value] || value);
 };

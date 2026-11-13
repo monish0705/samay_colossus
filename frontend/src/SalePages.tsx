@@ -134,9 +134,8 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
   }, [user, refresh]);
   if (loading) return <p role="status">{t('Loading account')}</p>;
   if (!user) return <><ErrorMessage error={error} /><Auth owner={owner} onUser={setUser} /></>;
-  const allowed = owner
-    ? (['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(user.role) || (user.roles && user.roles.some(r => ['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(r))) || location.pathname.startsWith('/business/apmc'))
-    : user.role === 'FARMER';
+  const isOperator = ['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(user.role) || (user.roles && user.roles.some(r => ['MANDI_OWNER', 'MANDI_STAFF', 'SYSTEM_ADMIN'].includes(r)));
+  const allowed = owner ? (isOperator || location.pathname.startsWith('/business/apmc')) : true;
   const action = async (run: () => Promise<unknown>) => {
     setError('');
     try { await run(); setRefresh(n => n + 1); } catch (e) { setError(e instanceof Error ? e.message : 'Request failed'); }

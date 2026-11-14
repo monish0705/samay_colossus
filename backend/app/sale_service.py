@@ -55,7 +55,7 @@ def load_request(db, public_id, user, owner=False, transact=False):
         assignment(db, user, row.mandi_id, transact)
         if row.status == 'SUBMITTED':
             raise HTTPException(409, 'request_waiting_for_mandi_activation')
-    elif row.farmer_id != user.id and not set(getattr(user, 'authorized_roles', [user.role])).intersection({'MANDI_OWNER', 'SYSTEM_ADMIN'}):
+    elif row.farmer_id != user.id:
         raise HTTPException(404, 'sale_request_not_found')
     return row
 

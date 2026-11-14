@@ -63,6 +63,11 @@ export const warningMessages: Record<string, string> = {
   interval_coverage_not_guaranteed: 'Empirical interval coverage is not guaranteed.',
   empirical_interval_unavailable: 'Not enough separated residuals to estimate a reliable empirical interval.',
   short_history_baseline_only: 'History supports baseline forecasts only; advanced model training is not justified.',
+  authentication_required: 'Please sign in to continue.',
+  sale_request_not_found: 'The requested sale record was not found or has expired.',
+  invalid_credentials: 'Invalid email or password.',
+  account_exists_use_login: 'An account with this email already exists. Please log in.',
+  role_not_authorized: 'This account is not authorized for the requested action.',
   research_forecast_unavailable: 'No usable research forecast is available for this series and date.',
   scenario_only_simulation: 'User-entered future price assumption; not a model forecast.',
 

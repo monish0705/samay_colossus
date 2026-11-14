@@ -64,12 +64,16 @@ export function Dashboard() {
           <p>{t('Every observation carries its report date. Every forecast carries its limitations.')}</p>
           <div className="readiness-row">
             <span>{t('Official observations')}</span>
-            <strong>{catalog.data?.data.official_observations ?? '—'}</strong>
+            <strong>{catalog.loading ? '…' : (catalog.data?.data.official_observations ?? '—')}</strong>
           </div>
           <div className="readiness-row">
             <span>{t('Model deployment')}</span>
-            <Badge tone={catalog.data?.models.models.some(m => m.model_version) ? 'green' : 'amber'}>
-              {catalog.data?.models.models.some(m => m.model_version) ? t('Artifacts available') : t('Not available')}
+            <Badge tone={catalog.loading ? 'neutral' : (catalog.data?.models.models.some(m => m.model_version) || (catalog.data?.models.research_models?.length ?? 0) > 0) ? 'green' : 'amber'}>
+              {catalog.loading
+                ? '…'
+                : (catalog.data?.models.models.some(m => m.model_version) || (catalog.data?.models.research_models?.length ?? 0) > 0)
+                  ? t('Artifacts available')
+                  : t('Not available')}
             </Badge>
           </div>
           <ActionLink to="/transparency">{t('See what powers SAMAY')}</ActionLink>
@@ -91,7 +95,7 @@ export function Dashboard() {
         />
         <Stat
           label={t('Saved forecast artifacts')}
-          value={((catalog.data?.models.models.filter(m => m.model_version).length || 0) + (catalog.data?.models.research_models?.length || 0)) || t('Not ready')}
+          value={catalog.loading ? '…' : (((catalog.data?.models.models.filter(m => m.model_version).length || 0) + (catalog.data?.models.research_models?.length || 0)) || t('Not ready'))}
           note={t('Research artifacts are not validated live models; freshness is checked per request.')}
           icon={<TrendingUp size={18} />}
         />

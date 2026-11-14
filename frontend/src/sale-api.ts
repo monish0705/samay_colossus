@@ -80,16 +80,25 @@ export async function saleAPI<T>(path: string, body?: unknown, key?: string, met
     }
   }
 
-  const data = await response.json();
+  const text = await response.text();
+  let data: any = {};
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    if (!response.ok) {
+      throw new SaleAPIError(response.status, text || `Server error (${response.status})`);
+    }
+  }
+
   if (!response.ok) {
-    let msg = data.error?.message || data.detail || 'Request failed';
-    if (data.error?.details?.fields && Array.isArray(data.error.details.fields) && data.error.details.fields.length > 0) {
+    let msg = data?.error?.message || data?.detail || `Request failed (${response.status})`;
+    if (data?.error?.details?.fields && Array.isArray(data.error.details.fields) && data.error.details.fields.length > 0) {
       const fieldMsgs = data.error.details.fields.map((f: { message?: string; type?: string }) => f.message || f.type).filter(Boolean);
       if (fieldMsgs.length > 0) {
         msg = fieldMsgs.join('. ');
       }
     }
-    throw new SaleAPIError(response.status, msg, data.error?.details);
+    throw new SaleAPIError(response.status, msg, data?.error?.details);
   }
 
   if (data && typeof data === 'object' && 'token' in data && typeof (data as { token?: unknown }).token === 'string') {

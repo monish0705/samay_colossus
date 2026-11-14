@@ -2,6 +2,7 @@
 
 import logging
 import os
+import shutil
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -10,7 +11,7 @@ from tempfile import TemporaryDirectory
 from urllib.parse import parse_qsl, urlencode
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from starlette.middleware.gzip import GZipMiddleware
 
 logger = logging.getLogger("samay.server")
@@ -29,10 +30,17 @@ else:
     tmp_base = Path("/tmp") if Path("/tmp").is_dir() else Path(TemporaryDirectory(prefix="samay-vercel-").name)
     database = tmp_base / "samay_runtime.db"
     if not database.exists():
-        try:
-            restore(bundle / "samay.db", bundle / "manifest.json", database)
-        except Exception as e:
-            logger.warning(f"Prepared database restoration skipped/failed: {e}")
+        root_db = ROOT / "samay.db"
+        if root_db.is_file():
+            try:
+                shutil.copy(root_db, database)
+            except Exception as e:
+                logger.warning(f"Root database copy failed: {e}")
+        if not database.exists():
+            try:
+                restore(bundle / "samay.db", bundle / "manifest.json", database)
+            except Exception as e:
+                logger.warning(f"Prepared database restoration skipped/failed: {e}")
     os.environ["SAMAY_DATABASE_URL"] = f"sqlite:///{database.as_posix()}"
 
 if "SAMAY_MARKETPLACE_ENABLED" not in os.environ:
@@ -86,6 +94,19 @@ async def lifespan(application):
 
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    import traceback
+    error_trace = traceback.format_exc()
+    logger.error(f"Global server error: {error_trace}")
+    return JSONResponse(
+        status_code=500,
+        content={"error": {"code": "internal_error", "message": str(exc) or "Unexpected server error", "details": {"type": type(exc).__name__}}},
+    )
+
+
 app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
 app.add_middleware(
     CORSMiddleware,

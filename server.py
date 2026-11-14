@@ -89,7 +89,6 @@ app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
 
 @app.middleware("http")
 async def restore_vercel_path(request: Request, call_next):
-    # When Vercel rewrites incoming traffic to /api/index.py, restore original URL path
     matched = request.headers.get("x-matched-path") or request.headers.get("x-forwarded-uri")
     if matched and request.url.path in ("/api/index.py", "/api/index", "/api"):
         request.scope["path"] = matched
@@ -109,7 +108,9 @@ async def buffer_recommendation(request: Request, call_next):
 
 app.mount("/backend", api)
 
-dist_dir = ROOT / "frontend" / "dist"
+dist_dir = ROOT / "public"
+if not dist_dir.is_dir():
+    dist_dir = ROOT / "frontend" / "dist"
 if not dist_dir.is_dir():
     dist_dir = ROOT / "dist"
 
@@ -123,6 +124,16 @@ SPA_ROUTES = {
 @app.get("/api/health", include_in_schema=False)
 def health_status():
     return {"status": "ok", "environment": os.getenv("SAMAY_ENVIRONMENT", "production")}
+
+
+@app.get("/assets/{asset_file:path}", include_in_schema=False)
+def serve_asset(asset_file: str):
+    for candidate_dir in [ROOT / "public" / "assets", ROOT / "frontend" / "dist" / "assets", ROOT / "dist" / "assets"]:
+        candidate = candidate_dir / asset_file
+        if candidate.is_file():
+            media = "text/javascript" if asset_file.endswith(".js") else "text/css" if asset_file.endswith(".css") else None
+            return FileResponse(candidate, media_type=media)
+    raise HTTPException(status_code=404)
 
 
 @app.get("/", include_in_schema=False)

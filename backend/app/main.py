@@ -1,9 +1,15 @@
 import json
 import logging
 import os
+import sys
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 from uuid import uuid4
+
+BACKEND_DIR = Path(__file__).resolve().parent.parent
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError

@@ -3,8 +3,16 @@
   "framework": "fastapi",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/backend/:path*",
       "destination": "/api/index.py"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/((?!assets/).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [

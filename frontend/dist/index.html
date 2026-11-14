@@ -11,9 +11,11 @@
     <div id="root"><p role="status" style="padding:24px;font:16px system-ui;color:#245138">Loading SAMAY…</p></div>
     <script>
       window.addEventListener('error', function (event) {
+        if (event.target && event.target.tagName && event.target.tagName !== 'SCRIPT') return;
         const root = document.getElementById('root');
         if (root && !root.querySelector('.app-shell')) {
-          root.innerHTML = '<div style="padding:24px;font:16px system-ui;color:#245138"><h1>SAMAY could not load</h1><p>Please reload the latest version.</p><a href="/?reload=' + Date.now() + '">Open SAMAY again</a></div>';
+          var msg = event.message || (event.error && event.error.message) || (event.target && event.target.src ? 'Failed to load script: ' + event.target.src : 'Initialization error');
+          root.innerHTML = '<div style="padding:24px;font:16px system-ui;color:#245138;max-width:640px;margin:auto;"><h1>SAMAY could not load</h1><p>Please reload the latest version.</p><p><a href="/?reload=' + Date.now() + '" style="color:#0f766e;font-weight:600;">Open SAMAY again</a></p><details style="margin-top:16px;background:#f8fafc;padding:12px;border-radius:6px;border:1px solid #cbd5e1;font-size:13px;color:#475569;"><summary style="cursor:pointer;font-weight:600;">Error details</summary><pre style="white-space:pre-wrap;margin-top:8px;">' + msg + '</pre></details></div>';
         }
       }, true);
     </script>

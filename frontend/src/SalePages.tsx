@@ -153,6 +153,14 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
     {owner && bWorkspace && bWorkspace.access && bWorkspace.access.workspaces.length > 0 && (
       <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '1.25rem', background: '#f0fdf4', padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #bbf7d0', alignItems: 'center', flexWrap: 'wrap' }}>
         <strong style={{ fontSize: '0.85rem', color: '#166534' }}>{t('Switch Persona:')}</strong>
+        <button
+          type="button"
+          className={`button ${bWorkspace.access?.active_workspace.mode === 'FARMER' ? 'button-primary' : ''}`}
+          style={{ fontSize: '0.85rem', padding: '0.35rem 0.75rem' }}
+          onClick={() => void bWorkspace.switchTo()}
+        >
+          🌾 {t('Farmer Mode')}
+        </button>
         {bWorkspace.access.workspaces.map(w => (
           <button
             key={`${w.business_id}:${w.role}`}
@@ -166,7 +174,7 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
         ))}
       </div>
     )}
-    <header className="sale-header"><div><Link to="/">SAMAY</Link><h1>{t(owner ? (location.pathname.startsWith('/business/apmc') ? 'APMC Mandi Dashboard' : 'Mandi Owner Portal') : 'My Sale Requests')}</h1><p>{user.name} · {t(user.role.replaceAll('_', ' '))}</p></div>
+    <header className="sale-header"><div><Link to="/" onClick={() => void bWorkspace.switchTo()}>SAMAY</Link><h1>{t(owner ? (location.pathname.startsWith('/business/apmc') ? 'APMC Mandi Dashboard' : 'Mandi Owner Portal') : 'My Sale Requests')}</h1><p>{user.name} · {t(user.role.replaceAll('_', ' '))}</p></div>
       <div><button className="button" onClick={() => setLanguage(language === 'en' ? 'kn' : 'en')}>{language === 'en' ? 'ಕನ್ನಡ' : 'English'}</button><button className="button" onClick={() => void action(async () => { await saleAPI('/auth/logout', {}); setUser(null); })}>{t('Sign out')}</button></div>
     </header>
     <p className="sale-notice">{t('SAMAY connects farmers and registered mandi operators. Physical sales and payments take place outside SAMAY.')}</p>

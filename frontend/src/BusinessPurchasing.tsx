@@ -76,12 +76,7 @@ export function BusinessPurchasing({profile, activeTab}: {profile: Profile; acti
                  access.active_workspace.business_id === profile.id &&
                  (!activeRole || activeRole === targetRole || (access.active_workspace as any).business_type === profile.business_type);
 
-  useEffect(() => {
-    if (!active && choice) {
-      void switchTo(choice);
-    }
-  }, [active, choice, switchTo]);
-
+  // Only load data if this business workspace is currently active
   useEffect(() => {
     if (!active) return;
     let alive = true; setLoading(true); setError(''); setOffers([]); setRequests([]); setNotes({unread:0,items:[]}); setAnalytics(null);

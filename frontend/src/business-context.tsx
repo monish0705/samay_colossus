@@ -31,9 +31,18 @@ export function BusinessWorkspaceProvider({ children }: { children: ReactNode })
   useEffect(() => { void refresh(); }, [refresh, location.pathname]);
   useEffect(() => { const listener = () => { void refresh(); }; window.addEventListener('samay-auth-changed', listener); return () => { window.removeEventListener('samay-auth-changed', listener); sequence.current++; }; }, [refresh]);
   const switchTo = async (workspace?: BusinessChoice) => {
-    const value = await saleAPI<BusinessAccess>('/business/active-role', workspace ? { mode: 'BUSINESS', business_id: workspace.business_id, role: workspace.role } : { mode: 'FARMER' });
-    setAccess(value);
-    navigate(workspace ? workspaceURL(workspace) : '/');
+    try {
+      const value = await saleAPI<BusinessAccess>('/business/active-role', workspace ? { mode: 'BUSINESS', business_id: workspace.business_id, role: workspace.role } : { mode: 'FARMER' });
+      setAccess(value);
+      navigate(workspace ? workspaceURL(workspace) : '/');
+    } catch (e) {
+      if (!workspace) {
+        setAccess(prev => prev ? { ...prev, active_workspace: { mode: 'FARMER', business_id: null, role: null } } : null);
+        navigate('/');
+      } else {
+        throw e;
+      }
+    }
   };
   return <Context.Provider value={{ access, loading, error, refresh, switchTo }}>{children}</Context.Provider>;
 }
@@ -48,9 +57,11 @@ export function RoleSwitcher() {
   const [busy, setBusy] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  // Restore only a server-authorized saved workspace, never a browser role selection.
+  const didInitialRestore = useRef(false);
+  // Restore only a server-authorized saved workspace on initial load, never a browser role selection.
   useEffect(() => {
-    if (access?.active_workspace.mode === 'BUSINESS' && !location.pathname.startsWith('/business')) {
+    if (!didInitialRestore.current && access?.active_workspace.mode === 'BUSINESS' && !location.pathname.startsWith('/business')) {
+      didInitialRestore.current = true;
       const choice = access.workspaces.find(w => w.business_id === access.active_workspace.business_id && w.role === access.active_workspace.role);
       if (choice) navigate(workspaceURL(choice), { replace: true });
     }
@@ -62,12 +73,9 @@ export function RoleSwitcher() {
   async function handleFarmerClick() {
     setBusy(true);
     setError('');
+    didInitialRestore.current = true;
     try {
-      if (access && access.active_workspace.mode === 'BUSINESS') {
-        await switchTo();
-      } else {
-        navigate('/');
-      }
+      await switchTo();
     } catch {
       navigate('/');
     } finally {

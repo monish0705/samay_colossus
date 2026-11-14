@@ -48,6 +48,14 @@ export function BusinessPage() {
     {access && access.workspaces && access.workspaces.length > 0 && (
       <div style={{ display: 'flex', gap: '0.6rem', margin: '0.75rem 0 1.25rem 0', background: '#f0fdf4', padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #bbf7d0', alignItems: 'center', flexWrap: 'wrap' }}>
         <strong style={{ fontSize: '0.85rem', color: '#166534' }}>{t('Switch Persona:')}</strong>
+        <button
+          type="button"
+          className={`button ${access.active_workspace.mode === 'FARMER' ? 'button-primary' : ''}`}
+          style={{ fontSize: '0.85rem', padding: '0.35rem 0.75rem' }}
+          onClick={() => void switchTo()}
+        >
+          🌾 {t('Farmer Mode')}
+        </button>
         {access.workspaces.map(w => (
           <button
             key={`${w.business_id}:${w.role}`}
@@ -71,7 +79,7 @@ export function BusinessPage() {
           </p>
           <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
             <Link to="/business/register" className="button button-primary">{t('View verification status and application')}</Link>
-            <Link to="/" className="button">{t('Return to Farmer Mode')}</Link>
+            <Link to="/" className="button" onClick={() => void switchTo()}>{t('Return to Farmer Mode')}</Link>
           </div>
         </article>
       ) : (

@@ -68,8 +68,13 @@ export function BusinessPurchasing({profile, activeTab}: {profile: Profile; acti
     }
   }, [activeTab]);
 
-  const choice = access?.workspaces.find(w => w.business_id === profile.id);
-  const active = access?.active_workspace.mode === 'BUSINESS' && access.active_workspace.business_id === profile.id;
+  const targetRole = profile.business_type === 'PRIVATE_MANDI' ? 'PRIVATE_MANDI_OWNER' : 'PRIVATE_BUYER';
+  const choice = access?.workspaces.find(w => w.business_id === profile.id && (w.business_type === profile.business_type || w.role === targetRole)) ||
+                 access?.workspaces.find(w => w.business_id === profile.id);
+  const activeRole = access?.active_workspace.role;
+  const active = access?.active_workspace.mode === 'BUSINESS' &&
+                 access.active_workspace.business_id === profile.id &&
+                 (!activeRole || activeRole === targetRole || (access.active_workspace as any).business_type === profile.business_type);
 
   useEffect(() => {
     if (!active && choice) {
@@ -82,9 +87,20 @@ export function BusinessPurchasing({profile, activeTab}: {profile: Profile; acti
     let alive = true; setLoading(true); setError(''); setOffers([]); setRequests([]); setNotes({unread:0,items:[]}); setAnalytics(null);
     Promise.all([purchaseAPI.offers(profile.id, offset), purchaseAPI.requests(profile.id, offset), purchaseAPI.analytics(profile.id), purchaseAPI.notes(profile.id, offset)])
       .then(([o,r,a,n]) => {if (alive) {setOffers(o);setRequests(r);setAnalytics(a);setNotes(n);}})
-      .catch(e => {if (alive) setError(e.message);}).finally(() => {if (alive) setLoading(false);});
+      .catch(async e => {
+        if (alive) {
+          if (e.message === 'active_business_workspace_required' && choice) {
+            try {
+              await switchTo(choice);
+              const [o,r,a,n] = await Promise.all([purchaseAPI.offers(profile.id, offset), purchaseAPI.requests(profile.id, offset), purchaseAPI.analytics(profile.id), purchaseAPI.notes(profile.id, offset)]);
+              if (alive) { setOffers(o); setRequests(r); setAnalytics(a); setNotes(n); setError(''); return; }
+            } catch {}
+          }
+          setError(e.message);
+        }
+      }).finally(() => {if (alive) setLoading(false);});
     return () => {alive=false;};
-  }, [profile.id, active, reload, offset]);
+  }, [profile.id, active, activeRole, reload, offset, choice, switchTo]);
   const refresh = () => {setDetail(null); setReload(n => n+1);};
   if (!active) return <section className="sale-card"><p>{t('Select this authorized business workspace to manage purchasing.')}</p>{choice && <button className="button button-primary" onClick={() => void switchTo(choice).catch(e => setError(e.message))}>{t('Open purchasing workspace')}</button>}{error && <p role="alert" className="sale-error">{errorMessage(error)}</p>}</section>;
 
@@ -99,8 +115,8 @@ export function BusinessPurchasing({profile, activeTab}: {profile: Profile; acti
   async function offerAction(offer: PurchaseOffer, verb: string) {setError(''); try {await saleAPI(`/business/offers/${offer.id}/${verb}`, {version: offer.version});refresh();} catch(e) {setError(e instanceof Error ? e.message : 'Request failed');}}
   return <section className="business-purchasing">
     <button type="button" className="button" onClick={refresh} disabled={loading}>{t('Refresh purchasing records')}</button>
-    <header className="sale-row"><h2>{t(profile.business_type === 'PRIVATE_MANDI' ? 'Private mandi purchasing' : 'Private buyer purchasing')}</h2>{profile.can_publish && <button className="button button-primary" onClick={() => {setEditing(null);setSection('Create Buying Offer');}}>{t('Create New Buying Offer')}</button>}</header>
-    <nav className="purchase-tabs" aria-label={t('Purchasing sections')}>{sections.map(s => <button key={s} type="button" aria-current={section===s ? 'page' : undefined} onClick={() => {setSection(s);setOffset(0);setDetail(null);}}>{t(s)}{s==='Notifications' ? ` (${notes.unread})` : ''}</button>)}</nav>
+    <header className="sale-row"><h2>{t(profile.business_type === 'PRIVATE_MANDI' ? 'Private mandi purchasing' : 'Private buyer purchasing')}</h2>{profile.can_publish && <button className="button button-primary" onClick={() => {setError('');setEditing(null);setSection('Create Buying Offer');}}>{t('Create New Buying Offer')}</button>}</header>
+    <nav className="purchase-tabs" aria-label={t('Purchasing sections')}>{sections.map(s => <button key={s} type="button" aria-current={section===s ? 'page' : undefined} onClick={() => {setError('');setSection(s);setOffset(0);setDetail(null);}}>{t(s)}{s==='Notifications' ? ` (${notes.unread})` : ''}</button>)}</nav>
     {error && <p role="alert" className="sale-error">{errorMessage(error)} <button onClick={refresh}>{t('Retry')}</button></p>}
     {loading && <p role="status">{t('Loading purchasing records')}</p>}
     {section==='Overview' && analytics && <><div className="purchase-stats">{[['Buying offers',analytics.offer_count],['Incoming requests',analytics.incoming_requests],['Requested quintals',analytics.requested_quantity],['Confirmed quintals',analytics.confirmed_quantity],['Reserved quintals',analytics.reserved_quantity],['Remaining quintals',analytics.remaining_quantity],['Average listed price',analytics.average_offered_price ? rupees(analytics.average_offered_price) : t('Unavailable')],['Completed purchases',analytics.completed_purchases]].map(([label,value]) => <article className="sale-card" key={label}><span>{t(String(label))}</span><strong>{value}</strong></article>)}</div><p>{t('Submitted requests do not reserve quantity. Business responses reserve it until expiry; farmer confirmation commits it.')}</p><p>{t('Average listed price is an unweighted average across your offers, not a realized selling price.')}</p></>}
@@ -252,10 +268,18 @@ function RequestCard({request:r,canManage,onChange}:{request:PrivateRequest;canM
 function Field({name,label,type='text',defaultValue,required=true,step,min,max,placeholder}:{name:string;label:string;type?:string;defaultValue?:string|number;required?:boolean;step?:string;min?:string;max?:string;placeholder?:string}) {return <label className="sale-field">{t(label)}<input aria-label={t(label)} name={name} type={type} defaultValue={defaultValue} required={required} step={step} min={min} max={max} placeholder={placeholder} maxLength={2000}/></label>;}
 
 export function OfferForm({profile,existing,onSaved}:{profile:Profile;existing:PurchaseOffer|null;onSaved:()=>void}) {
+  const { access, switchTo } = useBusinessWorkspace();
   const [step,setStep] = useState(0),[error,setError] = useState(''),[busy,setBusy] = useState(false);
   const [crops,setCrops] = useState<{id:number;name:string}[]>([]);
   const [terms,setTerms] = useState<Record<string,FormDataEntryValue>>({});
   const [key,setKey] = useState(()=>crypto.randomUUID());
+  const targetRole = profile.business_type === 'PRIVATE_MANDI' ? 'PRIVATE_MANDI_OWNER' : 'PRIVATE_BUYER';
+  const choice = access?.workspaces.find(w => w.business_id === profile.id && (w.business_type === profile.business_type || w.role === targetRole)) ||
+                 access?.workspaces.find(w => w.business_id === profile.id);
+  const activeRole = access?.active_workspace.role;
+  const active = access?.active_workspace.mode === 'BUSINESS' &&
+                 access.active_workspace.business_id === profile.id &&
+                 (!activeRole || activeRole === targetRole || (access.active_workspace as any).business_type === profile.business_type);
   const value=(name:keyof PurchaseTerms,fallback='')=>existing?.terms[name]===null ? '' : String(existing?.terms[name] ?? fallback);
   useEffect(()=>{api.commodities().then(setCrops).catch(e=>setError(e.message));},[]);
   const names=['Crop and quantity','Price and validity','Location','Logistics and payment','Review buying offer'];
@@ -271,7 +295,11 @@ export function OfferForm({profile,existing,onSaved}:{profile:Profile;existing:P
   async function directPublish(allTerms: Record<string, FormDataEntryValue>) {
     setBusy(true);
     setError('');
+    let body: Record<string, unknown> = {};
     try {
+      if (!active && choice) {
+        try { await switchTo(choice); } catch {}
+      }
       const amount = (name: string) => Number(allTerms[name]);
       if (!(amount('minimum_quantity') > 0 && amount('minimum_quantity') <= amount('maximum_quantity') && amount('maximum_quantity') <= amount('total_quantity'))) {
         setError(t('Minimum quantity must not exceed maximum quantity or total quantity.'));
@@ -284,7 +312,7 @@ export function OfferForm({profile,existing,onSaved}:{profile:Profile;existing:P
         setBusy(false);
         return;
       }
-      const body: Record<string,unknown> = { ...allTerms };
+      body = { ...allTerms };
       for (const name of ['starts_at','expires_at','price_valid_until']) body[name] = new Date(String(allTerms[name])).toISOString();
       body.commodity_id = Number(allTerms.commodity_id);
       body.unit = 'quintal';
@@ -303,6 +331,20 @@ export function OfferForm({profile,existing,onSaved}:{profile:Profile;existing:P
       }
       onSaved();
     } catch(e) {
+      if (e instanceof Error && e.message === 'active_business_workspace_required' && choice) {
+        try {
+          await switchTo(choice);
+          const saved = await saleAPI<{ id: number; version: number; status: string }>(existing ? `/business/offers/${existing.id}` : '/business/offers', {...body,...(existing ? {version:existing.version} : {business_id:profile.id})}, key, existing ? 'PUT' : 'POST');
+          if (!existing && saved?.status === 'DRAFT') {
+            try { await saleAPI(`/business/offers/${saved.id}/publish`, { version: saved.version }); } catch {}
+          }
+          onSaved();
+          return;
+        } catch (retryErr) {
+          setError(retryErr instanceof Error ? retryErr.message : 'Request failed');
+          return;
+        }
+      }
       setError(e instanceof Error ? e.message : 'Request failed');
     } finally {
       setBusy(false);

@@ -54,7 +54,15 @@ async def lifespan(application):
 
 
 app = FastAPI(title="SAMAY API", version="0.1.0", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=get_settings().cors_origins, allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type", "X-Request-ID", "X-SAMAY-Action", "Idempotency-Key"], expose_headers=["X-Request-ID"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=get_settings().cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allow_headers=["Content-Type", "X-Request-ID", "X-SAMAY-Action", "Idempotency-Key", "Authorization", "X-SAMAY-Token"],
+    expose_headers=["X-Request-ID"],
+)
 logger = logging.getLogger("samay.api")
 logger.setLevel(logging.INFO)
 if not logger.handlers:

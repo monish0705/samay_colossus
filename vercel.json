@@ -4,11 +4,19 @@
   "rewrites": [
     {
       "source": "/backend/:path*",
-      "destination": "/api/index.py"
+      "destination": "/api/index.py?__path=/backend/:path*"
+    },
+    {
+      "source": "/backend",
+      "destination": "/api/index.py?__path=/backend/api/health"
     },
     {
       "source": "/api/:path*",
-      "destination": "/api/index.py"
+      "destination": "/api/index.py?__path=/backend/api/:path*"
+    },
+    {
+      "source": "/api",
+      "destination": "/api/index.py?__path=/backend/api/health"
     },
     {
       "source": "/((?!assets/).*)",

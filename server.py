@@ -7,7 +7,9 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from urllib.parse import parse_qsl, urlencode
 from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from starlette.middleware.gzip import GZipMiddleware
 
@@ -85,13 +87,38 @@ async def lifespan(application):
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
 app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")
 async def restore_vercel_path(request: Request, call_next):
-    matched = request.headers.get("x-matched-path") or request.headers.get("x-forwarded-uri")
-    if matched and request.url.path in ("/api/index.py", "/api/index", "/api"):
-        request.scope["path"] = matched
+    query_str = request.scope.get("query_string", b"").decode("latin-1")
+    params = dict(parse_qsl(query_str)) if query_str else {}
+    custom_path = (
+        params.get("__path")
+        or request.headers.get("x-matched-path")
+        or request.headers.get("x-forwarded-uri")
+        or request.headers.get("x-original-uri")
+    )
+    if custom_path:
+        if not custom_path.startswith("/"):
+            custom_path = "/" + custom_path
+        if "?" in custom_path:
+            custom_path = custom_path.split("?", 1)[0]
+        if custom_path.startswith("/api/") and not custom_path.startswith("/backend/"):
+            custom_path = f"/backend{custom_path}"
+        request.scope["path"] = custom_path
+        if "raw_path" in request.scope:
+            request.scope["raw_path"] = custom_path.encode("latin-1")
+        if "__path" in params:
+            remaining = [(k, v) for k, v in parse_qsl(query_str) if k != "__path"]
+            request.scope["query_string"] = urlencode(remaining).encode("latin-1")
     return await call_next(request)
 
 
@@ -122,8 +149,9 @@ SPA_ROUTES = {
 
 @app.get("/health", include_in_schema=False)
 @app.get("/api/health", include_in_schema=False)
+@app.get("/backend/api/health", include_in_schema=False)
 def health_status():
-    return {"status": "ok", "environment": os.getenv("SAMAY_ENVIRONMENT", "production")}
+    return {"status": "ok", "service": "samay", "version": "0.1.0", "environment": os.getenv("SAMAY_ENVIRONMENT", "production")}
 
 
 @app.get("/assets/{asset_file:path}", include_in_schema=False)
@@ -136,10 +164,19 @@ def serve_asset(asset_file: str):
     raise HTTPException(status_code=404)
 
 
-@app.get("/", include_in_schema=False)
 @app.get("/api/index.py", include_in_schema=False)
 @app.get("/api/index", include_in_schema=False)
 @app.get("/api", include_in_schema=False)
+def api_index(request: Request):
+    if "application/json" in request.headers.get("accept", ""):
+        return {"status": "ok", "service": "samay", "version": "0.1.0", "environment": os.getenv("SAMAY_ENVIRONMENT", "production")}
+    index_file = dist_dir / "index.html"
+    if index_file.is_file():
+        return FileResponse(index_file, headers={"Cache-Control": "no-store"})
+    return Response("<h1>SAMAY Agricultural Market Intelligence</h1>", media_type="text/html")
+
+
+@app.get("/", include_in_schema=False)
 def root_index():
     index_file = dist_dir / "index.html"
     if index_file.is_file():

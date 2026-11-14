@@ -88,6 +88,15 @@ app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
 
 
 @app.middleware("http")
+async def restore_vercel_path(request: Request, call_next):
+    # When Vercel rewrites incoming traffic to /api/index.py, restore original URL path
+    matched = request.headers.get("x-matched-path") or request.headers.get("x-forwarded-uri")
+    if matched and request.url.path in ("/api/index.py", "/api/index", "/api"):
+        request.scope["path"] = matched
+    return await call_next(request)
+
+
+@app.middleware("http")
 async def buffer_recommendation(request: Request, call_next):
     response = await call_next(request)
     if request.url.path != "/backend/api/v1/recommend":
@@ -117,6 +126,9 @@ def health_status():
 
 
 @app.get("/", include_in_schema=False)
+@app.get("/api/index.py", include_in_schema=False)
+@app.get("/api/index", include_in_schema=False)
+@app.get("/api", include_in_schema=False)
 def root_index():
     index_file = dist_dir / "index.html"
     if index_file.is_file():
@@ -142,6 +154,10 @@ def nested_spa_page(first_part: str, rest_of_path: str):
     file_path = dist_dir / full_path
     if file_path.is_file():
         return FileResponse(file_path)
+    if first_part in ("api", "backend") and rest_of_path.startswith("index"):
+        index_file = dist_dir / "index.html"
+        if index_file.is_file():
+            return FileResponse(index_file, headers={"Cache-Control": "no-store"})
     if first_part in SPA_ROUTES or "." not in rest_of_path.split("/")[-1]:
         index_file = dist_dir / "index.html"
         if index_file.is_file():

@@ -3,10 +3,10 @@ import { localize, t, warningText } from './i18n';
 import { Badge, Card, Loading, Notice, Stat, dateLabel, inr, qty, useResource } from './ui';
 
 export function CropDomainCard({ profile }: { profile: NonNullable<Schema<'MarketContext'>['domain_profile']> }) {
-  const badgeTone = (impact: string): 'neutral' | 'green' | 'amber' | 'red' => {
+  const badgeTone = (impact: string): 'neutral' | 'green' | 'amber' => {
     switch (impact) {
       case 'bullish': return 'green';
-      case 'bearish': return 'red';
+      case 'bearish': return 'amber';
       case 'watch': return 'amber';
       default: return 'neutral';
     }
@@ -137,11 +137,11 @@ export function PredictionAttributionCard({
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.35rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '1.1rem' }}>{isFactorProfit ? '🟢' : isFactorLoss ? '🔴' : '⚪'}</span>
+                  <span style={{ fontSize: '1.1rem' }}>{isFactorProfit ? '🟢' : isFactorLoss ? '🟠' : '⚪'}</span>
                   <strong style={{ fontSize: '0.95rem' }}>{f.condition}</strong>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Badge tone={isFactorProfit ? 'green' : isFactorLoss ? 'red' : 'neutral'}>
+                  <Badge tone={isFactorProfit ? 'green' : isFactorLoss ? 'amber' : 'neutral'}>
                     {isFactorProfit
                       ? `+${inr(f.price_effect_inr_per_quintal)}/qtl ${t('Profit Driver')}`
                       : `${inr(f.price_effect_inr_per_quintal)}/qtl ${t('Loss Driver')}`}

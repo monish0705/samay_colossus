@@ -68,7 +68,15 @@ export function BusinessPurchasing({profile, activeTab}: {profile: Profile; acti
     }
   }, [activeTab]);
 
+  const choice = access?.workspaces.find(w => w.business_id === profile.id);
   const active = access?.active_workspace.mode === 'BUSINESS' && access.active_workspace.business_id === profile.id;
+
+  useEffect(() => {
+    if (!active && choice) {
+      void switchTo(choice);
+    }
+  }, [active, choice, switchTo]);
+
   useEffect(() => {
     if (!active) return;
     let alive = true; setLoading(true); setError(''); setOffers([]); setRequests([]); setNotes({unread:0,items:[]}); setAnalytics(null);
@@ -78,8 +86,7 @@ export function BusinessPurchasing({profile, activeTab}: {profile: Profile; acti
     return () => {alive=false;};
   }, [profile.id, active, reload, offset]);
   const refresh = () => {setDetail(null); setReload(n => n+1);};
-  const choice = access?.workspaces.find(w => w.business_id === profile.id);
-  if (!active) return <section className="sale-card"><p>{t('Select this authorized business workspace to manage purchasing.')}</p>{choice && <button className="button button-primary" onClick={() => void switchTo(choice).catch(e => setError(e.message))}>{t('Open purchasing workspace')}</button>}{error && <p role="alert">{errorMessage(error)}</p>}</section>;
+  if (!active) return <section className="sale-card"><p>{t('Select this authorized business workspace to manage purchasing.')}</p>{choice && <button className="button button-primary" onClick={() => void switchTo(choice).catch(e => setError(e.message))}>{t('Open purchasing workspace')}</button>}{error && <p role="alert" className="sale-error">{errorMessage(error)}</p>}</section>;
 
   const displayedRequests = section === 'Confirmed Requests'
     ? requests.filter(r => ['CONFIRMED', 'BOOKING_CONFIRMED', 'CONFIRMED_BY_FARMER', 'ARRIVED'].includes(r.status))

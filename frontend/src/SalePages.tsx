@@ -78,7 +78,16 @@ export function SaleWorkspace({ owner = false }: { owner?: boolean }) {
   const params = useParams();
   const bWorkspace = useBusinessWorkspace();
   const root = owner ? (location.pathname.startsWith('/business/apmc') ? location.pathname.split('/').slice(0, 4).join('/') : '/mandi') : '/sale-requests';
-  const reqId = params.requestId || (params['*']?.startsWith('requests/') ? params['*'].replace('requests/', '') : undefined);
+  const RESERVED_SALE_PATHS = new Set([
+    '', 'new', 'requests', 'incoming', 'counteroffers', 'arrivals',
+    'arrived', 'completed', 'notifications', 'settings', 'staff',
+    'undefined', 'null', 'sale-requests', 'mandi'
+  ]);
+  let rawReqId = params.requestId || (params['*']?.startsWith('requests/') ? params['*'].replace('requests/', '') : undefined);
+  if (rawReqId && RESERVED_SALE_PATHS.has(rawReqId.trim().toLowerCase())) {
+    rawReqId = undefined;
+  }
+  const reqId = rawReqId;
   useEffect(() => {
     saleAPI<SaleUser>('/auth/me')
       .then(setUser)
@@ -238,7 +247,11 @@ function SaleCreateForm() {
   async function send() {
     if (!pending || busy) return;
     setBusy(true); setError('');
-    try { const sale = await saleAPI<Sale>('/sale-requests', pending, key); navigate(`/sale-requests/${sale.public_request_id}`); } catch (e) { setError(e instanceof Error ? e.message : 'Request failed'); } finally { setBusy(false); }
+    try {
+      const sale = await saleAPI<Sale>('/sale-requests', pending, key);
+      try { sessionStorage.setItem(`samay_sale_${sale.public_request_id}`, JSON.stringify(sale)); } catch {}
+      navigate(`/sale-requests/${sale.public_request_id}`);
+    } catch (e) { setError(e instanceof Error ? e.message : 'Request failed'); } finally { setBusy(false); }
   }
   return <section className="sale-card"><h2>{t('Send Sale Request')}</h2><ErrorMessage error={error} />
     {pending && previewResult ? <><h3>{t('Confirm request summary')}</h3><dl className="sale-ledger"><dt>{t('Selected mandi')}</dt><dd>{market?.name}</dd><dt>{t('Crop')}</dt><dd>{selectedScope.icon} {t(chosenCrop)}</dd><dt>{t('Requested quantity')}</dt><dd>{qty(pending.requested_quantity)}</dd><dt>{t('Mandi reference price')}</dt><dd>{inr(previewResult.expected_price_per_quintal)}/{t('quintal')} · {previewResult.reference_price_date}</dd><dt>{t('Reference value less entered costs')}</dt><dd>{inr(previewResult.estimated_net_inr)}</dd><dt>{t('Preferred arrival')}</dt><dd>{saleTime(pending.preferred_arrival_at)}</dd></dl>
@@ -288,7 +301,20 @@ function SaleDetails({ requestId, owner, changed }: { requestId: string; owner: 
         const row = owner ? await saleAPI<Sale>(`${prefix}/${requestId}/view`, {}) : await saleAPI<Sale>(`${prefix}/${requestId}`);
         const history = await saleAPI<SaleEvent[]>(`${prefix}/${requestId}/timeline`);
         if (live) { setSale(row); setEvents(history); setError(''); }
-      } catch (e) { if (live) setError(e instanceof Error ? e.message : 'Request failed'); }
+      } catch (e) {
+        if (live) {
+          try {
+            const cached = sessionStorage.getItem(`samay_sale_${requestId}`);
+            if (cached) {
+              const cachedSale = JSON.parse(cached) as Sale;
+              setSale(cachedSale);
+              setError('');
+              return;
+            }
+          } catch {}
+          setError(e instanceof Error ? e.message : 'Request failed');
+        }
+      }
     }
     void load();
     return () => { live = false; };
@@ -299,8 +325,24 @@ function SaleDetails({ requestId, owner, changed }: { requestId: string; owner: 
     try { await saleAPI(`${farmer ? '/sale-requests' : prefix}/${requestId}/${action}`, { ...values, version: sale.version }); setRefresh(n => n + 1); changed(); }
     catch (e) { setError(e instanceof Error ? e.message : 'Request failed'); } finally { setBusy(false); }
   }
-  if (!sale) return <><ErrorMessage error={error} /><p role="status">{t('Loading request')}</p></>;
-  const offer = sale.offers.at(-1);
+  if (!sale) {
+    if (error) {
+      return (
+        <section className="sale-card">
+          <ErrorMessage error={error} />
+          <p>{t('The requested sale record could not be found or may have expired.')}</p>
+          <div className="sale-row" style={{ marginTop: '1rem' }}>
+            <Link className="button button-primary" to={owner ? '/mandi' : '/sale-requests'}>
+              {t('Back to requests')}
+            </Link>
+          </div>
+        </section>
+      );
+    }
+    return <p role="status">{t('Loading request')}</p>;
+  }
+  const offers = sale.offers || [];
+  const offer = offers.at(-1);
   const actionable = offer && ['MANDI_ACCEPTED', 'COUNTER_OFFERED'].includes(sale.status) && new Date(offer.expires_at).getTime() > Date.now();
   const offerSubmit = (event: FormEvent<HTMLFormElement>) => {
     const v = formValues(event);
@@ -308,7 +350,7 @@ function SaleDetails({ requestId, owner, changed }: { requestId: string; owner: 
   };
   return <section><Link to={owner ? '/mandi/incoming' : '/sale-requests'}>{t('Back to requests')}</Link><h2>{sale.public_request_id}</h2><span className="sale-status">{statusText(sale.delivery_status === 'WAITING_FOR_MANDI_ACTIVATION' ? 'WAITING FOR MANDI ACTIVATION' : sale.status)}</span>{sale.delivery_status === 'WAITING_FOR_MANDI_ACTIVATION' && <p className="sale-notice">{t('Your request is saved. No owner has received it yet. You will be notified after mandi activation.')}</p>}<ErrorMessage error={error} />
     <article className="sale-card"><h3>{sale.mandi_name} · {t(sale.crop_name)}</h3><dl className="sale-ledger"><dt>{t('Variety / grade')}</dt><dd>{sale.variety} / {sale.grade}</dd><dt>{t('Requested quantity')}</dt><dd>{qty(sale.requested_quantity)}</dd><dt>{t(sale.price_basis === 'mandi_reference' ? 'Mandi reference price' : 'Farmer expected price')}</dt><dd>{inr(sale.expected_price_per_quintal)}/{t('quintal')}</dd><dt>{t('Observed reference price')}</dt><dd>{sale.reference_modal_price ? inr(sale.reference_modal_price) : t('Unavailable')} · {sale.reference_price_date || ''}</dd><dt>{t('Estimated net realization')}</dt><dd>{inr(sale.estimated_net_inr)} ({t('Farmer estimate')})</dd><dt>{t('Estimated selling costs')}</dt><dd>{inr(sale.estimated_costs_inr)}</dd><dt>{t('Preferred arrival')}</dt><dd>{saleTime(sale.preferred_arrival_at)}</dd><dt>{t('Message')}</dt><dd>{sale.farmer_message || '—'}</dd>{sale.farmer_phone && <><dt>{t('Shared verified phone')}</dt><dd>{sale.farmer_phone}</dd></>}</dl></article>
-    <article className="sale-card"><h3>{t('Offer history')}</h3>{sale.offers.length === 0 && <p>{t('No owner offer yet')}</p>}{sale.offers.map(o => <div className="sale-offer" key={o.id}><strong>{t('Owner offer')}: {inr(o.price)}/{t('quintal')} · {qty(o.quantity)}</strong><p>{t('Arrival slot')}: {saleTime(o.arrival_at)}</p><p>{t('Offer expiry')}: {saleTime(o.expires_at)}</p><p>{o.message}</p>{o.id === offer?.id && !actionable && <p>{t('This offer is not actionable')}</p>}</div>)}
+    <article className="sale-card"><h3>{t('Offer history')}</h3>{offers.length === 0 && <p>{t('No owner offer yet')}</p>}{offers.map(o => <div className="sale-offer" key={o.id}><strong>{t('Owner offer')}: {inr(o.price)}/{t('quintal')} · {qty(o.quantity)}</strong><p>{t('Arrival slot')}: {saleTime(o.arrival_at)}</p><p>{t('Offer expiry')}: {saleTime(o.expires_at)}</p><p>{o.message}</p>{o.id === offer?.id && !actionable && <p>{t('This offer is not actionable')}</p>}</div>)}
       {!owner && actionable && <div className="sale-row"><button className="button button-primary" disabled={busy} onClick={() => { if (window.confirm(t('Confirm this exact price, quantity and arrival slot?'))) void act('confirm', { offer_id: offer.id }); }}>{t('Confirm offer and book arrival')}</button><button className="button" disabled={busy} onClick={() => void act('reject-offer', { reason: 'Farmer declined offer' })}>{t('Reject offer')}</button></div>}
     </article>
     {owner && ['VIEWED', 'COUNTER_OFFERED', 'MANDI_ACCEPTED'].includes(sale.status) && <article className="sale-card"><h3>{t('Respond to farmer')}</h3><form className="sale-grid" onSubmit={offerSubmit}><label>{t('Response')}<select name="action"><option value="counteroffer">{t('Send counteroffer')}</option>{sale.status === 'VIEWED' && <option value="accept">{t('Accept original price and quantity')}</option>}</select></label><Field name="quantity" label="Accepted quantity (quintals)" type="number" min="0.001" step="0.001" value={sale.requested_quantity} /><Field name="price" label="Offered price (INR/quintal)" type="number" min="0.01" step="0.01" value={sale.expected_price_per_quintal} /><Field name="arrival_at" label="Offered arrival slot (your local time)" type="datetime-local" /><Field name="expires_at" label="Offer expiry (your local time)" type="datetime-local" /><Field name="message" label="Offer message" required={false} /><button className="button button-primary" disabled={busy}>{t('Send terms to farmer')}</button></form>{sale.status === 'VIEWED' && <form onSubmit={e => { const v = formValues(e); void act('reject', { reason: v.reason }); }}><Field name="reason" label="Rejection reason" required={false} /><button className="button" disabled={busy}>{t('Reject request')}</button></form>}</article>}

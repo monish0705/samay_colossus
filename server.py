@@ -16,13 +16,15 @@ os.chdir(ROOT)
 
 from app.prepared_data import restore  # noqa: E402
 
-runtime = TemporaryDirectory(prefix="samay-vercel-")
-database = Path(runtime.name) / "samay.db"
 bundle = ROOT / "data" / "prepared"
-restore(bundle / "samay.db", bundle / "manifest.json", database)
 if os.getenv('SAMAY_PERSISTENT_DATABASE_URL'):
     os.environ['SAMAY_DATABASE_URL'] = os.environ['SAMAY_PERSISTENT_DATABASE_URL']
+    database = Path("samay.db")
 else:
+    tmp_base = Path("/tmp") if Path("/tmp").is_dir() else Path(TemporaryDirectory(prefix="samay-vercel-").name)
+    database = tmp_base / "samay_runtime.db"
+    if not database.exists():
+        restore(bundle / "samay.db", bundle / "manifest.json", database)
     os.environ["SAMAY_DATABASE_URL"] = f"sqlite:///{database.as_posix()}"
 if 'SAMAY_MARKETPLACE_ENABLED' not in os.environ:
     os.environ['SAMAY_MARKETPLACE_ENABLED'] = 'true'
